@@ -12,14 +12,14 @@ export function isValidNumber(value) {
 }
 
 export function validateLoginForm(data) {
-    if (!isNonEmptyString(data.username) || !isNonEmptyString(data.password)) {
+    if (!isNonEmptyString(data.fullName) || !isNonEmptyString(data.password)) {
         return "Username and password are required";
     }
     return null;
 }
 
 export function validateFirstRegisterStep(data) {
-    if (!isNonEmptyString(data.username) || !isNonEmptyString(data.password) || !isNonEmptyString(data.verifyPassword)) {
+    if (!isNonEmptyString(data.fullName) || !isNonEmptyString(data.password) || !isNonEmptyString(data.verifyPassword)) {
         return "All fields are required";
     }
     if (data.password !== data.verifyPassword) {
@@ -30,8 +30,7 @@ export function validateFirstRegisterStep(data) {
 
 export function validateSecondRegisterStep(data) {
     const requiredFields = [
-        "name", "email", "street", "suite", "city", "zipcode",
-        "lat", "lng", "phone", "website", "companyName", "catchPhrase", "bs"
+        'id', 'birthDate', 'gender', 'name', 'email', 'phone', 'address', 'sector',
     ];
 
     for (const field of requiredFields) {
@@ -42,10 +41,6 @@ export function validateSecondRegisterStep(data) {
 
     if (!isValidEmail(data.email)) {
         return "Email format is invalid";
-    }
-
-    if (!isValidNumber(data.lat) || !isValidNumber(data.lng)) {
-        return "Latitude and Longitude must be valid numbers";
     }
 
     return null;
