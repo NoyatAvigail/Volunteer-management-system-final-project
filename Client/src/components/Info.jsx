@@ -22,7 +22,7 @@ function Info({ setIsShowInfo }) {
       <div className="text">
         <h3 className="info-title">user information</h3><br />
         <p>name: {user.name}</p><br />
-        <p>username: {user.username}</p><br />
+        <p>fullName: {user.fullName}</p><br />
         <p>email: {user.email}</p><br />
         <p>phone: {user.phone}</p><br />
         <button onClick={() => setIsShowInfo(0)}>Close</button>

@@ -2,8 +2,8 @@ import axios from "axios";
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const registerAuth = async (endpoint, body, onSuccess, onError) => {
+    console.log(`Request to ${endpoint}:`, body);
     try {
-
         const response = await axios.post(
             `${API_URL}/${endpoint}`,
             body,
@@ -13,12 +13,12 @@ const registerAuth = async (endpoint, body, onSuccess, onError) => {
                 }
             }
         );
-        console.log("התקבלה תשובה מהשרת:", response.data);
+        console.log(`Response from ${endpoint}:`, response);    
         const data = response.data;
         if (onSuccess) onSuccess(data);
         return data;
     } catch (error) {
-        console.error(error);
+        console.error("123456", error);
         if (onError) onError(error.message);
     }
 };

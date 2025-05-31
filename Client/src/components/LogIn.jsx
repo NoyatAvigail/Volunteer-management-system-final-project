@@ -21,7 +21,7 @@ function LogIn() {
             return;
         }
         await login(
-            { username: data.username, password: data.password },
+            { fullName: data.fullName, password: data.password },
             (res) => {
                 if (res.user) {
                     localStorage.setItem("currentUser", JSON.stringify(res.user));
@@ -29,7 +29,7 @@ function LogIn() {
                     Cookies.set("token", res.token);
                     setCurrentUser(res.user);
                 } else {
-                    setResponstText('Incorrect username or password');
+                    setResponstText('Incorrect fullName or password');
                 }
             },
             () => {
@@ -45,7 +45,7 @@ function LogIn() {
             <h2>Login</h2>
             <div className="entryContainer">
                 <form onSubmit={handleSubmit(onSubmit)} className="entryForm">
-                    <input type="text" placeholder="username" {...register("username")} required />
+                    <input type="text" placeholder="fullName" {...register("fullName")} required />
                     <input type="email" placeholder="email" {...register("email")} required />
                     <input type="password" placeholder="password" {...register("password")} required />
                     <button type="submit">log in</button>
