@@ -52,7 +52,7 @@ body::-webkit-scrollbar {
   color: rgb(56, 56, 56);
 }
 
-.userName {
+.fullName {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);

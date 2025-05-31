@@ -2,8 +2,9 @@ import Users from '../Models/Users.js';
 import Passwords from '../Models/Passwords.js';
 
 const userDAL = {
-    findByUsername: (username) => {
-        return Users.findOne({ where: { username } });
+    findByEmail: (email) => {
+        
+        return Users.findOne({ where: { email } });
     },
 
     createUser: (userData) => {

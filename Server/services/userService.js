@@ -6,20 +6,20 @@ import { log } from "../utils/logger.js";
 const userService = {
     signup: async (userData) => {
         log('[POST]', { userData });
-        const { username, password, ...rest } = userData;
-        const existingUser = await userDAL.findByUsername(username);
+        const { email, password, ...rest } = userData;
+        const existingUser = await userDAL.findByEmail(email);
         if (existingUser) {
-            throw new Error("Username already taken");
+            throw new Error("Email already taken");
         }
-        const newUser = await userDAL.createUser({ username, ...rest });
+        const newUser = await userDAL.createUser({ email, ...rest });
         const hashed = await hashPassword(password);
         const userPassword = await userDAL.savePassword(newUser.id, hashed);
         return newUser;
     },
 
-    login: async ({ username, password }) => {
-        log('[POST]', { username, password });
-        const user = await userDAL.findByUsername(username);
+    login: async ({ email, password }) => {
+        log('[POST]', { email, password });
+        const user = await userDAL.findByEmail(email);
         if (!user) return null;
         const passwordEntry = await userDAL.getPasswordByUserId(user.id);
         if (!passwordEntry) return null;

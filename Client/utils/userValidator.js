@@ -13,7 +13,7 @@ export function isValidNumber(value) {
 
 export function validateLoginForm(data) {
     if (!isNonEmptyString(data.fullName) || !isNonEmptyString(data.password)) {
-        return "Username and password are required";
+        return "fullName and password are required";
     }
     return null;
 }
@@ -29,10 +29,13 @@ export function validateFirstRegisterStep(data) {
 }
 
 export function validateSecondRegisterStep(data) {
+    // const requiredFields = [
+    //     'userId', 'birthDate', 'gender', 'name', 'email', 'phone', 'address', 'sector',
+    // ];
     const requiredFields = [
-        'id', 'birthDate', 'gender', 'name', 'email', 'phone', 'address', 'sector',
+        'userId', 'gender', 'name', 'email', 'phone', 'address', 'sector',
     ];
-
+    
     for (const field of requiredFields) {
         if (!isNonEmptyString(data[field])) {
             return `Field '${field}' is required and must be a non - empty string`;
