@@ -3,7 +3,6 @@ import Passwords from '../Models/Passwords.js';
 
 const userDAL = {
     findByEmail: (email) => {
-        
         return Users.findOne({ where: { email } });
     },
 
