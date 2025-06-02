@@ -1,5 +1,6 @@
 import sequelize from '../../DB/db.mjs';
 import { Users } from '../Models/Users.js';
+import { Passwords } from '../Models/Passwords.js'; 
 import { Volunteers } from '../Models/Volunteers.js';
 import { Patients } from '../Models/Patients.js';
 import { ContactPeople } from '../Models/ContactPeople.js';
@@ -18,29 +19,29 @@ import { FixedVolunteerAvailability } from '../Models/FixedVolunteerAvailability
 import { OneTimeVolunteerAvailability } from '../Models/OneTimeVolunteerAvailability.js';
 import { AgeRange } from '../Models/AgeRange.js';
 
-Users.hasOne(Volunteers, { foreignKey: 'userId', onDelete: 'CASCADE' });
-Volunteers.belongsTo(Users, { foreignKey: 'userId' });
+Users.hasOne(Passwords, { foreignKey: 'id', onDelete: 'CASCADE' });
+Passwords.belongsTo(Users, { foreignKey: 'id' });
 
-Users.hasOne(Patients, { foreignKey: 'userId', onDelete: 'CASCADE' });
-Patients.belongsTo(Users, { foreignKey: 'userId' });
+Users.hasOne(Volunteers, { foreignKey: 'id', onDelete: 'CASCADE' });
+Volunteers.belongsTo(Users, { foreignKey: 'id' });
 
-Users.hasOne(ContactPeople, { foreignKey: 'userId', onDelete: 'CASCADE' });
-ContactPeople.belongsTo(Users, { foreignKey: 'userId' });
+Users.hasOne(ContactPeople, { foreignKey: 'id', onDelete: 'CASCADE' });
+ContactPeople.belongsTo(Users, { foreignKey: 'id' });
 
-Volunteers.hasOne(VolunteersDepartments, { foreignKey: 'volunteerId', onDelete: 'CASCADE' });
-VolunteersDepartments.belongsTo(Volunteers, { foreignKey: 'volunteerId' });
+Volunteers.hasOne(VolunteersDepartments, { foreignKey: 'id', onDelete: 'CASCADE' });
+VolunteersDepartments.belongsTo(Volunteers, { foreignKey: 'id' });
 
-Volunteers.hasOne(VolunteeringForSectors, { foreignKey: 'volunteerId', onDelete: 'CASCADE' });
-VolunteeringForSectors.belongsTo(Volunteers, { foreignKey: 'volunteerId' });
+Volunteers.hasOne(VolunteeringForSectors, { foreignKey: 'id', onDelete: 'CASCADE' });
+VolunteeringForSectors.belongsTo(Volunteers, { foreignKey: 'id' });
 
-Volunteers.hasOne(VolunteeringForGenders, { foreignKey: 'volunteerId', onDelete: 'CASCADE' });
-VolunteeringForGenders.belongsTo(Volunteers, { foreignKey: 'volunteerId' });
+Volunteers.hasOne(VolunteeringForGenders, { foreignKey: 'id', onDelete: 'CASCADE' });
+VolunteeringForGenders.belongsTo(Volunteers, { foreignKey: 'id' });
 
-Volunteers.hasOne(VolunteerDiaries, { foreignKey: 'volunteerId', onDelete: 'CASCADE' });
-VolunteerDiaries.belongsTo(Volunteers, { foreignKey: 'volunteerId' });
+Volunteers.hasOne(VolunteerDiaries, { foreignKey: 'id', onDelete: 'CASCADE' });
+VolunteerDiaries.belongsTo(Volunteers, { foreignKey: 'id' });
 
-Volunteers.hasOne(TableOfVolunteerTypes, { foreignKey: 'volunteerId', onDelete: 'CASCADE' });
-TableOfVolunteerTypes.belongsTo(Volunteers, { foreignKey: 'volunteerId' });
+Volunteers.hasOne(TableOfVolunteerTypes, { foreignKey: 'id', onDelete: 'CASCADE' });
+TableOfVolunteerTypes.belongsTo(Volunteers, { foreignKey: 'id' });
 
 Sectors.hasMany(VolunteeringForSectors, { foreignKey: 'sectorId', onDelete: 'CASCADE' });
 VolunteeringForSectors.belongsTo(Sectors, { foreignKey: 'sectorId' });
@@ -60,18 +61,19 @@ RelationToPatients.belongsTo(Patients, { foreignKey: 'patientId' });
 ContactPeople.hasOne(RelationToPatients, { foreignKey: 'contactPeopleId', onDelete: 'CASCADE' });
 RelationToPatients.belongsTo(ContactPeople, { foreignKey: 'contactPeopleId' });
 
-Volunteers.hasMany(FixedVolunteerAvailability, { foreignKey: 'volunteerId', onDelete: 'CASCADE' });
-FixedVolunteerAvailability.belongsTo(Volunteers, { foreignKey: 'volunteerId' });
+Volunteers.hasMany(FixedVolunteerAvailability, { foreignKey: 'id', onDelete: 'CASCADE' });
+FixedVolunteerAvailability.belongsTo(Volunteers, { foreignKey: 'id' });
 
-Volunteers.hasMany(OneTimeVolunteerAvailability, { foreignKey: 'volunteerId', onDelete: 'CASCADE' });
-OneTimeVolunteerAvailability.belongsTo(Volunteers, { foreignKey: 'volunteerId' });
+Volunteers.hasMany(OneTimeVolunteerAvailability, { foreignKey: 'id', onDelete: 'CASCADE' });
+OneTimeVolunteerAvailability.belongsTo(Volunteers, { foreignKey: 'id' });
 
-Volunteers.hasOne(AgeRange, { foreignKey: 'volunteerId', onDelete: 'CASCADE' });
-AgeRange.belongsTo(Volunteers, { foreignKey: 'volunteerId' });
+Volunteers.hasOne(AgeRange, { foreignKey: 'id', onDelete: 'CASCADE' });
+AgeRange.belongsTo(Volunteers, { foreignKey: 'id' });
 
 export {
   sequelize,
   Users,
+  Passwords,
   Volunteers,
   Patients,
   ContactPeople,
@@ -88,5 +90,5 @@ export {
   VolunteeringTypes,
   FixedVolunteerAvailability,
   OneTimeVolunteerAvailability,
-  AgeRange,
+  AgeRange
 };
