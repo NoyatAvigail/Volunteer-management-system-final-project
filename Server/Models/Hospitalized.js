@@ -3,7 +3,7 @@ import sequelize from '../../DB/db.mjs';
 
 export const Hospitalized = sequelize.define('Hospitalized', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  patientId: { type: DataTypes.INTEGER, allowNull: false, references: { model: "Patients", key: "userId" }, onUpdate: 'CASCADE', onDelete: 'CASCADE' },
+  patientId: { type: DataTypes.INTEGER, allowNull: false, references: { model: "Patients", key: "id" }, onUpdate: 'CASCADE', onDelete: 'CASCADE' },
   hospital: { type: DataTypes.STRING, allowNull: false },
   department: { type: DataTypes.STRING, allowNull: false },
   roomNumber: { type: DataTypes.STRING },

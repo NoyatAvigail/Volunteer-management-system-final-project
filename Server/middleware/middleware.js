@@ -30,4 +30,3 @@ export const validateUserId = (req, res, next) => {
 
   next();
 };
-
