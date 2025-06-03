@@ -31,7 +31,7 @@ function Register() {
             setResponstText(error);
             return;
         }
-        setUserData({ fullName: data.fullName, email: data.email, password: data.password, verifyPassword: data.verifyPassword, type: userType });
+        setUserData({ fullName: data.fullName, email: data.email, password: data.password, verifyPassword: data.verifyPassword, role: userType });
         setRegisterIsCompleted(1);
         resetFirstForm();
     };
@@ -42,31 +42,55 @@ function Register() {
             email: userData.email,
         };
 
+        let photoUrl = null;
+        if (data.image instanceof FileList && data.image.length > 0) {
+            const file = data.image[0];
+
+            photoUrl = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.readAsDataURL(file);
+            });
+        }
+
         const error = validateSecondRegisterStep(mergedData);
         if (error) {
             setResponstText(error);
             return;
         }
 
+        const availabilityArray = Array.isArray(mergedData.availability)
+            ? mergedData.availability
+            : mergedData.availability
+                ? [mergedData.availability]
+                : [];
+
         const fullUser = {
-            userId: mergedData.userId,
+            id: Number(mergedData.userId), // ודא שזה תואם את מה שהשרת מצפה (id ולא userId)
             fullName: userData.fullName,
             email: userData.email,
             password: userData.password,
             phone: mergedData.phone,
             type: userType,
-            details: mergedData,
+            dateOfBirth: mergedData.birthDate,
+            gender: mergedData.gender,
+            sector: mergedData.sector,
+            address: mergedData.address,
+            photo: "https://example.com/image.jpg",
+            // photo: photoUrl ?? "", // ודא שהשרת תומך ב־base64 או תן URL
+            volunteerStartDate: new Date().toISOString(),
+            volunteerEndDate: null,
+            isActive: true,
+            flexible: mergedData.availability === "true" ? true : false,
         };
-        console.log(fullUser);
 
         delete fullUser.verifyPassword;
-        delete fullUser.details.name;
+        delete fullUser.name;
+
+        console.log("Sending to server:", fullUser);
 
         await signup(
             fullUser,
-            () => {
-                console.log("User created successfully");
-            },
             (createdUser) => {
                 navigate(`/users/${createdUser.id}/home`);
                 Cookies.set("token", createdUser.token);
@@ -78,9 +102,10 @@ function Register() {
             }
         );
     };
+
     return (
         <div className="register-form">
-            {registerIsCompleted === 0 && (
+            {registerIsCompleted == 0 && (
                 <form onSubmit={handleFirstSubmit(onFirstSubmit)}>
                     <h2>שלב 1: הזנת פרטי משתמש בסיסיים</h2>
                     <input placeholder="fullName" {...register("fullName", { required: true })} />
@@ -104,11 +129,11 @@ function Register() {
                     <button type="submit" disabled={!userType}>המשך</button>
                 </form>
             )}
-            {registerIsCompleted === 1 && userType === "volunteer" && (
+            {registerIsCompleted == 1 && userType == "volunteer" && (
                 <form onSubmit={handleSecondSubmit(onSecondSubmit)}>
                     <h2>טופס מתנדב</h2>
-                    <input placeholder="ת.ז." {...registerSecond("id", { required: true })} />
-                    {errorsSecond.id && <p>יש להזין ת.ז.</p>}
+                    <input placeholder="ת.ז." {...registerSecond("userId", { required: true })} />
+                    {errorsSecond.userId && <p>יש להזין ת.ז.</p>}
                     <input value={userData.fullName} readOnly {...registerSecond("name", { required: true })} />
                     <input value={userData.email} readOnly {...registerSecond("email", { required: true })} />
                     <input
@@ -116,8 +141,7 @@ function Register() {
                         placeholder="תאריך לידה"
                         {...registerSecond("birthDate", { required: true })}
                     />
-                    {/* { {errorsSecond.birthDate && <p>יש להזין תאריך לידה</p>} } */}
-
+                    {errorsSecond.birthDate && <p>יש להזין תאריך לידה</p>}
                     <select {...registerSecond("gender", { required: true })}>
                         <option value="">בחר מין</option>
                         <option value="זכר">זכר</option>
@@ -133,7 +157,7 @@ function Register() {
                     {errorsSecond.phone && <p>יש להזין טלפון</p>}
                     <input placeholder="כתובת" {...registerSecond("address", { required: true })} />
                     {errorsSecond.address && <p>יש להזין כתובת</p>}
-                    {/* <input type="file" {...registerSecond("image")} /> */}
+                    <input type="file" {...registerSecond("image")} />
                     <label>תחומי התנדבות:</label>
                     <div>
                         <input type="checkbox" {...registerSecond("helpType")} value="שמירה" id="help-shmira" />
@@ -142,11 +166,8 @@ function Register() {
                         <label htmlFor="help-bikur">ביקור</label>
                     </div>
                     <label>זמינות (ניתן לבחור יותר מאפשרות אחת):</label>
-                    <select multiple {...registerSecond("availability", { required: true })}>
-                        {availabilities.map(a => (
-                            <option key={a} value={a}>{a}</option>
-                        ))}
-                    </select>
+                    <input type="checkbox" {...registerSecond("availability")} value="true" id="availability" />
+                    <label htmlFor="availability">האם זמין?</label>
                     <label>
                         <input type="checkbox" {...registerSecond("notifications")} />
                         מעוניין בהתראות
@@ -154,10 +175,10 @@ function Register() {
                     <button type="submit">הרשם</button>
                 </form>
             )}
-            {registerIsCompleted === 1 && userType === "contact" && (
+            {registerIsCompleted == 1 && userType == "contact" && (
                 <form onSubmit={handleSecondSubmit(onSecondSubmit)}>
                     <h2>טופס איש קשר</h2>
-                    <input placeholder="ת.ז." {...registerSecond("id", { required: true })} />
+                    <input placeholder="ת.ז." {...registerSecond("userId", { required: true })} />
                     <input placeholder="טלפון" {...registerSecond("phone", { required: true })} />
                     <input placeholder="כתובת" {...registerSecond("address", { required: true })} />
                     <select {...registerSecond("relation", { required: true })}>
