@@ -62,9 +62,11 @@ function Register() {
         delete fullUser.verifyPassword;
         delete fullUser.details.name;
 
-
         await signup(
             fullUser,
+            () => {
+                console.log("User created successfully");
+            },
             (createdUser) => {
                 navigate(`/users/${createdUser.id}/home`);
                 Cookies.set("token", createdUser.token);
@@ -165,12 +167,12 @@ function Register() {
                     <h3>פרטי מטופל</h3>
                     <input placeholder="ת.ז." {...registerSecond("patient.id", { required: true })} />
                     <input placeholder="שם" {...registerSecond("patient.name", { required: true })} />
-                    {/* <input
+                    <input
                         type="date"
                         placeholder="תאריך לידה"
                         {...registerSecond("birthDate", { required: true })}
                     />
-                    {errorsSecond.birthDate && <p>יש להזין תאריך לידה</p>} */}
+                    {errorsSecond.birthDate && <p>יש להזין תאריך לידה</p>}
                     <select {...registerSecond("patient.gender", { required: true })}>
                         <option value="">בחר מין</option>
                         <option value="זכר">זכר</option>
