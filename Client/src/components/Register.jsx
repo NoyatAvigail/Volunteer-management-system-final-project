@@ -31,7 +31,7 @@ function Register() {
             setResponstText(error);
             return;
         }
-        setUserData({ fullName: data.fullName, email: data.email, password: data.password, verifyPassword: data.verifyPassword, role: userType });
+        setUserData({ fullName: data.fullName, email: data.email, password: data.password, verifyPassword: data.verifyPassword, type: userType });
         setRegisterIsCompleted(1);
         resetFirstForm();
     };
@@ -42,11 +42,6 @@ function Register() {
             email: userData.email,
         };
 
-        // if (mergedData.birthDate) {
-        //     const [day, month, year] = mergedData.birthDate.split('/');
-        //     mergedData.birthDate = `${year}-${month}-${day}`;
-        // }
-
         const error = validateSecondRegisterStep(mergedData);
         if (error) {
             setResponstText(error);
@@ -54,18 +49,19 @@ function Register() {
         }
 
         const fullUser = {
+            userId: mergedData.userId,
             fullName: userData.fullName,
             email: userData.email,
             password: userData.password,
-            role: userType,
+            phone: mergedData.phone,
+            type: userType,
             details: mergedData,
         };
+        console.log(fullUser);
 
-        // לא לשלוח שדות מיותרים
         delete fullUser.verifyPassword;
         delete fullUser.details.name;
 
-        console.log("Sending to server:", fullUser); // debug
 
         await signup(
             fullUser,
@@ -80,33 +76,6 @@ function Register() {
             }
         );
     };
-
-    // const onSecondSubmit = async (data) => {
-    //     const mergedData = { ...data, name: userData.fullName, email: userData.email };
-    //     const error = validateSecondRegisterStep(mergedData);
-    //     if (error) {
-    //         setResponstText(error);
-    //         return;
-    //     }
-    //     const fullUser = {
-    //         ...userData,
-    //         role: userType,
-    //         details: data,
-    //     };
-    //     await signup(
-    //         fullUser,
-    //         (createdUser) => {
-    //             navigate(`/users/${createdUser.id}/home`);
-    //             Cookies.set("token", createdUser.token);
-    //             setCurrentUser(createdUser.user);
-    //             localStorage.setItem("currentUser", JSON.stringify(createdUser.user));
-    //         },
-    //         () => {
-    //             setResponstText("Registration failed. Please try again.");
-    //         }
-    //     );
-    //     // resetSecondForm();
-    // };
     return (
         <div className="register-form">
             {registerIsCompleted === 0 && (
@@ -136,16 +105,16 @@ function Register() {
             {registerIsCompleted === 1 && userType === "volunteer" && (
                 <form onSubmit={handleSecondSubmit(onSecondSubmit)}>
                     <h2>טופס מתנדב</h2>
-                    <input placeholder="ת.ז." {...registerSecond("userId", { required: true })} />
-                    {errorsSecond.userId && <p>יש להזין ת.ז.</p>}
+                    <input placeholder="ת.ז." {...registerSecond("id", { required: true })} />
+                    {errorsSecond.id && <p>יש להזין ת.ז.</p>}
                     <input value={userData.fullName} readOnly {...registerSecond("name", { required: true })} />
                     <input value={userData.email} readOnly {...registerSecond("email", { required: true })} />
-                    {/* <input
+                    <input
                         type="date"
                         placeholder="תאריך לידה"
                         {...registerSecond("birthDate", { required: true })}
-                    /> */}
-                    {/* {errorsSecond.birthDate && <p>יש להזין תאריך לידה</p>} */}
+                    />
+                    {/* { {errorsSecond.birthDate && <p>יש להזין תאריך לידה</p>} } */}
 
                     <select {...registerSecond("gender", { required: true })}>
                         <option value="">בחר מין</option>
@@ -186,7 +155,7 @@ function Register() {
             {registerIsCompleted === 1 && userType === "contact" && (
                 <form onSubmit={handleSecondSubmit(onSecondSubmit)}>
                     <h2>טופס איש קשר</h2>
-                    <input placeholder="ת.ז." {...registerSecond("userId", { required: true })} />
+                    <input placeholder="ת.ז." {...registerSecond("id", { required: true })} />
                     <input placeholder="טלפון" {...registerSecond("phone", { required: true })} />
                     <input placeholder="כתובת" {...registerSecond("address", { required: true })} />
                     <select {...registerSecond("relation", { required: true })}>

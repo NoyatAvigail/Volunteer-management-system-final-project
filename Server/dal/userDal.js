@@ -10,11 +10,12 @@ const userDal = {
         return Users.create(userData);
     },
 
-    savePassword: (userId, hashedPassword) => {
-        return Passwords.create({ userId, password: hashedPassword });
+    savePassword: (id, hashedPassword) => {
+        console.log('Saving password for userId:', id, 'with hashed password:', hashedPassword);
+        return Passwords.create({ id, password: hashedPassword });
     },
 
-    getPasswordByUserId: (userId) => Passwords.findOne({ where: { userId } }),
+    getPasswordByUserId: (id) => Passwords.findOne({ where: { id } }),
 };
 
 export default userDal;

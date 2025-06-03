@@ -9,5 +9,8 @@ router.route('/signup')
     .post(userController.signup);
 
 router.use(verifyToken);
+router.get('/protected', (req, res) => {
+    res.json({ message: 'Access granted', user: req.user });
+});
 
 export default router;
