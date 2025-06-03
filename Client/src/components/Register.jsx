@@ -31,76 +31,91 @@ function Register() {
             setResponstText(error);
             return;
         }
-        setUserData({ fullName: data.fullName, email: data.email, password: data.password, verifyPassword: data.verifyPassword, role: userType });
+        setUserData({ fullName: data.fullName, email: data.email, password: data.password, verifyPassword: data.verifyPassword, type: userType });
         setRegisterIsCompleted(1);
         resetFirstForm();
     };
 
+    const handleSignupSuccess = (createdUser) => {
+        navigate(`/users/${createdUser.id}/home`);
+        Cookies.set("token", createdUser.token);
+        setCurrentUser(createdUser.user);
+        localStorage.setItem("currentUser", JSON.stringify(createdUser.user));
+    };
+
+    const handleSignupFailure = () => {
+        setResponstText("Registration failed. Please try again.");
+    };
+
     const onSecondSubmit = async (data) => {
+        console.log("Second step data:", data);
+        console.log("User type is:", userType);
         const mergedData = {
             ...data,
             email: userData.email,
         };
-
-        let photoUrl = null;
-        if (data.image instanceof FileList && data.image.length > 0) {
-            const file = data.image[0];
-
-            photoUrl = await new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
-                reader.readAsDataURL(file);
-            });
-        }
-
         const error = validateSecondRegisterStep(mergedData);
         if (error) {
             setResponstText(error);
             return;
         }
+        if (userType == "volunteer") {
+            const fullUser = {
+                id: Number(mergedData.userId),
+                fullName: userData.fullName,
+                email: userData.email,
+                password: userData.password,
+                phone: mergedData.phone,
+                type: userType,
+                dateOfBirth: mergedData.birthDate,
+                gender: mergedData.gender,
+                sector: mergedData.sector,
+                address: mergedData.address,
+                photo: "https://example.com/image.jpg",
+                volunteerStartDate: new Date().toISOString(),
+                volunteerEndDate: null,
+                isActive: true,
+                flexible: mergedData.availability === "true",
+            };
+            delete fullUser.verifyPassword;
+            delete fullUser.name;
+            await signup(
+                fullUser,
+                handleSignupSuccess,
+                handleSignupFailure
+            );
+        }
+        else if (userType == "contact") {
+            const contactUser = {
+                id: Number(mergedData.userId),
+                email: userData.email,
+                phone: mergedData.phone,
+                type: userType,
+                password: userData.password,
+                fullName: userData.fullName,
+                address: mergedData.address,
 
-        const availabilityArray = Array.isArray(mergedData.availability)
-            ? mergedData.availability
-            : mergedData.availability
-                ? [mergedData.availability]
-                : [];
+                patientFullName: mergedData.patient.name,
+                patientDateOfBirth: mergedData.birthDate,
+                patientSector: mergedData.patient.sector,
+                patientGender: mergedData.patient.gender,
+                patientAddress: mergedData.patient.address,
+                patientDateOfDeath: null,
+                patientInterestedInReceivingNotifications: !!mergedData.notifications,
 
-        const fullUser = {
-            id: Number(mergedData.userId), // ודא שזה תואם את מה שהשרת מצפה (id ולא userId)
-            fullName: userData.fullName,
-            email: userData.email,
-            password: userData.password,
-            phone: mergedData.phone,
-            type: userType,
-            dateOfBirth: mergedData.birthDate,
-            gender: mergedData.gender,
-            sector: mergedData.sector,
-            address: mergedData.address,
-            photo: "https://example.com/image.jpg",
-            // photo: photoUrl ?? "", // ודא שהשרת תומך ב־base64 או תן URL
-            volunteerStartDate: new Date().toISOString(),
-            volunteerEndDate: null,
-            isActive: true,
-            flexible: mergedData.availability === "true" ? true : false,
-        };
+                relationType: mergedData.relation,
 
-        delete fullUser.verifyPassword;
-        delete fullUser.name;
-
-        console.log("Sending to server:", fullUser);
-
-        await signup(
-            fullUser,
-            (createdUser) => {
-                navigate(`/users/${createdUser.id}/home`);
-                Cookies.set("token", createdUser.token);
-                setCurrentUser(createdUser.user);
-                localStorage.setItem("currentUser", JSON.stringify(createdUser.user));
-            },
-            () => {
-                setResponstText("Registration failed. Please try again.");
-            }
-        );
+                hospital: mergedData.hospital,
+                department: mergedData.department,
+                roomNumber: mergedData.roomNumber
+            };
+            console.log("Contact payload being sent:", contactUser);
+            await signup(
+                contactUser,
+                handleSignupSuccess,
+                handleSignupFailure
+            );
+        }
     };
 
     return (

@@ -21,8 +21,9 @@ function LogIn() {
             return;
         }
         await login(
-            { fullName: data.fullName, password: data.password },
+            { fullName: data.fullName, email: data.email, password: data.password },
             (res) => {
+                console.log(res.user,"res", res);
                 if (res.user) {
                     localStorage.setItem("currentUser", JSON.stringify(res.user));
                     navigate(`/home`);

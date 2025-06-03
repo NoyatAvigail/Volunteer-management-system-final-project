@@ -15,7 +15,7 @@ const userService = {
             }
             const newUser = await userDal.createUser({ email, type, phone, id });
             console.log("Password from request:", password);
-            const hashed = await hashPassword(password); 
+            const hashed = await hashPassword(password);
             console.log("Hashed password:", hashed);
             await userDal.savePassword(newUser.id, hashed);
             if (type == "volunteer") {
@@ -33,6 +33,30 @@ const userService = {
                     flexible: rest.flexible
                 });
                 console.log("Volunteer created:", volunteer);
+            }
+            if (type == "contact") {
+                const contact = await ContactPeople.create({
+                    userId: newUser.id,
+                    fullName: rest.fullName,
+                    address: rest.address
+                });
+
+                const patient = await Patients.create({
+                    contactPeopleId: contact.id,
+                    fullName: rest.patientFullName,
+                    dateOfBirth: rest.patientDateOfBirth,
+                    sector: rest.patientSector,
+                    gender: rest.patientGender,
+                    address: rest.patientAddress,
+                    dateOfDeath: rest.patientDateOfDeath || null,
+                    interestedInReceivingNotifications: rest.patientInterestedInReceivingNotifications ?? true
+                });
+
+                await RelationToPatients.create({
+                    contactPeopleId: contact.id,
+                    patientId: patient.id,
+                    relationType: rest.relationType
+                });
             }
             return newUser;
         } catch (e) {

@@ -22,7 +22,7 @@ function Navigation({ setIsShowInfo }) {
                         <ul><Link to={`/users/${currentUser.id}/home`} >Home</Link></ul>
                         <ul><a onClick={() => setIsShowInfo(1)}>Info</a></ul>
                     </div>
-                    <h3 className='fullName'> Hello {currentUser.name}</h3>
+                    <h3 className='fullName'> Hello {currentUser.fullName}</h3>
                     <div className="right">
                         <ul onClick={logOut}><a>LogOut</a></ul>
                     </div>
