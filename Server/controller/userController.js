@@ -22,7 +22,7 @@ const userController = {
         try {
             const loginUser = await userService.login(req.body);
             if (!loginUser) return res.status(401).json({ message: 'Invalid credentials' });
-            const token = generateToken(loginUser.id, loginUser.fullName, req.body.password);
+            const token = generateToken(loginUser.id, loginUser.email, req.body.password);
             return res.status(201).json({
                 message: "User successfully registered",
                 token,

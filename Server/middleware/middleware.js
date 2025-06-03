@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET || "default_secret";
 
-export const generateToken = (id, fullName, password) => jwt.sign({ id, fullName, password }, JWT_SECRET, { expiresIn: "20s" });
+export const generateToken = (id, email, type) =>
+  jwt.sign({ id, email, type }, JWT_SECRET, { expiresIn: "20h" });
 
 export const verifyToken = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
