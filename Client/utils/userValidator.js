@@ -29,9 +29,6 @@ export function validateFirstRegisterStep(data) {
 }
 
 export function validateSecondRegisterStep(data) {
-    // const requiredFields = [
-    //     'userId', 'birthDate', 'gender', 'name', 'email', 'phone', 'address', 'sector',
-    // ];
     const requiredFields = [
         'userId', 'gender', 'name', 'email', 'phone', 'address', 'sector',
     ];
