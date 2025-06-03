@@ -22,8 +22,8 @@ import { AgeRange } from '../Models/AgeRange.js';
 Users.hasOne(Passwords, { foreignKey: 'id', onDelete: 'CASCADE' });
 Passwords.belongsTo(Users, { foreignKey: 'id' });
 
-Users.hasOne(Volunteers, { foreignKey: 'id', onDelete: 'CASCADE' });
-Volunteers.belongsTo(Users, { foreignKey: 'id' });
+Users.hasOne(Volunteers, { foreignKey: 'userId', onDelete: 'CASCADE' });
+Volunteers.belongsTo(Users, { foreignKey: 'userId' });
 
 Users.hasOne(ContactPeople, { foreignKey: 'id', onDelete: 'CASCADE' });
 ContactPeople.belongsTo(Users, { foreignKey: 'id' });
