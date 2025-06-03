@@ -25,8 +25,8 @@ Passwords.belongsTo(Users, { foreignKey: 'id' });
 Users.hasOne(Volunteers, { foreignKey: 'userId', onDelete: 'CASCADE' });
 Volunteers.belongsTo(Users, { foreignKey: 'userId' });
 
-Users.hasOne(ContactPeople, { foreignKey: 'id', onDelete: 'CASCADE' });
-ContactPeople.belongsTo(Users, { foreignKey: 'id' });
+Users.hasOne(ContactPeople, { foreignKey: 'userId', onDelete: 'CASCADE' });
+ContactPeople.belongsTo(Users, { foreignKey: 'userId' });
 
 Volunteers.hasOne(VolunteersDepartments, { foreignKey: 'id', onDelete: 'CASCADE' });
 VolunteersDepartments.belongsTo(Volunteers, { foreignKey: 'id' });
