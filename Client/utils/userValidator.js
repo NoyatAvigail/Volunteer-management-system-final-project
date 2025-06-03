@@ -30,7 +30,7 @@ export function validateFirstRegisterStep(data) {
 
 export function validateSecondRegisterStep(data) {
     const requiredFields = [
-        'userId', 'gender', 'name', 'email', 'phone', 'address', 'sector',
+        'userId', 'gender', 'fullName', 'email', 'phone', 'address', 'sector',
     ];
     
     for (const field of requiredFields) {
