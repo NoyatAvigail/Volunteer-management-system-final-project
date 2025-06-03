@@ -94,20 +94,24 @@ function Register() {
                 phone: mergedData.phone,
                 type: userType,
                 password: userData.password,
+
                 fullName: userData.fullName,
                 address: mergedData.address,
+                patientId: Number(mergedData.patientId),
                 patientFullName: mergedData.patientName,
-                dateOfBirth: mergedData.birthDate,
-                sector: mergedData.patientSector,
-                gender: "male",
-                address: mergedData.patientAddress,
-                dateOfDeath: null,
-                interestedInReceivingNotifications: !!mergedData.notifications,
+                patientDateOfBirth: mergedData.birthDate,
+                patientSector: mergedData.sector,
+                patientGender: mergedData.gender,
+                patientAddress: mergedData.patientAddress,
+                patientDateOfDeath: null,
+                patientInterestedInReceivingNotifications: !!mergedData.notifications,
+
                 relationType: mergedData.relation,
                 hospital: mergedData.hospital,
                 department: mergedData.department,
                 roomNumber: mergedData.roomNumber
             };
+
             console.log("Contact payload being sent:", contactUser);
             await signup(
                 contactUser,
@@ -148,7 +152,7 @@ function Register() {
                     <h2>טופס מתנדב</h2>
                     <input placeholder="ת.ז." {...registerSecond("userId", { required: true })} />
                     {errorsSecond.userId && <p>יש להזין ת.ז.</p>}
-                    <input value={userData.fullName} readOnly {...registerSecond("name", { required: true })} />
+                    <input value={userData.fullName} readOnly {...registerSecond("fullName", { required: true })} />
                     <input value={userData.email} readOnly {...registerSecond("email", { required: true })} />
                     <input
                         type="date"
@@ -193,6 +197,8 @@ function Register() {
                 <form onSubmit={handleSecondSubmit(onSecondSubmit)}>
                     <h2>טופס איש קשר</h2>
                     <input placeholder="ת.ז." {...registerSecond("userId", { required: true })} />
+                    <input value={userData.fullName} readOnly {...registerSecond("fullName", { required: true })} />
+                    <input value={userData.email} readOnly {...registerSecond("email", { required: true })} />
                     <input placeholder="טלפון" {...registerSecond("phone", { required: true })} />
                     <input placeholder="כתובת" {...registerSecond("address", { required: true })} />
                     <select {...registerSecond("relation", { required: true })}>
@@ -208,12 +214,12 @@ function Register() {
                         {...registerSecond("birthDate", { required: true })}
                     />
                     {errorsSecond.birthDate && <p>יש להזין תאריך לידה</p>}
-                    <select {...registerSecond("patientGender", { required: true })}>
+                    <select {...registerSecond("gender", { required: true })}>
                         <option value="">בחר מין</option>
                         <option value="זכר">זכר</option>
                         <option value="נקבה">נקבה</option>
                     </select>
-                    <select {...registerSecond("patientSector", { required: true })}>
+                    <select {...registerSecond("sector", { required: true })}>
                         <option value="">בחר מגזר</option>
                         {sectors.map(s => <option key={s} value={s}>{s}</option>)}
                     </select>
