@@ -6,16 +6,13 @@ const userService = {
     signup: async (userData) => {
         try {
             log('[POST]', { userData });
-            console.log("Received userData:", userData);
             const { email, password, type, phone, id, ...rest } = userData;
             const existingUser = await userDal.findByEmail(email);
             if (existingUser) {
                 throw new Error("Email already taken");
             }
             const newUser = await userDal.createUser({ email, type, phone, id });
-            console.log("Password from request:", password);
             const hashed = await hashPassword(password);
-            console.log("Hashed password:", hashed);
             await userDal.savePassword(newUser.id, hashed);
             if (type == "volunteer") {
                 const newVolunteer = await userDal.createVolunteer({
@@ -32,6 +29,10 @@ const userService = {
                     flexible: rest.flexible
                 });
                 console.log("Volunteer created:", newVolunteer);
+                newUser = {
+                    ...rest,
+                    id: newVolunteer.id,
+                };
             }
             if (type == "contact") {
                 const contact = await userDal.createContact({
@@ -54,6 +55,11 @@ const userService = {
                     patientId: patient.id,
                     relationType: rest.relationType
                 });
+                console.log("Contact and patient created:", contact, patient, contact.id, patient.id);
+                newUser = {
+                    ...rest,
+                    id: contact.id,
+                };
             }
             return newUser;
         } catch (e) {
@@ -74,7 +80,20 @@ const userService = {
         const passwordEntry = await userDal.getPasswordByUserId(user.id);
         if (!passwordEntry) return null;
         const valid = await isPasswordValid(password, passwordEntry.password);
-        return valid ? user : null;
+        if (!valid) return null;
+        const userData = user.toJSON(); 
+        if (user.type == "volunteer") {
+            const volunteer = await userDal.findVolunteerByUserId(user.id);
+            if (!volunteer) return null;
+            userData.fullName = volunteer.fullName;
+            userData.autoId = volunteer.id;
+        } else if (user.type == "contact") {
+            const contact = await userDal.findContactByUserId(user.id);
+            if (!contact) return null;
+            userData.fullName = contact.fullName;
+            userData.autoId = contact.id;
+        }
+        return { user: userData };
     }
 };
 
