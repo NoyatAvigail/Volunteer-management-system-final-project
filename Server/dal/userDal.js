@@ -10,6 +10,14 @@ const userDal = {
         return Users.findOne({ where: { email } });
     },
 
+    findVolunteerByUserId: (userId) => {
+        return Volunteers.findOne({ where: { userId } });
+    },
+ 
+    findContactByUserId: (userId) => {
+        return ContactPeople.findOne({ where: { userId } });
+    },
+
     createUser: (userData) => {
         return Users.create(userData);
     },

@@ -145,3 +145,48 @@
 [2025-06-03T18:01:13.033Z] [POST] | {"userData":{"id":61227757,"email":"avigail@gmail.com","phone":"0583210116","type":"contact","password":"111111","fullName":"Avigail David","address":"אהרון אשכולי 112/8","patientId":26625948,"patientFullName":"ישראל","patientDateOfBirth":"2025-07-11","patientSector":"דתי","patientGender":"זכר","patientAddress":"אהרון אשכולי","patientDateOfDeath":null,"patientInterestedInReceivingNotifications":false,"relationType":"אבא","hospital":"הדסה עין כרם","department":"ילדים","roomNumber":"13"}}
 [2025-06-03T18:12:42.023Z] [POST] | {"userData":{"id":328227445,"email":"s0533119351@gmail.com","phone":"0583299351","type":"contact","password":"111111","fullName":"Avigail David","address":"אלישע הנביא 5","patientId":328227442,"patientFullName":"חני","patientDateOfBirth":"2005-09-11","patientSector":"חרדי","patientGender":"נקבה","patientAddress":"אלישע 5","patientDateOfDeath":null,"patientInterestedInReceivingNotifications":false,"relationType":"אבא","hospital":"שערי צדק","department":"אורתופדיה","roomNumber":"112"}}
 [2025-06-03T18:16:58.326Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T12:14:49.929Z] [POST] | {"email":"avigail@gmail.com","password":"111111"}
+[2025-06-04T14:41:25.452Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T14:43:01.195Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T14:44:30.960Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T15:10:14.981Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T15:12:35.189Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T15:13:51.072Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T15:14:53.629Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T15:17:30.079Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T15:19:54.277Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T15:22:14.250Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T15:29:05.903Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T15:30:15.939Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T15:31:47.614Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T15:34:00.842Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T15:38:33.074Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T15:39:29.748Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T15:40:42.449Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T15:42:11.293Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T15:49:26.286Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T16:00:40.493Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T16:04:08.648Z] [POST] | {"userData":{"id":328227442,"email":"chanis9351@gmail.com","phone":"0583299351","type":"contact","password":"111111","fullName":"חני סץ","address":"אלישע 5","patientId":328227442,"patientFullName":"חני","patientDateOfBirth":"2005-01-11","patientSector":"חרדי","patientGender":"נקבה","patientAddress":"אלישע 5","patientDateOfDeath":null,"patientInterestedInReceivingNotifications":true,"relationType":"אבא","hospital":"איכילוב","department":"פנימית","roomNumber":"12"}}
+[2025-06-04T16:04:16.024Z] [POST] | {"userData":{"id":328227442,"email":"chanis9351@gmail.com","phone":"0583299351","type":"contact","password":"111111","fullName":"חני סץ","address":"אלישע 5","patientId":328227443,"patientFullName":"חני","patientDateOfBirth":"2005-01-11","patientSector":"חרדי","patientGender":"נקבה","patientAddress":"אלישע 5","patientDateOfDeath":null,"patientInterestedInReceivingNotifications":true,"relationType":"אבא","hospital":"איכילוב","department":"פנימית","roomNumber":"12"}}
+[2025-06-04T16:04:42.318Z] [POST] | {"userData":{"id":328227442,"email":"chanis9351@gmail.com","phone":"0583299356","type":"contact","password":"111111","fullName":"חני סץ","address":"אלישע 5","patientId":328227443,"patientFullName":"חני","patientDateOfBirth":"2005-01-11","patientSector":"חרדי","patientGender":"נקבה","patientAddress":"אלישע 5","patientDateOfDeath":null,"patientInterestedInReceivingNotifications":true,"relationType":"אבא","hospital":"איכילוב","department":"פנימית","roomNumber":"12"}}
+[2025-06-04T16:05:51.422Z] [POST] | {"email":"chanis9351@gmail.com","password":"111111"}
+[2025-06-04T16:09:25.939Z] [POST] | {"email":"chanis9351@gmail.com","password":"111111"}
+[2025-06-04T16:14:55.100Z] [POST] | {"email":"chanis9351@gmail.com","password":"111111"}
+[2025-06-04T16:23:55.272Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T16:25:37.729Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T16:26:23.471Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T16:28:03.487Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T16:29:40.318Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T16:36:29.929Z] [POST] | {"email":"avigaildvd@gmail.com","password":"222222"}
+[2025-06-04T16:36:35.908Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T16:39:12.429Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T16:43:22.682Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111,"}
+[2025-06-04T16:43:28.926Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T16:56:58.229Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T18:40:57.348Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T18:44:47.700Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T18:46:19.190Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T18:47:35.511Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T18:49:34.719Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T18:50:55.434Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-04T18:54:20.841Z] [POST] | {"email":"chanis9351@gmail.com","password":"111111"}
