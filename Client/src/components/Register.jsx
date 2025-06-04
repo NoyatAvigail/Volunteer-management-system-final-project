@@ -22,8 +22,6 @@ function Register() {
     const hospitals = ["שיבא", "איכילוב", "הדסה עין כרם", "שערי צדק", "בלינסון", "ברזילי", "סורוקה"];
     const departments = ["פנימית", "אורתופדיה", "ילדים", "ניתוחים", "שיקום"];
     const relations = ["אבא", "אמא", "אח", "אחות", "סבא", "סבתא", "בן זוג", "בת זוג"];
-    const availabilities = ["בוקר", "צהריים", "ערב", "לילה"];
-    const transportMeans = ["רכב פרטי", "תחבורה ציבורית", "הליכה", "אופניים"];
 
     const onFirstSubmit = async (data) => {
         const error = validateFirstRegisterStep(data);

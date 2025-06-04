@@ -12,16 +12,16 @@ export function isValidNumber(value) {
 }
 
 export function validateLoginForm(data) {
-    if (!isNonEmptyString(data.fullName) || !isNonEmptyString(data.password)) {
-        return "fullName and password are required";
-    }
+    // if (!isNonEmptyString(data.fullName) || !isNonEmptyString(data.password)) {
+    //     return "fullName and password are required";
+    // }
     return null;
 }
 
 export function validateFirstRegisterStep(data) {
-    if (!isNonEmptyString(data.fullName) || !isNonEmptyString(data.password) || !isNonEmptyString(data.verifyPassword)) {
-        return "All fields are required";
-    }
+    // if (!isNonEmptyString(data.fullName) || !isNonEmptyString(data.password) || !isNonEmptyString(data.verifyPassword)) {
+    //     return "All fields are required";
+   // }
     if (data.password !== data.verifyPassword) {
         return "Passwords do not match";
     }

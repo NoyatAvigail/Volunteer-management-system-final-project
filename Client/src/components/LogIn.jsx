@@ -1,7 +1,6 @@
-import React from 'react';
-import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import Cookies from "js-cookie";
 import { CurrentUser } from './App';
 import { validateLoginForm } from '../../utils/userValidator';
@@ -10,7 +9,7 @@ import '../style/LogIn.css';
 
 function LogIn() {
     const { register, handleSubmit, reset } = useForm();
-    const { currentUser, setCurrentUser } = useContext(CurrentUser);
+    const { setCurrentUser } = useContext(CurrentUser);
     const [responsText, setResponstText] = useState("Fill the form and click the login button");
     const navigate = useNavigate();
 
@@ -20,23 +19,23 @@ function LogIn() {
             setResponstText(error);
             return;
         }
+
         await login(
-            { fullName: data.fullName, email: data.email, password: data.password },
+            { email: data.email, password: data.password },
             (res) => {
-                console.log(res.user,"res", res);
                 if (res.user) {
-                    localStorage.setItem("currentUser", JSON.stringify(res.user));
-                    navigate(`/home`);
                     Cookies.set("token", res.token);
+                    localStorage.setItem("currentUser", JSON.stringify(res.user));
+                    console.log("Login successful:", res.user);       
                     setCurrentUser(res.user);
+                    navigate(`/home`);
                 } else {
-                    setResponstText('Incorrect fullName or password');
+                    setResponstText('Incorrect email or password');
                 }
             },
-            () => {
-                setResponstText('ERROR');
-            }
+            () => setResponstText('ERROR')
         );
+
         reset();
         setTimeout(() => setResponstText("Fill the form and click the login button"), 2000);
     };
@@ -46,10 +45,9 @@ function LogIn() {
             <h2>Login</h2>
             <div className="entryContainer">
                 <form onSubmit={handleSubmit(onSubmit)} className="entryForm">
-                    <input type="text" placeholder="fullName" {...register("fullName")} required />
                     <input type="email" placeholder="email" {...register("email")} required />
                     <input type="password" placeholder="password" {...register("password")} required />
-                    <button type="submit">log in</button>
+                    <button type="submit">Log In</button>
                     <h4>{responsText}</h4>
                 </form>
             </div>
