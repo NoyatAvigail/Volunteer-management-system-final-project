@@ -28,10 +28,10 @@ function LogIn() {
                     localStorage.setItem("currentUser", JSON.stringify(res.user));
                     setCurrentUser(res.user.user);
                     localStorage.setItem("currentUser", JSON.stringify(res.user.user));
-                    if (res.user.type == 'volunteer') {
-                        navigate(`/volunteer/${res.user.autoId}`);
-                    } else if (res.user.type == 'contact') {
-                        navigate(`/contact/${res.user.autoId}`);
+                    if (res.user.user.type == 'volunteer') {
+                        navigate(`/volunteer/${res.user.user.autoId}`);
+                    } else if (res.user.user.type == 'contact') {
+                        navigate(`/contact/${res.user.user.autoId}`);
                     } else {
                         navigate(`/home`);
                     }
