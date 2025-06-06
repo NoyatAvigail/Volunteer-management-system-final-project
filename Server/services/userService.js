@@ -30,6 +30,7 @@ const userService = {
                 });
                 console.log("Volunteer created:", newVolunteer);
                 newUser = {
+                    ...newUser,
                     ...rest,
                     id: newVolunteer.id,
                 };
@@ -58,6 +59,7 @@ const userService = {
                 });
                 console.log("Contact and patient created:", contact.id, patient.id);
                 newUser = {
+                    ...newUser,
                     ...rest,
                     id: contact.id,
                 };
