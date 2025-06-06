@@ -2,7 +2,8 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../../DB/db.mjs';
 
 export const Patients = sequelize.define('Patients', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+  userId: { type: DataTypes.INTEGER, allowNull: false},
   contactPeopleId: { type: DataTypes.INTEGER, allowNull: false, references: { model: "ContactPeople", key: "id" }, onUpdate: 'CASCADE', onDelete: 'CASCADE' },
   fullName: { type: DataTypes.STRING, allowNull: false },
   dateOfBirth: { type: DataTypes.DATE, allowNull: false },

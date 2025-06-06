@@ -26,9 +26,15 @@ function LogIn() {
                 if (res.user) {
                     Cookies.set("token", res.token);
                     localStorage.setItem("currentUser", JSON.stringify(res.user));
-                    console.log("Login successful:", res.user);       
-                    setCurrentUser(res.user);
-                    navigate(`/home`);
+                    setCurrentUser(res.user.user);
+                    localStorage.setItem("currentUser", JSON.stringify(res.user.user));
+                    if (res.user.type == 'volunteer') {
+                        navigate(`/volunteer/${res.user.autoId}`);
+                    } else if (res.user.type == 'contact') {
+                        navigate(`/contact/${res.user.autoId}`);
+                    } else {
+                        navigate(`/home`);
+                    }
                 } else {
                     setResponstText('Incorrect email or password');
                 }

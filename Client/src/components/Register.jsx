@@ -34,11 +34,21 @@ function Register() {
         resetFirstForm();
     };
 
+    // const handleSignupSuccess = (createdUser) => {
+    //     setResponstText("Registration successful! Redirecting...");
+    //     console.log("User created successfully:", createdUser);    
+    //     navigate(`/${userType}/${createdUser.user.id}`);
+    //     Cookies.set("token", createdUser.token);
+    //     setCurrentUser(createdUser.user);
+    //     localStorage.setItem("currentUser", JSON.stringify(createdUser.user));
+    // };
     const handleSignupSuccess = (createdUser) => {
-        navigate(`/users/${createdUser.id}/home`);
+        const user = createdUser.data; 
+        console.log("User created successfully:", user);    
         Cookies.set("token", createdUser.token);
-        setCurrentUser(createdUser.user);
-        localStorage.setItem("currentUser", JSON.stringify(createdUser.user));
+        setCurrentUser(user);
+        localStorage.setItem("currentUser", JSON.stringify(user));
+        navigate(`/${user.type}/${user.id}`);
     };
 
     const handleSignupFailure = () => {
@@ -46,13 +56,10 @@ function Register() {
     };
 
     const onSecondSubmit = async (data) => {
-        console.log("Second step data:", data);
-        console.log("User type is:", userType);
         const mergedData = {
             ...data,
             email: userData.email,
         };
-        console.log("Merged data before validation:", mergedData);
         const error = validateSecondRegisterStep(mergedData);
         console.log("Validation error:", error);
         if (error) {
@@ -78,7 +85,6 @@ function Register() {
                 flexible: mergedData.availability === "true" ? true : false,
             };
             delete fullUser.verifyPassword;
-            delete fullUser.name;
             await signup(
                 fullUser,
                 handleSignupSuccess,
@@ -110,7 +116,6 @@ function Register() {
                 roomNumber: mergedData.roomNumber
             };
 
-            console.log("Contact payload being sent:", contactUser);
             await signup(
                 contactUser,
                 handleSignupSuccess,

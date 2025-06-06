@@ -9,6 +9,8 @@ import LogIn from './LogIn'
 import Register from './Register'
 import Home from './Home'
 import Info from './Info'
+import Volunteers from './Volunteers'
+import Contacts from './Contacts'
 import ErrorPage from './ErrorPage'
 import '../style/App.css'
 
@@ -31,9 +33,11 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<Register />} />
+        <Route path="/volunteer/:id" element={<Volunteers />} />
+        <Route path="/contact/:id" element={<Contacts />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
-      {isShowInfo === 1 && <Info setIsShowInfo={setIsShowInfo} />}
+      {isShowInfo == 1 && <Info setIsShowInfo={setIsShowInfo} />}
     </CurrentUser.Provider>
   )
 }

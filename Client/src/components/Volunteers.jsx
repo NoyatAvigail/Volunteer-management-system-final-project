@@ -9,7 +9,7 @@ import Update from './Update';
 import '../style/Posts.css';
 import { apiService } from '../../services/genericServeices';
 
-function Volunteer() {
+function Volunteers() {
     const [shifts, setShifts] = useState([]);
     const [fixedShifts, setFixedShifts] = useState([]);
     const [openCalls, setOpenCalls] = useState([]);
@@ -18,31 +18,20 @@ function Volunteer() {
     const { currentUser } = useContext(CurrentUser);
     const navigate = useNavigate();
 
+    console.log("Volunteers component loaded");
+
     useEffect(() => {
         if (!currentUser?.id) {
             setError("המשתמש לא מחובר");
             return;
         }
-
-        const fetchData = async () => {
-            try {
-                await apiService.getByValue(currentUser.id, "Shifts", { volunteerId: currentUser.id }, setShifts, setError);
-                await apiService.getByValue(currentUser.id, "FixedShifts", { volunteerId: currentUser.id }, setFixedShifts, setError);
-                await apiService.getAll(currentUser.id, "OpenCalls", setOpenCalls, setError);
-            } catch (err) {
-                setError("שגיאה בטעינת נתונים: " + err);
-            }
-        };
-
-        fetchData();
     }, [currentUser.id, isChange]);
 
-    if (error) return <div>{error}</div>;
+    if (error) return <div>{error}</div>;    
 
     return (
         <div className='volunteer-dashboard'>
-            <h1>שלום, {currentUser.firstName}</h1>
-
+            <h1>ברוך הבא</h1>
             <div className="section">
                 <h2>המשמרות שלי</h2>
                 <Sort type="Shifts" setIsChange={setIsChange} options={["id", "date"]} userData={shifts} setData={setShifts} />
@@ -82,4 +71,4 @@ function Volunteer() {
     );
 }
 
-export default Volunteer;
+export default Volunteers;

@@ -11,7 +11,7 @@ const userService = {
             if (existingUser) {
                 throw new Error("Email already taken");
             }
-            const newUser = await userDal.createUser({ email, type, phone, id });
+            let newUser = await userDal.createUser({ email, type, phone, id });
             const hashed = await hashPassword(password);
             await userDal.savePassword(newUser.id, hashed);
             if (type == "volunteer") {
@@ -41,6 +41,7 @@ const userService = {
                     address: rest.address
                 });
                 const patient = await userDal.createPatient({
+                    userId: rest.patientId,
                     contactPeopleId: contact.id,
                     fullName: rest.patientFullName,
                     dateOfBirth: rest.patientDateOfBirth,
@@ -55,7 +56,7 @@ const userService = {
                     patientId: patient.id,
                     relationType: rest.relationType
                 });
-                console.log("Contact and patient created:", contact, patient, contact.id, patient.id);
+                console.log("Contact and patient created:", contact.id, patient.id);
                 newUser = {
                     ...rest,
                     id: contact.id,
