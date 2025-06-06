@@ -4,11 +4,11 @@ import '../style/Home.css';
 function Home() {
     return (
         <>
-            <h2 className='home-txt-h2'>Welcome to the place where everyone is connected</h2>
-            <h3 className='home-txt-h3'>Your posts, albums and tasks - all in one place!</h3>
-            <div className="home-page"></div>
+            <div className="home-container">
+                <h1>ברוכים הבאים למערכת ניהול מתנדבים</h1>
+            </div>
         </>
-    )
+    );
 }
 
 export default Home;

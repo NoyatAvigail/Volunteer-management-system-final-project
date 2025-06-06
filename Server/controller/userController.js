@@ -3,7 +3,6 @@ import { generateToken } from "../middleware/middleware.js";
 
 const userController = {
     signup: async (req, res) => {
-        console.log("Received signup request:", req.body);
         try {
             const newUser = await userService.signup(req.body);
             const token = generateToken(newUser.id, newUser.fullName, req.body.password);
