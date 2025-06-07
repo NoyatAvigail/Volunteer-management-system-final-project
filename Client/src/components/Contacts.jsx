@@ -35,7 +35,7 @@ function Contacts() {
                 (err) => setError(`שגיאה בטעינת מידע אישי: ${err}`)
             );
         };
-        fetchData();
+        // fetchData();
     }, [currentUser.id, isChange]);
 
     useEffect(() => {
@@ -51,7 +51,7 @@ function Contacts() {
                 (err) => setError(`שגיאה בטעינת כל הנתונים: ${err}`)
             );
         };
-        fetchAll();
+        // fetchAll();
     }, [isChange]);
 
     useEffect(() => {

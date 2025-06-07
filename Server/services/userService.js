@@ -158,6 +158,14 @@ const userService = {
                     patientId: patient.id,
                     relationType: rest.relationType
                 });
+                const hospital = await userDal.createHospitalized({
+                    patientId: patient.id,
+                    hospital: rest.hospital,
+                    department: rest.department,
+                    roomNumber: rest.roomNumber,
+                    hospitalizationStart: rest.hospitalizationStart,
+                    hospitalizationEnd: rest.hospitalizationEnd
+                });
                 console.log("Contact and patient created:", contact.id, patient.id);
                 newUser = {
                     type:newUser.type,
