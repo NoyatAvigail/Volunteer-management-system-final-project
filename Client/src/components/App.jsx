@@ -34,7 +34,19 @@ function App() {
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<Register />} />
         <Route path="/volunteer/:id" element={<Volunteers />} />
+        <Route path="/volunteer/:id/tasks" element={<Volunteers />} />
+        <Route path="/volunteer/:id/shifts" element={<Volunteers />} />
+        <Route path="/volunteer/:id/requests" element={<Volunteers />} />
+        <Route path="/volunteer/:id/certificate" element={<Volunteers />} />
+        <Route path="/volunteer/:id/profile" element={<Volunteers />} />
         <Route path="/contact/:id" element={<Contacts />} />
+        <Route path="/contact/:id/patient-info" element={<Contacts />} />
+        <Route path="/contact/:id/referrals" element={<Contacts />} />
+        <Route path="/contact/:id/new-request" element={<Contacts />} />
+        <Route path="/contact/:id/add-patient" element={<Contacts />} />
+        <Route path="/contact/:id/thanks" element={<Contacts />} />
+        <Route path="/contact/:id/profile" element={<Contacts />} />
+        <Route path="/error" element={<ErrorPage />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
       {isShowInfo == 1 && <Info setIsShowInfo={setIsShowInfo} />}

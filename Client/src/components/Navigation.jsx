@@ -15,9 +15,6 @@ function Navigation({ setIsShowInfo }) {
         setCurrentUser(null);
     }
 
-    console.log('Current User:', currentUser);
-    
-
     return (
         <>
             {currentUser ? (
