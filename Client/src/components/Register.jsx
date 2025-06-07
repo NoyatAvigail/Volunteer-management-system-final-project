@@ -42,8 +42,6 @@ function Register() {
         setCurrentUser(user);
         localStorage.setItem("currentUser", JSON.stringify(user));
         navigate(`/${userType}/${ user.id }`);
-        console.log(` navigate: (/${user.type}/${user.id}`);
-
     };
 
 const handleSignupFailure = () => {
@@ -105,6 +103,7 @@ const onSecondSubmit = async (data) => {
             patientInterestedInReceivingNotifications: !!mergedData.notifications,
 
             relationType: mergedData.relation,
+            
             hospital: mergedData.hospital,
             department: mergedData.department,
             roomNumber: mergedData.roomNumber

@@ -7,7 +7,7 @@ export const Hospitalized = sequelize.define('Hospitalized', {
   hospital: { type: DataTypes.STRING, allowNull: false },
   department: { type: DataTypes.STRING, allowNull: false },
   roomNumber: { type: DataTypes.STRING },
-  hospitalizationStart: { type: DataTypes.DATE, allowNull: false },
+  hospitalizationStart: { type: DataTypes.DATE },
   hospitalizationEnd: { type: DataTypes.DATE },
 });
 

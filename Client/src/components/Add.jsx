@@ -20,7 +20,7 @@ function Add({ type, setIsChange, inputs, defaultValue, name = "Add" }) {
         try {
             await apiService.create(
                 currentUser.id,
-                type,
+                currentUser.type,
                 body,
                 (result) => {
                     console.log("add successful:", result);

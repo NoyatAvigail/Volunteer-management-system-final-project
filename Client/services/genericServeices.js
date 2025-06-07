@@ -8,12 +8,12 @@ export function setTokenGetter(fn) {
     getToken = fn;
 }
 
-async function request(userId, url, params = {}, method = 'GET', body = null, onSuccess, onError) {
+async function request(userId, type, url, params = {}, method = 'GET', body = null, onSuccess, onError) {
     try {
         const token = getToken();
         const config = {
             method,
-            url: `${API_URL}/users/${userId}/${url}`,
+            url: `${API_URL}/${type}/${userId}/${url}`,
             headers: {
                 authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',

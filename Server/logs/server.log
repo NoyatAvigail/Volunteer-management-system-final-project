@@ -334,3 +334,58 @@
 [2025-06-06T13:04:13.301Z] [POST] | {"userData":{"id":328115522,"fullName":"Avigail David","email":"avigaildvd@gmail.com","password":"111111","phone":"0583210118","type":"volunteer","dateOfBirth":"2025-12-31","gender":"זכר","sector":"חרדי","address":"אהרון אשכולי 112/8","photo":"https://example.com/image.jpg","volunteerStartDate":"2025-06-06T13:04:13.207Z","volunteerEndDate":null,"isActive":true,"flexible":true}}
 [2025-06-06T13:07:12.760Z] [POST] | {"userData":{"id":61227757,"fullName":"Avigail David","email":"avigaildvd@gmail.com","password":"111111","phone":"0583210118","type":"volunteer","dateOfBirth":"1111-11-01","gender":"זכר","sector":"חרדי","address":"אהרון אשכולי 112/8","photo":"https://example.com/image.jpg","volunteerStartDate":"2025-06-06T13:07:12.642Z","volunteerEndDate":null,"isActive":true,"flexible":true}}
 [2025-06-06T13:07:36.886Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-06T13:14:08.029Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-06T13:15:06.895Z] [POST] | {"userData":{"id":328115523,"email":"avigaildvd1@gmail.com","phone":"0583210119","type":"contact","password":"111111","fullName":"Avigail David","address":"אהרון אשכולי 112/8","patientId":61227757,"patientFullName":"ישראל","patientDateOfBirth":"2005-01-25","patientSector":"חרדי","patientGender":"זכר","patientAddress":"אהרון אשכולי 3","patientDateOfDeath":null,"patientInterestedInReceivingNotifications":true,"relationType":"אבא","hospital":"שיבא","department":"פנימית","roomNumber":"12"}}
+[2025-06-06T13:15:07.260Z] [GET ALL] | {"table":"requests","query":{"type":"users","userId":"1","table":"requests"}}
+[2025-06-06T13:15:07.289Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:15:07.309Z] [GET ALL] | {"table":"requests","query":{"type":"users","userId":"1","table":"requests"}}
+[2025-06-06T13:15:07.328Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:18:51.749Z] [POST] | {"email":"avigaildvd1@gmail.com","password":"1111111"}
+[2025-06-06T13:19:10.497Z] [POST] | {"email":"avigaildvd1@gmail.com","password":"111111"}
+[2025-06-06T13:19:27.076Z] [POST] | {"email":"avigaildvd1@gmail.com","password":"111111"}
+[2025-06-06T13:20:12.181Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-06T13:20:36.384Z] [POST] | {"email":"avigaildvd1@gmail.com","password":"111111"}
+[2025-06-06T13:21:54.080Z] [POST] | {"email":"avigaildvd1@gmail.com","password":"111111"}
+[2025-06-06T13:24:39.486Z] [POST] | {"userData":{"id":328115523,"email":"avigaildvd2@gmail.com","phone":"0583210117","type":"contact","password":"111111","fullName":"Avigail David","address":"אהרון אשכולי 112/8","patientId":26625947,"patientFullName":"ישראל","patientDateOfBirth":"2025-06-11","patientSector":"דתי","patientGender":"זכר","patientAddress":"אהרון אשכולי","patientDateOfDeath":null,"patientInterestedInReceivingNotifications":false,"relationType":"אבא","hospital":"הדסה עין כרם","department":"פנימית","roomNumber":"13"}}
+[2025-06-06T13:25:30.612Z] [POST] | {"userData":{"id":328115524,"email":"avigaildvd2@gmail.com","phone":"0583210117","type":"contact","password":"111111","fullName":"Avigail David","address":"אהרון אשכולי 112/8","patientId":26625947,"patientFullName":"ישראל","patientDateOfBirth":"2025-06-11","patientSector":"דתי","patientGender":"זכר","patientAddress":"אהרון אשכולי","patientDateOfDeath":null,"patientInterestedInReceivingNotifications":false,"relationType":"אבא","hospital":"הדסה עין כרם","department":"פנימית","roomNumber":"13"}}
+[2025-06-06T13:25:33.890Z] [GET ALL] | {"table":"requests","query":{"type":"users","userId":"2","table":"requests"}}
+[2025-06-06T13:25:33.911Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:25:33.931Z] [GET ALL] | {"table":"requests","query":{"type":"users","userId":"2","table":"requests"}}
+[2025-06-06T13:25:33.953Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:28:17.425Z] [GET ALL] | {"table":"requests","query":{"type":"users","userId":"2","table":"requests"}}
+[2025-06-06T13:28:17.433Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:28:17.441Z] [GET ALL] | {"table":"requests","query":{"type":"users","userId":"2","table":"requests"}}
+[2025-06-06T13:28:17.451Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:28:18.211Z] [GET ALL] | {"table":"requests","query":{"type":"users","userId":"2","table":"requests"}}
+[2025-06-06T13:28:18.221Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:28:18.229Z] [GET ALL] | {"table":"requests","query":{"type":"users","userId":"2","table":"requests"}}
+[2025-06-06T13:28:18.239Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:28:20.356Z] [GET ALL] | {"table":"requests","query":{"type":"users","userId":"2","table":"requests"}}
+[2025-06-06T13:28:20.376Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:28:20.401Z] [GET ALL] | {"table":"requests","query":{"type":"users","userId":"2","table":"requests"}}
+[2025-06-06T13:28:20.431Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:28:21.320Z] [GET ALL] | {"table":"requests","query":{"type":"users","userId":"2","table":"requests"}}
+[2025-06-06T13:28:21.338Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:28:21.358Z] [GET ALL] | {"table":"requests","query":{"type":"users","userId":"2","table":"requests"}}
+[2025-06-06T13:28:21.379Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:28:28.982Z] [GET ALL] | {"table":"requests","query":{"type":"users","userId":"2","table":"requests"}}
+[2025-06-06T13:28:28.988Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:28:28.995Z] [GET ALL] | {"table":"requests","query":{"type":"users","userId":"2","table":"requests"}}
+[2025-06-06T13:28:29.002Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:28:49.396Z] [GET ALL] | {"table":"requests","query":{"type":"users","userId":"2","table":"requests"}}
+[2025-06-06T13:28:49.415Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:28:49.449Z] [GET ALL] | {"table":"requests","query":{"type":"users","userId":"2","table":"requests"}}
+[2025-06-06T13:28:49.532Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:28:57.440Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:28:57.452Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:28:59.530Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:28:59.539Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:29:00.711Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:29:00.720Z] [GET ALL] | {"table":"requests"}
+[2025-06-06T13:30:09.189Z] [POST] | {"email":"avigaildvd2@gmail.com","password":"111111"}
+[2025-06-06T13:33:32.739Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-06T13:33:52.160Z] [POST] | {"email":"avigaildvd1@gmail.com","password":"111111"}
+[2025-06-06T14:11:50.462Z] [POST] | {"userData":{"id":328115522,"email":"avigaildvd@gmail.com","phone":"0583210118","type":"contact","password":"111111","fullName":"אביגיל","address":"אהרון אשכולי 112/8","patientId":61227757,"patientFullName":"ישראל","patientDateOfBirth":"2005-01-25","patientSector":"חרדי","patientGender":"זכר","patientAddress":"אהרון אשכולי","patientDateOfDeath":null,"patientInterestedInReceivingNotifications":false,"relationType":"אבא","hospital":"שיבא","department":"פנימית","roomNumber":"12"}}
+[2025-06-06T14:13:00.732Z] [POST] | {"table":"requests","data":{"patientId":"61227757","contactId":"1","hospital":"שיבא","department":"פנימית","roomNumber":"12","date":"06-07-2025","startTime":"12:00:00","endTime":"18:00:00","userId":1}}
+[2025-06-06T14:17:16.103Z] [POST] | {"table":"requests","data":{"patientId":"61227757","contactId":1,"hospital":"שיבא","department":"פנימית","roomNumber":"12","date":"06-07-2025","startTime":"12:00:00","endTime":"18:00:00","userId":1}}
+[2025-06-06T14:19:48.725Z] [POST] | {"table":"requests","data":{"patientId":"61227757","contactId":1,"hospital":"שיבא","department":"פנימית","roomNumber":"12","date":"06-07-2025","startTime":"12:00:00","endTime":"18:00:00","userId":1}}
