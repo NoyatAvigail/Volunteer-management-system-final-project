@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { CurrentUser } from "./App";
 import { apiService } from "../../services/genericServeices"
 
-function Add({ type, setIsChange, inputs, defaultValue, name = "Add" }) {
+function Add({ setIsChange, inputs, defaultValue, name = "Add" }) {
     const { currentUser } = useContext(CurrentUser);
     const [isScreen, setIsScreen] = useState(0);
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
@@ -19,7 +19,7 @@ function Add({ type, setIsChange, inputs, defaultValue, name = "Add" }) {
         setIsScreen(0);
         try {
             await apiService.create(
-                currentUser.id,
+                currentUser.autoId,
                 currentUser.type,
                 body,
                 (result) => {
