@@ -80,14 +80,14 @@ ContactPeople.hasOne(RelationToPatients, { foreignKey: 'contactPeopleId', onDele
 RelationToPatients.belongsTo(ContactPeople, { foreignKey: 'contactPeopleId' });
 
 // Events ←→ Patients / Volunteers / ContactPeople
-Patients.hasMany(Events, { foreignKey: 'patientId', onDelete: 'CASCADE' });
-Events.belongsTo(Patients, { foreignKey: 'patientId' });
+Patients.hasMany(Events, { foreignKey: 'patientId', sourceKey: 'userId', onDelete: 'CASCADE' });
+Events.belongsTo(Patients, { foreignKey: 'patientId', targetKey: 'userId' });
 
-Volunteers.hasMany(Events, { foreignKey: 'volunteerId', onDelete: 'CASCADE' });
-Events.belongsTo(Volunteers, { foreignKey: 'volunteerId' });
+Volunteers.hasMany(Events, { foreignKey: 'volunteerId', sourceKey: 'userId', onDelete: 'CASCADE' });
+Events.belongsTo(Volunteers, { foreignKey: 'volunteerId', targetKey: 'userId', onDelete: 'CASCADE' });
 
-ContactPeople.hasMany(Events, { foreignKey: 'contactId', onDelete: 'CASCADE' });
-Events.belongsTo(ContactPeople, { foreignKey: 'contactId' });
+ContactPeople.hasMany(Events, { foreignKey: 'contactId', sourceKey: 'userId', onDelete: 'CASCADE' });
+Events.belongsTo(ContactPeople, { foreignKey: 'contactId', targetKey: 'userId' });
 export {
   sequelize,
   Users,

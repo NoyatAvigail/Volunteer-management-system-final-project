@@ -131,7 +131,10 @@ const userService = {
                 });
                 console.log("Volunteer created:", newVolunteer);
                 newUser = {
-                    type:newUser.type,
+                    type: newUser.type,
+                    email: newUser.email,
+                    phone: newUser.phone,
+                    userId: newUser.id,
                     ...rest,
                     id: newVolunteer.id,
                 };
@@ -168,7 +171,10 @@ const userService = {
                 });
                 console.log("Contact and patient created:", contact.id, patient.id);
                 newUser = {
-                    type:newUser.type,
+                    type: newUser.type,
+                    email: newUser.email,
+                    phone: newUser.phone,
+                    userId: newUser.id,
                     ...rest,
                     id: contact.id,
                 };
@@ -193,7 +199,7 @@ const userService = {
         if (!passwordEntry) return null;
         const valid = await isPasswordValid(password, passwordEntry.password);
         if (!valid) return null;
-        const userData = user.toJSON(); 
+        const userData = user.toJSON();
         if (user.type == "volunteer") {
             const volunteer = await userDal.findVolunteerByUserId(user.id);
             if (!volunteer) return null;

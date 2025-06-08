@@ -5,7 +5,9 @@ const userController = {
     signup: async (req, res) => {
         try {
             const newUser = await userService.signup(req.body);
-            const token = generateToken(newUser.id, newUser.fullName, req.body.password);
+            console.log("New user created:", newUser);
+            const token = generateToken(newUser.id, newUser.email, newUser.type);
+            console.log("User created successfully:", newUser, "Token generated:", token);
             return res.status(201).json({
                 message: "User successfully registered",
                 token,
@@ -20,8 +22,11 @@ const userController = {
     login: async (req, res) => {
         try {
             const loginUser = await userService.login(req.body);
+            console.log("Login user found:", loginUser);
+
             if (!loginUser) return res.status(401).json({ message: 'Invalid credentials' });
-            const token = generateToken(loginUser.id, loginUser.email, req.body.password);
+            const token = generateToken(loginUser.user.autoId, loginUser.user.email, loginUser.user.type);
+            console.log("User logged in successfully:", loginUser, "Token generated:", token);
             return res.status(201).json({
                 message: "User successfully registered",
                 token,

@@ -1,10 +1,12 @@
 import Sequelize from "sequelize";
 import Users from '../Models/Users.js';
 import Passwords from '../Models/Passwords.js';
-const models = { Users, Passwords };
+import Events from '../Models/Events.js';
+const models = { Users, Passwords, Events };
 
 const genericDAL = {
     getModelByName: (name) => {
+        console.log(models[name]);   
         return models[name]
     },
 
@@ -53,6 +55,7 @@ const genericDAL = {
     },
 
     createItem: (model, data) => {
+        console.log("data", data); 
         return model.create(data)
     },
 

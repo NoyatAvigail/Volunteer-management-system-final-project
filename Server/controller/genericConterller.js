@@ -36,12 +36,21 @@ const genericConterller = {
         }
     },
 
+    // post: async (req, res) => {
+    //     try {
+    //         const item = await service.createItem(req.params.table, req.body);
+    //         res.status(201).json(item);
+    //     } catch {
+    //         res.status(500).json({ message: 'Server error' });
+    //     }
+    // },
     post: async (req, res) => {
         try {
             const item = await service.createItem(req.params.table, req.body);
             res.status(201).json(item);
-        } catch {
-            res.status(500).json({ message: 'Server error' });
+        } catch (err) {
+            console.error("Error in POST /:table:", err);
+            res.status(500).json({ message: 'Server error', error: err.message });
         }
     },
 
