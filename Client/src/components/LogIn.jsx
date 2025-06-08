@@ -12,7 +12,7 @@ function LogIn() {
     const { setCurrentUser } = useContext(CurrentUser);
     const [responsText, setResponstText] = useState("Fill the form and click the login button");
     const navigate = useNavigate();
-
+    
     const onSubmit = async (data) => {
         const error = validateLoginForm(data);
         if (error) {
