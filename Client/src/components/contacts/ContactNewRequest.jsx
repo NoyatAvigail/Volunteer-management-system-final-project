@@ -13,7 +13,7 @@ function ContactNewRequest() {
     <div className="form-container">
       <h2>הוספת פנייה חדשה</h2>
       <Add
-        type="ContactRequests"
+        type="Events"
         setIsChange={() => { }} 
         inputs={[
           "patientId",

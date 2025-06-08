@@ -47,12 +47,12 @@ export const apiService = {
         request(userId, `${table}`, {}, 'GET', null, onSuccess, onError),
     getNested: (userId, base, id, nested, params, onSuccess, onError) =>
         request(userId, `${base}/${id}/${nested}`, params, 'GET', null, onSuccess, onError),
-    create: (userId, table, body, onSuccess, onError) =>
-        request(userId, table, '', {}, 'POST', body, onSuccess, onError),
+    create: (userId, userType, entityName, body, onSuccess, onError) =>
+        request(userId, userType, entityName, {}, 'POST', body, onSuccess, onError),
     update: (userId, table, id, data, onSuccess, onError) =>
-        request(userId, `${table}/${id}`, {}, 'PUT', data, onSuccess, onError),
+        request(userId, `${table}/${id}`, {}, 'PUT', data, onSuccess, onError, type),
     patch: (userId, table, id, data, onSuccess, onError) =>
-        request(userId, `${table}/${id}`, {}, 'PATCH', data, onSuccess, onError),
+        request(userId, `${table}/${id}`, {}, 'PATCH', data, onSuccess, onError, type),
     remove: (userId, table, id, onSuccess, onError) =>
-        request(userId, `${table}/${id}`, {}, 'DELETE', null, onSuccess, onError),
+        request(userId, `${table}/${id}`, {}, 'DELETE', null, onSuccess, onError, type),
 };

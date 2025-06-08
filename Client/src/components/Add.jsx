@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useContext } from "react";
 import { CurrentUser } from "./App";
-import { apiService } from "../../services/genericServeices"
+import { apiService } from "../../services/genericServeices";
 
-function Add({ setIsChange, inputs, defaultValue, name = "Add" }) {
+function Add({ setIsChange = () => { }, inputs, defaultValue, name = "Add", type }) {
     const { currentUser } = useContext(CurrentUser);
     const [isScreen, setIsScreen] = useState(0);
+
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         defaultValues: {
             ...defaultValue,
@@ -14,14 +14,46 @@ function Add({ setIsChange, inputs, defaultValue, name = "Add" }) {
         },
     });
 
+    // const addFunc = async (body) => {
+    //     reset();
+    //     setIsScreen(0);
+    //     try {
+    //         await apiService.create(
+    //             currentUser.autoId,
+    //             currentUser.type,
+    //             type,
+    //             body,
+    //             (result) => {
+    //                 console.log("add successful:", result);
+    //                 setIsChange(1);
+    //                 reset();
+    //             },
+    //             (error) => {
+    //                 console.log("add was unsuccessful", error);
+    //             });
+    //     } catch (error) {
+    //         console.log("Unexpected error:", error);
+    //     }
+    // };
     const addFunc = async (body) => {
+        const preparedBody = {
+            ...body,
+            patientId: Number(body.patientId),
+            contactId: Number(body.contactId),
+            volunteerId: body.volunteerId ? Number(body.volunteerId) : null,
+            date: formatDateToISO(body.date),
+        };
+
+        console.log("Prepared body:", preparedBody);    
+
         reset();
         setIsScreen(0);
         try {
             await apiService.create(
                 currentUser.autoId,
                 currentUser.type,
-                body,
+                type,
+                preparedBody,
                 (result) => {
                     console.log("add successful:", result);
                     setIsChange(1);
@@ -29,11 +61,18 @@ function Add({ setIsChange, inputs, defaultValue, name = "Add" }) {
                 },
                 (error) => {
                     console.log("add was unsuccessful", error);
-                },
-            );
+                });
         } catch (error) {
             console.log("Unexpected error:", error);
         }
+    };
+
+    const formatDateToISO = (inputDate) => {
+        if (!inputDate) return null;
+        const parts = inputDate.split('-');
+        if (parts.length !== 3) return inputDate; 
+        const [day, month, year] = parts;
+        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     };
 
     const handleCancel = () => {

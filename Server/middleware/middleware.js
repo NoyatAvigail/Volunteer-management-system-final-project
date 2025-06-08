@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET || "default_secret";
 
 export const generateToken = (id, email, type) =>
-  jwt.sign({ id, email, type }, JWT_SECRET, { expiresIn: "20h" });
+  jwt.sign({ id, email, type }, JWT_SECRET, { expiresIn: "24h" });
 
 export const verifyToken = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
@@ -25,6 +25,7 @@ export const validateUserId = (req, res, next) => {
 
   const requestedId = req.params.userId;
   const authenticatedId = req.user.id;
+  console.log("Authenticated ID:", req.user);
   if (requestedId != authenticatedId) {
     return res.status(403).json({ error: 'Access denied' });
   }
