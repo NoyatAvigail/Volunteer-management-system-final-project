@@ -486,3 +486,544 @@
 [2025-06-08T14:35:25.640Z] [POST] | {"userData":{"id":61000000,"email":"avigaildvd@gmail.com","phone":"0583000000","type":"contact","password":"111111","fullName":"Avigail David","address":"אהרון אשכולי 112/8","patientId":26000000,"patientFullName":"חני","patientDateOfBirth":"2005-01-25","patientSector":"חרדי","patientGender":"זכר","patientAddress":"אהרון אשכולי 3","patientDateOfDeath":null,"patientInterestedInReceivingNotifications":false,"relationType":"אבא","hospital":"שיבא","department":"פנימית","roomNumber":"12"}}
 [2025-06-08T14:35:34.506Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
 [2025-06-08T14:35:55.974Z] [POST] | {"table":"Events","data":{"patientId":26000000,"contactId":61000000,"hospital":"שיבא","department":"פנימית","roomNumber":"12","date":"2025-07-06","startTime":"12:00:00","endTime":"18:00:00","userId":61000000,"volunteerId":null}}
+[2025-06-08T15:02:34.894Z] [GET ALL] | {"table":"[object Object]"}
+[2025-06-08T15:02:34.913Z] [GET ALL] | {"table":"[object Object]"}
+[2025-06-08T15:02:46.534Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T15:02:52.163Z] [GET ALL] | {"table":"[object Object]"}
+[2025-06-08T15:02:53.055Z] [GET ALL] | {"table":"[object Object]"}
+[2025-06-08T15:17:34.987Z] [GET ALL] | {"table":"[object Object]"}
+[2025-06-08T15:17:35.015Z] [GET ALL] | {"table":"[object Object]"}
+[2025-06-08T15:18:11.808Z] [GET ALL] | {"table":"by-contact","query":{"type":"requests","userId":"1","table":"by-contact"}}
+[2025-06-08T15:18:12.774Z] [GET ALL] | {"table":"by-contact","query":{"type":"requests","userId":"1","table":"by-contact"}}
+[2025-06-08T15:19:16.706Z] [GET ALL] | {"table":"contactId","query":{"type":"Events","userId":"1","table":"contactId"}}
+[2025-06-08T15:19:18.066Z] [GET ALL] | {"table":"contactId","query":{"type":"Events","userId":"1","table":"contactId"}}
+[2025-06-08T15:41:21.806Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:06:52.707Z] [GET ALL] | {"table":"Events","query":{"type":"contact","userId":"1","table":"Events"}}
+[2025-06-08T16:07:06.617Z] [GET ALL] | {"table":"Events","query":{"type":"contact","userId":"1","table":"Events"}}
+[2025-06-08T16:13:36.727Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:15:54.779Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:17:04.639Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:17:36.878Z] [POST] | {"table":"Events","data":{"patientId":26000000,"contactId":61000000,"hospital":"שיבא","department":"פנימית","roomNumber":"12","date":"2025-07-08","startTime":"12:00:00","endTime":"18:00:00","userId":61000000,"volunteerId":null}}
+[2025-06-08T16:24:06.342Z] [GET ALL] | {"table":"Events","query":{"type":"contact","userId":"1","table":"Events"}}
+[2025-06-08T16:24:06.397Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:24:06.419Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:24:06.441Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:24:45.764Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:31:14.822Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:35:06.027Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T16:35:06.175Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:35:06.180Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:35:06.187Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:35:37.219Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T16:35:53.746Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T16:36:00.162Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T16:37:00.599Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T16:37:03.269Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T16:37:03.306Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:37:03.322Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:37:11.499Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T16:37:12.535Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T16:37:13.819Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T16:45:17.071Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:45:27.631Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T16:51:24.646Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:51:40.351Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T16:51:59.639Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T16:52:04.535Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T16:55:22.463Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:55:22.471Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:55:22.475Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:55:31.819Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:59:47.091Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T16:59:51.086Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T17:00:03.636Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T17:00:10.907Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T19:36:45.585Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T19:36:49.795Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T19:37:24.534Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T19:37:36.475Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T19:42:14.283Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T19:42:16.393Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T19:47:26.413Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T19:47:36.497Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T19:47:45.265Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T19:48:45.600Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T19:48:46.676Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T19:49:19.652Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T19:50:32.800Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T19:50:36.096Z] [GET ALL] | {"table":"Events","query":{"type":"contact","userId":"1","table":"Events"}}
+[2025-06-08T19:50:36.171Z] [GET ALL] | {"table":"Events","query":{"type":"contact","userId":"1","table":"Events"}}
+[2025-06-08T19:52:25.179Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T19:57:09.653Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T19:57:44.534Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T19:57:44.612Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T19:58:11.558Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T20:03:04.473Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T20:03:07.291Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T20:03:07.348Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T20:03:07.400Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T20:04:59.431Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T20:08:29.916Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T20:09:05.038Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T20:11:12.729Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T20:11:19.579Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T20:11:23.546Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T20:11:24.430Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T20:11:25.295Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T20:13:07.418Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T20:13:07.476Z] [GET ALL] | {"table":"Events","query":{"contactId":"1"}}
+[2025-06-08T20:13:14.445Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T20:13:18.173Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:13:28.393Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:13:32.590Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:14:32.486Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:14:33.236Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:14:35.456Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:14:43.934Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:14:45.842Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:14:45.898Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:15:07.051Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:15:07.123Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:15:14.766Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:16:27.598Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:16:27.656Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:16:27.696Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:16:30.492Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:16:30.539Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:16:30.579Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:16:31.514Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:16:31.548Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:16:31.582Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:16:59.608Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:16:59.658Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:16:59.701Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:17:51.528Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:17:51.588Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:17:51.632Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:21:27.937Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:21:27.999Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:21:52.890Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:23:32.514Z] [POST] | {"userData":{"id":61227757,"email":"avigaildvd1@gmail.com","phone":"0583210118","type":"contact","password":"111111","fullName":"Avigail David","address":"אהרון אשכולי 112/8","patientId":26625947,"patientFullName":"ישראל","patientDateOfBirth":"12005-05-22","patientSector":"דתי","patientGender":"זכר","patientAddress":"אהרון אשכולי 3","patientDateOfDeath":null,"patientInterestedInReceivingNotifications":false,"relationType":"אבא","hospital":"שיבא","department":"פנימית","roomNumber":"12"}}
+[2025-06-08T20:24:12.149Z] [POST] | {"email":"avigaildvd1@gmail.com","password":"111111"}
+[2025-06-08T20:24:37.485Z] [POST] | {"table":"Events","data":{"patientId":26625947,"contactId":61227757,"hospital":"שיבא","department":"פנימית","roomNumber":"12","date":"2025-09-06","startTime":"12:00:00","endTime":"20:00:00","userId":61227757,"volunteerId":null}}
+[2025-06-08T20:24:40.227Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:24:40.287Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:24:40.334Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:24:43.854Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:24:43.898Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:24:43.938Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:24:51.859Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:24:51.908Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:24:51.954Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:25:11.707Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:25:11.787Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:25:14.819Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:25:25.607Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:25:25.653Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:25:25.695Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:26:06.475Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T20:26:08.763Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:26:08.794Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:26:08.884Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:27:24.650Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:27:24.704Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:28:09.755Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T20:28:17.584Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:28:18.994Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:28:19.873Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:31:14.073Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:31:14.131Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:31:14.153Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:31:19.130Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T20:32:07.686Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T20:33:05.763Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:33:06.714Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:33:07.935Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:33:12.033Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T20:34:43.097Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:34:44.002Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:34:45.034Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:34:48.355Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T20:35:13.155Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T20:35:34.115Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:35:34.204Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:35:34.260Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:35:35.760Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T20:36:02.627Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T20:36:14.279Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T20:36:14.321Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T20:36:19.734Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T20:36:21.172Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T20:36:24.010Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T20:37:29.982Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:37:30.038Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:37:30.085Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:37:38.758Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:37:38.801Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:37:38.851Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:38:53.788Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:38:54.462Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:38:54.957Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:39:25.983Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:39:26.158Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:39:26.766Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:39:32.418Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:39:33.275Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:39:34.053Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:39:37.586Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T20:39:44.364Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:39:45.290Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:39:45.817Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:03.532Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:03.612Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:07.496Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:08.307Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:09.031Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:17.190Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:17.883Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:18.625Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:22.535Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:22.590Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:22.650Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:36.941Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:36.980Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:37.022Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:43.725Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:43.770Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:43.818Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:51.054Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:51.083Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:51.129Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:59.517Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:59.552Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:40:59.592Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:41:05.383Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:41:05.398Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:41:05.445Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:41:13.476Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T20:41:16.459Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T20:42:29.570Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:42:29.646Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:42:29.694Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:42:33.552Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:42:33.590Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:42:33.631Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:42:34.521Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:42:34.560Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:42:34.621Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:42:50.378Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:42:50.411Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:42:50.447Z] [GET ALL] | {"table":"Events","query":{"contactId":"61000000"}}
+[2025-06-08T20:44:18.435Z] [POST] | {"email":"avigaildvd1@gmail.com","password":"111111"}
+[2025-06-08T20:44:23.845Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:44:23.906Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:44:23.955Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:44:37.573Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:44:37.633Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:44:37.682Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:44:52.630Z] [POST] | {"email":"avigaildvd1@gmail.com","password":"111111"}
+[2025-06-08T20:44:55.062Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:44:55.092Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:44:55.117Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:45:19.188Z] [POST] | {"table":"Events","data":{"patientId":26625947,"contactId":61227757,"hospital":"שיבא","department":"פנימית","roomNumber":"12","date":"2026-07-06","startTime":"12:00:00","endTime":"20:00:00","userId":61227757,"volunteerId":null}}
+[2025-06-08T20:45:22.354Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:45:22.384Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:45:22.403Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:46:14.198Z] [POST] | {"email":"avigaildvd1@gmail.com","password":"111111"}
+[2025-06-08T20:46:17.467Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:46:17.530Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:46:17.606Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:46:35.209Z] [POST] | {"table":"Events","data":{"patientId":26625947,"contactId":61227757,"hospital":"שיבא","department":"פנימית","roomNumber":"12","date":"2025-07-06","startTime":"12:00:00","endTime":"20:00:00","userId":61227757,"volunteerId":null}}
+[2025-06-08T20:52:38.955Z] [POST] | {"userData":{"id":328115522,"email":"avigaildvd@gmail.com","phone":"0583210118","type":"contact","password":"111111","fullName":"אביגיל","address":"אהרון אשכולי 112/8","patientId":329394696,"patientFullName":"מיכל","patientDateOfBirth":"2005-01-25","patientSector":"חרדי","patientGender":"נקבה","patientAddress":"אהרון אשכולי 3","patientDateOfDeath":null,"patientInterestedInReceivingNotifications":false,"relationType":"אחות","hospital":"שיבא","department":"פנימית","roomNumber":"12"}}
+[2025-06-08T20:53:15.727Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T20:53:18.250Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T20:53:18.294Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T20:53:18.336Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T20:53:41.561Z] [POST] | {"table":"Events","data":{"patientId":329394696,"contactId":328115522,"hospital":"שיבא","department":"פנימית","roomNumber":"12","date":"2025-07-06","startTime":"12:00:00","endTime":"18:00:00","userId":328115522,"volunteerId":null}}
+[2025-06-08T20:53:45.211Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T20:53:45.254Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T20:53:45.305Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T20:54:17.814Z] [POST] | {"table":"Events","data":{"patientId":329394696,"contactId":328115522,"hospital":"שערי צדק","department":"פנימית","roomNumber":"12","date":"2025-07-08","startTime":"12:00:00","endTime":"20:00:00","userId":328115522,"volunteerId":null}}
+[2025-06-08T20:54:20.436Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T20:54:20.481Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T20:54:20.528Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T20:55:21.112Z] [POST] | {"userData":{"id":61227757,"email":"avigaildvd1@gmail.com","phone":"0583210117","type":"contact","password":"111111","fullName":"אביגיל","address":"אהרון אשכולי 112/8","patientId":26625947,"patientFullName":"ישראל","patientDateOfBirth":"2005-01-25","patientSector":"חרדי","patientGender":"זכר","patientAddress":"אהרון אשכולי 3","patientDateOfDeath":null,"patientInterestedInReceivingNotifications":false,"relationType":"אמא","hospital":"איכילוב","department":"אורתופדיה","roomNumber":"12"}}
+[2025-06-08T20:55:32.545Z] [POST] | {"email":"avigaildvd1@gmail.com","password":"111111"}
+[2025-06-08T20:56:00.765Z] [POST] | {"table":"Events","data":{"patientId":26625947,"contactId":61227757,"hospital":"איכילוב","department":"אורתופדיה","roomNumber":"12","date":"2025-09-06","startTime":"12:00:00","endTime":"18:00:00","userId":61227757,"volunteerId":null}}
+[2025-06-08T20:56:03.042Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:56:03.089Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:56:03.137Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:56:22.220Z] [POST] | {"table":"Events","data":{"patientId":26625947,"contactId":61227757,"hospital":"שערי צדק","department":"פנימית","roomNumber":"12","date":"2025-07-06","startTime":"12:00:00","endTime":"18:00:00","userId":61227757,"volunteerId":null}}
+[2025-06-08T20:56:24.361Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:56:24.409Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:56:24.451Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:56:25.939Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T20:57:20.026Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:57:20.083Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:57:20.130Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:57:23.776Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T20:59:56.697Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:59:56.752Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T20:59:56.814Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:00:10.623Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:00:10.679Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:00:10.718Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:00:11.710Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:00:11.750Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:00:11.821Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:00:14.004Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:00:14.042Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:00:14.083Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:00:15.238Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:00:15.272Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:00:15.319Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:00:16.353Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T21:01:03.637Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:03.692Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:03.754Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:05.792Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:05.834Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:05.906Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:07.633Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:07.650Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:07.694Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:11.750Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:11.791Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:11.863Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:14.758Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:14.790Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:14.866Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:17.803Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:17.843Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:17.910Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:18.841Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:18.880Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:18.927Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:21.483Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:21.504Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:21.556Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:38.801Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:38.866Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:38.932Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:57.775Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:57.843Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:01:57.903Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:02:00.812Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:02:00.858Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:02:00.922Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:02:07.706Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:02:07.740Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:02:07.817Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:02:10.769Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:02:10.785Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:02:10.826Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:02:15.591Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:02:15.625Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:02:15.698Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:03:32.367Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:03:32.426Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:03:32.485Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:05:53.010Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T21:06:10.372Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T21:06:11.783Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T21:06:13.926Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T21:06:29.739Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T21:06:35.971Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T21:06:37.405Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T21:06:39.105Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T21:06:57.390Z] [POST] | {"email":"avigaildvd1@gmail.com","password":"111111"}
+[2025-06-08T21:07:01.707Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:07:03.043Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:07:05.125Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:08:37.663Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:08:39.939Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:08:42.360Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:09:54.389Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:09:54.462Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:09:54.610Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:09:54.856Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:09:54.888Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:09:54.932Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:11:11.175Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:11:12.280Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:11:14.267Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:11:18.614Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:11:18.662Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:11:18.751Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:14:25.744Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:14:25.817Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:14:25.881Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:21:19.069Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:21:19.163Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:21:19.230Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:23:17.068Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:23:17.111Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:23:17.162Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:26:05.801Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:26:05.877Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:26:05.984Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:26:06.249Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:26:06.289Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:26:06.335Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:26:07.096Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:26:07.140Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:26:07.197Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:31:29.961Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:31:30.031Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:31:30.106Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:31:32.594Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:31:32.637Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:31:32.716Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:31:35.839Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:31:35.874Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:31:35.911Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:31:57.458Z] [DELETE] | {"table":"Events","id":"3"}
+[2025-06-08T21:34:08.214Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T21:34:13.764Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T21:34:13.815Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T21:34:13.883Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T21:39:29.507Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T21:39:29.539Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T21:39:29.568Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T21:40:24.545Z] [POST] | {"userData":{"id":61227757,"email":"avigaildvd@gmail.com","phone":"0583210118","type":"contact","password":"111111","fullName":"Avigail David","address":"אהרון אשכולי 112/8","patientId":26625947,"patientFullName":"ישראל","patientDateOfBirth":"2005-01-25","patientSector":"חרדי","patientGender":"זכר","patientAddress":"אהרון אשכולי 3","patientDateOfDeath":null,"patientInterestedInReceivingNotifications":false,"relationType":"אבא","hospital":"שיבא","department":"פנימית","roomNumber":"12"}}
+[2025-06-08T21:40:33.873Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T21:40:51.804Z] [POST] | {"table":"Events","data":{"patientId":26625947,"contactId":61227757,"hospital":"שיבא","department":"פנימית","roomNumber":"12","date":"2025-07-06","startTime":"12:00:00","endTime":"18:00:00","userId":61227757,"volunteerId":null}}
+[2025-06-08T21:40:54.269Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:40:54.316Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:40:54.372Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:41:27.012Z] [DELETE] | {"table":"Events","id":"1"}
+[2025-06-08T21:45:56.761Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:45:56.812Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:45:56.916Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:45:57.154Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:45:57.195Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:45:57.242Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:45:58.219Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:45:58.260Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:45:58.304Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:46:13.738Z] [DELETE] | {"table":"Events","id":"1"}
+[2025-06-08T21:46:41.139Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:46:44.340Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:47:13.557Z] [POST] | {"table":"Events","data":{"patientId":26625947,"contactId":61227757,"hospital":"שיבא","department":"פנימית","roomNumber":"12","date":"2025-09-06","startTime":"12:00:00","endTime":"18:00:00","userId":61227757,"volunteerId":null}}
+[2025-06-08T21:47:16.109Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:47:16.161Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:47:16.209Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:47:33.397Z] [DELETE] | {"table":"Events","id":"2"}
+[2025-06-08T21:47:49.014Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:47:54.728Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:48:04.236Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:48:04.271Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:48:04.336Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:48:29.015Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T21:48:31.551Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T21:48:32.797Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T21:49:55.636Z] [POST] | {"userData":{"id":61227757,"email":"avigaildvd@gmail.com","phone":"0583210118","type":"contact","password":"111111","fullName":"Avigail David","address":"אהרון אשכולי 112/8","patientId":26625947,"patientFullName":"ישראל","patientDateOfBirth":"2005-01-25","patientSector":"חרדי","patientGender":"נקבה","patientAddress":"אהרון אשכולי 3","patientDateOfDeath":null,"patientInterestedInReceivingNotifications":false,"relationType":"אבא","hospital":"שיבא","department":"פנימית","roomNumber":"12"}}
+[2025-06-08T21:50:04.315Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T21:50:24.486Z] [POST] | {"table":"Events","data":{"patientId":26625947,"contactId":61227757,"hospital":"שיבא","department":"פנימית","roomNumber":"13","date":"2025-07-06","startTime":"12:00:00","endTime":"18:00:00","userId":61227757,"volunteerId":null}}
+[2025-06-08T21:50:43.822Z] [POST] | {"table":"Events","data":{"patientId":26625947,"contactId":61227757,"hospital":"שערי צדק","department":"אורתופדיה","roomNumber":"12","date":"2025-07-06","startTime":"12:00:00","endTime":"18:00:00","userId":61227757,"volunteerId":null}}
+[2025-06-08T21:50:45.593Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:50:45.655Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:50:45.712Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:52:10.523Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:52:10.612Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:52:10.702Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:53:04.631Z] [DELETE] | {"table":"Events","id":"1"}
+[2025-06-08T21:54:21.775Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:54:22.667Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:56:25.299Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:56:25.370Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:56:25.423Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:56:33.849Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T21:56:37.278Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:56:37.329Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:56:37.380Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:56:54.889Z] [DELETE] | {"table":"Events","id":"1"}
+[2025-06-08T21:57:20.938Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:57:21.061Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T21:59:11.302Z] [POST] | {"userData":{"id":328115522,"email":"avigaildvd1@gmail.com","phone":"0583210117","type":"contact","password":"111111","fullName":"Avigail David","address":"אהרון אשכולי 112/8","patientId":329394696,"patientFullName":"ישראל","patientDateOfBirth":"2005-01-25","patientSector":"חרדי","patientGender":"זכר","patientAddress":"אהרון אשכולי 3","patientDateOfDeath":null,"patientInterestedInReceivingNotifications":false,"relationType":"אח","hospital":"שערי צדק","department":"ילדים","roomNumber":"12"}}
+[2025-06-08T21:59:30.058Z] [POST] | {"email":"avigaildvd1@gmail.com","password":"111111"}
+[2025-06-08T21:59:59.547Z] [POST] | {"table":"Events","data":{"patientId":329394696,"contactId":328115522,"hospital":"שערי צדק","department":"ילדים","roomNumber":"12","date":"2025-07-06","startTime":"12:00:00","endTime":"18:00:00","userId":328115522,"volunteerId":null}}
+[2025-06-08T22:00:20.013Z] [POST] | {"table":"Events","data":{"patientId":329394696,"contactId":328115522,"hospital":"איכילוב","department":"פנימית","roomNumber":"12","date":"2025-07-06","startTime":"12:00:00","endTime":"20:00:00","userId":328115522,"volunteerId":null}}
+[2025-06-08T22:00:22.279Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:00:22.326Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:00:22.376Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:00:23.735Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T22:05:27.419Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:05:27.495Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:05:27.581Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:05:27.779Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:05:27.812Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:05:27.857Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:05:28.115Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:05:28.149Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:05:28.179Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:06:17.828Z] [PATCH] | {"table":"Events","id":"3","body":{"patientId":"329394696","hospital":"איכילוב","department":"פנימית","roomNumber":"12","date":"06-07-2025","startTime":"12:00:00","endTime":"18:00:00"}}
+[2025-06-08T22:11:49.407Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:11:49.472Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:11:49.558Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:12:02.950Z] [DELETE] | {"table":"Events","id":"3"}
+[2025-06-08T22:12:03.016Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:12:03.050Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:12:28.680Z] [PATCH] | {"table":"Events","id":"4","body":{"patientId":"329394696","hospital":"שיבא","department":"פנימית","roomNumber":"12","date":"06-07-2025","startTime":"12:00:00","endTime":"18:00:00"}}
+[2025-06-08T22:14:22.752Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:14:22.784Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:14:22.807Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:14:23.092Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:14:23.112Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:14:23.139Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:14:23.955Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:14:23.992Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:14:24.027Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:14:43.938Z] [PATCH] | {"table":"Events","id":"4","body":{"patientId":"329394696","hospital":"שערי צדק","department":"פנימית","roomNumber":"13","date":"06-07-2025","startTime":"12:00:00","endTime":"18:00:00"}}
+[2025-06-08T22:14:44.035Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:14:44.101Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:15:06.883Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:15:06.940Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:15:06.981Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:15:08.616Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T22:16:07.093Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T22:17:18.280Z] [PATCH] | {"table":"Events","id":"4","body":{"patientId":"329394696","hospital":"שיבא","department":"פנימית","roomNumber":"10","date":"06-07-2025","startTime":"12:00:00","endTime":"18:00:00"}}
+[2025-06-08T22:17:18.378Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:17:18.407Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T22:17:18.466Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:17:18.505Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T22:21:31.911Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:21:31.955Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:21:32.001Z] [GET ALL] | {"table":"Events","query":{"contactId":"328115522"}}
+[2025-06-08T22:35:51.552Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T22:35:53.712Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:35:53.752Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:35:53.799Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:36:09.843Z] [POST] | {"email":"avigaildvd@gmail.com","password":"111111"}
+[2025-06-08T22:36:32.191Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:36:32.231Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:36:32.257Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:37:48.024Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:37:48.042Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:37:48.076Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:37:50.067Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:37:50.090Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:37:50.125Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:37:51.958Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T22:37:54.181Z] [GET ALL] | {"table":"Events"}
+[2025-06-08T22:38:00.509Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:38:00.550Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:38:00.586Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:38:02.393Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:38:02.439Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:38:02.485Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:38:21.556Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:38:21.604Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:38:21.642Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:38:30.544Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:38:30.557Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:38:30.571Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:38:47.747Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:38:47.799Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:38:47.835Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:39:00.435Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:39:00.448Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:39:00.470Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:39:01.572Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:39:01.605Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}
+[2025-06-08T22:39:01.634Z] [GET ALL] | {"table":"Events","query":{"contactId":"61227757"}}

@@ -22,10 +22,9 @@ const genericDAL = {
     },
 
     findAll: (model) => {
-
         return model.findAll({
             where: {
-                is_deleted: { [Sequelize.Op.not]: false }
+                is_deleted: 1
             }
         })
     },
@@ -34,7 +33,7 @@ const genericDAL = {
         return model.findOne({
             where: {
                 id,
-                is_deleted: false
+                is_deleted: 1
             }
         });
     },

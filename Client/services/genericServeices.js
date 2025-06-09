@@ -40,19 +40,19 @@ async function request(userId, type, url, params = {}, method = 'GET', body = nu
 
 export const apiService = {
     getAll: (userId, table, onSuccess, onError) =>
-        request(userId, table, {}, 'GET', null, onSuccess, onError),
-    getByValue: (userId, table, params, onSuccess, onError) =>
-        request(userId, table, params, 'GET', null, onSuccess, onError),
+        request(userId, "contact", table, {}, 'GET', null, onSuccess, onError),
+    getByValue: (userId, type, table, params, onSuccess, onError) =>
+        request(userId, type, table, params, 'GET', null, onSuccess, onError),
     getById: (userId, table, onSuccess, onError) =>
         request(userId, `${table}`, {}, 'GET', null, onSuccess, onError),
     getNested: (userId, base, id, nested, params, onSuccess, onError) =>
         request(userId, `${base}/${id}/${nested}`, params, 'GET', null, onSuccess, onError),
     create: (userId, userType, entityName, body, onSuccess, onError) =>
         request(userId, userType, entityName, {}, 'POST', body, onSuccess, onError),
-    update: (userId, table, id, data, onSuccess, onError) =>
-        request(userId, `${table}/${id}`, {}, 'PUT', data, onSuccess, onError, type),
-    patch: (userId, table, id, data, onSuccess, onError) =>
-        request(userId, `${table}/${id}`, {}, 'PATCH', data, onSuccess, onError, type),
-    remove: (userId, table, id, onSuccess, onError) =>
-        request(userId, `${table}/${id}`, {}, 'DELETE', null, onSuccess, onError, type),
+    update: (userId, userType, entityName, id, data, onSuccess, onError) =>
+        request(userId, userType, `${entityName}/${id}`, {}, 'PUT', data, onSuccess, onError),
+    patch: (userId, userType, entityName, id, data, onSuccess, onError) =>
+        request(userId, userType, `${entityName}/${id}`, {}, 'PATCH', data, onSuccess, onError),
+    remove: (userId, userType, entityName, id, onSuccess, onError) =>
+        request(userId, userType, `${entityName}/${id}`, {}, 'DELETE', null, onSuccess, onError),
 };

@@ -1,113 +1,8 @@
-// import React, { useState, useEffect, useContext } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import { CurrentUser } from './App';
-// import Search from './Search';
-// import Sort from './Sort';
-// import Add from './Add';
-// import Delete from './Delete';
-// import Update from './Update';
-// import '../style/Posts.css';
-// import { apiService } from '../../services/genericServeices';
-
-// function Contacts() {
-//     const [userData, setUserData] = useState([]);
-//     const [allData, setAllData] = useState([]);
-//     const [isAll, setIsAll] = useState(0);
-//     const [displayData, setDisplayData] = useState([]);
-//     const [error, setError] = useState(null);
-//     const [isChange, setIsChange] = useState(0);
-//     const [displayDetails, setDisplayDetails] = useState(null);
-//     const { currentUser } = useContext(CurrentUser);
-//     const navigate = useNavigate();
-
-//     useEffect(() => {
-//         setIsChange(0);
-//         if (!currentUser || !currentUser.id) {
-//             setError("User is not logged in");
-//             return;
-//         }
-//         const fetchData = async () => {
-//             await apiService.getByValue(
-//                 currentUser.id,
-//                 "requests",
-//                 { userId: currentUser.id },
-//                 setUserData,
-//                 (err) => setError(`שגיאה בטעינת מידע אישי: ${err}`)
-//             );
-//         };
-//         // fetchData();
-//     }, [currentUser.id, isChange]);
-
-//     useEffect(() => {
-//         setIsChange(0);
-//         if (!currentUser || !currentUser.id) {
-//             return;
-//         }
-//         const fetchAll = async () => {
-//             await apiService.getAll(
-//                 currentUser.id,
-//                 "requests",
-//                 setAllData,
-//                 (err) => setError(`שגיאה בטעינת כל הנתונים: ${err}`)
-//             );
-//         };
-//         // fetchAll();
-//     }, [isChange]);
-
-//     useEffect(() => {
-//         setDisplayData(isAll === 0 ? userData : allData);
-//     }, [isAll, userData, allData]);
-
-//     return (
-//         <>
-//             <div className='control'>
-//                 <button onClick={() => setIsAll(prev => !prev)}>
-//                     {isAll === 0 ? "כל המידע" : "המידע שלי"}
-//                 </button>
-
-//                 <Sort
-//                     type={"requests"}
-//                     setIsChange={setIsChange}
-//                     options={["dateTime", "hospital", "department", "patientId"]}
-//                     userData={displayData}
-//                     setData={setDisplayData}
-//                 />
-
-//                 <Search
-//                     type={"requests"}
-//                     setIsChange={setIsChange}
-//                     options={["All", "hospital", "department", "patientId"]}
-//                     data={displayData}
-//                     setData={setDisplayData}
-//                 />
-
-//                 <Add
-//                     type="requests"
-//                     setIsChange={setIsChange}
-//                     inputs={["patientId", "contactId", "hospital", "department", "roomNumber", "date", "startTime", "endTime"]}
-//                     defaultValue={{
-//                         patientId: "",
-//                         contactId: currentUser.id,
-//                         hospital: "",
-//                         department: "",
-//                         roomNumber: "",
-//                         date: "",
-//                         startTime: "",
-//                         endTime: ""
-//                     }}
-//                     name="הוסף פנייה"
-//                 />
-//             </div>
-//         </>
-//     );
-// }
-// export default Contacts;
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CurrentUser } from './App';
 import Search from './Search';
 import Sort from './Sort';
-import Add from './Add';
 import Delete from './Delete';
 import Update from './Update';
 import '../style/Posts.css';
@@ -123,8 +18,6 @@ function Contacts() {
     const { currentUser } = useContext(CurrentUser);
     const navigate = useNavigate();
 
-    console.log("currentUser:", currentUser);
-
     useEffect(() => {
         setError(null);
         if (!currentUser || !currentUser.id) {
@@ -133,13 +26,25 @@ function Contacts() {
         }
         const fetchData = async () => {
             try {
-                const data = await apiService.getByValue(currentUser.id, "requests", { contactId: currentUser.id });
-                setUserData(data || []);
-            } catch (err) {
-                setError(`שגיאה בטעינת הפניות שלי: ${err.message || err}`);
+                await apiService.getByValue(
+                    currentUser.autoId,
+                    "contact",
+                    "Events",
+                    { contactId: currentUser.id },
+                    (result) => {
+                        console.log("get successful:", result);
+                        setUserData(result);
+                        setDisplayData(result);
+                        setIsChange(1);
+                    },
+                    (error) => {
+                        console.log("get was unsuccessful", error);
+                    });
+            } catch (error) {
+                console.log("Unexpected error:", error);
             }
         };
-        // fetchData();
+        fetchData();
     }, [currentUser, isChange]);
 
     useEffect(() => {
@@ -153,13 +58,25 @@ function Contacts() {
         }
         const fetchAll = async () => {
             try {
-                const data = await apiService.getAll(currentUser.id, "requests");
+                const data = await apiService.getAll(
+                    currentUser.autoId,
+                    "Events",
+                    (data) => {
+                        setAllData(data);
+                        setDisplayData(data);
+                        setIsChange(1);
+                        console.log("get all successful:", data);
+                    },
+                    (err) => {
+                        setError(`שגיאה בטעינת כל הפניות: ${err}`);
+                    }
+                );
                 setAllData(data || []);
             } catch (err) {
                 setError(`שגיאה בטעינת כל הפניות: ${err.message || err}`);
             }
         };
-        // fetchAll();
+        fetchAll();
     }, [currentUser, isAll, isChange]);
 
     useEffect(() => {
@@ -192,59 +109,41 @@ function Contacts() {
                     data={displayData}
                     setData={setDisplayData}
                 />
-
-                {/* <Add
-                    type="requests"
-                    setIsChange={setIsChange}
-                    inputs={["patientId", "contactId", "hospital", "department", "roomNumber", "date", "startTime", "endTime"]}
-                    defaultValue={{
-                        patientId: "",
-                        contactId: currentUser?.id || "",
-                        hospital: "",
-                        department: "",
-                        roomNumber: "",
-                        date: "",
-                        startTime: "",
-                        endTime: ""
-                    }}
-                    name="הוסף פנייה"
-                /> */}
             </div>
 
             {error && <div className="error">{error}</div>}
 
-            <table className="posts-table">
-                <thead>
-                    <tr>
-                        <th>תאריך</th>
-                        <th>בית חולים</th>
-                        <th>מחלקה</th>
-                        <th>מספר מטופל</th>
-                        <th>פעולות</th>
-                    </tr>
-                </thead>
+            <table className="requests-table">
                 <tbody>
                     {displayData && displayData.length > 0 ? (
                         displayData.map((item) => (
                             <tr key={item.id}>
                                 <td>{item.date}</td>
+                                <td>{item.startTime}</td>
+                                <td>{item.endTime}</td>
+                                <td>{item.roomNumber}</td>
                                 <td>{item.hospital}</td>
                                 <td>{item.department}</td>
                                 <td>{item.patientId}</td>
                                 <td>
                                     <button onClick={() => handleShowDetails(item.id)}>פרטים</button>
-                                    <Update
-                                        type="requests"
-                                        id={item.id}
-                                        setIsChange={setIsChange}
-                                        inputs={["patientId", "hospital", "department", "roomNumber", "date", "startTime", "endTime"]}
-                                        defaultValue={item}
-                                    />
-                                    <Delete
-                                        type="requests"
-                                        id={item.id}
-                                        setIsChange={setIsChange}
-                                    />
+                                    {console.log("item.id", item.id, "item.contactId", item.contactId, "currentUser.id", currentUser.id)}
+                                    {item.contactId === currentUser.id && (
+                                        <>
+                                            <Update
+                                                type="Events"
+                                                itemId={item.id}
+                                                setIsChange={setIsChange}
+                                                inputs={["patientId", "hospital", "department", "roomNumber", "date", "startTime", "endTime"]}
+                                                defaultValue={item}
+                                            />
+                                            <Delete
+                                                type="Events"
+                                                itemId={item.id}
+                                                setIsChange={setIsChange}
+                                            />
+                                        </>
+                                    )}
                                 </td>
                             </tr>
                         ))

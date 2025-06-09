@@ -12,7 +12,7 @@ export const Events = sequelize.define('Events', {
     date: { type: DataTypes.DATE, allowNull: false },
     startTime: { type: DataTypes.TIME, allowNull: false },
     endTime: { type: DataTypes.TIME, allowNull: false },
-    is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false },
+    is_deleted: { type: DataTypes.BOOLEAN, defaultValue: true },
     deleted_at: { type: DataTypes.DATE, allowNull: true }
 });
 

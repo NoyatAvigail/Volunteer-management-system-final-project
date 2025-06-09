@@ -3,7 +3,7 @@ import { useState } from "react";
 import { apiService } from "../../services/genericServeices";
 import { useContext } from "react";
 import { CurrentUser } from "./App";
-function Update({ type, itemId, setIsChange, inputs }) {
+function Update({ type, itemId, setIsChange, inputs, onSuccess = null }) {
     const [screen, setScreen] = useState(0);
     const [formData, setFormData] = useState({});
     const { currentUser } = useContext(CurrentUser);
@@ -22,17 +22,23 @@ function Update({ type, itemId, setIsChange, inputs }) {
         setScreen(0);
         try {
             await apiService.patch(
-                currentUser.id,
+                currentUser.autoId,
+                currentUser.type,
                 type,
                 itemId,
                 formData,
                 (result) => {
                     console.log("Update successful:", result);
-                    setIsChange(1);
+                    if (onSuccess) {
+                        onSuccess();
+                    } else {
+                        setIsChange(prev => prev === 0 ? 1 : 0);
+                    }
                 },
                 (error) => {
-                    console.log("Update was unsuccessful:", error);
-                },
+                    console.error(`Failed to update ${type} with ID ${itemId}: ${error}`);
+                    alert("עדכון נכשל. נסה שוב.");
+                }
             );
         } catch (error) {
             console.error("Unexpected error:", error);
