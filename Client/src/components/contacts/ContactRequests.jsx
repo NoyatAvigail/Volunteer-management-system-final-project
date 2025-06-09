@@ -10,8 +10,6 @@ import { apiService } from '../../../services/genericServeices';
 
 function ContactRequests() {
     const [userData, setUserData] = useState([]);
-    const [allData, setAllData] = useState([]);
-    const [isAll, setIsAll] = useState(false);
     const [displayData, setDisplayData] = useState([]);
     const [error, setError] = useState(null);
     const [isChange, setIsChange] = useState(0);
@@ -39,49 +37,16 @@ function ContactRequests() {
                     },
                     (error) => {
                         console.log("get was unsuccessful", error);
-                    });
+                        setError("שגיאה בטעינת הנתונים");
+                    }
+                );
             } catch (error) {
                 console.log("Unexpected error:", error);
+                setError("שגיאה בלתי צפויה בטעינת הנתונים");
             }
         };
         fetchData();
     }, [currentUser, isChange]);
-
-    useEffect(() => {
-        setError(null);
-        if (!currentUser || !currentUser.id) {
-            return;
-        }
-        if (!isAll) {
-            setAllData([]);
-            return;
-        }
-        const fetchAll = async () => {
-            try {
-                const data = await apiService.getAll(
-                    currentUser.autoId,
-                    "Events",
-                    (data) => {
-                        setAllData(data);
-                        setDisplayData(data);
-                        setIsChange(1);
-                        console.log("get all successful:", data);
-                    },
-                    (err) => {
-                        setError(`שגיאה בטעינת כל הפניות: ${err}`);
-                    }
-                );
-                setAllData(data || []);
-            } catch (err) {
-                setError(`שגיאה בטעינת כל הפניות: ${err.message || err}`);
-            }
-        };
-        fetchAll();
-    }, [currentUser, isAll, isChange]);
-
-    useEffect(() => {
-        setDisplayData(isAll ? allData : userData);
-    }, [isAll, userData, allData]);
 
     const handleShowDetails = (id) => {
         navigate(`/${currentUser.type}/${currentUser.id}/request-details/${id}`);
@@ -90,23 +55,19 @@ function ContactRequests() {
     return (
         <>
             <div className='control'>
-                <button onClick={() => setIsAll(prev => !prev)}>
-                    {isAll ? "המידע שלי" : "כל המידע"}
-                </button>
-
                 <Sort
-                    type={"requests"}
+                    type="requests"
                     setIsChange={setIsChange}
                     options={["date", "hospital", "department", "patientId"]}
-                    userData={displayData}
+                    userData={userData}
                     setData={setDisplayData}
                 />
 
                 <Search
-                    type={"requests"}
+                    type="requests"
                     setIsChange={setIsChange}
                     options={["All", "hospital", "department", "patientId"]}
-                    data={displayData}
+                    data={userData}
                     setData={setDisplayData}
                 />
             </div>
@@ -127,7 +88,6 @@ function ContactRequests() {
                                 <td>{item.patientId}</td>
                                 <td>
                                     <button onClick={() => handleShowDetails(item.id)}>פרטים</button>
-                                    {console.log("item.id", item.id, "item.contactId", item.contactId, "currentUser.id", currentUser.id)}
                                     {item.contactId === currentUser.id && (
                                         <>
                                             <Update
@@ -149,7 +109,7 @@ function ContactRequests() {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan={5}>אין נתונים להצגה</td>
+                            <td colSpan={8}>אין נתונים להצגה</td>
                         </tr>
                     )}
                 </tbody>

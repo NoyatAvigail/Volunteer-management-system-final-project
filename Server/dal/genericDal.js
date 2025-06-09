@@ -6,7 +6,7 @@ const models = { Users, Passwords, Events };
 
 const genericDAL = {
     getModelByName: (name) => {
-        console.log(models[name]);   
+        console.log(models[name]);
         return models[name]
     },
 
@@ -20,6 +20,17 @@ const genericDAL = {
             }
         });
     },
+    // findByField: (model, query) => {
+    //     const whereClause = { is_deleted: false };
+    //     for (const [field, value] of Object.entries(query)) {
+    //         if (value === '' || value === null || value === 'null') {
+    //             whereClause[field] = null;
+    //         } else {
+    //             whereClause[field] = value;
+    //         }
+    //     }
+    //     return model.findAll({ where: whereClause });
+    // },
 
     findAll: (model) => {
         return model.findAll({
@@ -54,7 +65,7 @@ const genericDAL = {
     },
 
     createItem: (model, data) => {
-        console.log("data", data); 
+        console.log("data", data);
         return model.create(data)
     },
 

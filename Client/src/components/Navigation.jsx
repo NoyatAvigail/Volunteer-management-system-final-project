@@ -48,7 +48,7 @@ function Navigation({ setIsShowInfo }) {
                                     <ul><Link to={`/${currentUser.type}/${currentUser.autoId}/requests`}>הפניות שלי</Link></ul>
                                     <ul><Link to={`/${currentUser.type}/${currentUser.autoId}/new-request`}>הוספת פנייה</Link></ul>
                                     <ul><Link to={`/${currentUser.type}/${currentUser.autoId}/add-patient`}>הוספת מטופל</Link></ul>
-                                    <ul><Link to={`/${currentUser.type}/${currentUser.autoId}/thanks`}>םני רוצה לומר תודה</Link></ul>
+                                    <ul><Link to={`/${currentUser.type}/${currentUser.autoId}/thanks`}>אני רוצה לומר תודה</Link></ul>
                                     <ul><Link to={`/${currentUser.type}/${currentUser.autoId}/profile`}>ניהול פרופיל</Link></ul>
                                     <div className="right">
                                         <ul onClick={logOut}><a>התנתקות</a></ul>
