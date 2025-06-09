@@ -40,7 +40,7 @@ async function request(userId, type, url, params = {}, method = 'GET', body = nu
 
 export const apiService = {
     getAll: (userId, table, onSuccess, onError) =>
-        request(userId, "contact", table, {}, 'GET', null, onSuccess, onError),
+        request(userId, type, table, {}, 'GET', null, onSuccess, onError),
     getByValue: (userId, type, table, params, onSuccess, onError) =>
         request(userId, type, table, params, 'GET', null, onSuccess, onError),
     getById: (userId, table, onSuccess, onError) =>

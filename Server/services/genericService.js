@@ -1,4 +1,4 @@
-import genericDAL from "../dal/genericDal.js";
+import genericDAL from "../dal/genericDal.js"
 import { capitalize } from "../utils/utils.js";
 import { log } from "../utils/logger.js";
 
