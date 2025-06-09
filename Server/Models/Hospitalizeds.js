@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../../DB/db.mjs';
+import sequelize from '../../DB/connectionDB.mjs';
 
-export const Hospitalized = sequelize.define('Hospitalized', {
+export const Hospitalizeds = sequelize.define('Hospitalizeds', {
   id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
   patientId: { type: DataTypes.INTEGER, allowNull: false, references: { model: "Patients", key: "id" }, onUpdate: 'CASCADE', onDelete: 'CASCADE' },
   hospital: { type: DataTypes.STRING, allowNull: false },
@@ -11,4 +11,4 @@ export const Hospitalized = sequelize.define('Hospitalized', {
   hospitalizationEnd: { type: DataTypes.DATE },
 });
 
-export default Hospitalized;
+export default Hospitalizeds;

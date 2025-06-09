@@ -20,17 +20,6 @@ const genericDAL = {
             }
         });
     },
-    // findByField: (model, query) => {
-    //     const whereClause = { is_deleted: false };
-    //     for (const [field, value] of Object.entries(query)) {
-    //         if (value === '' || value === null || value === 'null') {
-    //             whereClause[field] = null;
-    //         } else {
-    //             whereClause[field] = value;
-    //         }
-    //     }
-    //     return model.findAll({ where: whereClause });
-    // },
 
     findAll: (model) => {
         return model.findAll({
