@@ -4,7 +4,7 @@ import Volunteers from "../Models/Volunteers.js";
 import ContactPeople from "../Models/ContactPeople.js"
 import Patients from "../Models/Patients.js"
 import RelationToPatients from '../Models/RelationToPatients.js'
-import Hospitalized from '../Models/Hospitalized.js';
+import Hospitalizeds from '../Models/Hospitalizeds.js';
 
 const userDal = {
     findByEmail: (email) => {
@@ -43,9 +43,9 @@ const userDal = {
         return RelationToPatients.create(relationData);
     },
 
-    createHospitalized: (hospitalizedData) => {
-        console.log('Creating hospitalized record with data:', hospitalizedData);
-        return Hospitalized.create(hospitalizedData);
+    createHospitalizeds: (HospitalizedsData) => {
+        console.log('Creating Hospitalizeds record with data:', HospitalizedsData);
+        return Hospitalizeds.create(HospitalizedsData);
     },  
 
     savePassword: (id, hashedPassword) => {

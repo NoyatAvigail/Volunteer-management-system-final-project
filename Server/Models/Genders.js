@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../../DB/db.mjs';
+import sequelize from '../../DB/connectionDB.mjs';
 
 export const Genders = sequelize.define('Genders', {
   id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
