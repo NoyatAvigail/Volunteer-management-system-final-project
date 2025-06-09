@@ -1,26 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { apiService } from "../../services/genericServeices";
-import { useContext } from "react";
 import { CurrentUser } from "./App";
 
-function Delete({ type, itemId, setIsChange, deleteChildren = null, typeOfChild = null }) {
+function Delete({
+    type,
+    itemId,
+    setIsChange,
+    onSuccess = null,
+}) {
     const { currentUser } = useContext(CurrentUser);
     const [process, setProcess] = useState(0);
 
     async function deleteFunc(e) {
+        e.preventDefault();
+        setProcess(1);
         try {
             await apiService.remove(
-                currentUser.id,
+                currentUser.autoId,
+                currentUser.type,
                 type,
                 itemId,
                 (result) => {
                     console.log("Delete successful:", result);
-                    setIsChange(1);
+                    if (onSuccess) {
+                        onSuccess();
+                    } else {
+                        setIsChange(prev => prev == 0 ? 1 : 0);
+                    }
                 },
                 (error) => {
                     console.error(`Failed to delete ${type} with ID ${itemId}: ${error}`);
-                    alert("Failed to delete the item. Please try again.");
-                },
+                    alert("מחיקה נכשלה. נסה שוב.");
+                }
             );
         } catch (error) {
             console.error("Unexpected error:", error);
@@ -30,12 +41,12 @@ function Delete({ type, itemId, setIsChange, deleteChildren = null, typeOfChild 
 
     return (
         <>
-            <button onClick={(e) => deleteFunc(e)} className="action-btn delete-btn">
+            <button onClick={deleteFunc} className="action-btn delete-btn">
                 <i className="fa fa-trash"></i>
             </button>
-            {process == 1 && <h3>in process...</h3>}
+            {process === 1 && <h3>in process...</h3>}
         </>
-    )
+    );
 }
 
 export default Delete;

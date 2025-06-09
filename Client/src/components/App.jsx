@@ -54,7 +54,7 @@ function App() {
         <Route path="/contact/:id" element={<Contacts />} />
         <Route path="/contact/:id/home" element={<Contacts />} />
         <Route path="/contact/:id/patient-info" element={<ContactPatientInfo />} />
-        <Route path="/contact/:id/referrals" element={<ContactRequests />} />
+        <Route path="/contact/:id/requests" element={<ContactRequests />} />
         <Route path="/contact/:id/new-request" element={<ContactNewRequest />} />
         <Route path="/contact/:id/add-patient" element={<ContactAddPatient />} />
         <Route path="/contact/:id/thanks" element={<ContactThanks />} />

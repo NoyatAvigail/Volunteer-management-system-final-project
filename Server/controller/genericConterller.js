@@ -8,7 +8,7 @@ const genericConterller = {
                 const items = await service.getAllItems(req.params.table);
                 return res.status(200).json(items);
             } else {
-                const item = await service.getItem(req.params.table, req.params);
+                const item = await service.getItem(req.params.table, req.query);
                 res.status(200).json(item);
             }
         } catch (error) {
@@ -36,14 +36,6 @@ const genericConterller = {
         }
     },
 
-    // post: async (req, res) => {
-    //     try {
-    //         const item = await service.createItem(req.params.table, req.body);
-    //         res.status(201).json(item);
-    //     } catch {
-    //         res.status(500).json({ message: 'Server error' });
-    //     }
-    // },
     post: async (req, res) => {
         try {
             const item = await service.createItem(req.params.table, req.body);
