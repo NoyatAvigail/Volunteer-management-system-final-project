@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { CurrentUser } from "../App";
-import { apiService } from '../../../services/genericServeices';
+import { userService } from '../../services/usersServices';
 
 function VolunteerShifts() {
   const { currentUser } = useContext(CurrentUser);
@@ -9,7 +9,7 @@ function VolunteerShifts() {
   useEffect(() => {
     if (!currentUser?.id) return;
 
-    apiService.getByValue(
+    userService.getByValue(
       currentUser.autoId,
       'volunteers',
       'Events',

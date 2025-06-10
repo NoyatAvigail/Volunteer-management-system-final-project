@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { CurrentUser } from '.././App';
-import { apiService } from '../../../services/genericServeices';
+import { userService } from '../../services/usersServices';
 
 function ContactAddPatient() {
     const { currentUser } = useContext(CurrentUser);
@@ -23,7 +23,7 @@ function ContactAddPatient() {
         setError(null);
         setSuccess(null);
         try {
-            await apiService.addNew(currentUser.id, "patients", { ...formData, contactId: currentUser.id });
+            await userService.addNew(currentUser.id, "patients", { ...formData, contactId: currentUser.id });
             setSuccess("מטופל נוסף בהצלחה");
             setFormData({
                 name: '',

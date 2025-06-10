@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { apiService } from "../../services/genericServeices";
+import { userService } from "../services/usersServices";
 import { useContext } from "react";
 import { CurrentUser } from "./App";
 function Update({ type, itemId, setIsChange, inputs, onSuccess = null }) {
@@ -21,7 +21,7 @@ function Update({ type, itemId, setIsChange, inputs, onSuccess = null }) {
         e.target.reset();
         setScreen(0);
         try {
-            await apiService.patch(
+            await userService.patch(
                 currentUser.autoId,
                 currentUser.type,
                 type,

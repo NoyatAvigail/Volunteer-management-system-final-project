@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from "js-cookie";
 import { CurrentUser } from './App';
 import { validateLoginForm } from '../../utils/userValidator';
-import { login } from '../../services/usersServices';
+import { login } from '../services/usersServices';
 import '../style/LogIn.css';
 
 function LogIn() {

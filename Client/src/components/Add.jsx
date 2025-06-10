@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { CurrentUser } from "./App";
-import { apiService } from "../../services/genericServeices";
+import { userService } from "../services/usersServices";
 
 function Add({ setIsChange = () => { }, inputs, defaultValue, name = "Add", type }) {
     const { currentUser } = useContext(CurrentUser);
@@ -14,27 +14,6 @@ function Add({ setIsChange = () => { }, inputs, defaultValue, name = "Add", type
         },
     });
 
-    // const addFunc = async (body) => {
-    //     reset();
-    //     setIsScreen(0);
-    //     try {
-    //         await apiService.create(
-    //             currentUser.autoId,
-    //             currentUser.type,
-    //             type,
-    //             body,
-    //             (result) => {
-    //                 console.log("add successful:", result);
-    //                 setIsChange(1);
-    //                 reset();
-    //             },
-    //             (error) => {
-    //                 console.log("add was unsuccessful", error);
-    //             });
-    //     } catch (error) {
-    //         console.log("Unexpected error:", error);
-    //     }
-    // };
     const addFunc = async (body) => {
         const preparedBody = {
             ...body,
@@ -49,7 +28,7 @@ function Add({ setIsChange = () => { }, inputs, defaultValue, name = "Add", type
         reset();
         setIsScreen(0);
         try {
-            await apiService.create(
+            await userService.create(
                 currentUser.autoId,
                 currentUser.type,
                 type,

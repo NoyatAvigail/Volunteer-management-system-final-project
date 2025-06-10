@@ -6,7 +6,7 @@ import Sort from './Sort';
 import Delete from './Delete';
 import Update from './Update';
 import '../style/Posts.css';
-import { apiService } from '../../services/genericServeices';
+import { userService } from '../services/usersServices';
 
 function Contact() {
     const [userData, setUserData] = useState([]);
@@ -24,7 +24,7 @@ function Contact() {
         }
         const fetchData = async () => {
             try {
-                await apiService.getByValue(
+                await userService.getByValue(
                     currentUser.autoId,
                     "contact",
                     "Events",
