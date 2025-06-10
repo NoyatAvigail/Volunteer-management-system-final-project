@@ -1,11 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { CurrentUser } from './App';
 import Cookies from "js-cookie";
 import { validateFirstRegisterStep, validateSecondRegisterStep } from '../../utils/userValidator';
 import { signup } from '../services/usersServices';
+import { genericServices } from '../services/genericServices';
 import '../style/Register.css';
 
 function Register() {
@@ -17,14 +18,34 @@ function Register() {
     const [responsText, setResponstText] = useState("Fill the form and click the sign up button");
     const { setCurrentUser } = useContext(CurrentUser);
     const [userData, setUserData] = useState({});
-    const sectors = ["חרדי", "דתי", "חילוני", "מסורתי"];
-    const hospitals = ["שיבא", "איכילוב", "הדסה עין כרם", "שערי צדק", "בלינסון", "ברזילי", "סורוקה"];
-    const departments = ["פנימית", "אורתופדיה", "ילדים", "ניתוחים", "שיקום"];
-    const familyRelations = [
-        'אמא', 'אבא', 'אח', 'אחות', 'סבא', 'סבתא',
-        'דוד', 'דודה', 'בן דוד', 'בת דוד', 'בן זוג',
-        'בת זוג', 'ילד', 'ילדה'
-    ];
+    const comboTables = ["UserTypes", "Sectors", "Genders", "Hospitals", "Departments", "FamilyRelations", "VolunteeringTypes"];
+    const [comboData, setComboData] = useState({});
+    const [showMoreForm, setShowMoreForm] = useState(false);
+
+    useEffect(() => {
+        const fetchAllCombos = async () => {
+            const results = {};
+            await Promise.all(
+                comboTables.map(async (table) => {
+                    try {
+                        const response = await genericServices.getAll(table);
+                        console.log(`Data from ${table}:`, response);
+                        if (Array.isArray(response)) {
+                            results[table] = response;
+                        } else {
+                            console.error(`Invalid data from ${table}`, response);
+                            results[table] = [];
+                        }
+                    } catch (error) {
+                        console.error(`Error fetching ${table}`, error);
+                        results[table] = [];
+                    }
+                })
+            );
+            setComboData(results);
+        };
+        fetchAllCombos();
+    }, []);
 
     const onFirstSubmit = async (data) => {
         const error = validateFirstRegisterStep(data);
@@ -32,19 +53,19 @@ function Register() {
             setResponstText(error);
             return;
         }
-        setUserData({ fullName: data.fullName, email: data.email, password: data.password, verifyPassword: data.verifyPassword, type: userType });
+        setUserData({ fullName: data.fullName, email: data.email, password: data.password, verifyPassword: data.verifyPassword, type: userType.id });
         setRegisterIsCompleted(1);
         resetFirstForm();
     };
 
     const handleSignupSuccess = (createdUser) => {
-        console.log(`userType${userType}`);
+        console.log(`userType${userType.description}`);
         const user = createdUser.user;
         console.log("User created successfully:", user);
         Cookies.set("token", createdUser.token);
         setCurrentUser(user);
         localStorage.setItem("currentUser", JSON.stringify(user));
-        navigate(`/${userType}/${user.id}`);
+        navigate(`/${userType.description}/${user.id}`);
     };
 
     const handleSignupFailure = () => {
@@ -62,23 +83,29 @@ function Register() {
             setResponstText(error);
             return;
         }
-        if (userType == "volunteer") {
+        if (userType.description == "volunteer") {
+            console.log("Registering as a volunteer with data:", mergedData);
+
             const fullUser = {
                 id: Number(mergedData.userId),
                 fullName: userData.fullName,
                 email: userData.email,
                 password: userData.password,
                 phone: mergedData.phone,
-                type: userType,
+                type: Number(mergedData.userType.id),
                 dateOfBirth: mergedData.birthDate,
-                gender: mergedData.gender,
-                sector: mergedData.sector,
+                gender: Number(mergedData.gender),
+                sector: Number(mergedData.sector),
                 address: mergedData.address,
-                photo: "https://example.com/image.jpg",
                 volunteerStartDate: new Date().toISOString(),
                 volunteerEndDate: null,
                 isActive: true,
-                flexible: mergedData.availability === "true" ? true : false,
+                preferredDepartments: mergedData.preferredDepartments.map(d => Number(d)),
+                preferredHospitals: mergedData.preferredHospitals.map(h => Number(h)),
+                helpTypes: mergedData.helpTypes.map(h => Number(h)),
+                guardSectors: mergedData.guardSectors.map(s => Number(s)),
+                guardGenders: mergedData.guardGenders.map(g => Number(g)),
+                isFlexible: mergedData.isFlexible == "true",
             };
             delete fullUser.verifyPassword;
             await signup(
@@ -87,12 +114,12 @@ function Register() {
                 handleSignupFailure
             );
         }
-        else if (userType == "contact") {
+        else if (userType.description == "contact") {
             const contactUser = {
                 id: Number(mergedData.userId),
                 email: userData.email,
                 phone: mergedData.phone,
-                type: userType,
+                type: Number(userType.id),
                 password: userData.password,
                 fullName: userData.fullName,
                 address: mergedData.address,
@@ -106,7 +133,7 @@ function Register() {
                 patientInterestedInReceivingNotifications: !!mergedData.notifications,
 
                 relationId: Number(mergedData.relationId),
-                
+
                 hospital: mergedData.hospital,
                 department: mergedData.department,
                 roomNumber: mergedData.roomNumber
@@ -139,14 +166,21 @@ function Register() {
                     />
                     {errors.verifyPassword && <p>הסיסמאות אינן תואמות</p>}
                     <div>
-                        <button type="button" onClick={() => setUserType("volunteer")}>אני מתנדב</button>
-                        <button type="button" onClick={() => setUserType("contact")}>אני איש קשר</button>
+                        {comboData["UserTypes"]?.map((item) => (
+                            <button
+                                key={item.id}
+                                type="button"
+                                onClick={() => setUserType({ id: item.id, description: item.description })}
+                            >
+                                {item.description}
+                            </button>
+                        ))}
                     </div>
                     {!userType && <p>יש לבחור סוג משתמש</p>}
                     <button type="submit" disabled={!userType}>המשך</button>
                 </form>
             )}
-            {registerIsCompleted == 1 && userType == "volunteer" && (
+            {registerIsCompleted == 1 && userType.description == "volunteer" && (
                 <form onSubmit={handleSecondSubmit(onSecondSubmit)}>
                     <h2>טופס מתנדב</h2>
                     <input placeholder="ת.ז." {...registerSecond("userId", { required: true })} />
@@ -159,40 +193,127 @@ function Register() {
                         {...registerSecond("birthDate", { required: true })}
                     />
                     {errorsSecond.birthDate && <p>יש להזין תאריך לידה</p>}
-                    <select {...registerSecond("gender", { required: true })}>
-                        <option value="">בחר מין</option>
-                        <option value="זכר">זכר</option>
-                        <option value="נקבה">נקבה</option>
-                    </select>
-                    {errorsSecond.gender && <p>יש לבחור מין</p>}
-                    <select {...registerSecond("sector", { required: true })}>
-                        <option value="">בחר מגזר</option>
-                        {sectors.map(s => <option key={s} value={s}>{s}</option>)}
-                    </select>
-                    {errorsSecond.sector && <p>יש לבחור מגזר</p>}
                     <input placeholder="טלפון" {...registerSecond("phone", { required: true })} />
                     {errorsSecond.phone && <p>יש להזין טלפון</p>}
                     <input placeholder="כתובת" {...registerSecond("address", { required: true })} />
                     {errorsSecond.address && <p>יש להזין כתובת</p>}
-                    <input type="file" {...registerSecond("image")} />
+                    {errorsSecond.gender && <p>יש לבחור מין</p>}
+                    <select {...registerSecond("gender", { required: true })}>
+                        <option value="">בחר מגדר</option>
+                        {comboData["Genders"]?.map((item) => (
+                            <option key={item.id} value={item.id}>{item.description}</option>
+                        ))}
+                    </select>
+                    {errorsSecond.gender && <p>יש לבחור מגזר</p>}
+                    <select {...registerSecond("sector", { required: true })}>
+                        <option value="">בחר מגזר</option>
+                        {comboData["Sectors"]?.map((item) => (
+                            <option key={item.id} value={item.id}>{item.description}</option>
+                        ))}
+                    </select>
                     <label>תחומי התנדבות:</label>
                     <div>
-                        <input type="checkbox" {...registerSecond("helpType")} value="שמירה" id="help-shmira" />
-                        <label htmlFor="help-shmira">שמירה</label>
-                        <input type="checkbox" {...registerSecond("helpType")} value="ביקור" id="help-bikur" />
-                        <label htmlFor="help-bikur">ביקור</label>
+                        {comboData["VolunteeringTypes"]?.map((item) => (
+                            <div key={item.id}>
+                                <input
+                                    type="checkbox"
+                                    {...registerSecond("helpTypes", { required: true })}
+                                    value={item.id}
+                                    id={`help-${item.id}`}
+                                />
+                                <label htmlFor={`help-${item.id}`}>{item.description}</label>
+                            </div>
+                        ))}
                     </div>
-                    <label>זמינות (ניתן לבחור יותר מאפשרות אחת):</label>
-                    <input type="checkbox" {...registerSecond("availability")} value="true" id="availability" />
-                    <label htmlFor="availability">האם זמין?</label>
-                    <label>
-                        <input type="checkbox" {...registerSecond("notifications")} />
-                        מעוניין בהתראות
-                    </label>
+                    <button type="button" onClick={() => setShowMoreForm(true)}>
+                        המשך מילוי פרטים נוספים
+                    </button>
+                    {showMoreForm && (
+                        <div className="more-form">
+                            <h3>פרטים נוספים</h3>
+                            <label>מחלקות בהן מוכן להתנדב</label>
+                            {comboData["Departments"]?.map((item) => (
+                                <div key={item.id}>
+                                    <input
+                                        type="checkbox"
+                                        {...registerSecond("preferredDepartments")}
+                                        value={item.id}
+                                        id={`dept-${item.id}`}
+                                    />
+                                    <label htmlFor={`dept-${item.id}`}>{item.description}</label>
+                                </div>
+                            ))}
+                            <label>בתי חולים בהן מוכן להתנדב</label>
+                            {comboData["Hospitals"]?.map((item) => (
+                                <div key={item.id}>
+                                    <input
+                                        type="checkbox"
+                                        {...registerSecond("preferredHospitals")}
+                                        value={item.id}
+                                        id={`hospital-${item.id}`}
+                                    />
+                                    <label htmlFor={`hospital-${item.id}`}>{item.description}</label>
+                                </div>
+                            ))}
+                            <label>מגזרים עליהם מוכן לשמור</label>
+                            {comboData["Sectors"]?.map((item) => (
+                                <div key={item.id}>
+                                    <input
+                                        type="checkbox"
+                                        {...registerSecond("guardSectors")}
+                                        value={item.id}
+                                        id={`guard-sector-${item.id}`}
+                                    />
+                                    <label htmlFor={`guard-sector-${item.id}`}>{item.description}</label>
+                                </div>
+                            ))}
+                            <label>מגדרים עליהם מוכן לשמור</label>
+                            {comboData["Genders"]?.map((item) => (
+                                <div key={item.id}>
+                                    <input
+                                        type="checkbox"
+                                        {...registerSecond("guardGenders")}
+                                        value={item.id}
+                                        id={`guard-gender-${item.id}`}
+                                    />
+                                    <label htmlFor={`guard-gender-${item.id}`}>{item.description}</label>
+                                </div>
+                            ))}
+                            <label>האם הוא גמיש בשעות?</label>
+                            <div>
+                                <input
+                                    type="radio"
+                                    {...registerSecond("isFlexible")}
+                                    value="true"
+                                    id="flexible-yes"
+                                />
+                                <label htmlFor="flexible-yes">כן</label>
+                                <input
+                                    type="radio"
+                                    {...registerSecond("isFlexible")}
+                                    value="false"
+                                    id="flexible-no"
+                                />
+                                <label htmlFor="flexible-no">לא</label>
+                            </div>
+                            {/* <label>באילו שעות מוכן להתנדב?</label>
+                            {comboData["VolunteerDiaries"]?.map((item) => (
+                                <div key={item.id}>
+                                    <input
+                                        type="checkbox"
+                                        {...registerSecond("volunteerTimes")}
+                                        value={item.id}
+                                        id={`diary-${item.id}`}
+                                    />
+                                    <label htmlFor={`diary-${item.id}`}>{item.description}</label>
+                                </div>
+                            ))} */}
+                        </div>
+                    )}
                     <button type="submit">הרשם</button>
                 </form>
             )}
-            {registerIsCompleted == 1 && userType == "contact" && (
+            {registerIsCompleted == 1 && userType.description == "contact" && (
                 <form onSubmit={handleSecondSubmit(onSecondSubmit)}>
                     <h2>טופס איש קשר</h2>
                     <input placeholder="ת.ז." {...registerSecond("userId", { required: true })} />

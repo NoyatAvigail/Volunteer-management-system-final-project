@@ -2,7 +2,17 @@ import service from "../services/genericService.js";
 
 const genericConterller = {
 
-    getAllOrByValue: async (req, res) => {
+    getAll: async (req, res) => {
+        try {
+            const items = await service.getAllItems(req.params.table);
+            res.status(200).json(items);
+        } catch (error) {
+            console.error("Error in getAll:", error);
+            res.status(500).json({ message: 'Server error' });
+        }
+    },
+
+    getByValue: async (req, res) => {
         try {
             if (Object.keys(req.query).length == 0) {
                 const items = await service.getAllItems(req.params.table);
