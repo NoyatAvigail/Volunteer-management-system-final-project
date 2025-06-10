@@ -2,7 +2,15 @@ import Sequelize from "sequelize";
 import Users from '../Models/Users.js';
 import Passwords from '../Models/Passwords.js';
 import Events from '../Models/Events.js';
-const models = { Users, Passwords, Events };
+import Sectors from '../Models/Sectors.js';
+import Genders from '../models/Genders.js';
+import Hospitals from '../Models/Hospitals.js'; 
+import Departments from '../Models/Departments.js';
+import FamilyRelations from '../Models/FamilyRelations.js';
+import VolunteeringTypes from '../Models/VolunteeringTypes.js';
+import UserTypes from '../Models/UserTypes.js';
+
+const models = { Users, Passwords, Events, Sectors, Genders, Hospitals, Departments, FamilyRelations, VolunteeringTypes, UserTypes };
 
 const genericDAL = {
     getModelByName: (name) => {
@@ -22,11 +30,7 @@ const genericDAL = {
     },
 
     findAll: (model) => {
-        return model.findAll({
-            where: {
-                is_deleted: 1
-            }
-        })
+        return model.findAll()
     },
 
     findById: (model, id) => {

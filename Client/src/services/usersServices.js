@@ -11,7 +11,7 @@ export function setTokenGetter(fn) {
 const registerAuth = async (endpoint, body, onSuccess, onError) => {
     try {
         const response = await axios.post(
-            `${API_URL}/${endpoint}`,
+            `${API_URL}/api/users/${endpoint}`,
             body,
             {
                 headers: {
@@ -34,7 +34,7 @@ async function request(userId, type, url, params = {}, method = 'GET', body = nu
         const token = getToken();
         const config = {
             method,
-            url: `${API_URL}/${type}/${userId}/${url}`,
+            url: `${API_URL}/api/users/${type}/${userId}/${url}`,
             headers: {
                 authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -59,9 +59,6 @@ async function request(userId, type, url, params = {}, method = 'GET', body = nu
     }
 }
 
-export const signup = (body, onSuccess, onError) => registerAuth("signup", body, onSuccess, onError);
-export const login = (body, onSuccess, onError) => registerAuth("login", body, onSuccess, onError);
-
 export const userService = {
     getAll: (userId, table, onSuccess, onError) =>
         request(userId, type, table, {}, 'GET', null, onSuccess, onError),
@@ -80,3 +77,6 @@ export const userService = {
     remove: (userId, userType, entityName, id, onSuccess, onError) =>
         request(userId, userType, `${entityName}/${id}`, {}, 'DELETE', null, onSuccess, onError),
 };
+
+export const signup = (body, onSuccess, onError) => registerAuth("signup", body, onSuccess, onError);
+export const login = (body, onSuccess, onError) => registerAuth("login", body, onSuccess, onError);
