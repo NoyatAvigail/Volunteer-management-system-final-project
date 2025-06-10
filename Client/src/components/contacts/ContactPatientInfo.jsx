@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { CurrentUser } from '.././App';
-import { apiService } from '../../../services/genericServeices';
+import { userService } from '../../services/usersServices';
 
 function ContactPatientInfo() {
     const { currentUser } = useContext(CurrentUser);
@@ -14,7 +14,7 @@ function ContactPatientInfo() {
         }
         const fetchPatientInfo = async () => {
             try {
-                const data = await apiService.getByValue(currentUser.id, "patient-info", { contactId: currentUser.id });
+                const data = await userService.getByValue(currentUser.id, "patient-info", { contactId: currentUser.id });
                 setPatientInfo(data);
             } catch (err) {
                 setError(`שגיאה בטעינת מידע על המטופל: ${err.message || err}`);

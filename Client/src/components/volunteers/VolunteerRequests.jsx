@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { apiService } from '../../../services/genericServeices';
+import { userService } from '../../services/usersServices';
 import { CurrentUser } from '../App';
 
 function VolunteerRequests() {
@@ -11,7 +11,7 @@ function VolunteerRequests() {
   useEffect(() => {
     if (!currentUser) return;
 
-    apiService.getByValue(
+    userService.getByValue(
       currentUser.autoId,
       'volunteers',
       'Events',
@@ -23,7 +23,7 @@ function VolunteerRequests() {
 
   const handleTakeCall = (callId) => {
     if (!currentUser) return;
-    apiService.patch(
+    userService.patch(
       currentUser.autoId,
       currentUser.type,
       'Events',

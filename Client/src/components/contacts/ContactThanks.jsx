@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { CurrentUser } from '.././App';
-import { apiService } from '../../../services/genericServeices';
+import { userService } from '../../services/usersServices';
 
 function ContactThanks() {
     const { currentUser } = useContext(CurrentUser);
@@ -21,7 +21,7 @@ function ContactThanks() {
         }
 
         try {
-            await apiService.addNew(currentUser.id, "thanks", { contactId: currentUser.id, message });
+            await userService.addNew(currentUser.id, "thanks", { contactId: currentUser.id, message });
             setSuccess("תודה נשלחה בהצלחה");
             setMessage('');
         } catch (err) {

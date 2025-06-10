@@ -44,6 +44,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<Register />} />
+
         <Route path="/volunteer/:id" element={<Volunteers />} />
         <Route path="/volunteer/:id/home" element={<Volunteers />} />
         <Route path="/volunteer/:id/shifts" element={<VolunteerShifts />} />
@@ -51,6 +52,7 @@ function App() {
         <Route path="/volunteer/:id/certificate" element={<VolunteerCertificate />} />
         <Route path="/volunteer/:id/profile" element={<VolunteerProfile />} />
         <Route path="/volunteer/:id/fixedShifts" element={<VolunteerFixedShifts />} />
+
         <Route path="/contact/:id" element={<Contacts />} />
         <Route path="/contact/:id/home" element={<Contacts />} />
         <Route path="/contact/:id/patient-info" element={<ContactPatientInfo />} />
@@ -59,6 +61,7 @@ function App() {
         <Route path="/contact/:id/add-patient" element={<ContactAddPatient />} />
         <Route path="/contact/:id/thanks" element={<ContactThanks />} />
         <Route path="/contact/:id/profile" element={<ContactProfile />} />
+        
         <Route path="/error" element={<ErrorPage />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>

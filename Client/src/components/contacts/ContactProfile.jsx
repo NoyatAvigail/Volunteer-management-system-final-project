@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { CurrentUser } from '.././App';
-import { apiService } from '../../../services/genericServeices';
+import { userService } from '../../services/usersServices';
 
 function ContactProfile() {
     const { currentUser, setCurrentUser } = useContext(CurrentUser);
@@ -20,7 +20,7 @@ function ContactProfile() {
         }
         const fetchProfile = async () => {
             try {
-                const data = await apiService.getByValue(currentUser.id, "contacts", { id: currentUser.id });
+                const data = await userService.getByValue(currentUser.id, "contacts", { id: currentUser.id });
                 setProfileData(data);
                 setFormData({
                     fullName: data.fullName || '',
@@ -44,7 +44,7 @@ function ContactProfile() {
         setSuccess(null);
 
         try {
-            await apiService.update(currentUser.id, "contacts", currentUser.id, formData);
+            await userService.update(currentUser.id, "contacts", currentUser.id, formData);
             setSuccess("הפרופיל עודכן בהצלחה");
             setCurrentUser(prev => ({ ...prev, ...formData }));
         } catch (err) {

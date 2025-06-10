@@ -5,7 +5,7 @@ import { useState, useContext } from 'react';
 import { CurrentUser } from './App';
 import Cookies from "js-cookie";
 import { validateFirstRegisterStep, validateSecondRegisterStep } from '../../utils/userValidator';
-import { signup } from '../../services/usersServices';
+import { signup } from '../services/usersServices';
 import '../style/Register.css';
 
 function Register() {
@@ -50,75 +50,6 @@ function Register() {
     const handleSignupFailure = () => {
         setResponstText("Registration failed. Please try again.");
     };
-
-    // const onSecondSubmit = async (data) => {
-    //     const mergedData = {
-    //         ...data,
-    //         email: userData.email,
-    //     };
-    //     const error = validateSecondRegisterStep(mergedData);
-    //     console.log("Validation error:", error);
-    //     if (error) {
-    //         setResponstText(error);
-    //         return;
-    //     }
-    //     if (userType == "volunteer") {
-    //         const fullUser = {
-    //             id: Number(mergedData.userId),
-    //             fullName: userData.fullName,
-    //             email: userData.email,
-    //             password: userData.password,
-    //             phone: mergedData.phone,
-    //             type: userType,
-    //             dateOfBirth: mergedData.birthDate,
-    //             gender: mergedData.gender,
-    //             sector: mergedData.sector,
-    //             address: mergedData.address,
-    //             photo: "https://example.com/image.jpg",
-    //             volunteerStartDate: new Date().toISOString(),
-    //             volunteerEndDate: null,
-    //             isActive: true,
-    //             flexible: mergedData.availability === "true" ? true : false,
-    //         };
-    //         delete fullUser.verifyPassword;
-    //         await signup(
-    //             fullUser,
-    //             handleSignupSuccess,
-    //             handleSignupFailure
-    //         );
-    //     }
-    //     else if (userType == "contact") {
-    //         const contactUser = {
-    //             id: Number(mergedData.userId),
-    //             email: userData.email,
-    //             phone: mergedData.phone,
-    //             type: userType,
-    //             password: userData.password,
-    //             fullName: userData.fullName,
-    //             address: mergedData.address,
-    //             patientId: Number(mergedData.patientId),
-    //             patientFullName: mergedData.patientName,
-    //             patientDateOfBirth: mergedData.birthDate,
-    //             patientSector: mergedData.sector,
-    //             patientGender: mergedData.gender,
-    //             patientAddress: mergedData.patientAddress,
-    //             patientDateOfDeath: null,
-    //             patientInterestedInReceivingNotifications: !!mergedData.notifications,
-
-    //             relationId: Number(mergedData.relationId),
-
-    //             hospital: mergedData.hospital,
-    //             department: mergedData.department,
-    //             roomNumber: mergedData.roomNumber
-    //         };
-
-    //         await signup(
-    //             contactUser,
-    //             handleSignupSuccess,
-    //             handleSignupFailure
-    //         );
-    //     }
-    // };
 
     const onSecondSubmit = async (data) => {
         const mergedData = {
