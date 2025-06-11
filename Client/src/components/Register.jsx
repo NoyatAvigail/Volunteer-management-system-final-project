@@ -21,6 +21,7 @@ function Register() {
     const [userData, setUserData] = useState({});
     const [showMoreForm, setShowMoreForm] = useState(false);
 
+
     const onFirstSubmit = async (data) => {
         const error = validateFirstRegisterStep(data);
         if (error) {
@@ -125,6 +126,9 @@ function Register() {
         <div className="register-form">
             {registerIsCompleted == 0 && (
                 <form onSubmit={handleFirstSubmit(onFirstSubmit)}>
+
+                    {console.log(CodesContext.Consumer.Genders)}
+
                     <h2>שלב 1: הזנת פרטי משתמש בסיסיים</h2>
                     <input placeholder="fullName" {...register("fullName", { required: true })} />
                     {errors.fullName && <p>יש להזין שם משתמש</p>}
