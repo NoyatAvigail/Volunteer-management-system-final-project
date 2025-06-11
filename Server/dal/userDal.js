@@ -5,7 +5,10 @@ import ContactPeople from "../Models/ContactPeople.js"
 import Patients from "../Models/Patients.js"
 import RelationToPatients from '../Models/RelationToPatients.js'
 import Hospitalizeds from '../Models/Hospitalizeds.js';
-
+import VolunteeringInDepartments from '../Models/VolunteeringInDepartments.js';
+import VolunteeringForSectors from '../Models/VolunteeringForSectors.js';
+import VolunteeringForGenders from '../models/VolunteeringForGenders.js';   
+import VolunteerTypes from '../models/VolunteerTypes.js';
 const userDal = {
     findByEmail: (email) => {
         return Users.findOne({ where: { email } });
@@ -14,42 +17,47 @@ const userDal = {
     findVolunteerByUserId: (userId) => {
         return Volunteers.findOne({ where: { userId } });
     },
- 
+
     findContactByUserId: (userId) => {
         return ContactPeople.findOne({ where: { userId } });
     },
 
-    createUser: (userData) => {
-        return Users.create(userData);
+    createModel: (model, data) => {
+        return model.create(data);
     },
+    // createVolunteerTypes: (volunteerTypeData) => {
+    //     return VolunteerTypes.create(volunteerTypeData);
+    // },
+    // createVolunteer: (volunteerData) => {
+    //     return Volunteers.create(volunteerData);
+    // },
+    // createVolunteeringForGenders: (volunteeringForGendersData) => {
+    //     return VolunteeringForGenders.create(volunteeringForGendersData);
+    // },
+    // createVolunteeringForSectors: (volunteeringForSectorsData) => {
+    //     return VolunteeringForSectors.create(volunteeringForSectorsData);
+    // },
+    // createVolunteeringInDepartments: (volunteeringInDepartmentsData) => {
+    //     return VolunteeringInDepartments.create(volunteeringInDepartmentsData);
+    // },
 
-    createVolunteer: (volunteerData) => {
-        console.log('Creating volunteer with data:', volunteerData);
-        return Volunteers.create(volunteerData);
-    },
+    // createContact: (contactData) => {
+    //     return ContactPeople.create(contactData);
+    // },
 
-    createContact: (contactData) => {
-        console.log('Creating contact with data:', contactData);
-        return ContactPeople.create(contactData);
-    },
+    // createPatient: (patientData) => {
+    //     return Patients.create(patientData);
+    // },
 
-    createPatient: (patientData) => {
-        console.log('Creating patient with data:', patientData);
-        return Patients.create(patientData);
-    },
+    // createRelation: (relationData) => {
+    //     return RelationToPatients.create(relationData);
+    // },
 
-    createRelation: (relationData) => {
-        console.log('Creating relation with data:', relationData);
-        return RelationToPatients.create(relationData);
-    },
-
-    createHospitalizeds: (HospitalizedsData) => {
-        console.log('Creating Hospitalizeds record with data:', HospitalizedsData);
-        return Hospitalizeds.create(HospitalizedsData);
-    },  
+    // createHospitalizeds: (HospitalizedsData) => {
+    //     return Hospitalizeds.create(HospitalizedsData);
+    // },
 
     savePassword: (id, hashedPassword) => {
-        console.log('Saving password for userId:', id, 'with hashed password:', hashedPassword);
         return Passwords.create({ id, password: hashedPassword });
     },
 
