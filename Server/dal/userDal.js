@@ -7,7 +7,7 @@ import RelationToPatients from '../Models/RelationToPatients.js'
 import Hospitalizeds from '../Models/Hospitalizeds.js';
 import VolunteeringInDepartments from '../Models/VolunteeringInDepartments.js';
 import VolunteeringForSectors from '../Models/VolunteeringForSectors.js';
-import VolunteeringForGenders from '../models/VolunteeringForGenders.js';   
+import VolunteeringForGenders from '../models/VolunteeringForGenders.js';
 import VolunteerTypes from '../models/VolunteerTypes.js';
 const userDal = {
     findByEmail: (email) => {
@@ -22,44 +22,17 @@ const userDal = {
         return ContactPeople.findOne({ where: { userId } });
     },
 
-    createModel: (model, data) => {
-        return model.create(data);
+    createModel: (Model, data, options = {}) => {
+        return Model.create(data, options);
     },
-    // createVolunteerTypes: (volunteerTypeData) => {
-    //     return VolunteerTypes.create(volunteerTypeData);
-    // },
-    // createVolunteer: (volunteerData) => {
-    //     return Volunteers.create(volunteerData);
-    // },
-    // createVolunteeringForGenders: (volunteeringForGendersData) => {
-    //     return VolunteeringForGenders.create(volunteeringForGendersData);
-    // },
-    // createVolunteeringForSectors: (volunteeringForSectorsData) => {
-    //     return VolunteeringForSectors.create(volunteeringForSectorsData);
-    // },
-    // createVolunteeringInDepartments: (volunteeringInDepartmentsData) => {
-    //     return VolunteeringInDepartments.create(volunteeringInDepartmentsData);
-    // },
 
-    // createContact: (contactData) => {
-    //     return ContactPeople.create(contactData);
-    // },
-
-    // createPatient: (patientData) => {
-    //     return Patients.create(patientData);
-    // },
-
-    // createRelation: (relationData) => {
-    //     return RelationToPatients.create(relationData);
-    // },
-
-    // createHospitalizeds: (HospitalizedsData) => {
-    //     return Hospitalizeds.create(HospitalizedsData);
-    // },
-
-    savePassword: (id, hashedPassword) => {
-        return Passwords.create({ id, password: hashedPassword });
+    bulkCreateModel: (Model, dataArray, options = {}) => {
+        return Model.bulkCreate(dataArray, options);
     },
+
+    // savePassword: (id, hashedPassword, options = {}) => {
+    //     return Passwords.create({ id, password: hashedPassword, options });
+    // },
 
     getPasswordByUserId: (id) => Passwords.findOne({ where: { id } }),
 };

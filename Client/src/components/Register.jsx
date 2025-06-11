@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useState, useContext } from 'react';
 import { CurrentUser } from './App';
-import { CodesContext } from './CodesProvider';
+import { CodesContext } from './Models';
 import Cookies from "js-cookie";
 import { validateFirstRegisterStep, validateSecondRegisterStep } from '../../utils/userValidator';
 import { signup } from '../services/usersServices';
@@ -20,6 +20,9 @@ function Register() {
     const { setCodesContext } = useContext(CodesContext);
     const [userData, setUserData] = useState({});
     const [showMoreForm, setShowMoreForm] = useState(false);
+    const { codes, loading } = useContext(CodesContext);
+    console.log("Codes context loaded:", codes);
+    console.log("Genders from context:", codes?.Genders);
 
 
     const onFirstSubmit = async (data) => {
@@ -29,6 +32,8 @@ function Register() {
             return;
         }
         setUserData({ fullName: data.fullName, email: data.email, password: data.password, verifyPassword: data.verifyPassword, type: userType });
+        console.log("userData", userData);
+        
         setRegisterIsCompleted(1);
         resetFirstForm();
     };
@@ -126,9 +131,6 @@ function Register() {
         <div className="register-form">
             {registerIsCompleted == 0 && (
                 <form onSubmit={handleFirstSubmit(onFirstSubmit)}>
-
-                    {console.log(CodesContext.Consumer.Genders)}
-
                     <h2>שלב 1: הזנת פרטי משתמש בסיסיים</h2>
                     <input placeholder="fullName" {...register("fullName", { required: true })} />
                     {errors.fullName && <p>יש להזין שם משתמש</p>}
@@ -144,7 +146,8 @@ function Register() {
                     />
                     {errors.verifyPassword && <p>הסיסמאות אינן תואמות</p>}
                     <div>
-                        {CodesContext["UserTypes"]?.map((item) => (
+                        {codes?.UserTypes?.map((item) => (
+
                             <button
                                 key={item.id}
                                 type="button"
@@ -178,20 +181,20 @@ function Register() {
                     {errorsSecond.gender && <p>יש לבחור מין</p>}
                     <select {...registerSecond("gender", { required: true })}>
                         <option value="">בחר מגדר</option>
-                        {CodesContext["Genders"]?.map((item) => (
+                        {codes?.Genders?.map((item) => (
                             <option key={item.id} value={item.id}>{item.description}</option>
                         ))}
                     </select>
                     {errorsSecond.gender && <p>יש לבחור מגזר</p>}
                     <select {...registerSecond("sector", { required: true })}>
                         <option value="">בחר מגזר</option>
-                        {CodesContext["Sectors"]?.map((item) => (
+                        {codes?.Sectors?.map((item) => (
                             <option key={item.id} value={item.id}>{item.description}</option>
                         ))}
                     </select>
                     <label>תחומי התנדבות:</label>
                     <div>
-                        {CodesContext["VolunteeringTypes"]?.map((item) => (
+                        {codes?.VolunteeringTypes?.map((item) => (
                             <div key={item.id}>
                                 <input
                                     type="checkbox"
@@ -210,7 +213,7 @@ function Register() {
                         <div className="more-form">
                             <h3>פרטים נוספים</h3>
                             <label>מחלקות בהן מוכן להתנדב</label>
-                            {CodesContext["Departments"]?.map((item) => (
+                            {codes?.Departments?.map((item) => (
                                 <div key={item.id}>
                                     <input
                                         type="checkbox"
@@ -222,7 +225,7 @@ function Register() {
                                 </div>
                             ))}
                             <label>בתי חולים בהן מוכן להתנדב</label>
-                            {CodesContext["Hospitals"]?.map((item) => (
+                            {codes?.Hospitals?.map((item) => (
                                 <div key={item.id}>
                                     <input
                                         type="checkbox"
@@ -234,7 +237,7 @@ function Register() {
                                 </div>
                             ))}
                             <label>מגזרים עליהם מוכן לשמור</label>
-                            {CodesContext["Sectors"]?.map((item) => (
+                            {codes?.Sectors?.map((item) => (
                                 <div key={item.id}>
                                     <input
                                         type="checkbox"
@@ -246,7 +249,7 @@ function Register() {
                                 </div>
                             ))}
                             <label>מגדרים עליהם מוכן לשמור</label>
-                            {CodesContext["Genders"]?.map((item) => (
+                            {codes?.Genders?.map((item) => (
                                 <div key={item.id}>
                                     <input
                                         type="checkbox"
