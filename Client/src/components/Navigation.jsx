@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CurrentUser } from './App';
-import { CodesContext } from './CodesProvider';
+// import { CodesContext } from './CodesProvider';
+import { useCodes } from './Models';
 import { useContext } from 'react';
 import { logOutFunc } from '../js/logout';
 import Cookies from 'js-cookie';

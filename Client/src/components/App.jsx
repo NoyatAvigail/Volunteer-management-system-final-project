@@ -3,7 +3,6 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Cookies from 'js-cookie'
-
 import Navigation from './Navigation'
 import LogIn from './LogIn'
 import Register from './Register'
@@ -22,6 +21,7 @@ import ContactNewRequest from './contacts/ContactNewRequest';
 import ContactAddPatient from './contacts/ContactAddPatient';
 import ContactThanks from './contacts/ContactThanks';
 import ContactProfile from './contacts/ContactProfile';
+import { CodesProvider } from './Models'; 
 import ErrorPage from './ErrorPage'
 import '../style/App.css'
 
@@ -37,6 +37,7 @@ function App() {
   const [isShowInfo, setIsShowInfo] = useState(0);
 
   return (
+    <CodesProvider>
     <CurrentUser.Provider value={{ currentUser, setCurrentUser }}>
       <Navigation currentUser={currentUser} setIsShowInfo={setIsShowInfo} />
       <Routes>
@@ -67,6 +68,8 @@ function App() {
       </Routes>
       {isShowInfo == 1 && <Info setIsShowInfo={setIsShowInfo} />}
     </CurrentUser.Provider>
+    </CodesProvider>
+
   )
 }
 
