@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CurrentUser } from './App';
+import { CodesContext } from './CodesProvider';
 import { useContext } from 'react';
 import { logOutFunc } from '../js/logout';
 import Cookies from 'js-cookie';
@@ -19,25 +20,25 @@ function Navigation({ setIsShowInfo }) {
         <>
             {currentUser ? (
                 <div>
-                    {currentUser.type == 'volunteer' ? (
+                    {CodesContext.UserTypes == 'volunteer' ? (
                         <div>
                             <nav className='header'>
                                 <div className="left">
                                     <h3 className='userName'> {currentUser.fullName}</h3>
-                                    <ul><Link to={`/${currentUser.type}/${currentUser.autoId}/home`}>דף הבית</Link></ul>
+                                    <ul><Link to={`/${CodesContext.UserTypes}/${currentUser.autoId}/home`}>דף הבית</Link></ul>
                                     <ul><a onClick={() => setIsShowInfo(1)}>מידע</a></ul>
-                                    <ul><Link to={`/${currentUser.type}/${currentUser.autoId}/shifts`}>המשמרות שלי</Link></ul>
-                                    <ul><Link to={`/${currentUser.type}/${currentUser.autoId}/fixedShifts`}>משמרות קבועות</Link></ul>
-                                    <ul><Link to={`/${currentUser.type}/${currentUser.autoId}/requests`}>בקשות פתוחות</Link></ul>
-                                    <ul><Link to={`/${currentUser.type}/${currentUser.autoId}/certificate`}>תעודת מתנדב</Link></ul>
-                                    <ul><Link to={`/${currentUser.type}/${currentUser.autoId}/profile`}>ניהול פרופיל</Link></ul >
+                                    <ul><Link to={`/${CodesContext.UserTypes}/${currentUser.autoId}/shifts`}>המשמרות שלי</Link></ul>
+                                    <ul><Link to={`/${CodesContext.UserTypes}/${currentUser.autoId}/fixedShifts`}>משמרות קבועות</Link></ul>
+                                    <ul><Link to={`/${CodesContext.UserTypes}/${currentUser.autoId}/requests`}>בקשות פתוחות</Link></ul>
+                                    <ul><Link to={`/${CodesContext.UserTypes}/${currentUser.autoId}/certificate`}>תעודת מתנדב</Link></ul>
+                                    <ul><Link to={`/${CodesContext.UserTypes}/${currentUser.autoId}/profile`}>ניהול פרופיל</Link></ul >
                                     <div className="right">
                                         <ul onClick={logOut}><a>התנתקות</a></ul>
                                     </div>
                                 </div >
                             </nav >
                         </div >
-                    ) : currentUser.type == 'contact' ? (
+                    ) : currentUser.type == 'Contact' ? (
                         <div>
                             <nav className='header'>
                                 <div className="left">

@@ -11,27 +11,48 @@ const userService = {
             if (existingUser) {
                 throw new Error("Email already taken");
             }
-            let newUser = await userDal.createUser({ email, type, phone, id });
+            let newUser = await userDal.createModel(Users, { email, type, phone, id });
+            let userType = await userDal.createModel(UserTypes, { userId: newUser.id, type });
             const hashed = await hashPassword(password);
             await userDal.savePassword(newUser.id, hashed);
-            if (type == "volunteer") {
-                const newVolunteer = await userDal.createVolunteer({
+            if (type == "Volunteer") {
+                const Volunteer = await userDal.createModel(Volunteers, {
                     userId: newUser.id,
                     fullName: rest.fullName,
                     dateOfBirth: rest.dateOfBirth,
                     gender: rest.gender,
                     sector: rest.sector,
                     address: rest.address,
-                    photo: rest.photo,
                     volunteerStartDate: rest.volunteerStartDate,
                     volunteerEndDate: rest.volunteerEndDate,
                     isActive: rest.isActive,
                     flexible: rest.flexible
                 });
-                console.log("Volunteer created:", newVolunteer);
+                const VolunteerTypes = await userDal.createModel(VolunteerTypes, {
+                    volunteerId: Volunteer.id,
+                    volunteerTypeId: rest.volunteerTypeId
+                });
+                const VolunteeringInDepartments = await userDal.createModel(VolunteeringInDepartments, {
+                    volunteerId: Volunteer.id,
+                    departmentId: rest.departmentId,
+                    hospitalId: rest.hospitalId
+                });
+                const VolunteeringForSectors = await userDal.createModel(VolunteeringForSectors, {
+                    volunteerId: Volunteer.id,
+                    sectorId: rest.sectorId
+                });
+                const VolunteeringForGenders = await userDal.createModel(VolunteeringForGenders, {
+                    volunteerId: Volunteer.id,
+                    genderId: rest.genderId
+                });
+                const FamilyRelation = await userDal.createModel(FamilyRelation, {
+                    volunteerId: Volunteer.id,
+                    relationId: rest.relationId
+                });
+                console.log("Volunteer created:", Volunteer);
                 newUser = {
                     ...rest,
-                    id: newVolunteer.id,
+                    id: Volunteer.id,
                 };
             }
             if (type == "contact") {
