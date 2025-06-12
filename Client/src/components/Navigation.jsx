@@ -11,10 +11,9 @@ function Navigation({ setIsShowInfo }) {
     const { currentUser, setCurrentUser } = useContext(CurrentUser);
     const navigate = useNavigate();
     const { codes, loading } = useContext(CodesContext);
-    console.log(currentUser?.type);
-    console.log("codes?.UserTypes:", codes?.UserTypes);
     const userTypeObject = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
-    console.log("userTypeObject:", userTypeObject);
+    console.log("currentUser", currentUser);
+
 
     function logOut() {
         logOutFunc(navigate);
