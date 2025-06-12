@@ -3,16 +3,18 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import Cookies from "js-cookie";
 import { CurrentUser } from './App';
+import { CodesContext } from './Models';
 import { validateLoginForm } from '../../utils/userValidator';
 import { login } from '../services/usersServices';
 import '../style/LogIn.css';
 
 function LogIn() {
     const { register, handleSubmit, reset } = useForm();
-    const { setCurrentUser } = useContext(CurrentUser);
+    const { currentUser, setCurrentUser } = useContext(CurrentUser);
     const [responsText, setResponstText] = useState("Fill the form and click the login button");
+    const { codes, loading } = useContext(CodesContext);
     const navigate = useNavigate();
-    
+
     const onSubmit = async (data) => {
         const error = validateLoginForm(data);
         if (error) {
@@ -25,13 +27,14 @@ function LogIn() {
             (res) => {
                 if (res.user) {
                     Cookies.set("token", res.token);
-                    localStorage.setItem("currentUser", JSON.stringify(res.user));
-                    setCurrentUser(res.user.user);
-                    localStorage.setItem("currentUser", JSON.stringify(res.user.user));
-                    if (res.user.user.type == 'volunteer') {
-                        navigate(`/volunteer/${res.user.user.autoId}`);
-                    } else if (res.user.user.type == 'contact') {
-                        navigate(`/contact/${res.user.user.autoId}`);
+                    const user = res.user.user;
+                    setCurrentUser(user);
+                    localStorage.setItem("currentUser", JSON.stringify(user));
+                    const userTypeObject = codes?.UserTypes?.find(type => type.id == user?.type)?.description;
+                    if (userTypeObject == 'Volunteer') {
+                        navigate(`/volunteer/${user.autoId}`);
+                    } else if (userTypeObject == 'ContactPerson') {
+                        navigate(`/contact/${user.autoId}`);
                     } else {
                         navigate(`/home`);
                     }

@@ -3,8 +3,9 @@ import { CurrentUser } from '.././App';
 import Add from '.././Add';
 
 function ContactNewRequest() {
-  const { currentUser } = useContext(CurrentUser);
-
+  const { currentUser } = useContext(CurrentUser);  
+  console.log("123456789");
+  
   if (!currentUser || currentUser.type !== 'contact') {
     return <div>אין גישה לטופס זה</div>;
   }
@@ -14,7 +15,7 @@ function ContactNewRequest() {
       <h2>הוספת פנייה חדשה</h2>
       <Add
         type="Events"
-        setIsChange={() => { }} 
+        setIsChange={() => { }}
         inputs={[
           "patientId",
           "contactId",
