@@ -30,10 +30,6 @@ const userDal = {
         return Model.bulkCreate(dataArray, options);
     },
 
-    // savePassword: (id, hashedPassword, options = {}) => {
-    //     return Passwords.create({ id, password: hashedPassword, options });
-    // },
-
     getPasswordByUserId: (id) => Passwords.findOne({ where: { id } }),
 };
 

@@ -13,40 +13,40 @@ export async function seedStaticTables() {
             await UserTypes.findOrCreate({ where: { description: type } });
         }
         const familyRelations = [
-            'אמא', 'אבא', 'אח', 'אחות', 'סבא', 'סבתא',
-            'דוד', 'דודה', 'בן דוד', 'בת דוד', 'בן זוג',
-            'בת זוג', 'ילד', 'ילדה'
+            'mother', 'father', 'brother', 'sister', 'grandfather', 'grandmother',
+            'uncle', 'aunt', 'cousin', 'cousin', 'spouse',
+            'spouse', 'child', 'child'
         ];
         for (const relation of familyRelations) {
             await FamilyRelations.findOrCreate({ where: { description: relation } });
         }
         const volunteeringTypes = [
-            'שומר/ת', 'מחלק/ת אוכלת', 'ליצן רפואי',
+            'guard', 'food distributor', 'medical clown',
         ];
         for (const type of volunteeringTypes) {
             await VolunteeringTypes.findOrCreate({ where: { description: type } });
         }
-        const sectors = ['חרדי/ת', 'דתי/ת', 'חילוני/ת', 'מסורתי/ת', 'אחר'];
+        const sectors = ['Haredi', 'Religious', 'General', 'Traditional', 'Other'];
         for (const sector of sectors) {
             await Sectors.findOrCreate({ where: { description: sector } });
         }
-        const genders = ['זכר', 'נקבה', 'אחר'];
+        const genders = ['male', 'female', 'other'];
         for (const gender of genders) {
             await Genders.findOrCreate({ where: { description: gender } });
         }
         const hospitals = [
-            'שיבא- תל השומר', 'איכילוב', 'וולפסון', 'הלל יפה', 'רמב"ם',
-            'זיו', 'פוריה', 'ברזילי', 'אסף הרופא', 'סורוקה',
-            'בילינסון', 'שניידר-רפואת ילדים', 'הדסה עין כרם', 'הדסה הר הצופים',
-            'שערי צדק', 'לניאדו', 'אסותא', 'מעייני הישועה'
+            'Sheba-Tel Hashomer', 'Ichilov', 'Wolfson', 'Hillel Yaffe', 'Rambam',
+            'Ziv', 'Poriya', 'Barzilai', 'Asaf Harofeh', 'Soroka',
+            'Beilinson', 'Schneider-Pediatrics', 'Hadassah Ein Kerem', 'Hadassah Mount Scopus',
+            'Shaarei Tzedek', 'Laniado', 'Assuta', 'Maayanei Hayeshua'
         ];
         for (const hospital of hospitals) {
             await Hospitals.findOrCreate({ where: { description: hospital } });
         }
         const departments = [
-            'חדר מיון', 'פנימית', 'כירורגיה', 'ילדים', 'אורתופדיה',
-            'יולדות', 'טראומה', 'קרדיולוגיה', 'נורולוגיה', 'אונקולגיה',
-            'המטולוגיה', 'עורומין', 'גריאטריה', 'טיפול נמרץ', 'פסיכיאטריה', 'שיקום'
+            'ER', 'Internal', 'Surgery', 'Pediatrics', 'Orthopedics',
+            'Maternity', 'Trauma', 'Cardiology', 'Neurology', 'Oncology',
+            'Hematology', 'Urology', 'Geriatrics', 'ICU', 'Psychiatry', 'Rehabilitation'
         ];
         for (const dept of departments) {
             await Departments.findOrCreate({ where: { description: dept } });

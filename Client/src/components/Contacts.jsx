@@ -37,12 +37,12 @@ function Contact() {
                     },
                     (error) => {
                         console.log("get was unsuccessful", error);
-                        setError("שגיאה בטעינת הנתונים");
+                        setError("Error loading data");
                     }
                 );
             } catch (error) {
                 console.log("Unexpected error:", error);
-                setError("שגיאה בלתי צפויה בטעינת הנתונים");
+                setError("Unexpected error loading data");
             }
         };
         fetchData();
@@ -109,7 +109,7 @@ function Contact() {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan={8}>אין נתונים להצגה</td>
+                            <td colSpan={8}>No data to display</td>
                         </tr>
                     )}
                 </tbody>

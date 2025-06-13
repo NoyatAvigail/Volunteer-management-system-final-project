@@ -19,7 +19,7 @@ function ContactRequests() {
     useEffect(() => {
         setError(null);
         if (!currentUser || !currentUser.id) {
-            setError("משתמש לא מחובר");
+            setError("User not logged in");
             return;
         }
         const fetchData = async () => {
@@ -37,12 +37,12 @@ function ContactRequests() {
                     },
                     (error) => {
                         console.log("get was unsuccessful", error);
-                        setError("שגיאה בטעינת הנתונים");
+                        setError("Error loading data");
                     }
                 );
             } catch (error) {
                 console.log("Unexpected error:", error);
-                setError("שגיאה בלתי צפויה בטעינת הנתונים");
+                setError("Unexpected error loading data");
             }
         };
         fetchData();
@@ -87,7 +87,7 @@ function ContactRequests() {
                                 <td>{item.department}</td>
                                 <td>{item.patientId}</td>
                                 <td>
-                                    <button onClick={() => handleShowDetails(item.id)}>פרטים</button>
+                                    <button onClick={() => handleShowDetails(item.id)}>Details</button>
                                     {item.contactId === currentUser.id && (
                                         <>
                                             <Update
@@ -109,7 +109,7 @@ function ContactRequests() {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan={8}>אין נתונים להצגה</td>
+                            <td colSpan={8}>No data to display</td>
                         </tr>
                     )}
                 </tbody>

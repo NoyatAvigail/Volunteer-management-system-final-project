@@ -1,7 +1,6 @@
 import service from "../services/genericService.js";
 
 const genericConterller = {
-
     getAll: async (req, res) => {
         try {
             const items = await service.getAllItems(req.params.table);

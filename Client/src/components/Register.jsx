@@ -126,23 +126,21 @@ function Register() {
         <div className="register-form">
             {registerIsCompleted == 0 && (
                 <form onSubmit={handleFirstSubmit(onFirstSubmit)}>
-                    <h2>שלב 1: הזנת פרטי משתמש בסיסיים</h2>
+                    <h2>Enter basic user information</h2>
                     <input placeholder="fullName" {...register("fullName", { required: true })} />
-                    {errors.fullName && <p>יש להזין שם משתמש</p>}
+                    {errors.fullName && <p>A username must be entered</p>}
                     <input type="email" placeholder="email" {...register("email", { required: true })} />
-                    {errors.email && <p>יש להזין מייל תקין</p>}
+                    {errors.email && <p>You must enter a valid email</p>}
                     <input type="password" placeholder="password" {...register("password", { required: true, minLength: 6 })} />
-                    {errors.password && <p>יש להזין סיסמה באורך מינימום 6 תווים</p>}
-                    <input type="password" placeholder="אימות סיסמה"
+                    {errors.password && <p>You must enter a password with a minimum length of 6 characters</p>}                    <input type="password" placeholder="אימות סיסמה"
                         {...register("verifyPassword", {
                             required: true,
                             validate: (value) => value === watch("password"),
                         })}
                     />
-                    {errors.verifyPassword && <p>הסיסמאות אינן תואמות</p>}
+                    {errors.verifyPassword && <p>The passwords do not match</p>}
                     <div>
                         {codes?.UserTypes?.map((item) => (
-
                             <button
                                 key={item.id}
                                 type="button"
@@ -152,42 +150,42 @@ function Register() {
                             </button>
                         ))}
                     </div>
-                    {!userType && <p>יש לבחור סוג משתמש</p>}
+                    {!userType && <p>You must select a user type</p>}
                     <button type="submit" disabled={!userType}>המשך</button>
                 </form>
             )}
             {registerIsCompleted == 1 && userType.description == "Volunteer" && (
                 <form onSubmit={handleSecondSubmit(onSecondSubmit)}>
-                    <h2>טופס מתנדב</h2>
-                    <input placeholder="ת.ז." {...registerSecond("userId", { required: true })} />
-                    {errorsSecond.userId && <p>יש להזין ת.ז.</p>}
+                    <h2>Volunteer Form</h2>
+                    <input placeholder="ID" {...registerSecond("userId", { required: true })} />
+                    {errorsSecond.userId && <p>You must enter an ID.</p>}
                     <input value={userData.fullName} readOnly {...registerSecond("fullName", { required: true })} />
                     <input value={userData.email} readOnly {...registerSecond("email", { required: true })} />
                     <input
                         type="date"
-                        placeholder="תאריך לידה"
+                        placeholder="Birth date"
                         {...registerSecond("birthDate", { required: true })}
                     />
-                    {errorsSecond.birthDate && <p>יש להזין תאריך לידה</p>}
-                    <input placeholder="טלפון" {...registerSecond("phone", { required: true })} />
-                    {errorsSecond.phone && <p>יש להזין טלפון</p>}
-                    <input placeholder="כתובת" {...registerSecond("address", { required: true })} />
-                    {errorsSecond.address && <p>יש להזין כתובת</p>}
-                    {errorsSecond.gender && <p>יש לבחור מין</p>}
+                    {errorsSecond.birthDate && <p>A birth date must be entered</p>}
+                    <input placeholder="Phone" {...registerSecond("phone", { required: true })} />
+                    {errorsSecond.phone && <p>A phone number must be entered</p>}
+                    <input placeholder="Address" {...registerSecond("address", { required: true })} />
+                    {errorsSecond.address && <p>An address must be entered</p>}
                     <select {...registerSecond("gender", { required: true })}>
-                        <option value="">בחר מגדר</option>
+                        <option value="">Select a gender</option>
                         {codes?.Genders?.map((item) => (
                             <option key={item.id} value={item.id}>{item.description}</option>
                         ))}
                     </select>
-                    {errorsSecond.gender && <p>יש לבחור מגזר</p>}
+                    {errorsSecond.gender && <p>You must select a gender</p>}
+                    {errorsSecond.gender && <p>You must select a sector</p>}
                     <select {...registerSecond("sector", { required: true })}>
-                        <option value="">בחר מגזר</option>
+                        <option value="">Select a sector</option>
                         {codes?.Sectors?.map((item) => (
                             <option key={item.id} value={item.id}>{item.description}</option>
                         ))}
                     </select>
-                    <label>תחומי התנדבות:</label>
+                    <label>Volunteering Areas:</label>
                     <div>
                         {codes?.VolunteeringTypes?.map((item) => (
                             <div key={item.id}>
@@ -201,13 +199,11 @@ function Register() {
                             </div>
                         ))}
                     </div>
-                    <button type="button" onClick={() => setShowMoreForm(true)}>
-                        המשך מילוי פרטים נוספים
-                    </button>
+                    <button type="button" onClick={() => setShowMoreForm(true)}></button>
                     {showMoreForm && (
                         <div className="more-form">
-                            <h3>פרטים נוספים</h3>
-                            <label>מחלקות בהן מוכן להתנדב</label>
+                            <h3>Additional Details</h3>
+                            <label>Departments I am willing to volunteer in</label>
                             {codes?.Departments?.map((item) => (
                                 <div key={item.id}>
                                     <input
@@ -219,8 +215,7 @@ function Register() {
                                     <label htmlFor={`dept-${item.id}`}>{item.description}</label>
                                 </div>
                             ))}
-                            <label>בתי חולים בהן מוכן להתנדב</label>
-                            {codes?.Hospitals?.map((item) => (
+                            <label>Hospitals where I am willing to volunteer</label>                            {codes?.Hospitals?.map((item) => (
                                 <div key={item.id}>
                                     <input
                                         type="checkbox"
@@ -231,7 +226,7 @@ function Register() {
                                     <label htmlFor={`hospital-${item.id}`}>{item.description}</label>
                                 </div>
                             ))}
-                            <label>מגזרים עליהם מוכן לשמור</label>
+                            <label>Sectors I am willing to keep</label>
                             {codes?.Sectors?.map((item) => (
                                 <div key={item.id}>
                                     <input
@@ -243,7 +238,7 @@ function Register() {
                                     <label htmlFor={`guard-sector-${item.id}`}>{item.description}</label>
                                 </div>
                             ))}
-                            <label>מגדרים עליהם מוכן לשמור</label>
+                            <label>Genders I am willing to maintain</label>
                             {codes?.Genders?.map((item) => (
                                 <div key={item.id}>
                                     <input
@@ -255,7 +250,7 @@ function Register() {
                                     <label htmlFor={`guard-gender-${item.id}`}>{item.description}</label>
                                 </div>
                             ))}
-                            <label>האם הוא גמיש בשעות?</label>
+                            <label>Flexibility in hours</label>
                             <div>
                                 <input
                                     type="radio"
@@ -286,20 +281,18 @@ function Register() {
                             ))} */}
                         </div>
                     )}
-                    <button type="submit">הרשם</button>
+                    <button type="submit">Sign Up</button>
                 </form>
             )}
             {registerIsCompleted == 1 && userType.description == "ContactPerson" && (
                 <form onSubmit={handleSecondSubmit(onSecondSubmit)}>
-                    <h2>טופס איש קשר</h2>
-                    <input placeholder="ת.ז." {...registerSecond("userId", { required: true })} />
+                    <h2>Contact form</h2>
+                    <input placeholder="T.Z." {...registerSecond("userId", { required: true })} />
                     <input value={userData.fullName} readOnly {...registerSecond("fullName", { required: true })} />
                     <input value={userData.email} readOnly {...registerSecond("email", { required: true })} />
-                    <input placeholder="טלפון" {...registerSecond("phone", { required: true })} />
-                    <input placeholder="כתובת" {...registerSecond("address", { required: true })} />
-                    <label>קרבה משפחתית</label>
-                    {/* {codes?.FamilyRelations.map((relation, idx) => ( */}
-                    <label >בחר בית חולים</label>
+                    <input placeholder="phone" {...registerSecond("phone", { required: true })} />
+                    <input placeholder="address" {...registerSecond("address", { required: true })} />
+                    <label>family closeness</label>
                     {codes?.FamilyRelations?.map((item) => (
                         <div key={item.id}>
                             <input
@@ -311,17 +304,17 @@ function Register() {
                             <label htmlFor={`guard-FamilyRelations-${item.id}`}>{item.description}</label>
                         </div>
                     ))}
-                    {errorsSecond.relationId && <p>יש לבחור קרבה משפחתית</p>}
-                    <h3>פרטי מטופל</h3>
-                    <input placeholder="ת.ז." {...registerSecond("patientId", { required: true })} />
-                    <input placeholder="שם" {...registerSecond("patientName", { required: true })} />
+                    {errorsSecond.relationId && <p>Must select a family relationship</p>}
+                    <h3>Patient details</h3>
+                    <input placeholder="ID" {...registerSecond("patientId", { required: true })} />
+                    <input placeholder="Name" {...registerSecond("patientName", { required: true })} />
                     <input
                         type="date"
-                        placeholder="תאריך לידה"
+                        placeholder="Date of birth"
                         {...registerSecond("birthDate", { required: true })}
                     />
-                    {errorsSecond.birthDate && <p>יש להזין תאריך לידה</p>}
-                    <label>  מגזר </label>
+                    {errorsSecond.birthDate && <p>Must enter a date of birth</p>}
+                    <label> Gender </label>
                     {codes?.Genders?.map((item) => (
                         <div key={item.id}>
                             <input
@@ -333,7 +326,7 @@ function Register() {
                             <label htmlFor={`guard-gender-${item.id}`}>{item.description}</label>
                         </div>
                     ))}
-                    <label>מין</label>
+                    <label>Sector</label>
                     {codes?.Sectors?.map((item) => (
                         <div key={item.id}>
                             <input
@@ -345,12 +338,12 @@ function Register() {
                             <label htmlFor={`guard-sector-${item.id}`}>{item.description}</label>
                         </div>
                     ))}
-                    <input placeholder="כתובת" {...registerSecond("patientAddress", { required: true })} />
+                    <input placeholder="address" {...registerSecond("patientAddress", { required: true })} />
                     <label>
                         <input type="checkbox" {...registerSecond("notifications")} />
-                        מעוניין בהתראות
+                        interested in notifications
                     </label>
-                    <label >בחר בית חולים</label>
+                    <label>Choose a hospital</label>
                     {codes?.Hospitals?.map((item) => (
                         <div key={item.id}>
                             <input
@@ -362,7 +355,7 @@ function Register() {
                             <label htmlFor={`Hospitals-${item.id}`}>{item.description}</label>
                         </div>
                     ))}
-                    <label >בחר מחלקה</label>
+                    <label>Choose a class</label>
                     {codes?.Departments?.map((item) => (
                         <div key={item.id}>
                             <input
@@ -374,8 +367,8 @@ function Register() {
                             <label htmlFor={`Departments-${item.id}`}>{item.description}</label>
                         </div>
                     ))}
-                    <input placeholder="מס' חדר" {...registerSecond("roomNumber", { required: true })} />
-                    <button type="submit">הרשם</button>
+                    <input placeholder="Room Number" {...registerSecond("roomNumber", { required: true })} />
+                    <button type="submit">Subscribe</button>
                 </form>
             )}
         </div>

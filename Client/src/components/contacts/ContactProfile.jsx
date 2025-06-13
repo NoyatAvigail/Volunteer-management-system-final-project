@@ -15,7 +15,7 @@ function ContactProfile() {
 
     useEffect(() => {
         if (!currentUser || !currentUser.id) {
-            setError("משתמש לא מחובר");
+            setError("User not logged in");
             return;
         }
         const fetchProfile = async () => {
@@ -28,7 +28,7 @@ function ContactProfile() {
                     phone: data.phone || '',
                 });
             } catch (err) {
-                setError(`שגיאה בטעינת פרופיל: ${err.message || err}`);
+                setError(`Error loading profile: ${err.message || err}`);
             }
         };
         fetchProfile();
@@ -45,32 +45,20 @@ function ContactProfile() {
 
         try {
             await userService.update(currentUser.id, "contacts", currentUser.id, formData);
-            setSuccess("הפרופיל עודכן בהצלחה");
+            setSuccess("Profile updated successfully");
             setCurrentUser(prev => ({ ...prev, ...formData }));
         } catch (err) {
-            setError(`שגיאה בעדכון פרופיל: ${err.message || err}`);
+            setError(`Error updating profile: ${err.message || err}`);
         }
     };
 
     if (error) return <div className="error">{error}</div>;
-    if (!profileData) return <div>טוען פרופיל...</div>;
+    if (!profileData) return <div>Loading profile...</div>;
 
     return (
         <div>
-            <h2>ניהול פרופיל</h2>
-            {success && <div className="success">{success}</div>}
-            <form onSubmit={handleSubmit}>
-                <label>שם מלא:
-                    <input name="fullName" value={formData.fullName} onChange={handleChange} required />
-                </label>
-                <label>אימייל:
-                    <input type="email" name="email" value={formData.email} onChange={handleChange} />
-                </label>
-                <label>טלפון:
-                    <input name="phone" value={formData.phone} onChange={handleChange} />
-                </label>
-                <button type="submit">עדכן פרופיל</button>
-            </form>
+            <h2>Contact Profile</h2>
+            <p>The contact profile will appear here.</p>
         </div>
     );
 }

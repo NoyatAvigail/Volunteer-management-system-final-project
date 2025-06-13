@@ -23,7 +23,6 @@ const userController = {
         try {
             const loginUser = await userService.login(req.body);
             console.log("Login user found:", loginUser);
-
             if (!loginUser) return res.status(401).json({ message: 'Invalid credentials' });
             const token = generateToken(loginUser.user.autoId, loginUser.user.email, loginUser.user.type);
             console.log("User logged in successfully:", loginUser, "Token generated:", token);
@@ -35,7 +34,7 @@ const userController = {
         } catch (e) {
             res.status(500).json({ message: 'Server error' });
         }
-    }
+    },
 };
 
 export default userController;

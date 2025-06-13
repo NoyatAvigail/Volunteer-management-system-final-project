@@ -9,8 +9,9 @@ import Departments from '../Models/Departments.js';
 import FamilyRelations from '../Models/FamilyRelations.js';
 import VolunteeringTypes from '../Models/VolunteeringTypes.js';
 import UserTypes from '../Models/UserTypes.js';
+import Hospitalizeds from '../models/Hospitalizeds.js'
 
-const models = { Users, Passwords, Events, Sectors, Genders, Hospitals, Departments, FamilyRelations, VolunteeringTypes, UserTypes };
+const models = { Users, Passwords, Events, Sectors, Genders, Hospitals, Departments, FamilyRelations, VolunteeringTypes, UserTypes, Hospitalizeds };
 
 const genericDAL = {
     getModelByName: (name) => {

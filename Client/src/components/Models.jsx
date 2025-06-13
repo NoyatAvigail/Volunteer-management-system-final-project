@@ -44,36 +44,3 @@ export const CodesProvider = ({ children }) => {
 };
 
 export const useCodes = () => useContext(CodesContext);
-// import React from "react";
-// import { createContext, useContext, useEffect, useState } from "react";
-// import { genericServices } from '../services/genericServices';
-
-// const CodesContext = createContext();
-
-// export const CodesProvider = ({ children }) => {
-//   const [codes, setCodes] = useState(null);
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     const fetchCodes = async () => {
-//       try {
-//         const data = await genericServices.getAll();
-//         setCodes(data);
-//       } catch (error) {
-//         console.error("Failed to fetch codes:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchCodes();
-//   }, []);
-
-//   return (
-//     <CodesContext.Provider value={{ codes, loading }}>
-//       {children}
-//     </CodesContext.Provider>
-//   );
-// };
-
-// export const useCodes = () => useContext(CodesContext);

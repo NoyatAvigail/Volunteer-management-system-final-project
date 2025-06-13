@@ -31,8 +31,8 @@ function VolunteerRequests() {
       { volunteerId: currentUser.id },
       () => setOpenCalls(prev => prev.filter(call => call.id !== callId)),
       (error) => {
-        console.error('שגיאה בעדכון הקריאה:', error);
-        alert('אירעה שגיאה בעדכון הקריאה');
+        console.error('Error updating call:', error);
+        alert('Error updating call');
       }
     );
 
@@ -40,16 +40,16 @@ function VolunteerRequests() {
 
   return (
     <div className="section">
-      <h2>בקשות פתוחות</h2>
+      <h2>Open Requests</h2>
       {openCalls.length === 0 ? (
-        <p>אין כרגע בקשות פתוחות</p>
+        <p>There are currently no open requests</p>
       ) : (
         openCalls.map(call => (
           <div key={call.id} className="post-item">
-            <p>מחלקה: {call.department}</p>
-            <p>בית חולים: {call.hospital}</p>
-            <p>בשעות: {call.startTime} - {call.endTime}</p>
-            <button onClick={() => handleTakeCall(call.id)}>אני לוקח</button>
+            <p>Department: {call.department}</p>
+            <p>Hospital: {call.hospital}</p>
+            <p>Times: {call.startTime} - {call.endTime}</p>
+            <button onClick={() => handleTakeCall(call.id)}>I'm taking</button>
           </div>
         ))
       )}

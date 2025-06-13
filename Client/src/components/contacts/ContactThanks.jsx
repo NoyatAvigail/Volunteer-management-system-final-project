@@ -8,7 +8,7 @@ function ContactThanks() {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
 
-    if (!currentUser) return <div>משתמש לא מחובר</div>;
+    if (!currentUser) return <div>User not logged in</div>;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,36 +16,23 @@ function ContactThanks() {
         setSuccess(null);
 
         if (!message.trim()) {
-            setError("אנא הזן הודעת תודה");
+            setError("Please enter a thank you message");
             return;
         }
 
         try {
             await userService.addNew(currentUser.id, "thanks", { contactId: currentUser.id, message });
-            setSuccess("תודה נשלחה בהצלחה");
+            setSuccess("Thanks sent successfully");
             setMessage('');
         } catch (err) {
-            setError(`שגיאה בשליחת התודה: ${err.message || err}`);
+            setError(`Error sending thanks: ${err.message || err}`);
         }
     };
 
     return (
         <div>
-            <h2>אני רוצה לומר תודה</h2>
-            {error && <div className="error">{error}</div>}
-            {success && <div className="success">{success}</div>}
-            <form onSubmit={handleSubmit}>
-                <textarea
-                    rows="5"
-                    cols="50"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="כתוב את הודעת התודה כאן..."
-                    required
-                />
-                <br />
-                <button type="submit">שלח תודה</button>
-            </form>
+            <h2>Thanks</h2>
+            <p>The Thanks will appear here.</p>
         </div>
     );
 }
