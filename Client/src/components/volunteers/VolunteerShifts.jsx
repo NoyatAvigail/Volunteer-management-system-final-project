@@ -21,15 +21,15 @@ function VolunteerShifts() {
 
   return (
     <div className="section">
-      <h2>המשמרות שלי</h2>
+      <h2>My Shifts</h2>
       {shifts.length === 0 ? (
-        <p>אין לך משמרות כרגע.</p>
+        <p>You have no shifts at the moment.</p>
       ) : (
         shifts.map(shift => (
           <div key={shift.id} className="post-item">
-            <p>מחלקה: {shift.department}</p>
-            <p>בית חולים: {shift.hospital}</p>
-            <p>בשעות: {shift.startTime} - {shift.endTime}</p>
+            <p>Department: {shift.department}</p>
+            <p>Hospital: {shift.hospital}</p>
+            <p>Times: {shift.startTime} - {shift.endTime}</p>
           </div>
         ))
       )}

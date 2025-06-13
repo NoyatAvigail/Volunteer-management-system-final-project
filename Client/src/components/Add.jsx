@@ -22,9 +22,7 @@ function Add({ setIsChange = () => { }, inputs, defaultValue, name = "Add", type
             volunteerId: body.volunteerId ? Number(body.volunteerId) : null,
             date: formatDateToISO(body.date),
         };
-
-        console.log("Prepared body:", preparedBody);    
-
+        console.log("Prepared body:", preparedBody);
         reset();
         setIsScreen(0);
         try {
@@ -40,7 +38,8 @@ function Add({ setIsChange = () => { }, inputs, defaultValue, name = "Add", type
                 },
                 (error) => {
                     console.log("add was unsuccessful", error);
-                });
+                }
+            );
         } catch (error) {
             console.log("Unexpected error:", error);
         }
@@ -48,10 +47,10 @@ function Add({ setIsChange = () => { }, inputs, defaultValue, name = "Add", type
 
     const formatDateToISO = (inputDate) => {
         if (!inputDate) return null;
-        const parts = inputDate.split('-');
-        if (parts.length !== 3) return inputDate; 
+        const parts = inputDate.split("-");
+        if (parts.length !== 3) return inputDate;
         const [day, month, year] = parts;
-        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+        return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
     };
 
     const handleCancel = () => {
@@ -61,18 +60,38 @@ function Add({ setIsChange = () => { }, inputs, defaultValue, name = "Add", type
 
     return (
         <>
-            {isScreen === 0 && <button className="addBtn" onClick={() => setIsScreen(1)}>{name}</button>}
+            {isScreen === 0 && (
+                <button className="addBtn" onClick={() => setIsScreen(1)}>{name}</button>
+            )}
             {isScreen === 1 && (
                 <form onSubmit={handleSubmit(addFunc)}>
-                    {inputs.map((input, index) => (
-                        <div key={index}>
-                            <input
-                                {...register(input, { required: true })}
-                                placeholder={`Enter ${input}`}
-                            />
-                            {errors[input] && <span>{input} is required</span>}
-                        </div>
-                    ))}
+                    {inputs.map((input, index) => {
+                        const inputName = typeof input === "string" ? input : input.name;
+                        const inputType = typeof input === "string" ? "text" : input.type || "text";
+                        const options = typeof input === "object" && input.options;
+
+                        return (
+                            <div key={index}>
+                                {inputType === "select" ? (
+                                    <select {...register(inputName, { required: true })}>
+                                        <option value="">choose {inputName}</option>
+                                        {options?.map((option, i) => (
+                                            <option key={i} value={option.value ?? option}>
+                                                {option.label ?? option}
+                                            </option>
+                                        ))}
+                                    </select>
+                                ) : (
+                                    <input
+                                        type={inputType}
+                                        {...register(inputName, { required: true })}
+                                        placeholder={`Enter ${inputName}`}
+                                    />
+                                )}
+                                {errors[inputName] && <span>{inputName} is required</span>}
+                            </div>
+                        );
+                    })}
                     <button className="add" type="submit">OK</button>
                     <button type="button" onClick={handleCancel}>Cancel</button>
                 </form>

@@ -3,8 +3,8 @@ import React from 'react';
 function Certificate() {
   return (
     <div className="section">
-      <h2>תעודת מתנדב</h2>
-      <p>כאן תופיע תעודת המתנדב.</p>
+      <h2>Volunteer Certificate</h2>
+      <p>The volunteer certificate will appear here.</p>
     </div>
   );
 }

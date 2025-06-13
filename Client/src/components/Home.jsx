@@ -5,7 +5,7 @@ function Home() {
     return (
         <>
             <div className="home-container">
-                <h1>ברוכים הבאים למערכת ניהול מתנדבים</h1>
+                <h1>Welcome to the Volunteer Management System</h1>
             </div>
         </>
     );

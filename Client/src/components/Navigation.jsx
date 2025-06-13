@@ -29,15 +29,15 @@ function Navigation({ setIsShowInfo }) {
                             <nav className='header'>
                                 <div className="left">
                                     <h3 className='userName'> {currentUser.fullName}</h3>
-                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/home`}>דף הבית</Link></ul>
-                                    <ul><a onClick={() => setIsShowInfo(1)}>מידע</a></ul>
-                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/shifts`}>המשמרות שלי</Link></ul>
-                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/fixedShifts`}>משמרות קבועות</Link></ul>
-                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/requests`}>בקשות פתוחות</Link></ul>
-                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/certificate`}>תעודת מתנדב</Link></ul>
-                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/profile`}>ניהול פרופיל</Link></ul >
+                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/home`}>Home page</Link></ul>
+                                    <ul><a onClick={() => setIsShowInfo(1)}>Information</a></ul>
+                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/shifts`}>My shifts</Link></ul>
+                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/permanentShifts`}>Permanent shifts</Link></ul>
+                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/requests`}>Open requests</Link></ul>
+                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/profile`}>Profile management</Link></ul >
+                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/certificate`}>Volunteer certificate</Link></ul>
                                     <div className="right">
-                                        <ul onClick={logOut}><a>התנתקות</a></ul>
+                                        <ul onClick={logOut}><a>Logout</a></ul>
                                     </div>
                                 </div >
                             </nav >
@@ -47,16 +47,17 @@ function Navigation({ setIsShowInfo }) {
                             <nav className='header'>
                                 <div className="left">
                                     <h3 className='userName'>{currentUser.fullName}</h3>
-                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/home`}>דף הבית</Link></ul>
-                                    <ul><a onClick={() => setIsShowInfo(1)}>פרטים אישיים</a></ul>
-                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient-info`}>מידע על המטופל</Link></ul>
-                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/requests`}>הפניות שלי</Link></ul>
-                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/new-request`}>הוספת פנייה</Link></ul>
-                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/add-patient`}>הוספת מטופל</Link></ul>
-                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/thanks`}>אני רוצה לומר תודה</Link></ul>
-                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/profile`}>ניהול פרופיל</Link></ul>
+                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/home`}>Home page</Link></ul>
+                                    <ul><a onClick={() => setIsShowInfo(1)}>Information</a></ul>
+                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/requests`}>My requests</Link></ul>
+                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/new-request`}>Add request</Link></ul>
+                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/profile`}>Profile management</Link></ul>
+                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/info`}>Patient information</Link></ul>
+                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/add-patient`}>Add patient</Link></ul>
+                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/profile`}>Profile management</Link></ul>
+                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/thanks`}>Thanks</Link></ul>
                                     <div className="right">
-                                        <ul onClick={logOut}><a>התנתקות</a></ul>
+                                        <ul onClick={logOut}><a>Logout</a></ul>
                                     </div>
                                 </div>
                             </nav>
@@ -69,9 +70,9 @@ function Navigation({ setIsShowInfo }) {
             ) : (
                 <nav className='header'>
                     <div className="left">
-                        <ul><Link to="/home">דף הבית</Link></ul>
-                        <ul><Link to="/login">התחברות</Link></ul>
-                        <ul><Link to="/signup">הרשמה</Link></ul>
+                        <ul><Link to="/home">Home page</Link></ul>
+                        <ul><Link to="/login">Login</Link></ul>
+                        <ul><Link to="/signup">Sign Up</Link></ul>
                     </div>
                 </nav>
             )

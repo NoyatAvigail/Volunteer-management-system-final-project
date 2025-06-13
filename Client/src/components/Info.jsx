@@ -15,7 +15,7 @@ function Info({ setIsShowInfo }) {
     }
   }, []);
 
-  if (!user) return <div className="info">Loading...</div>;  
+  if (!user) return <div className="info">Loading...</div>;
 
   return (
     <div className="info">

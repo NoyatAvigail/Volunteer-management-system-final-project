@@ -22,51 +22,15 @@ function Volunteers() {
 
     useEffect(() => {
         if (!currentUser?.id) {
-            setError("המשתמש לא מחובר");
+            setError("User is not logged in");
             return;
         }
     }, [currentUser.id, isChange]);
 
-    if (error) return <div>{error}</div>;    
+    if (error) return <div>{error}</div>;
 
     return (
         <div className='volunteer-dashboard'>
-            <h1>ברוך הבא</h1>
-            <div className="section">
-                <h2>המשמרות שלי</h2>
-                <Sort type="Shifts" setIsChange={setIsChange} options={["id", "date"]} userData={shifts} setData={setShifts} />
-                <Search type="Shifts" setIsChange={setIsChange} options={["All", "ID", "Date"]} data={shifts} setData={setShifts} />
-                {shifts.map(shift => (
-                    <div key={shift.id} className="post-item">
-                        <p>#{shift.id}</p>
-                        <p>תאריך: {shift.date}</p>
-                        <p>מיקום: {shift.location}</p>
-                    </div>
-                ))}
-            </div>
-
-            <div className="section">
-                <h2>משמרות קבועות</h2>
-                {fixedShifts.map(fixed => (
-                    <div key={fixed.id} className="post-item">
-                        <p>#{fixed.id}</p>
-                        <p>יום: {fixed.weekDay}</p>
-                        <p>שעה: {fixed.hour}</p>
-                    </div>
-                ))}
-            </div>
-
-            <div className="section">
-                <h2>בקשות פתוחות</h2>
-                {openCalls.map(call => (
-                    <div key={call.id} className="post-item">
-                        <p>#{call.id}</p>
-                        <p>סוג: {call.type}</p>
-                        <p>כתובת: {call.address}</p>
-                        <button onClick={() => navigate(`/take-call/${call.id}`)}>אני לוקח</button>
-                    </div>
-                ))}
-            </div>
         </div>
     );
 }

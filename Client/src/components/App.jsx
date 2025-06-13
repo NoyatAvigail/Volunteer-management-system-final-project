@@ -48,18 +48,19 @@ function App() {
           <Route path="/volunteer/:id" element={<Volunteers />} />
           <Route path="/volunteer/:id/home" element={<Volunteers />} />
           <Route path="/volunteer/:id/shifts" element={<VolunteerShifts />} />
+          <Route path="/volunteer/:id/permanentShifts" element={<VolunteerFixedShifts />} />
           <Route path="/volunteer/:id/requests" element={<VolunteerRequests />} />
-          <Route path="/volunteer/:id/certificate" element={<VolunteerCertificate />} />
           <Route path="/volunteer/:id/profile" element={<VolunteerProfile />} />
-          <Route path="/volunteer/:id/fixedShifts" element={<VolunteerFixedShifts />} />
+          <Route path="/volunteer/:id/certificate" element={<VolunteerCertificate />} />
           <Route path="/contactperson/:id" element={<Contacts />} />
           <Route path="/contactperson/:id/home" element={<Contacts />} />
-          <Route path="/contactperson/:id/patient-info" element={<ContactPatientInfo />} />
           <Route path="/contactperson/:id/requests" element={<ContactRequests />} />
           <Route path="/contactperson/:id/new-request" element={<ContactNewRequest />} />
-          <Route path="/contactperson/:id/add-patient" element={<ContactAddPatient />} />
-          <Route path="/contactperson/:id/thanks" element={<ContactThanks />} />
           <Route path="/contactperson/:id/profile" element={<ContactProfile />} />
+          <Route path="/contactperson/:id/patient/patient-info" element={<ContactPatientInfo />} />
+          <Route path="/contactperson/:id/patient/add-patient" element={<ContactAddPatient />} />
+          <Route path="/contactperson/:id/patient/profile" element={<ContactProfile />} />
+          <Route path="/contactperson/:id/thanks" element={<ContactThanks />} />
           <Route path="/error" element={<ErrorPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>

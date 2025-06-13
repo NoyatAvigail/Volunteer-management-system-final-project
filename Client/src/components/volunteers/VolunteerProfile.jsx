@@ -3,10 +3,10 @@ import React from 'react';
 function Profile() {
   return (
     <div className="section">
-      <h2>ניהול פרופיל</h2>
-      <p>כאן תופיע טופס לניהול פרופיל.</p>
+      <h2>Profile Management</h2>
+      <p>A profile management form will appear here.</p>
     </div>
-  );    
+  );
 }
 
 export default Profile;

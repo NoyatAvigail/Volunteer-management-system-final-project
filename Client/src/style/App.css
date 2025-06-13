@@ -41,7 +41,7 @@ body::-webkit-scrollbar {
 }
 
 .header ul a {
-  font-size: 1.5vw;
+  font-size: 1vw;
   text-decoration: none;
   cursor: pointer;
   font-weight: bold;

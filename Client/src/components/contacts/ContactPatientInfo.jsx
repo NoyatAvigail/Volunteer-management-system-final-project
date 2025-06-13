@@ -9,7 +9,7 @@ function ContactPatientInfo() {
 
     useEffect(() => {
         if (!currentUser || !currentUser.id) {
-            setError("משתמש לא מחובר");
+            setError("User not logged in");
             return;
         }
         const fetchPatientInfo = async () => {
@@ -17,21 +17,19 @@ function ContactPatientInfo() {
                 const data = await userService.getByValue(currentUser.id, "patient-info", { contactId: currentUser.id });
                 setPatientInfo(data);
             } catch (err) {
-                setError(`שגיאה בטעינת מידע על המטופל: ${err.message || err}`);
+                setError(`Error loading patient information: ${err.message || err}`);
             }
         };
         fetchPatientInfo();
     }, [currentUser]);
 
     if (error) return <div className="error">{error}</div>;
-    if (!patientInfo) return <div>טוען מידע על המטופל...</div>;
+    if (!patientInfo) return <div>Loading patient information...</div>;
 
     return (
         <div>
-            <h2>מידע על המטופל</h2>
-            <p>שם המטופל: {patientInfo.name}</p>
-            <p>תאריך לידה: {patientInfo.birthDate}</p>
-            <p>מספר מזהה: {patientInfo.patientId}</p>
+            <h2>Patient Information</h2>
+            <p>The patient information will appear here.</p>
         </div>
     );
 }
