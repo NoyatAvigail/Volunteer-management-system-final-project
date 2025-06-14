@@ -9,7 +9,7 @@ import Departments from '../Models/Departments.js';
 import FamilyRelations from '../Models/FamilyRelations.js';
 import VolunteeringTypes from '../Models/VolunteeringTypes.js';
 import UserTypes from '../Models/UserTypes.js';
-import Hospitalizeds from '../models/Hospitalizeds.js'
+import Hospitalizeds from '../Models/Hospitalizeds.js'
 
 const models = { Users, Passwords, Events, Sectors, Genders, Hospitals, Departments, FamilyRelations, VolunteeringTypes, UserTypes, Hospitalizeds };
 
@@ -58,7 +58,7 @@ const genericDAL = {
         return items;
     },
 
-    createItem: (model, data) => {
+    create: (model, data) => {
         console.log("data", data);
         return model.create(data)
     },

@@ -111,7 +111,9 @@ function Register() {
                 relationId: Number(mergedData.relationId),
                 hospital: mergedData.hospital,
                 department: mergedData.department,
-                roomNumber: mergedData.roomNumber
+                roomNumber: mergedData.roomNumber,
+                hospitalizationStart: mergedData.hospitalizationStart,
+                hospitalizationEnd: null
             };
 
             await signup(
@@ -355,7 +357,7 @@ function Register() {
                             <label htmlFor={`Hospitals-${item.id}`}>{item.description}</label>
                         </div>
                     ))}
-                    <label>Choose a class</label>
+                    <label>Choose a department</label>
                     {codes?.Departments?.map((item) => (
                         <div key={item.id}>
                             <input
@@ -368,6 +370,7 @@ function Register() {
                         </div>
                     ))}
                     <input placeholder="Room Number" {...registerSecond("roomNumber", { required: true })} />
+                    <input placeholder="hospitalization Start" {...registerSecond("hospitalizationStart", { required: true })} />
                     <button type="submit">Subscribe</button>
                 </form>
             )}

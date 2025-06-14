@@ -3,13 +3,16 @@ import Passwords from '../Models/Passwords.js';
 import Volunteers from "../Models/Volunteers.js";
 import ContactPeople from "../Models/ContactPeople.js"
 import Patients from "../Models/Patients.js"
-import RelationToPatients from '../Models/RelationToPatients.js'
 import Hospitalizeds from '../Models/Hospitalizeds.js';
-import VolunteeringInDepartments from '../Models/VolunteeringInDepartments.js';
-import VolunteeringForSectors from '../Models/VolunteeringForSectors.js';
-import VolunteeringForGenders from '../models/VolunteeringForGenders.js';
-import VolunteerTypes from '../models/VolunteerTypes.js';
+
+const models = { Users, Passwords, Hospitalizeds, Patients };
+
 const userDal = {
+    getModelByName: (name) => {
+        console.log(models[name]);
+        return models[name]
+    },
+
     findByEmail: (email) => {
         return Users.findOne({ where: { email } });
     },

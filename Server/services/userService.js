@@ -93,7 +93,7 @@ const userService = {
                         fullName: rest.fullName,
                         address: rest.address
                     }, { transaction });
-
+                //TODO check if patient exists, if not then create
                 const patient = await userDal.createModel(Patients,
                     {
                         userId: rest.patientId,
@@ -112,6 +112,16 @@ const userService = {
                         contactPeopleId: contact.id,
                         patientId: patient.id,
                         relationId: rest.relationId,
+                    }, { transaction });
+                //TODO check if hospitalized exists, if exists then popup check to user, else create 
+                const hospitalizeds = await userDal.createModel(Hospitalizeds,
+                    {
+                        patientId: patient.id,
+                        hospital: rest.hospital,
+                        department: rest.department,
+                        roomNumber: rest.roomNumber,
+                        hospitalizationStart: rest.hospitalizationStart,
+                        hospitalizationEnd: rest.hospitalizationEnd
                     }, { transaction });
 
                 newUser = {
@@ -156,7 +166,13 @@ const userService = {
             user: userData,
             autoId: userData.id
         };
-    }
+    },
+
+    create: async (table, data) => {
+        log('[POST]', { table, data });
+        const model = userDal.getModelByName((table));
+        return userDal.createModel(model, data);
+    },
 };
 
 export default userService;

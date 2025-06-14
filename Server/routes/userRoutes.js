@@ -1,8 +1,6 @@
 import express from 'express';
 import userController from '../controller/userController.js';
-import genericController from '../controller/genericConterller.js';
 import { verifyToken, validateUserId } from '../middleware/middleware.js';
-// import { swaggerUi } from '../swagger.js';
 const router = express.Router();
 
 router.route('/login')
@@ -14,20 +12,13 @@ router.use(verifyToken);
 
 router.route('/:type/:userId/:table')
     .all(validateUserId)
-    .get(genericController.getAll)
-    .get(genericController.getByValue)
-    .post(genericController.post);
+    .post(userController.post);
 
-router.route('/:type/:userId/:baseTable/:id/:table')
+router.route('/ContactPerson/:id/Patients')
     .all(validateUserId)
-    .get(genericController.getNested)
-    .post(genericController.post)
-    .patch(genericController.update)
-    .delete(genericController.softDelete);
+    .post(userController.post);
 
 router.route('/:type/:userId/:table/:id')
-    .all(validateUserId)
-    .patch(genericController.update)
-    .delete(genericController.softDelete);
+    .all(validateUserId);
 
 export default router;

@@ -35,6 +35,16 @@ const userController = {
             res.status(500).json({ message: 'Server error' });
         }
     },
+
+    post: async (req, res) => {
+        try {
+            const item = await userService.create(req.params.table, req.body);
+            res.status(201).json(item);
+        } catch (err) {
+            console.error("Error in POST /:table:", err);
+            res.status(500).json({ message: 'Server error', error: err.message });
+        }
+    },
 };
 
 export default userController;
