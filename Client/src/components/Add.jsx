@@ -1,12 +1,15 @@
 import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { CurrentUser } from "./App";
+import { CodesContext } from './Models';
 import { userService } from "../services/usersServices";
 
 function Add({ setIsChange = () => { }, inputs, defaultValue, name = "Add", type }) {
     const { currentUser } = useContext(CurrentUser);
     const [isScreen, setIsScreen] = useState(0);
-
+    const { codes, loading } = useContext(CodesContext);
+    const userTypeObj = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
+    
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         defaultValues: {
             ...defaultValue,
@@ -15,22 +18,14 @@ function Add({ setIsChange = () => { }, inputs, defaultValue, name = "Add", type
     });
 
     const addFunc = async (body) => {
-        const preparedBody = {
-            ...body,
-            patientId: Number(body.patientId),
-            contactId: Number(body.contactId),
-            volunteerId: body.volunteerId ? Number(body.volunteerId) : null,
-            date: formatDateToISO(body.date),
-        };
-        console.log("Prepared body:", preparedBody);
         reset();
         setIsScreen(0);
         try {
             await userService.create(
                 currentUser.autoId,
-                currentUser.type,
+                userTypeObj,
                 type,
-                preparedBody,
+                body,
                 (result) => {
                     console.log("add successful:", result);
                     setIsChange(1);

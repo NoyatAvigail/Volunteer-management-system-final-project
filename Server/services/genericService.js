@@ -29,10 +29,10 @@ const service = {
         return genericDAL.findNested(baseModel, id, nestedModel, body);
     },
 
-    createItem: async (table, data) => {
+    create: async (table, data) => {
         log('[POST]', { table, data });
         const model = genericDAL.getModelByName((table));
-        return genericDAL.createItem(model, data);
+        return genericDAL.create(model, data);
     },
 
     updateItemField: async (table, id, body) => {
