@@ -16,6 +16,9 @@ function ContactRequests() {
     const { currentUser } = useContext(CurrentUser);
     const navigate = useNavigate();
 
+    console.log("displayData", displayData);  
+    console.log("userData", userData);      
+
     useEffect(() => {
         setError(null);
         if (!currentUser || !currentUser.id) {

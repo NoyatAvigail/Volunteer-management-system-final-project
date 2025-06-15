@@ -7,8 +7,8 @@ function ContactAddPatient() {
     const { currentUser } = useContext(CurrentUser);
     const { codes, loading } = useContext(CodesContext);
     const userTypeObj = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
-    const sectorsObj = codes?.Hospitals;
-    const gendersObj = codes?.Departments;
+    const sectorsObj = codes?.Sectors;
+    const gendersObj = codes?.Genders;
 
     if (!currentUser || userTypeObj !== 'ContactPerson') {
         return <div>No access to this form</div>;
@@ -22,10 +22,17 @@ function ContactAddPatient() {
                     type="Patients"
                     setIsChange={() => { }}
                     inputs={[
-                        "id",
-                        "contactId",
+                        {
+                            name: "userId",
+                            label: "Patient ID",
+                            type: "text" 
+                        },
+                        "contactPeopleId",
                         "fullName",
-                        "dateOfBirth",
+                        {
+                            name: "dateOfBirth",
+                            type: "date"
+                        },
                         {
                             name: "sector",
                             type: "select",
@@ -36,16 +43,21 @@ function ContactAddPatient() {
                             type: "select",
                             options: gendersObj.map(h => ({ label: h.description, value: h.id }))
                         },
-                        "address"
-                    ]}
+                        "address",
+                        {
+                            name: "patientInterestedInReceivingNotifications",
+                            type: "checkbox",
+                            label: "Interested in receiving notifications?"
+                        }]}
                     defaultValue={{
-                        id: "",
-                        contactId: currentUser.id,
+                        userId: "",
+                        contactPeopleId: currentUser.id,
                         fullName: "",
                         dateOfBirth: "",
                         sector: "",
                         gender: "",
                         address: "",
+                        patientInterestedInReceivingNotifications: "",
                     }}
                     name="Add patient"
                 />
