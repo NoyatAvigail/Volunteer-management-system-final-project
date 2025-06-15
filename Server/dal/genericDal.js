@@ -4,14 +4,15 @@ import Passwords from '../Models/Passwords.js';
 import Events from '../Models/Events.js';
 import Sectors from '../Models/Sectors.js';
 import Genders from '../models/Genders.js';
-import Hospitals from '../Models/Hospitals.js'; 
+import Hospitals from '../Models/Hospitals.js';
 import Departments from '../Models/Departments.js';
 import FamilyRelations from '../Models/FamilyRelations.js';
 import VolunteeringTypes from '../Models/VolunteeringTypes.js';
 import UserTypes from '../Models/UserTypes.js';
-import Hospitalizeds from '../Models/Hospitalizeds.js'
+import Hospitalizeds from '../Models/Hospitalizeds.js';
+import Patients from "../Models/Patients.js";   
 
-const models = { Users, Passwords, Events, Sectors, Genders, Hospitals, Departments, FamilyRelations, VolunteeringTypes, UserTypes, Hospitalizeds };
+const models = { Users, Passwords, Events, Sectors, Genders, Hospitals, Departments, FamilyRelations, VolunteeringTypes, UserTypes, Hospitalizeds, Patients };
 
 const genericDAL = {
     getModelByName: (name) => {
@@ -22,11 +23,14 @@ const genericDAL = {
     findByField: (model, query) => {
         const field = Object.keys(query)[0];
         const value = query[field];
+        const whereClause = {
+            [field]: value
+        };
+        if ('is_deleted' in model.rawAttributes) {
+            whereClause.is_deleted = 0;
+        }
         return model.findAll({
-            where: {
-                [field]: value,
-                is_deleted: 1
-            }
+            where: whereClause
         });
     },
 
@@ -58,11 +62,14 @@ const genericDAL = {
         return items;
     },
 
-    create: (model, data) => {
-        console.log("data", data);
-        return model.create(data)
+    createModel: (Model, data, options = {}) => {
+        return Model.create(data, options);
     },
 
+    bulkCreateModel: (Model, dataArray, options = {}) => {
+        return Model.bulkCreate(dataArray, options);
+    },
+    
     updateFields: async (model, id, updatedFields) => {
         const item = await model.findByPk(id);
         if (item) {

@@ -21,6 +21,7 @@ import ContactNewRequest from './contacts/ContactNewRequest';
 import ContactAddPatient from './contacts/ContactAddPatient';
 import ContactThanks from './contacts/ContactThanks';
 import ContactProfile from './contacts/ContactProfile';
+import ContactAddHospitalization from './contacts/ContactAddHospitalization';
 import { CodesProvider } from './Models';
 import ErrorPage from './ErrorPage'
 import '../style/App.css'
@@ -57,10 +58,11 @@ function App() {
           <Route path="/contactperson/:id/requests" element={<ContactRequests />} />
           <Route path="/contactperson/:id/new-request" element={<ContactNewRequest />} />
           <Route path="/contactperson/:id/profile" element={<ContactProfile />} />
+          <Route path="/contactperson/:id/thanks" element={<ContactThanks />} />
           <Route path="/contactperson/:id/patient/patient-info" element={<ContactPatientInfo />} />
           <Route path="/contactperson/:id/patient/add-patient" element={<ContactAddPatient />} />
+          <Route path="/contactperson/:id/patient/add-hospitalization" element={<ContactAddHospitalization />} />
           <Route path="/contactperson/:id/patient/profile" element={<ContactProfile />} />
-          <Route path="/contactperson/:id/thanks" element={<ContactThanks />} />
           <Route path="/error" element={<ErrorPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
