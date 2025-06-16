@@ -35,7 +35,6 @@ export const CodesProvider = ({ children }) => {
         fetchAllCode();
     }, []);
 
-
     return (
         <CodesContext.Provider value={{ codes, loading }}>
             {children}

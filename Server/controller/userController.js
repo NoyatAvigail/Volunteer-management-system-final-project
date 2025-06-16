@@ -40,6 +40,22 @@ const userController = {
                 user: loginUser,
             });
         } catch (e) {
+            res.status(500).json({ message: 'Server error' }, e);
+        }
+    },
+
+    getAll: async (req, res) => {
+        try {
+            const { table } = req.params;
+            const query = req.query;
+            if (Object.keys(query).length > 0) {
+                const items = await userService.getItem(table, query);
+                return res.status(200).json(items);
+            }
+            const items = await userService.getAll(table);
+            res.status(200).json(items);
+        } catch (error) {
+            console.error("Error in getAll (generic):", error);
             res.status(500).json({ message: 'Server error' });
         }
     },

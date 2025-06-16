@@ -6,13 +6,11 @@ export const generateToken = (id, email, type) =>
 
 export const verifyToken = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
-
   if (!token) {
     return res.status(401).json({ message: "There is no token" });
   }
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-
     req.user = decoded;
     next();
   } catch (error) {
@@ -22,13 +20,11 @@ export const verifyToken = (req, res, next) => {
 };
 
 export const validateUserId = (req, res, next) => {
-
   const requestedId = req.params.userId;
-  const authenticatedId = req.user.id;
+  const authenticatedId = req.user.id.toString();
   console.log("Authenticated ID:", req.user);
   if (requestedId != authenticatedId) {
     return res.status(403).json({ error: 'Access denied' });
   }
-
   next();
 };

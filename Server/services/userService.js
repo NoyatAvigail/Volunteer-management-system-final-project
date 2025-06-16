@@ -1,39 +1,37 @@
-import genericDAL from "../dal/genericDal.js";
-import userDal from "../dal/userDal.js"
 import { hashPassword, isPasswordValid } from "../utils/utils.js";
 import { log } from "../utils/logger.js";
 import Users from '../Models/Users.js';
 import Passwords from '../Models/Passwords.js';
 import Volunteers from "../Models/Volunteers.js";
 import VolunteerTypes from '../Models/VolunteerTypes.js';
-// import ContactPeople from "../Models/ContactPeople.js"
-// import Patients from "../Models/Patients.js"
-// import RelationToPatients from '../Models/RelationToPatients.js'
-// import Hospitalizeds from '../Models/Hospitalizeds.js';
-import { ContactPeople, Patients, RelationToPatients, Hospitalizeds, } from '../Models/Index.js'
+import ContactPeople from "../Models/ContactPeople.js"
+import Patients from "../Models/Patients.js"
+import RelationToPatients from '../Models/RelationToPatients.js'
+import Hospitalizeds from '../Models/Hospitalizeds.js';
+// import { ContactPeople, Patients, RelationToPatients, Hospitalizeds, } from '../Models/Index.js'
 import VolunteeringInDepartments from '../Models/VolunteeringInDepartments.js';
 import VolunteeringForSectors from '../Models/VolunteeringForSectors.js';
 import VolunteeringForGenders from '../Models/VolunteeringForGenders.js';
 import { cUserType } from '../common/consts.js'
 import sequelize from '../../DB/connectionDB.mjs';
+import genericDAL from "../dal/genericDal.js";
 
 const userService = {
     signup: async (userData) => {
         const transaction = await sequelize.transaction();
         try {
             const { email, password, type, phone, id, ...rest } = userData;
-            const existingUser = await userDal.findByEmail(email);
+            const findUser = await genericDAL.findByField(Users, { email });
+            const existingUser = findUser[0];
             if (existingUser) throw new Error("Email already taken");
-
-            let newUser = await userDal.createModel(Users, { email, type, phone, id }, { transaction });
+            let newUser = await genericDAL.createModel(Users, { email, type, phone, id }, { transaction });
             const hashed = await hashPassword(password);
-            const pwd = await userDal.createModel(Passwords, {
+            const pwd = await genericDAL.createModel(Passwords, {
                 id: newUser.id,
                 password: hashed
             }, { transaction });
-
             if (type == cUserType.VOLUNTEER) {
-                const Volunteer = await userDal.createModel(Volunteers, {
+                const Volunteer = await genericDAL.createModel(Volunteers, {
                     userId: newUser.id,
                     fullName: rest.fullName,
                     dateOfBirth: rest.dateOfBirth,
@@ -45,14 +43,12 @@ const userService = {
                     isActive: rest.isActive,
                     flexible: rest.flexible
                 }, { transaction });
-
                 const helpTypes = rest.helpTypes.map(typeId => ({
                     id: Volunteer.id,
                     volunteerTypeId: typeId
                 }));
                 if (helpTypes.length)
-                    await userDal.bulkCreateModel(VolunteerTypes, helpTypes, { transaction });
-
+                    await genericDAL.bulkCreateModel(VolunteerTypes, helpTypes, { transaction });
                 const departments = [];
                 for (const hospitalId of rest.preferredHospitals) {
                     for (const departmentId of rest.preferredDepartments) {
@@ -64,21 +60,20 @@ const userService = {
                     }
                 }
                 if (departments.length)
-                    await userDal.bulkCreateModel(VolunteeringInDepartments, departments, { transaction });
-
+                    await genericDAL.bulkCreateModel(VolunteeringInDepartments, departments, { transaction });
                 const sectors = rest.guardSectors.map(sectorId => ({
                     id: Volunteer.id,
                     sectorId
                 }));
                 if (sectors.length)
-                    await userDal.bulkCreateModel(VolunteeringForSectors, sectors, { transaction });
+                    await genericDAL.bulkCreateModel(VolunteeringForSectors, sectors, { transaction });
 
                 const genders = rest.guardGenders.map(genderId => ({
                     id: Volunteer.id,
                     genderId
                 }));
                 if (genders.length)
-                    await userDal.bulkCreateModel(VolunteeringForGenders, genders, { transaction });
+                    await genericDAL.bulkCreateModel(VolunteeringForGenders, genders, { transaction });
 
                 newUser = {
                     ...rest,
@@ -89,17 +84,16 @@ const userService = {
             }
 
             if (type == cUserType.CONTACTPERSON) {
-                const contact = await userDal.createModel(ContactPeople,
+                const contact = await genericDAL.createModel(ContactPeople,
                     {
                         userId: newUser.id,
                         fullName: rest.fullName,
                         address: rest.address
                     }, { transaction });
-                //TODO check if patient exists, if not then create
-                const patient = await userDal.createModel(Patients,
+                const patient = await genericDAL.createModel(Patients,
                     {
                         userId: rest.patientId,
-                        contactPeopleId: contact.id,
+                        contactPeopleId: contact.userId,
                         fullName: rest.patientFullName,
                         dateOfBirth: rest.patientDateOfBirth,
                         sector: rest.patientSector,
@@ -109,16 +103,15 @@ const userService = {
                         interestedInReceivingNotifications: rest.patientInterestedInReceivingNotifications ?? true
                     }, { transaction });
 
-                const relationToPatients = await userDal.createModel(RelationToPatients,
+                const relationToPatients = await genericDAL.createModel(RelationToPatients,
                     {
                         contactPeopleId: contact.id,
                         patientId: patient.id,
                         relationId: rest.relationId,
                     }, { transaction });
-                //TODO check if hospitalized exists, if exists then popup check to user, else create 
-                const hospitalizeds = await userDal.createModel(Hospitalizeds,
+                const hospitalizeds = await genericDAL.createModel(Hospitalizeds,
                     {
-                        patientId: patient.id,
+                        patientId: patient.userId,
                         hospital: rest.hospital,
                         department: rest.department,
                         roomNumber: rest.roomNumber,
@@ -146,20 +139,24 @@ const userService = {
 
     login: async ({ email, password }) => {
         log('[POST]', { email, password });
-        const user = await userDal.findByEmail(email);
+        const findUser = await genericDAL.findByField(Users, { email });
+        const user = findUser[0];
         if (!user) return null;
-        const passwordEntry = await userDal.getPasswordByUserId(user.id);
+        const findPassword = await genericDAL.findByField(Passwords, { id: user.id });
+        const passwordEntry = findPassword[0];
         if (!passwordEntry) return null;
         const valid = await isPasswordValid(password, passwordEntry.password);
         if (!valid) return null;
         const userData = user.toJSON();
         if (user.type == cUserType.VOLUNTEER) {
-            const volunteer = await userDal.findVolunteerByUserId(user.id);
+            const findVolunteer = await genericDAL.findByField(Volunteers, { userId: user.id });
+            const volunteer = findVolunteer[0];
             if (!volunteer) return null;
             userData.fullName = volunteer.fullName;
             userData.autoId = volunteer.id;
         } else if (user.type == cUserType.CONTACTPERSON) {
-            const contact = await userDal.findContactByUserId(user.id);
+            const findContact = await genericDAL.findByField(ContactPeople, { userId: user.id });
+            const contact = findContact[0];
             if (!contact) return null;
             userData.fullName = contact.fullName;
             userData.autoId = contact.id;
@@ -168,6 +165,19 @@ const userService = {
             user: userData,
             autoId: userData.id
         };
+    },
+
+    getAll: async (table) => {
+        log('[GET ALL]', { table });
+        const model = genericDAL.getModelByName((table));
+        const data = genericDAL.findAll(model);
+        return data;
+    },
+
+    getItem: async (table, query) => {
+        log('[GET ALL]', { table, query });
+        const model = genericDAL.getModelByName((table));
+        return genericDAL.findByField(model, query);
     },
 
     create: async (table, data) => {
@@ -243,45 +253,6 @@ const userService = {
             throw e;
         }
     },
-
-    // updateVolunteerProfile: async (userId, data) => {
-    //     const volunteer = await genericDAL.findOneWithIncludes("Volunteers", { userId }, []);
-    //     if (!volunteer) throw new Error("Volunteer not found");
-
-    //     await genericDAL.updateFields("Volunteers", volunteer.id, data);
-
-    //     await genericDAL.deleteWhere("VolunteerTypes", { id: volunteer.id });
-    //     for (const vt of data.VolunteerTypes || []) {
-    //         await genericDAL.create("VolunteerTypes", { id: volunteer.id, volunteerTypeId: vt.volunteerTypeId });
-    //     }
-
-    //     await genericDAL.deleteWhere("VolunteeringInDepartments", { id: volunteer.id });
-    //     for (const dep of data.VolunteersDepartments || []) {
-    //         await genericDAL.create("VolunteeringInDepartments", {
-    //             id: volunteer.id,
-    //             hospital: dep.hospital,
-    //             department: dep.department
-    //         });
-    //     }
-
-    //     await genericDAL.deleteWhere("VolunteeringForSectors", { id: volunteer.id });
-    //     for (const sec of data.VolunteeringForSectors || []) {
-    //         await genericDAL.create("VolunteeringForSectors", { id: volunteer.id, sectorId: sec.sectorId });
-    //     }
-
-    //     await genericDAL.deleteWhere("VolunteeringForGenders", { id: volunteer.id });
-    //     for (const gen of data.VolunteeringForGenders || []) {
-    //         await genericDAL.create("VolunteeringForGenders", { id: volunteer.id, genderId: gen.genderId });
-    //     }
-
-    //     return await genericDAL.findOneWithIncludes("Volunteers", { userId }, [
-    //         { model: genericDAL.getModelByName("Users") },
-    //         { model: genericDAL.getModelByName("VolunteerTypes") },
-    //         { model: genericDAL.getModelByName("VolunteeringInDepartments") },
-    //         { model: genericDAL.getModelByName("VolunteeringForSectors") },
-    //         { model: genericDAL.getModelByName("VolunteeringForGenders") }
-    //     ]);
-    // },
     updateVolunteerProfile: async (userId, data) => {
         try {
             const Volunteers = genericDAL.getModelByName("Volunteers");
@@ -289,18 +260,15 @@ const userService = {
             if (!volunteerArr || volunteerArr.length === 0) throw new Error("Volunteer not found");
 
             const volunteer = volunteerArr[0];
-            console.log("🔍 volunteer id:", volunteer.id);
+            console.log(" volunteer id:", volunteer.id);
 
-            // עדכון שדות בסיסיים של הטבלה Volunteers
             await genericDAL.updateFields(Volunteers, volunteer.id, data);
 
-            // טבלאות עזר
             const VolunteerTypes = genericDAL.getModelByName("VolunteerTypes");
             const VolunteeringInDepartments = genericDAL.getModelByName("VolunteeringInDepartments");
             const VolunteeringForSectors = genericDAL.getModelByName("VolunteeringForSectors");
             const VolunteeringForGenders = genericDAL.getModelByName("VolunteeringForGenders");
 
-            // מחיקה ויצירה מחדש לפי id (שהוא volunteerId בטבלאות האלה)
             await VolunteerTypes.destroy({ where: { id: volunteer.id } });
             for (const vt of data.VolunteerTypes || []) {
                 await genericDAL.create(VolunteerTypes, {
@@ -334,7 +302,6 @@ const userService = {
                 });
             }
 
-            // שליפת כל המידע מחדש באותו סגנון פשוט
             const [types, departments, sectors, genders] = await Promise.all([
                 genericDAL.findByField(VolunteerTypes, { id: volunteer.id }),
                 genericDAL.findByField(VolunteeringInDepartments, { id: volunteer.id }),
@@ -350,7 +317,7 @@ const userService = {
                 VolunteeringForGenders: genders.map(g => g.toJSON()),
             };
         } catch (error) {
-            console.error("❗ שגיאה ב-updateVolunteerProfile:", error);
+            console.error(" error- updateVolunteerProfile:", error);
             throw error;
         }
     },

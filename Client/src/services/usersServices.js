@@ -142,6 +142,7 @@ async function request(userId, type, url, params = {}, method = 'GET', body = nu
 }
 
 export const userService = {
+<<<<<<< HEAD
     getAll: (userId, userType, table, onSuccess, onError) =>
         request(userId, userType, table, {}, 'GET', null, onSuccess, onError),
 
@@ -154,6 +155,16 @@ export const userService = {
     getNested: (userId, userType, base, id, nested, params, onSuccess, onError) =>
         request(userId, userType, `${base}/${id}/${nested}`, params, 'GET', null, onSuccess, onError),
 
+=======
+    getAll: (userId, type, table, onSuccess, onError) =>
+        request(userId, type, table, {}, 'GET', null, onSuccess, onError),
+    getByValue: (userId, type, table, params, onSuccess, onError) =>
+        request(userId, type, table, params, 'GET', null, onSuccess, onError),
+    getById: (userId, table, onSuccess, onError) =>
+        request(userId, `${table}`, {}, 'GET', null, onSuccess, onError),
+    getNested: (userId, base, id, nested, params, onSuccess, onError) =>
+        request(userId, `${base}/${id}/${nested}`, params, 'GET', null, onSuccess, onError),
+>>>>>>> be1f0374231cab5154b3fad8035041c534780a00
     create: (userId, userType, entityName, body, onSuccess, onError) =>
         request(userId, userType, entityName, {}, 'POST', body, onSuccess, onError),
 
