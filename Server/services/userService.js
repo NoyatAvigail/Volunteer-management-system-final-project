@@ -14,7 +14,7 @@ import VolunteeringForGenders from '../Models/VolunteeringForGenders.js';
 import { cUserType } from '../common/consts.js'
 import sequelize from '../../DB/connectionDB.mjs';
 import genericDAL from "../dal/genericDal.js";
-
+import _ from "lodash";
 const userService = {
     signup: async (userData) => {
         const transaction = await sequelize.transaction();
@@ -163,6 +163,10 @@ const userService = {
         };
     },
 
+    getModel: (table) => {
+        return genericDAL.getModelByName(table);
+    },
+
     getAll: async (table) => {
         log('[GET ALL]', { table });
         const model = genericDAL.getModelByName((table));
@@ -174,6 +178,49 @@ const userService = {
         log('[GET ALL]', { table, query });
         const model = genericDAL.getModelByName((table));
         return genericDAL.findByField(model, query);
+    },
+
+    join: async (
+        joinParams = [{ parentTbl: '', targetField: '', childTbl: '', foreignKey: '' }],
+        whereParams = [{ key: '', value: '' }]
+    ) => {
+        for (const { parentTbl, targetField, childTbl, foreignKey } of joinParams) {
+            console.log('Join:', parentTbl, targetField, childTbl, foreignKey);
+
+            // לדוגמה: שליפת טבלה
+            const parentModel = genericDAL.getModelByName(parentTbl);
+            const childModel = genericDAL.getModelByName(childTbl);
+
+            // פה תוכלי לבנות query או לבצע join בין המודלים
+        }
+
+        for (const { key, value } of whereParams) {
+            console.log('Where clause:', key, '=', value);
+
+            // לדוגמה: הוספת תנאי לסינון או WHERE לדאטאבייס
+        }
+    },
+
+
+    getByForeignJoin: async (table1, targetField, table2, foreignKey, targetKey, targetValue) => {
+        const matchingRecordsTbl1 = await genericDAL.findByField(
+            genericDAL.getModelByName(table1),
+            { [targetKey]: targetValue }
+        );
+        const parentIds = matchingRecordsTbl1.map(item => item[targetField]);
+        const matchingRecordsTbl2 = await genericDAL.findByFieldIn(
+            genericDAL.getModelByName(table2),
+            foreignKey,
+            parentIds
+        );
+        return _.flatMap(matchingRecordsTbl2, child => {
+            const parent = matchingRecordsTbl1.find(p => p[targetField] === child[foreignKey]);
+            if (!parent) return [];
+            return {
+                ...child,
+                ..._.mapKeys(parent, (v, k) => `parent_${k}`)
+            };
+        });
     },
 
     create: async (table, data) => {
@@ -249,6 +296,7 @@ const userService = {
             throw e;
         }
     },
+
     updateVolunteerProfile: async (userId, data) => {
         try {
             const Volunteers = genericDAL.getModelByName("Volunteers");
@@ -317,7 +365,6 @@ const userService = {
             throw error;
         }
     },
-
 
     updateContactProfile: async (userId, data) => {
         const contact = await genericDAL.findOneWithIncludes("ContactPeople", { userId }, []);
@@ -388,7 +435,6 @@ const userService = {
             }
         ]);
     },
-
 };
 
 export default userService;

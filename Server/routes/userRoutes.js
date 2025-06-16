@@ -29,7 +29,7 @@ router.route('/:type/:userId/:table')
 router.route('/:type/:userId/:table/:id')
     .all(validateUserId);
 
-router.route('/:type/:userId/join-foreign/:table1/:foreignKey/:table2/:targetField')
+router.route('/:type/:userId/join-foreign/:table1/:foreignKey/:table2/:targetKey/:targetField')
     .all(validateUserId)
     .get(userController.getByForeignJoin);
 
