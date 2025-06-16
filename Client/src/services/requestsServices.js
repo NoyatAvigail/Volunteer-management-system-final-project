@@ -31,8 +31,6 @@ export const genericServices = {
         request(table, params, 'GET', null, onSuccess, onError),
     getById: (table, onSuccess, onError) =>
         request(`${table}`, {}, 'GET', null, onSuccess, onError),
-    getNested: (base, id, nested, params, onSuccess, onError) =>
-        request(`${base}/${id}/${nested}`, params, 'GET', null, onSuccess, onError),
     create: (table, body, onSuccess, onError) =>
         request(table, {}, 'POST', body, onSuccess, onError),
     update: (table, id, data, onSuccess, onError) =>
