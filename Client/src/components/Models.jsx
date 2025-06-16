@@ -16,7 +16,7 @@ export const CodesProvider = ({ children }) => {
                 codeTables.map(async (table) => {
                     try {
                         const response = await genericServices.getAll(table);
-                        console.log(`Data from ${table}:`, response);
+                        // console.log(`Data from ${table}:`, response);
                         if (Array.isArray(response)) {
                             results[table] = response;
                         } else {
@@ -24,7 +24,7 @@ export const CodesProvider = ({ children }) => {
                             results[table] = [];
                         }
                     } catch (error) {
-                        console.error(`Error fetching ${table}`, error);
+                        // console.error(`Error fetching ${table}`, error);
                         results[table] = [];
                     }
                 })

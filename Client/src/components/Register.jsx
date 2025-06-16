@@ -21,6 +21,7 @@ function Register() {
     const [userData, setUserData] = useState({});
     const [showMoreForm, setShowMoreForm] = useState(false);
     const { codes, loading } = useContext(CodesContext);
+    console.log("codes:", codes);
 
     const onFirstSubmit = async (data) => {
         const error = validateFirstRegisterStep(data);
@@ -78,7 +79,7 @@ function Register() {
                 isActive: true,
                 preferredDepartments: mergedData.preferredDepartments.map(d => Number(d)),
                 preferredHospitals: mergedData.preferredHospitals.map(h => Number(h)),
-                helpTypes: mergedData.helpTypes.map(h => Number(h)),
+                helpTypes: mergedData.helpTypes?.map(h => Number(h)),
                 guardSectors: mergedData.guardSectors.map(s => Number(s)),
                 guardGenders: mergedData.guardGenders.map(g => Number(g)),
                 isFlexible: mergedData.isFlexible == "true",
