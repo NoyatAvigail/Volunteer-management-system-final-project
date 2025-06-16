@@ -1,25 +1,35 @@
 import sequelize from './connectionDB.mjs';
-import { Users } from '../Server/models/Users.js';
-import { Passwords } from '../Server/models/Passwords.js';
-import { Volunteers } from '../Server/models/Volunteers.js';
-import { Patients } from '../Server/models/Patients.js';
-import { ContactPeople } from '../Server/models/ContactPeople.js';
-import { Hospitalizeds } from '../Server/models/Hospitalizeds.js';
-import { VolunteeringInDepartments } from '../Server/models/VolunteeringInDepartments.js';
-import { VolunteeringForSectors } from '../Server/models/VolunteeringForSectors.js';
-import { VolunteeringForGenders } from '../Server/models/VolunteeringForGenders.js';
-import { VolunteerTypes } from '../Server/models/VolunteerTypes.js';
-import { RelationToPatients } from '../Server/models/RelationToPatients.js';
-import { Hospitals } from '../Server/models/Hospitals.js';
-import { Sectors } from '../Server/models/Sectors.js';
+// טבלאות בסיסיות
+import { UserTypes } from '../Server/Models/UserTypes.js';
 import { Genders } from '../Server/models/Genders.js';
-import { FamilyRelations } from '../Server/models/FamilyRelations.js';
-import { VolunteeringTypes } from '../Server/models/VolunteeringTypes.js';
-import { FixedVolunteerAvailability } from '../Server/models/FixedVolunteerAvailability.js';
-import { OneTimeVolunteerAvailability } from '../Server/models/OneTimeVolunteerAvailability.js';
-import { Departments } from '../Server/models/Departments.js';
-import { UserTypes } from '../Server/models/UserTypes.js';
-import { Events } from '../Server/models/Events.js';
+import { Hospitals } from '../Server/Models/Hospitals.js';
+import { Departments } from '../Server/Models/Departments.js';
+import { Sectors } from '../Server/Models/Sectors.js';
+import { VolunteeringTypes } from '../Server/Models/VolunteeringTypes.js';
+import { FamilyRelations } from '../Server/Models/FamilyRelations.js';
+
+// משתמשים וסיסמאות
+import { Users } from '../Server/Models/Users.js';
+import { Passwords } from '../Server/Models/Passwords.js';
+import { Volunteers } from '../Server/Models/Volunteers.js';
+import { ContactPeople } from '../Server/Models/ContactPeople.js';
+
+// חולים ומטפלים
+import { Patients } from '../Server/Models/Patients.js';
+import { Hospitalizeds } from '../Server/Models/Hospitalizeds.js';
+import { RelationToPatients } from '../Server/Models/RelationToPatients.js';
+
+// התנדבויות לפי העדפות
+import { VolunteeringInDepartments } from '../Server/Models/VolunteeringInDepartments.js';
+import { VolunteeringForSectors } from '../Server/Models/VolunteeringForSectors.js';
+import { VolunteeringForGenders } from '../Server/Models/VolunteeringForGenders.js';
+import { VolunteerTypes } from '../Server/Models/VolunteerTypes.js';
+import { FixedVolunteerAvailability } from '../Server/Models/FixedVolunteerAvailability.js';
+import { OneTimeVolunteerAvailability } from '../Server/Models/OneTimeVolunteerAvailability.js';
+
+// אירועים
+import { Events } from '../Server/Models/Events.js';
+
 
 // Users ←→ Passwords
 Users.hasMany(Passwords, { foreignKey: 'id', onDelete: 'CASCADE' });
@@ -38,7 +48,7 @@ ContactPeople.belongsTo(Users, { foreignKey: 'userId' });
 
 // Volunteers ←→ Volunteering Details
 Volunteers.hasMany(VolunteeringInDepartments, { foreignKey: 'id', onDelete: 'CASCADE' });
-VolunteeringInDepartments.belongsTo(Volunteers, { foreignKey: 'id' , onDelete: 'CASCADE' });
+VolunteeringInDepartments.belongsTo(Volunteers, { foreignKey: 'id', onDelete: 'CASCADE' });
 
 Volunteers.hasMany(VolunteeringForSectors, { foreignKey: 'id', onDelete: 'CASCADE' });
 VolunteeringForSectors.belongsTo(Volunteers, { foreignKey: 'id', onDelete: 'CASCADE' });
@@ -79,7 +89,9 @@ RelationToPatients.belongsTo(ContactPeople, { foreignKey: 'contactPeopleId', onD
 
 FamilyRelations.hasOne(RelationToPatients, { foreignKey: 'relationId', onDelete: 'CASCADE' });
 RelationToPatients.belongsTo(FamilyRelations, { foreignKey: 'relationId', onDelete: 'CASCADE' });
+ContactPeople.hasMany(Patients, { foreignKey: 'contactPeopleId', as: 'patients', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
+Patients.belongsTo(ContactPeople, { foreignKey: 'contactPeopleId', as: 'contactPerson' });
 // Events ←→ Patients / Volunteers / ContactPeople
 Volunteers.hasMany(Events, { foreignKey: 'volunteerId', sourceKey: 'userId', onDelete: 'CASCADE' });
 Events.belongsTo(Volunteers, { foreignKey: 'volunteerId', targetKey: 'userId', onDelete: 'CASCADE' });
@@ -92,25 +104,30 @@ Events.belongsTo(Hospitalizeds, { foreignKey: 'HospitalizedsId', onDelete: 'CASC
 
 export {
   sequelize,
+  // בסיס
+  UserTypes,
+  Genders,
+  Hospitals,
+  Departments,
+  Sectors,
+  VolunteeringTypes,
+  FamilyRelations,
+  // משתמשים
   Users,
   Passwords,
   Volunteers,
-  Patients,
   ContactPeople,
+  // חולים
+  Patients,
   Hospitalizeds,
+  RelationToPatients,
+  // העדפות התנדבות
   VolunteeringInDepartments,
   VolunteeringForSectors,
   VolunteeringForGenders,
-  VolunteeringTypes,
-  RelationToPatients,
   VolunteerTypes,
-  Hospitals,
-  Sectors,
-  Genders,
-  FamilyRelations,
   FixedVolunteerAvailability,
   OneTimeVolunteerAvailability,
-  Events,
-  Departments,
-  UserTypes
+  // אירועים
+  Events
 };

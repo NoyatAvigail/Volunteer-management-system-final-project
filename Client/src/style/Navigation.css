@@ -1,0 +1,324 @@
+/* Navigation.css - עיצוב חדשני לסרגל ניווט */
+
+/* איפוס בסיסי */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* סרגל הניווט הראשי */
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0 2rem;
+  min-height: 70px;
+  direction: rtl;
+}
+
+/* המכולה הפנימית */
+.left {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 70px;
+  width: 100%;
+}
+
+/* שם המשתמש */
+.userName {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-left: 2rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.5px;
+  background: linear-gradient(45deg, #ffffff, #e3f2fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* רשימת הניווט */
+.left ul {
+  list-style: none;
+  display: inline-block;
+  margin: 0 0.5rem;
+}
+
+.left ul a,
+.left ul Link {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+/* אפקט hover */
+.left ul a:hover,
+.left ul Link:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* אפקט גלי בלחיצה */
+.left ul a::before,
+.left ul Link::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.left ul a:active::before,
+.left ul Link:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* כפתור התנתקות */
+.right {
+  margin-right: 0;
+}
+
+.right ul a {
+  background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.right ul a:hover {
+  background: linear-gradient(45deg, #ff5252, #d63031);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+}
+
+/* אנימציות כניסה */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.header {
+  animation: fadeInScale 0.6s ease-out;
+}
+
+.left ul {
+  animation: slideInRight 0.8s ease-out;
+  animation-fill-mode: both;
+}
+
+/* עיכוב אנימציה לכל פריט */
+.left ul:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.left ul:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.left ul:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.left ul:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+.left ul:nth-child(6) {
+  animation-delay: 0.5s;
+}
+
+.left ul:nth-child(7) {
+  animation-delay: 0.6s;
+}
+
+.left ul:nth-child(8) {
+  animation-delay: 0.7s;
+}
+
+.userName {
+  animation: fadeInScale 1s ease-out 0.2s both;
+}
+
+/* עיצוב רספונסיבי */
+@media (max-width: 1024px) {
+  .header {
+    padding: 0 1rem;
+  }
+
+  .left {
+    flex-wrap: wrap;
+    min-height: auto;
+    padding: 1rem 0;
+  }
+
+  .userName {
+    width: 100%;
+    text-align: center;
+    margin: 0 0 1rem 0;
+    font-size: 1.3rem;
+  }
+
+  .left ul {
+    margin: 0.25rem;
+  }
+
+  .left ul a,
+  .left ul Link {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 0.5rem;
+  }
+
+  .left {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem 0;
+  }
+
+  .userName {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .left ul {
+    width: 100%;
+    margin: 0.2rem 0;
+  }
+
+  .left ul a,
+  .left ul Link {
+    display: block;
+    text-align: center;
+    padding: 1rem;
+    margin: 0;
+    border-radius: 15px;
+  }
+
+  .right {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .userName {
+    font-size: 1.1rem;
+  }
+
+  .left ul a,
+  .left ul Link {
+    font-size: 0.85rem;
+    padding: 0.8rem;
+  }
+}
+
+/* אפקטים נוספים */
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  animation: shimmer 3s infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* מצב פוקוס לנגישות */
+.left ul a:focus,
+.left ul Link:focus {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* אפקט loading עדין */
+.header.loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.header.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ffffff, transparent);
+  animation: loading 2s infinite;
+}
+
+@keyframes loading {
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 100%;
+  }
+}

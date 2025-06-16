@@ -12,6 +12,9 @@ const userDal = {
         console.log(models[name]);
         return models[name]
     },
+    getUserById: (id) => {
+        return Users.findOne({ where: { id } });
+    },
 
     findByEmail: (email) => {
         return Users.findOne({ where: { email } });

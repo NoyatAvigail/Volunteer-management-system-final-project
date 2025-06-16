@@ -13,5 +13,4 @@ export const Patients = sequelize.define('Patients', {
   dateOfDeath: { type: DataTypes.DATE, allowNull: true },
   interestedInReceivingNotifications: { type: DataTypes.BOOLEAN, defaultValue: true },
 });
-
 export default Patients;
