@@ -34,7 +34,6 @@ const genericDAL = {
         return models[name];
     },
 
-
     findByField: (model, query) => {
         const field = Object.keys(query)[0];
         const value = query[field];
@@ -61,7 +60,6 @@ const genericDAL = {
         return model.findOne({
             where: {
                 id,
-                // is_deleted: 1
             }
         });
     },
@@ -75,7 +73,6 @@ const genericDAL = {
         const items = await nestedModel.findAll({
             where: {
                 ...query,
-                // is_deleted: 1
             }
         });
         return items;
@@ -113,6 +110,7 @@ const genericDAL = {
             }
         }
     },
+
     findOneWithIncludes: (modelName, query, includes) => {
         const model = models[modelName];
         return model.findOne({
@@ -120,7 +118,6 @@ const genericDAL = {
             include: includes
         });
     }
-
 };
 
 export default genericDAL;

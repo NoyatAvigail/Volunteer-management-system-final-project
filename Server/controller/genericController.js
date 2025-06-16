@@ -35,16 +35,6 @@ const genericConterller = {
         }
     },
 
-    getNested: async (req, res) => {
-        try {
-            const { baseTable, id, table } = req.params;
-            const item = await service.getNestedItems(baseTable, id, table, req.query);
-            res.status(200).json(item);
-        } catch {
-            res.status(500).json({ message: 'Server error' });
-        }
-    },
-
     post: async (req, res) => {
         try {
             const item = await service.create(req.params.table, req.body);

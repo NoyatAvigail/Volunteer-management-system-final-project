@@ -8,7 +8,6 @@ import ContactPeople from "../Models/ContactPeople.js"
 import Patients from "../Models/Patients.js"
 import RelationToPatients from '../Models/RelationToPatients.js'
 import Hospitalizeds from '../Models/Hospitalizeds.js';
-// import { ContactPeople, Patients, RelationToPatients, Hospitalizeds, } from '../Models/Index.js'
 import VolunteeringInDepartments from '../Models/VolunteeringInDepartments.js';
 import VolunteeringForSectors from '../Models/VolunteeringForSectors.js';
 import VolunteeringForGenders from '../Models/VolunteeringForGenders.js';
@@ -74,7 +73,6 @@ const userService = {
                 }));
                 if (genders.length)
                     await genericDAL.bulkCreateModel(VolunteeringForGenders, genders, { transaction });
-
                 newUser = {
                     ...rest,
                     type: type,
@@ -102,7 +100,6 @@ const userService = {
                         dateOfDeath: rest.patientDateOfDeath || null,
                         interestedInReceivingNotifications: rest.patientInterestedInReceivingNotifications ?? true
                     }, { transaction });
-
                 const relationToPatients = await genericDAL.createModel(RelationToPatients,
                     {
                         contactPeopleId: contact.id,
@@ -118,7 +115,6 @@ const userService = {
                         hospitalizationStart: rest.hospitalizationStart,
                         hospitalizationEnd: rest.hospitalizationEnd
                     }, { transaction });
-
                 newUser = {
                     ...rest,
                     type: type,
@@ -182,8 +178,8 @@ const userService = {
 
     create: async (table, data) => {
         log('[POST]', { table, data });
-        const model = userDal.getModelByName((table));
-        return userDal.createModel(model, data);
+        const model = genericDAL.getModelByName((table));
+        return genericDAL.createModel(model, data);
     },
 
     getProfile: async (userId) => {
