@@ -45,11 +45,10 @@ const service = {
         log('[DELETE]', { table, id });
         const model = genericDAL.getModelByName((table));
         return genericDAL.updateFields(model, id, {
-            is_deleted: 0,
+            validateSecondRegisterStep: 0,
             deleted_at: new Date()
         });
     },
-
     cleanup: () => {
         setInterval(() => {
             genericDAL.cleanupOldDeleted();

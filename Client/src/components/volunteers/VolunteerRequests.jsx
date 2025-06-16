@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userService } from '../../services/usersServices';
 import { CurrentUser } from '../App';
-
+import '../../style/VolunteerRequests.css';
 function VolunteerRequests() {
   const [openCalls, setOpenCalls] = useState([]);
   const { currentUser } = useContext(CurrentUser);

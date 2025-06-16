@@ -6,7 +6,6 @@ import { CodesContext } from './Models';
 import { logOutFunc } from '../js/logout';
 import Cookies from 'js-cookie';
 import ErrorPage from './ErrorPage';
-
 function Navigation({ setIsShowInfo }) {
     const { currentUser, setCurrentUser } = useContext(CurrentUser);
     const navigate = useNavigate();

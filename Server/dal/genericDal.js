@@ -4,20 +4,36 @@ import Passwords from '../Models/Passwords.js';
 import Events from '../Models/Events.js';
 import Sectors from '../Models/Sectors.js';
 import Genders from '../models/Genders.js';
-import Hospitals from '../Models/Hospitals.js'; 
+import Hospitals from '../Models/Hospitals.js';
 import Departments from '../Models/Departments.js';
 import FamilyRelations from '../Models/FamilyRelations.js';
 import VolunteeringTypes from '../Models/VolunteeringTypes.js';
 import UserTypes from '../Models/UserTypes.js';
 import Hospitalizeds from '../Models/Hospitalizeds.js'
+import Volunteers from "../Models/Volunteers.js";
+import ContactPeople from "../Models/ContactPeople.js";
+import Patients from "../Models/Patients.js";
+import RelationToPatients from "../Models/RelationToPatients.js";
+import VolunteerTypes from "../Models/VolunteerTypes.js";
+import VolunteeringInDepartments from "../Models/VolunteeringInDepartments.js";
+import VolunteeringForSectors from "../Models/VolunteeringForSectors.js";
+import VolunteeringForGenders from "../Models/VolunteeringForGenders.js";
 
-const models = { Users, Passwords, Events, Sectors, Genders, Hospitals, Departments, FamilyRelations, VolunteeringTypes, UserTypes, Hospitalizeds };
+const models = {
+    Users, Passwords, Events, Sectors, Genders, Hospitals, Departments,
+    FamilyRelations, VolunteeringTypes, UserTypes, Hospitalizeds, Volunteers,
+    ContactPeople, Patients, RelationToPatients, VolunteerTypes,
+    VolunteeringInDepartments, VolunteeringForSectors, VolunteeringForGenders
+};
 
 const genericDAL = {
     getModelByName: (name) => {
-        console.log(models[name]);
-        return models[name]
+        if (!models[name]) {
+            throw new Error(`Model '${name}' not found in genericDAL`);
+        }
+        return models[name];
     },
+
 
     findByField: (model, query) => {
         const field = Object.keys(query)[0];
@@ -25,7 +41,7 @@ const genericDAL = {
         return model.findAll({
             where: {
                 [field]: value,
-                is_deleted: 1
+                // is_deleted: 1
             }
         });
     },
@@ -38,7 +54,7 @@ const genericDAL = {
         return model.findOne({
             where: {
                 id,
-                is_deleted: 1
+                // is_deleted: 1
             }
         });
     },
@@ -52,7 +68,7 @@ const genericDAL = {
         const items = await nestedModel.findAll({
             where: {
                 ...query,
-                is_deleted: 1
+                // is_deleted: 1
             }
         });
         return items;
@@ -86,7 +102,15 @@ const genericDAL = {
                 console.error(`Error cleaning up old deleted records from ${model.name}:`, error);
             }
         }
+    },
+    findOneWithIncludes: (modelName, query, includes) => {
+        const model = models[modelName];
+        return model.findOne({
+            where: query,
+            include: includes
+        });
     }
+
 };
 
 export default genericDAL;

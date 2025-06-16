@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
-
 function Info({ setIsShowInfo }) {
   const [user, setUser] = useState(null);
 
