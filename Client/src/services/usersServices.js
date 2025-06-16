@@ -36,7 +36,6 @@ async function request(userId, type, url, params = {}, method = 'GET', body = nu
         const config = {
             method,
             url: `${API_URL}/api/users/${type}/${userId}/${url}`,
-
             headers: {
                 authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -64,8 +63,8 @@ export const userService = {
         request(userId, type, table, {}, 'GET', null, onSuccess, onError),
     getByValue: (userId, type, table, params, onSuccess, onError) =>
         request(userId, type, table, params, 'GET', null, onSuccess, onError),
-    getByForeignJoin: (userId, type, table1, foreignKey, table2, targetField, targetValue, onSuccess, onError) =>
-        request(userId, type, `join-foreign/${table1}/${foreignKey}/${table2}/${targetField}`, { value: targetValue }, 'GET', null, onSuccess, onError),
+    getByForeignJoin: (userId, type, table1, foreignKey, table2, targetField, targetKey, targetValue, onSuccess, onError) =>
+        request(userId, type, `join-foreign/${table1}/${foreignKey}/${table2}/${targetField}/${targetKey}`, { value: targetValue }, 'GET', null, onSuccess, onError),
     getById: (userId, table, onSuccess, onError) =>
         request(userId, `${table}`, {}, 'GET', null, onSuccess, onError),
     create: (userId, userType, entityName, body, onSuccess, onError) =>

@@ -8,7 +8,7 @@ function ContactNewRequest() {
   const { currentUser } = useContext(CurrentUser);
   const { codes, loading } = useContext(CodesContext);
   const userTypeObj = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
-  const [hospitalizeds, setHospitalizeds] = useState([]);
+  const [hospitalizedsPerPatient, setHospitalizedsPerPatient] = useState([]);
   const [patients, setPatients] = useState([]);
   const [selectedPatientId, setSelectedPatientId] = useState("");
 
@@ -35,7 +35,7 @@ function ContactNewRequest() {
         userTypeObj,
         "Hospitalizeds",
         { patientId: selectedPatientId },
-        (res) => setHospitalizeds(res || []),
+        (res) => hospitalizedsPerPatient(res || []),
         (err) => console.error("Failed to fetch hospitalizeds:", err)
       );
     }
@@ -62,7 +62,7 @@ function ContactNewRequest() {
           {
             name: "hospitalizedsId",
             type: "select",
-            options: hospitalizeds.map(h => ({
+            options: hospitalizedsPerPatient.map(h => ({
               label: `בית חולים: ${h.hospital}, מחלקה: ${h.department}, חדר: ${h.roomNumber}, מתחילת אשפוז: ${h.hospitalizationStart}`,
               value: h.id
             }))

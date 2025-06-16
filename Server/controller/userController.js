@@ -4,7 +4,6 @@ import Users from '../Models/Users.js';
 import { cUserType } from '../common/consts.js';
 import sendEditVerificationMail from '../services/emailService.js';
 import { generateEditToken } from '../utils/utils.js';
-import { v4 as uuidv4 } from 'uuid';
 import jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
@@ -55,25 +54,16 @@ const userController = {
             res.status(200).json(items);
         } catch (error) {
             console.error("Error in getAll (generic):", error);
-            res.status(500).json({ message: 'Server error' });
+            res.status(500).json({ message: 'Server error', error });
         }
     },
 
     getByForeignJoin: async (req, res) => {
         try {
-            const { table1, foreignKey, table2, targetField } = req.params;
+            const { table1, foreignKey, table2, targetKey, targetField } = req.params;
             const targetValue = req.query.value;
             if (!targetValue) return res.status(400).json({ message: "Missing target value" });
-            const Model1 = genericDAL.getModelByName(table1);
-            const Model2 = genericDAL.getModelByName(table2);
-            const matchingRecords = await genericDAL.findByField(Model2, { [targetField]: targetValue });
-            const matchingIds = matchingRecords.map(rec => rec.id);
-            if (!matchingIds.length) return res.status(200).json([]);
-            const result = await Model1.findAll({
-                where: {
-                    [foreignKey]: matchingIds
-                }
-            });
+            const result = await userService.getByForeignJoin(table1, foreignKey, table2, targetKey,targetField, targetValue);
             res.status(200).json(result);
         } catch (err) {
             console.error("Error in getByForeignJoin:", err);

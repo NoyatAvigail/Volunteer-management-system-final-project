@@ -25,7 +25,7 @@ const models = {
     ContactPeople, Patients, RelationToPatients, VolunteerTypes,
     VolunteeringInDepartments, VolunteeringForSectors, VolunteeringForGenders
 };
- 
+
 const genericDAL = {
     getModelByName: (name) => {
         if (!models[name]) {
@@ -78,6 +78,23 @@ const genericDAL = {
         return items;
     },
 
+    findByFieldIn: async (model, field, values) => {
+        return await model.findAll({
+            where: {
+                [field]: values
+            }
+        });
+    },
+
+    getItemsByFieldInList: async (tableName, field, values) => {
+        const Model = genericDAL.getModelByName(tableName);
+        return await Model.findAll({
+            where: {
+                [field]: values
+            }
+        });
+    },
+
     createModel: (Model, data, options = {}) => {
         return Model.create(data, options);
     },
@@ -85,7 +102,7 @@ const genericDAL = {
     bulkCreateModel: (Model, dataArray, options = {}) => {
         return Model.bulkCreate(dataArray, options);
     },
-    
+
     updateFields: async (model, id, updatedFields) => {
         const item = await model.findByPk(id);
         if (item) {
