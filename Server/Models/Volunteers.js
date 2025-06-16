@@ -1,5 +1,9 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../../DB/connectionDB.mjs';
+import VolunteerTypes from './VolunteerTypes.js';
+import VolunteeringInDepartments from './VolunteeringInDepartments.js';
+import VolunteeringForSectors from './VolunteeringForSectors.js';
+import VolunteeringForGenders from './VolunteeringForGenders.js';
 
 export const Volunteers = sequelize.define('Volunteers', {
   id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
@@ -14,5 +18,8 @@ export const Volunteers = sequelize.define('Volunteers', {
   isActive: { type: DataTypes.BOOLEAN, defaultValue: false },
   flexible: { type: DataTypes.BOOLEAN, defaultValue: false },
 });
+
+
+
 
 export default Volunteers;

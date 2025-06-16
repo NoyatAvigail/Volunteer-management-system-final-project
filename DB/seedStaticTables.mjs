@@ -1,10 +1,10 @@
-import { Sectors } from '../Server/models/Sectors.js';
+import { Sectors } from '../Server/Models/Sectors.js';
 import { Genders } from '../Server/models/Genders.js';
-import { Hospitals } from '../Server/models/Hospitals.js';
-import { Departments } from '../Server/models/Departments.js';
-import { VolunteeringTypes } from '../Server/models/VolunteeringTypes.js';
-import { FamilyRelations } from '../Server/models/FamilyRelations.js';
-import { UserTypes } from '../Server/models/UserTypes.js';
+import { Hospitals } from '../Server/Models/Hospitals.js';
+import { Departments } from '../Server/Models/Departments.js';
+import { VolunteeringTypes } from '../Server/Models/VolunteeringTypes.js';
+import { FamilyRelations } from '../Server/Models/FamilyRelations.js';
+import { UserTypes } from '../Server/Models/UserTypes.js';
 
 export async function seedStaticTables() {
     try {
