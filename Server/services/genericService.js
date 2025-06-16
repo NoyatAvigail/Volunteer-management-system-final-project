@@ -32,7 +32,7 @@ const service = {
     create: async (table, data) => {
         log('[POST]', { table, data });
         const model = genericDAL.getModelByName((table));
-        return genericDAL.create(model, data);
+        return genericDAL.create(model, data);    
     },
 
     updateItemField: async (table, id, body) => {

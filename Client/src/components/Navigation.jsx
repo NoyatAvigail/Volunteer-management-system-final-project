@@ -51,10 +51,14 @@ function Navigation({ setIsShowInfo }) {
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/requests`}>My requests</Link></ul>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/new-request`}>Add request</Link></ul>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/profile`}>Profile management</Link></ul>
-                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/info`}>Patient information</Link></ul>
-                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/add-patient`}>Add patient</Link></ul>
-                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/profile`}>Profile management</Link></ul>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/thanks`}>Thanks</Link></ul>
+                                    <details>
+                                        <summary>Patients</summary>
+                                        <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/add-patient`}>➤ Add patient</Link></ul>
+                                        <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/add-hospitalization`}>➤ Add hospitalization</Link></ul>
+                                        <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/info`}>➤ Patient info</Link></ul>
+                                        <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/profile`}>➤ Manage patient profile</Link></ul>
+                                    </details>
                                     <div className="right">
                                         <ul onClick={logOut}><a>Logout</a></ul>
                                     </div>

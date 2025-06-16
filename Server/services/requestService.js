@@ -22,20 +22,20 @@ const requestsService = {
 
             let newRequest = await genericDAL.createModel(Users, { email, type, phone, id }, { transaction });
             const hashed = await hashPassword(password);
-            const pwd = await userDal.createModel(Passwords, {
+            const pwd = await genericDAL.createModel(Passwords, {
                 id: newUser.id,
                 password: hashed
             }, { transaction });
 
             if (type == cUserType.CONTACTPERSON) {
-                const contact = await userDal.createModel(ContactPeople,
+                const contact = await genericDAL.createModel(ContactPeople,
                     {
                         userId: newUser.id,
                         fullName: rest.fullName,
                         address: rest.address
                     }, { transaction });
                 //TODO check if patient exists, if not then create
-                const patient = await userDal.createModel(Patients,
+                const patient = await genericDAL.createModel(Patients,
                     {
                         userId: rest.patientId,
                         contactPeopleId: contact.id,
@@ -48,14 +48,14 @@ const requestsService = {
                         interestedInReceivingNotifications: rest.patientInterestedInReceivingNotifications ?? true
                     }, { transaction });
 
-                const relationToPatients = await userDal.createModel(RelationToPatients,
+                const relationToPatients = await genericDAL.createModel(RelationToPatients,
                     {
                         contactPeopleId: contact.id,
                         patientId: patient.id,
                         relationId: rest.relationId,
                     }, { transaction });
                 //TODO check if hospitalized exists, if exists then popup check to user, else create 
-                const hospitalizeds = await userDal.createModel(Hospitalizeds,
+                const hospitalizeds = await genericDAL.createModel(Hospitalizeds,
                     {
                         patientId: patient.id,
                         hospital: rest.hospital,
