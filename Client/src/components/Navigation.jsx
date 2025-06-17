@@ -6,6 +6,8 @@ import { CodesContext } from './Models';
 import { logOutFunc } from '../js/logout';
 import Cookies from 'js-cookie';
 import ErrorPage from './ErrorPage';
+import logo from '../style/img/logo.png';
+
 function Navigation({ setIsShowInfo }) {
     const { currentUser, setCurrentUser } = useContext(CurrentUser);
     const navigate = useNavigate();
@@ -29,7 +31,6 @@ function Navigation({ setIsShowInfo }) {
                                 <div className="left">
                                     <h3 className='userName'> {currentUser.fullName}</h3>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/home`}>Home page</Link></ul>
-                                    <ul><a onClick={() => setIsShowInfo(1)}>Information</a></ul>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/shifts`}>My shifts</Link></ul>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/permanentShifts`}>Permanent shifts</Link></ul>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/requests`}>Open requests</Link></ul>
@@ -38,6 +39,7 @@ function Navigation({ setIsShowInfo }) {
                                     <div className="right">
                                         <ul onClick={logOut}><a>Logout</a></ul>
                                     </div>
+                                    <img src={logo} alt="Logo" className="logo" />
                                 </div >
                             </nav >
                         </div >
@@ -47,21 +49,20 @@ function Navigation({ setIsShowInfo }) {
                                 <div className="left">
                                     <h3 className='userName'>{currentUser.fullName}</h3>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/home`}>Home page</Link></ul>
-                                    <ul><a onClick={() => setIsShowInfo(1)}>Information</a></ul>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/requests`}>My requests</Link></ul>
-                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/new-request`}>Add request</Link></ul>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/profile`}>Profile management</Link></ul>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/thanks`}>Thanks</Link></ul>
-                                    <details>
+                                    <details className='patientLink'>
                                         <summary>Patients</summary>
-                                        <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/add-patient`}>➤ Add patient</Link></ul>
-                                        <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/add-hospitalization`}>➤ Add hospitalization</Link></ul>
-                                        <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/info`}>➤ Patient info</Link></ul>
-                                        <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/profile`}>➤ Manage patient profile</Link></ul>
+                                        <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/add-patient`}>Add patient</Link></ul>
+                                        <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/add-hospitalization`}>Add hospitalization</Link></ul>
+                                        <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/info`}>Patient info</Link></ul>
+                                        <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/profile`}>Manage patient profile</Link></ul>
                                     </details>
                                     <div className="right">
                                         <ul onClick={logOut}><a>Logout</a></ul>
                                     </div>
+                                    <img src={logo} alt="Logo" className="logo" />
                                 </div>
                             </nav>
                         </div>
@@ -77,6 +78,7 @@ function Navigation({ setIsShowInfo }) {
                         <ul><Link to="/login">Login</Link></ul>
                         <ul><Link to="/signup">Sign Up</Link></ul>
                     </div>
+                    <img src={logo} alt="Logo" className="logo" />
                 </nav>
             )
             }

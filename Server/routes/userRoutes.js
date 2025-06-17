@@ -35,16 +35,11 @@ router.route('/:type/:userId/:table')
     .get(userController.getAll)
     .post(userController.post);
 
-// router.route('/ContactPerson/:id/Patients')
-//     .all(validateUserId)
-//     .get(userController.getAll)
-//     .post(userController.post);
-
-// router.route('/ContactPerson/:id/Patients/:byValue')
-//     .all(validateUserId)
-//     .get(userController.getByValue)
-
 router.route('/:type/:userId/:table/:id')
     .all(validateUserId);
+
+router.route('/:type/:userId/join-foreign/:table1/:foreignKey/:table2/:targetKey/:targetField')
+    .all(validateUserId)
+    .get(userController.getByForeignJoin);
 
 export default router;

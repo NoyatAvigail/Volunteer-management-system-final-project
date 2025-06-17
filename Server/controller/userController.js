@@ -55,7 +55,20 @@ const userController = {
             res.status(200).json(items);
         } catch (error) {
             console.error("Error in getAll (generic):", error);
-            res.status(500).json({ message: 'Server error' });
+            res.status(500).json({ message: 'Server error', error });
+        }
+    },
+
+    getByForeignJoin: async (req, res) => {
+        try {
+            const { table1, foreignKey, table2, targetKey, targetField } = req.params;
+            const targetValue = req.query.value;
+            if (!targetValue) return res.status(400).json({ message: "Missing target value" });
+            const result = await userService.getRequests(table1, foreignKey, table2, targetKey,targetField, targetValue);
+            res.status(200).json(result);
+        } catch (err) {
+            console.error("Error in getByForeignJoin:", err);
+            res.status(500).json({ message: 'Server error', error: err.message });
         }
     },
 
@@ -79,7 +92,7 @@ const userController = {
         }
     },
 
-    getPatientsByContact: async (req, res) => {
+ getPatientsByContact: async (req, res) => {
         const { contactId } = req.params;
 
         try {
@@ -94,12 +107,12 @@ const userController = {
     sendEditEmail: async (req, res) => {
         try {
             const { id } = req.params;
-            const { email } = req.body;
-
             console.log("Received ID:", id);
+             const user = await usersDal.getUserById(id);
+            console.log("user found:", user);
             console.log("Email to send:", email);
-
-            if (!email) return res.status(400).send("Email is required");
+            if (!user) return res.status(404).send("User not found");
+            if (!user.email) return res.status(400).send("User has no email");
 
             const token = generateEditToken(id);
             console.log("Generated token:", token);
@@ -132,17 +145,17 @@ const userController = {
             return res.status(400).send("Invalid or expired code");
         }
     },
+
     updateProfile: async (req, res) => {
         try {
-            const userId = req.params.userId;
-            const type =req.params.type;
-            console.log("הגיעה לכונטרולר");
-            
+            const {userId} = req.params.userId;
+            const type =req.params.type; 
+             const user = await Users.findByPk(userId);
+            if (!user) return res.status(404).json({ message: 'User not found' });           
             const updated = await userService.updateProfile(userId,type, req.body);
-            res.json(updated);
-        } catch (err) {
-            console.error(" Failed to update profile", err);
-            res.status(500).json({ message: "Failed to update profile" });
+          return res.json(updated);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
         }
     },
 };

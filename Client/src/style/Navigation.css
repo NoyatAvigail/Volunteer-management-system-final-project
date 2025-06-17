@@ -101,26 +101,6 @@
   height: 300px;
 }
 
-/* כפתור התנתקות */
-.right {
-  margin-right: 0;
-}
-
-.right ul a {
-  background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #ffffff;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-.right ul a:hover {
-  background: linear-gradient(45deg, #ff5252, #d63031);
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
-}
-
-/* אנימציות כניסה */
 @keyframes slideInRight {
   from {
     opacity: 0;

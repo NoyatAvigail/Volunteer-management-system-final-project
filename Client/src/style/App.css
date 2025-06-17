@@ -3,6 +3,11 @@
 }
 
 body {
+  background-image: url('../style/img/background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 50vh;
   overflow: auto;
 }
 
@@ -27,9 +32,16 @@ body::-webkit-scrollbar {
   right: 0;
   width: 100%;
   height: 16vh;
-  background-color: #3390ad;
+  background-color: #5fa79b;
   padding: 0 2vw;
   z-index: 1000;
+}
+
+.logo {
+  height: 17vh;
+  margin-right: 1vw;
+  position: absolute;
+  right: 0;
 }
 
 .header ul {
@@ -41,15 +53,16 @@ body::-webkit-scrollbar {
 }
 
 .header ul a {
-  font-size: 1vw;
+  font-size: 1.5vw;
   text-decoration: none;
   cursor: pointer;
   font-weight: bold;
-  color: #1b3c60;
+  color: rgb(255, 255, 255);
+
 }
 
 .header ul a:hover {
-  color: rgb(56, 56, 56);
+  color: #07223f;
 }
 
 .fullName {
@@ -57,17 +70,18 @@ body::-webkit-scrollbar {
   left: 50%;
   transform: translateX(-50%);
   font-size: 1.5rem;
-  color: #1b3c60;
+  color: rgb(255, 255, 255);
 }
 
 .header .left {
   display: flex;
   gap: 2vw;
+  align-items: center;
 }
 
 .header .right {
   position: absolute;
-  right: 2vw;
+  right: 10vw;
 }
 
 .container {
@@ -89,7 +103,7 @@ body::-webkit-scrollbar {
   right: 21.4vw;
   position: fixed;
   top: 16vh;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   border-bottom: 1px solid #ddd;
   padding: 10px 15px;
   display: flex;
@@ -123,7 +137,6 @@ body::-webkit-scrollbar {
 .control input {
   flex: 1;
   min-width: 150px;
-
 }
 
 .info {
@@ -142,29 +155,13 @@ body::-webkit-scrollbar {
   border: 1px solid black;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
 input {
   flex: 1;
   min-width: 150px;
   padding: 8px 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #e4e2e2;
   border-radius: 4px;
-  background-color: #fff;
+  background-color: #e4e2e2;
   font-size: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -181,7 +178,7 @@ input {
 
 .info-title {
   justify-content: center;
-  color: #0097b2;
+  color: #5fa79b;
   font-weight: bold;
   position: relative;
   text-align: start;
@@ -189,4 +186,31 @@ input {
   z-index: 2;
   margin-top: 15vh;
   font-size: 1.75vw;
+}
+
+summary {
+  font-size: 1.5vw;
+  color: #ffffff;
+}
+
+.patientLink summary:hover {
+  color: #07223f;
+}
+
+.patientLink ul {
+  list-style: none;
+  padding: 0;
+}
+
+.patientLink ul a {
+  text-decoration: none;
+  font-size: 0.9vw;
+  color: #ffffff;
+  display: block;
+  padding: 0.1vh 0;
+  transition: color 0.3s ease;
+}
+
+.patientLink ul a:hover {
+  color: #07223f;
 }

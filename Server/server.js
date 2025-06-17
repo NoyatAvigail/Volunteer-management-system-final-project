@@ -4,10 +4,8 @@ import cors from 'cors';
 import userRoutes from './routes/userRoutes.js';
 import genericRoutes from './routes/genericRoutes.js';
 import sequelize from '../DB/connectionDB.mjs';
-import { swaggerUi, specs } from './swagger.js';
 
 const app = express();
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use(express.json({ limit: '10mb' }));
 app.use(cors());

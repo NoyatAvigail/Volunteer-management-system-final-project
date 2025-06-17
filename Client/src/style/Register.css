@@ -1,56 +1,88 @@
-.form-container {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: relative;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
 }
 
-.form-title {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+body {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+h2 {
+    margin-top: 23vh;
+}
+
+.entryForm button.typeBtn {
+    background-color: #dddfdf;
+}
+
+.entryForm button.typeBtn:hover {
+    background-color: #cfcfcf;
+}
+
+.entryContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: absolute;
+    margin-top: 5vh;
+}
+
+.entryForm {
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 0.3vw 0.7vw rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
     text-align: center;
 }
 
-.form-input {
+.entryForm input {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #ccc;
+    border: 1px solid #ffffff;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: 16px;
 }
 
-.form-fieldset {
-    margin: 20px 0;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.entryForm input {
+    color: #4c4b4b !important;
 }
 
-legend {
-    font-weight: bold;
-    font-size: 1.1rem;
+
+.entryForm input:focus {
+    border-color: #5fa79b;
+    outline: none;
 }
 
-.form-button {
-    display: block;
+.entryForm button {
     width: 100%;
     padding: 10px;
+    margin: auto;
     margin-top: 10px;
-    background-color: #3390ad;
-    color: #fff;
+    background-color: #5fa79b;
+    color: rgb(113, 111, 111);
     border: none;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: 16px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.form-button:hover {
-    background-color: #3390ad;
+.entryForm button:hover {
+    background-color: #5fa79b;
+}
+
+.entryForm button:focus {
+    outline: none;
 }
 
 .back-ground-img {
@@ -58,10 +90,14 @@ legend {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    min-height: 100vh;
+    /* height: 100vh; */
     width: 100vw;
     position: absolute;
     right: 0;
     top: 0;
-    overflow: auto;
+}
+
+input[type="date"] {
+    direction: rtl;
+    text-align: left;
 }
