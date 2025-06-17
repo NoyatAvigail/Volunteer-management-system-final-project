@@ -17,6 +17,8 @@ export const Volunteers = sequelize.define('Volunteers', {
   volunteerEndDate: { type: DataTypes.DATE },
   isActive: { type: DataTypes.BOOLEAN, defaultValue: false },
   flexible: { type: DataTypes.BOOLEAN, defaultValue: false },
+  is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false },
+  deleted_at: { type: DataTypes.DATE, allowNull: true }
 });
 
 

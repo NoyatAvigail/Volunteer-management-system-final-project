@@ -5,6 +5,8 @@ export const RelationToPatients = sequelize.define('RelationToPatients', {
   contactPeopleId: { type: DataTypes.INTEGER, allowNull: false, references: { model: "ContactPeople", key: "id" }, onUpdate: 'CASCADE', onDelete: 'CASCADE' },
   patientId: { type: DataTypes.INTEGER, allowNull: false, references: { model: "Patients", key: "id" }, onUpdate: 'CASCADE', onDelete: 'CASCADE' },
   relationId: { type: DataTypes.INTEGER, allowNull: false, references: { model: "FamilyRelations", key: "id" }, onUpdate: 'CASCADE', onDelete: 'CASCADE' },
+  is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false },
+  deleted_at: { type: DataTypes.DATE, allowNull: true }
 });
 
 export default RelationToPatients;

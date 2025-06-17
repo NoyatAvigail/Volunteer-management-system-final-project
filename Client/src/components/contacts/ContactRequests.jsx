@@ -230,8 +230,6 @@ function ContactRequests() {
                                                         disabled={isPast}
                                                     />
                                                     <Delete
-                                                        userType={userTypeObj}
-                                                        userId={currentUser.autoId}
                                                         type="Events"
                                                         itemId={item.id}
                                                         setIsChange={setIsChange}

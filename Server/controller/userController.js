@@ -63,7 +63,7 @@ const userController = {
             const { table1, foreignKey, table2, targetKey, targetField } = req.params;
             const targetValue = req.query.value;
             if (!targetValue) return res.status(400).json({ message: "Missing target value" });
-            const result = await userService.getRequests(table1, foreignKey, table2, targetKey,targetField, targetValue);
+            const result = await userService.getRequests(table1, foreignKey, table2, targetKey, targetField, targetValue);
             res.status(200).json(result);
         } catch (err) {
             console.error("Error in getByForeignJoin:", err);
@@ -80,6 +80,22 @@ const userController = {
             res.status(500).json({ message: 'Server error', error: err.message });
         }
     },
+
+    softDelete: async (req, res) => {
+        try {
+            const deleted = await userService.softDeleteItem(req.params.table, req.params.id);
+            res.status(200).json(deleted);
+        } catch {
+            res.status(500).json({ message: 'Server error', error });
+        }
+    },
+
+
+
+
+
+
+
 
     getProfile: async (req, res) => {
         try {

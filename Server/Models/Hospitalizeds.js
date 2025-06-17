@@ -8,6 +8,8 @@ export const Hospitalizeds = sequelize.define('Hospitalizeds', {
   roomNumber: { type: DataTypes.STRING },
   hospitalizationStart: { type: DataTypes.DATE },
   hospitalizationEnd: { type: DataTypes.DATE },
+  is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false },
+  deleted_at: { type: DataTypes.DATE, allowNull: true }
 });
 
 

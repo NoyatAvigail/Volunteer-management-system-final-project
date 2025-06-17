@@ -73,8 +73,10 @@ export const userService = {
         request(userId, userType, `${entityName}/${id}`, {}, 'PUT', data, onSuccess, onError),
     patch: (userId, userType, entityName, id, data, onSuccess, onError) =>
         request(userId, userType, `${entityName}/${id}`, {}, 'PATCH', data, onSuccess, onError),
-    remove: (userId, userType, entityName, id, onSuccess, onError) =>
-        request(userId, userType, `${entityName}/${id}`, {}, 'DELETE', null, onSuccess, onError),
+    // remove: (userId, userType, table, params, onSuccess, onError) =>
+    //     request(userId, userType, table, params, 'DELETE', null, onSuccess, onError),
+    remove: (userId, userType, table, id, onSuccess, onError) =>
+        request(userId, userType, `${table}/${id}`, {}, 'DELETE', null, onSuccess, onError),
     getProfile: (userId, onSuccess, onError) =>
         request(userId, "profile", "", {}, "GET", null, onSuccess, onError),
     updateProfile: (userId, data, onSuccess, onError) =>
