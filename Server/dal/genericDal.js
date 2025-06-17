@@ -103,22 +103,12 @@ const genericDAL = {
         return Model.bulkCreate(dataArray, options);
     },
 
-<<<<<<< HEAD
     updateFields: async (model, where, updatedFields) => {
         const item = await model.findOne({ where });
         if (!item) {
             console.log(" Not found with where:", where);
             return null;
         }
-=======
-    updateFields: async (model, id, updatedFields) => {
-        const item = await model.findByPk(id);
->>>>>>> 5a0b969504d42c4cc3b39f12304bdbb3fec4d295
-        if (item) {
-            Object.assign(item, updatedFields);
-            await item.save();
-        }
-        return item;
     },
 
 
@@ -137,7 +127,6 @@ const genericDAL = {
             }
         }
     },
-<<<<<<< HEAD
     deleteByFieldValue(modelName, fieldName, value) {
         const model = models[modelName];
         if (!model) throw new Error(`Model ${modelName} not found`);
@@ -148,8 +137,6 @@ const genericDAL = {
             }
         });
     },
-=======
->>>>>>> 5a0b969504d42c4cc3b39f12304bdbb3fec4d295
 
     findOneWithIncludes: (modelName, query, includes) => {
         const model = models[modelName];
