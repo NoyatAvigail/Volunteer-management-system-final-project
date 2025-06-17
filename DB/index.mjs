@@ -99,8 +99,8 @@ Events.belongsTo(Volunteers, { foreignKey: 'volunteerId', targetKey: 'userId', o
 ContactPeople.hasMany(Events, { foreignKey: 'contactId', sourceKey: 'userId', onDelete: 'CASCADE' });
 Events.belongsTo(ContactPeople, { foreignKey: 'contactId', targetKey: 'userId', onDelete: 'CASCADE' });
 
-Hospitalizeds.hasMany(Events, { foreignKey: 'HospitalizedsId', onDelete: 'CASCADE' });
-Events.belongsTo(Hospitalizeds, { foreignKey: 'HospitalizedsId', onDelete: 'CASCADE' });
+Hospitalizeds.hasMany(Events, { foreignKey: 'hospitalizedsId', onDelete: 'CASCADE' });
+Events.belongsTo(Hospitalizeds, { foreignKey: 'hospitalizedsId', onDelete: 'CASCADE' });
 
 export {
   sequelize,

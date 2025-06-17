@@ -243,11 +243,11 @@ const userService = {
     //     return req2;
     // },
 
-    // create: async (table, data) => {
-    //     log('[POST]', { table, data });
-    //     const model = genericDAL.getModelByName((table));
-    //     return genericDAL.createModel(model, data);
-    // },
+    create: async (table, data) => {
+        log('[POST]', { table, data });
+        const model = genericDAL.getModelByName((table));
+        return genericDAL.createModel(model, data);
+    },
     // getRequests: async (table1, targetField, table2, foreignKey, targetKey, targetValue) => {
     //     // שלב 1: טבלת הורים ראשונה
     //     const matchingRecordsTbl1 = await genericDAL.findByField(

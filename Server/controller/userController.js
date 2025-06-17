@@ -64,7 +64,7 @@ const userController = {
             const { table1, foreignKey, table2, targetKey, targetField } = req.params;
             const targetValue = req.query.value;
             if (!targetValue) return res.status(400).json({ message: "Missing target value" });
-            const result = await userService.getRequests(table1, foreignKey, table2, targetKey,targetField, targetValue);
+            const result = await userService.getRequests(table1, foreignKey, table2, targetKey, targetField, targetValue);
             res.status(200).json(result);
         } catch (err) {
             console.error("Error in getByForeignJoin:", err);
@@ -92,7 +92,7 @@ const userController = {
         }
     },
 
- getPatientsByContact: async (req, res) => {
+    getPatientsByContact: async (req, res) => {
         const { contactId } = req.params;
 
         try {
@@ -108,7 +108,7 @@ const userController = {
         try {
             const { id } = req.params;
             console.log("Received ID:", id);
-             const user = await usersDal.getUserById(id);
+            const user = await usersDal.getUserById(id);
             console.log("user found:", user);
             console.log("Email to send:", email);
             if (!user) return res.status(404).send("User not found");
@@ -148,12 +148,12 @@ const userController = {
 
     updateProfile: async (req, res) => {
         try {
-            const {userId} = req.params.userId;
-            const type =req.params.type; 
-             const user = await Users.findByPk(userId);
-            if (!user) return res.status(404).json({ message: 'User not found' });           
-            const updated = await userService.updateProfile(userId,type, req.body);
-          return res.json(updated);
+            const { userId } = req.params.userId;
+            const type = req.params.type;
+            const user = await Users.findByPk(userId);
+            if (!user) return res.status(404).json({ message: 'User not found' });
+            const updated = await userService.updateProfile(userId, type, req.body);
+            return res.json(updated);
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
