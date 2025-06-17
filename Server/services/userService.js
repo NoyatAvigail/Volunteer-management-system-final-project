@@ -181,6 +181,64 @@ const userService = {
         const model = genericDAL.getModelByName((table));
         return genericDAL.findByField(model, query);
     },
+    create: async (table, data) => {
+        log('[POST]', { table, data });
+        const model = genericDAL.getModelByName((table));
+        return genericDAL.createModel(model, data);
+    },
+    // getRequests: async (table1, targetField, table2, foreignKey, targetKey, targetValue) => {
+    //     // שלב 1: טבלת הורים ראשונה
+    //     const matchingRecordsTbl1 = await genericDAL.findByField(
+    //         genericDAL.getModelByName(table1),
+    //         { [targetKey]: targetValue }
+    //     );
+
+    //     const parentIds = matchingRecordsTbl1.map(item => item[targetField]);
+
+    //     // שלב 2: טבלת ילדים
+    //     const matchingRecordsTbl2 = await genericDAL.findByFieldIn(
+    //         genericDAL.getModelByName(table2),
+    //         foreignKey,
+    //         parentIds
+    //     );
+
+    //     // שלב 3: חיבור בין הורה לילד
+    //     const req = _.flatMap(matchingRecordsTbl1, parent => {
+    //         const matchingChildren = matchingRecordsTbl2.filter(child => child[foreignKey] === parent[targetField]);
+
+    //         return matchingChildren.map(child => ({
+    //             ..._.mapKeys(parent.dataValues ?? parent, (v, k) => `parent_${k}`), // אם זה Sequelize, תומך ב- dataValues
+    //             ...child.dataValues ?? child
+    //         }));
+    //     });
+
+    //     // שלב 4: שליפת מזהים ייחודיים של patientId
+    //     const distinctPatientIds = [...new Set(req.map(item => item.patientId))];
+
+    //     // שלב 5: שליפת מטופלים
+    //     const patients = await genericDAL.findByFieldIn(
+    //         genericDAL.getModelByName("Patients"),
+    //         "userId",
+    //         distinctPatientIds
+    //     );
+
+    //     // שלב 6: חיבור בין כל רשומה ב־req לרשומת המטופל שלה
+    //     const req2 = _.flatMap(req, parent => {
+    //         const matchingPatient = patients.find(patient => 
+    //             (patient.userId ?? patient.dataValues?.userId) === parent.patientId
+    //         );
+
+    //         if (!matchingPatient) return [];
+
+    //         return [{
+    //             ...parent, // כבר כולל parent_ שדות
+    //             ...matchingPatient.dataValues ?? matchingPatient
+    //         }];
+    //     });
+
+    //     console.log("req2", req2);
+    //     return req2;
+    // },
 
     getRequests: async (table1, targetField, table2, foreignKey, targetKey, targetValue) => {
         const matchingRecordsTbl1 = await genericDAL.findByField(
