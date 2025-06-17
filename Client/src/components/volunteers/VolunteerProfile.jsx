@@ -4,103 +4,53 @@ import { CurrentUser } from '../App';
 import { CodesContext } from '../Models';
 import { useForm } from "react-hook-form";
 import '../../style/VolunteerRequests.css';
+import { useProfileData, handleVerifyCode, parseProfileDataToForm, useEditModeFromSessionStorage, sendEditRequest, updateProfile } from '../ProfileManagement';
 
 function VolunteerProfile() {
+  const [isEditing, setIsEditing] = useEditModeFromSessionStorage();
+    // const [isEditing, setIsEditing] = useState(true);
   const { codes, loading } = useContext(CodesContext);
   const { currentUser } = useContext(CurrentUser);
-  const [initialData, setInitialData] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
   const [showCodeInput, setShowCodeInput] = useState(false);
   const [code, setCode] = useState("");
-
-
   const { register, handleSubmit, setValue, getValues, reset, formState: { errors } } = useForm();
-
-  useEffect(() => {
-    async function fetchProfile() {
-      const data = await userService.getProfile(currentUser.id);
-      setInitialData(data);
-      console.log("data:", data);
-
-      const formValues = {};
-
-      for (const key in data) {
-        if (Array.isArray(data[key])) {
-          formValues[key] = data[key].map(item => {
-            if (typeof item === 'object' && item !== null) {
-              return item.volunteerTypeId ?? item.id ?? item;
-            }
-            return item;
-          });
-        } else if (typeof data[key] !== 'object') {
-          formValues[key] = data[key];
-        }
-      }
-      if (data.dateOfBirth) {
-        formValues.dateOfBirth = data.dateOfBirth.split('T')[0];
-      }
-      if (data.user && typeof data.user === 'object') {
-        for (const key in data.user) {
-          if (!(key in formValues)) {
-            formValues[key] = data.user[key];
-          }
-        }
-      }
-
-      reset(formValues);
-    }
-
-    fetchProfile();
-  }, [currentUser.id, reset]);
-
-  useEffect(() => {
-    const canEdit = sessionStorage.getItem("canEdit");
-    if (canEdit === "true") {
-      setIsEditing(true);
-      sessionStorage.removeItem("canEdit");
-    }
-  }, []);
-  const handleVerifyCode = async () => {
-    try {
-      await userService.verifyEditCode({ code });
-      setIsEditing(true);
-      setShowCodeInput(false);
-      alert("הקוד אומת, ניתן לערוך את הפרופיל");
-    } catch (err) {
-      alert("קוד שגוי או שפג תוקפו");
-    }
-  };
+  const initialData = useProfileData(currentUser.id, 'Volunteer', 'profile', reset);
 
   const onSubmit = async (formData) => {
+    console.log("Submitting form...", formData);
     try {
-      await userService.updateProfile(currentUser.id, formData);
-      alert("Profile updated!");
+      await updateProfile(currentUser.id, "Volunteer", 'profile',currentUser.autoId, formData);
+      alert("Profile updated successfully.");
       setIsEditing(false);
-      setInitialData(formData);
     } catch (err) {
-      alert("Error updating profile");
+      console.error("Update failed:", err);
+      alert("Failed to update profile.");
     }
   };
+
 
   const handleRequestEdit = async () => {
     try {
-      await userService.sendEditEmail(currentUser.id);
+      await sendEditRequest(currentUser.id, currentUser.email);
       alert("נשלח מייל עם קוד אימות");
-      setShowCodeInput(true); // נפתח תיבת הזנה לקוד
+      setShowCodeInput(true);
     } catch (e) {
-      console.error("שגיאה בשליחת אימייל:", e);
       alert("שליחת האימייל נכשלה");
     }
   };
+  const onClickVerify = async () => {
+    console.log("verifying with code", code);
+    await handleVerifyCode(code, setIsEditing, setShowCodeInput, currentUser);
+  };
 
-  if (!initialData) return <div>Loading...</div>;
+
 
   return (
     <div>
       <h2>Volunteer Profile</h2>
 
       {!isEditing && (
-        <button onClick={handleRequestEdit}>עריכה</button>
+        <button onClick={handleRequestEdit}>update</button>
       )}
       {!isEditing && showCodeInput && (
         <div>
@@ -109,10 +59,10 @@ function VolunteerProfile() {
             value={code}
             onChange={(e) => setCode(e.target.value)}
           />
-          <button onClick={handleVerifyCode}>אמת קוד</button>
+          <button onClick={onClickVerify}>אמת קוד </button>
+
         </div>
       )}
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           placeholder="Full Name"
@@ -176,7 +126,7 @@ function VolunteerProfile() {
               value={item.id}
               id={`help-${item.id}`}
               disabled={!isEditing}
-              defaultChecked={initialData.VolunteerTypes?.some(vt => vt.volunteerTypeId === item.id)}
+              defaultChecked={initialData?.VolunteerTypes?.some(vt => vt.volunteerTypeId === item.id)}
             />
             <label htmlFor={`help-${item.id}`}>{item.description}</label>
           </div>
@@ -191,7 +141,7 @@ function VolunteerProfile() {
               value={item.id}
               id={`dept-${item.id}`}
               disabled={!isEditing}
-              defaultChecked={initialData.VolunteersDepartments?.some(d => d.department === item.id)}
+              defaultChecked={initialData?.VolunteersDepartments?.some(d => d.department === item.id)}
             />
             <label htmlFor={`dept-${item.id}`}>{item.description}</label>
           </div>
@@ -206,7 +156,7 @@ function VolunteerProfile() {
               value={item.id}
               id={`hospital-${item.id}`}
               disabled={!isEditing}
-              defaultChecked={initialData.VolunteersDepartments?.some(d => d.hospital === item.id)}
+              defaultChecked={initialData?.VolunteersDepartments?.some(d => d.hospital === item.id)}
             />
             <label htmlFor={`hospital-${item.id}`}>{item.description}</label>
           </div>
@@ -248,9 +198,9 @@ function VolunteerProfile() {
             value="true"
             id="flexible-yes"
             disabled={!isEditing}
-            defaultChecked={initialData.flexible === true || initialData.flexible === "true"}
+            defaultChecked={initialData?.flexible === true || initialData?.flexible === "true"}
           />
-          <label htmlFor="flexible-yes">כן</label>
+          <label htmlFor="flexible-yes">yes</label>
 
           <input
             type="radio"
@@ -258,12 +208,12 @@ function VolunteerProfile() {
             value="false"
             id="flexible-no"
             disabled={!isEditing}
-            defaultChecked={initialData.flexible === false || initialData.flexible === "false"}
+            defaultChecked={initialData?.flexible === false || initialData?.flexible === "false"}
           />
-          <label htmlFor="flexible-no">לא</label>
+          <label htmlFor="flexible-no">no</label>
         </div>
 
-        {isEditing && <button type="submit">Update</button>}
+        {isEditing && <button onSubmit={onSubmit} type="submit">Update</button>}
       </form>
     </div>
   );

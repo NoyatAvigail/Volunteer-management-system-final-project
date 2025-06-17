@@ -8,7 +8,6 @@ import ContactPeople from "../Models/ContactPeople.js"
 import Patients from "../Models/Patients.js"
 import RelationToPatients from '../Models/RelationToPatients.js'
 import Hospitalizeds from '../Models/Hospitalizeds.js';
-// import { ContactPeople, Patients, RelationToPatients, Hospitalizeds, } from '../Models/Index.js'
 import VolunteeringInDepartments from '../Models/VolunteeringInDepartments.js';
 import VolunteeringForSectors from '../Models/VolunteeringForSectors.js';
 import VolunteeringForGenders from '../Models/VolunteeringForGenders.js';
@@ -168,9 +167,10 @@ const userService = {
     },
 
     getAll: async (table) => {
-        log('[GET ALL]', { table });
+        // log('[GET ALL]', { table });
         const model = genericDAL.getModelByName((table));
         const data = genericDAL.findAll(model);
+        
         return data;
     },
 
@@ -182,8 +182,8 @@ const userService = {
 
     create: async (table, data) => {
         log('[POST]', { table, data });
-        const model = userDal.getModelByName((table));
-        return userDal.createModel(model, data);
+        const model = validateSecondRegisterStep.getModelByName((table));
+        return validateSecondRegisterStep.createModel(model, data);
     },
 
     getProfile: async (userId) => {
@@ -194,7 +194,7 @@ const userService = {
         if (user.type == 1) {
             return await userService.getVolunteerProfile(user, user.id);
         } else if (user.type == 2) {
-            return await userService.getContactProfile(user.id);
+            return await userService.getContactProfile(user, user.id);
         } else {
             throw new Error('Unsupported user type');
         }
@@ -234,163 +234,211 @@ const userService = {
         }
     },
 
-    getContactProfile: async (userId) => {
+    getContactProfile: async (user, userId) => {
         try {
-            const contact = await genericDAL.findOneWithIncludes("ContactPeople", { userId }, [
-                {
-                    model: genericDAL.getModelByName("Patients"),
-                    as: 'patients',
-                    include: [
-                        { model: genericDAL.getModelByName("RelationToPatients"), as: 'relation' },
-                        { model: genericDAL.getModelByName("Hospitalizeds"), as: 'hospitalizeds' }
-                    ]
-                }
-            ]);
-            if (!contact) throw new Error("Contact person not found");
-            return contact;
+            const ContactPeople = genericDAL.getModelByName("ContactPeople");
+            const contactArr = await genericDAL.findByField(ContactPeople, { userId });
+
+            if (!contactArr || contactArr.length === 0) {
+                throw new Error("Contact person not found");
+            }
+
+            const contact = contactArr[0];
+
+
+            return {
+                ...contact.toJSON(),
+                // patients: patientsWithDetails,
+                user: user,
+            };
+
         } catch (e) {
             console.error("getContactProfile error:", e);
             throw e;
         }
     },
-    updateVolunteerProfile: async (userId, data) => {
-        try {
-            const Volunteers = genericDAL.getModelByName("Volunteers");
-            const volunteerArr = await genericDAL.findByField(Volunteers, { userId });
-            if (!volunteerArr || volunteerArr.length === 0) throw new Error("Volunteer not found");
 
-            const volunteer = volunteerArr[0];
-            console.log(" volunteer id:", volunteer.id);
+    // getPatientsByContact: async (contactUserId) => {
+    //     const ContactPeople = genericDAL.getModelByName("ContactPeople");
+    //     const contacts = await genericDAL.findByField(ContactPeople, { userId: contactUserId });
 
-            await genericDAL.updateFields(Volunteers, volunteer.id, data);
+    //     if (!contacts || contacts.length === 0) {
+    //         throw new Error(`Contact with userId ${contactUserId} not found`);
+    //     }
 
-            const VolunteerTypes = genericDAL.getModelByName("VolunteerTypes");
-            const VolunteeringInDepartments = genericDAL.getModelByName("VolunteeringInDepartments");
-            const VolunteeringForSectors = genericDAL.getModelByName("VolunteeringForSectors");
-            const VolunteeringForGenders = genericDAL.getModelByName("VolunteeringForGenders");
+    //     const contact = contacts[0];
+    //     console.log("contact:", contact);
 
-            await VolunteerTypes.destroy({ where: { id: volunteer.id } });
-            for (const vt of data.VolunteerTypes || []) {
-                await genericDAL.create(VolunteerTypes, {
-                    id: volunteer.id,
-                    volunteerTypeId: vt.volunteerTypeId
-                });
-            }
+    //     const Patients = genericDAL.getModelByName("Patients");
+    //     const RelationToPatients = genericDAL.getModelByName("RelationToPatients");
+    //     const Hospitalizeds = genericDAL.getModelByName("Hospitalizeds");
+    //     const patients = await genericDAL.findByField(Patients, { contactPeopleId: contact.id });
+    //     const patientsWithDetails = await Promise.all(
+    //         patients.map(async (patient) => {
+    //             const relation = await genericDAL.findByField(RelationToPatients, { patientId: patient.id });
+    //             const hospitalizeds = await genericDAL.findByField(Hospitalizeds, { patientId: patient.id });
 
-            await VolunteeringInDepartments.destroy({ where: { id: volunteer.id } });
-            for (const dep of data.VolunteersDepartments || []) {
-                await genericDAL.create(VolunteeringInDepartments, {
-                    id: volunteer.id,
-                    hospital: dep.hospital,
-                    department: dep.department
-                });
-            }
+    //             return {
+    //                 ...patient.toJSON(),
+    //                 relation: relation.map(r => r.toJSON()),
+    //                 hospitalizeds: hospitalizeds.map(h => h.toJSON())
+    //             };
+    //         })
+    //     );
+    //     return { patients: patientsWithDetails };
+    // },
 
-            await VolunteeringForSectors.destroy({ where: { id: volunteer.id } });
-            for (const sec of data.VolunteeringForSectors || []) {
-                await genericDAL.create(VolunteeringForSectors, {
-                    id: volunteer.id,
-                    sectorId: sec.sectorId
-                });
-            }
+    updateProfile: async (userId, type, newData) => {
+        console.log("הגיע לאפדייט בסרבייסז");
 
-            await VolunteeringForGenders.destroy({ where: { id: volunteer.id } });
-            for (const gen of data.VolunteeringForGenders || []) {
-                await genericDAL.create(VolunteeringForGenders, {
-                    id: volunteer.id,
-                    genderId: gen.genderId
-                });
-            }
-
-            const [types, departments, sectors, genders] = await Promise.all([
-                genericDAL.findByField(VolunteerTypes, { id: volunteer.id }),
-                genericDAL.findByField(VolunteeringInDepartments, { id: volunteer.id }),
-                genericDAL.findByField(VolunteeringForSectors, { id: volunteer.id }),
-                genericDAL.findByField(VolunteeringForGenders, { id: volunteer.id }),
-            ]);
-
-            return {
-                ...volunteer.toJSON(),
-                VolunteerTypes: types.map(t => t.toJSON()),
-                VolunteersDepartments: departments.map(d => d.toJSON()),
-                VolunteeringForSectors: sectors.map(s => s.toJSON()),
-                VolunteeringForGenders: genders.map(g => g.toJSON()),
-            };
-        } catch (error) {
-            console.error(" error- updateVolunteerProfile:", error);
-            throw error;
+        const Users = genericDAL.getModelByName("Users");
+        const user = await genericDAL.findById(Users, userId);
+        if (!user) throw new Error('User not found');
+        if (type == "Volunteer") {
+            return await userService.updateVolunteerProfile(user, newData);
         }
+        if (type == "ContactPerson") {
+            return await userService.updateContactProfile(user, newData);
+        }
+        if (type == "patient") {
+            return await userService.updatePatientProfile(user, newData);
+        }
+
+
+        throw new Error('No profile found to update');
     },
 
+    updateVolunteerProfile: async (user, data) => {
+        const Volunteer = await genericDAL.updateFields(
+            Volunteers,
+            { userId: user.id }, // או id: user.id תלוי במבנה הנתונים שלך
+            {
+                fullName: data.fullName,
+                dateOfBirth: data.dateOfBirth,
+                gender: data.gender,
+                sector: data.sector,
+                address: data.address,
+                volunteerStartDate: data.volunteerStartDate,
+                volunteerEndDate: data.volunteerEndDate,
+                isActive: data.isActive,
+                flexible: data.flexible
+            }
+        );
 
-    updateContactProfile: async (userId, data) => {
-        const contact = await genericDAL.findOneWithIncludes("ContactPeople", { userId }, []);
-        if (!contact) throw new Error("Contact person not found");
+        if (!Volunteer) throw new Error("Volunteer not found for update");
 
-        await genericDAL.updateFields("ContactPeople", contact.id, {
-            fullName: data.fullName,
-            address: data.address
-        });
+        const volunteerId = Volunteer.id;
 
-        const patientData = data.patients?.[0];
-        if (!patientData) throw new Error("Missing patient data");
 
-        let patient = await genericDAL.findById("Patients", patientData.id);
-        if (patient) {
-            await genericDAL.updateFields("Patients", patient.id, {
-                fullName: patientData.fullName,
-                dateOfBirth: patientData.dateOfBirth,
-                sector: patientData.sector,
-                gender: patientData.gender,
-                address: patientData.address,
-                dateOfDeath: patientData.dateOfDeath || null,
-                interestedInReceivingNotifications: patientData.interestedInReceivingNotifications ?? true
-            });
-        } else {
-            patient = await genericDAL.create("Patients", {
-                ...patientData,
-                contactPeopleId: contact.id
-            });
+        const volunteerIdField = 'volunteerId';
+
+        await genericDAL.deleteByFieldValue('VolunteerTypes', 'id', volunteerId);
+
+        const helpTypes = data.helpTypes.map(typeId => ({
+            id: Volunteer.id,
+            volunteerTypeId: typeId,
+        }));
+
+        if (helpTypes.length)
+            await genericDAL.bulkCreateModel(VolunteerTypes, helpTypes);
+
+        await genericDAL.deleteByFieldValue('VolunteeringInDepartments', 'id', volunteerId);
+
+        const departments = [];
+        for (const hospitalId of data.preferredHospitals) {
+            for (const departmentId of data.preferredDepartments) {
+                departments.push({
+                    volunteerId: volunteerId,
+                    department: departmentId,
+                    hospital: hospitalId
+                });
+            }
         }
 
-        await genericDAL.deleteWhere("RelationToPatients", {
-            contactPeopleId: contact.id,
-            patientId: patient.id
+        if (departments.length)
+            await genericDAL.bulkCreateModel(VolunteeringInDepartments, departments);
+
+        await genericDAL.deleteByFieldValue('VolunteeringForSectors', 'id', volunteerId);
+
+        const sectors = data.guardSectors.map(sectorId => ({
+            volunteerId: volunteerId,
+            sectorId
+        }));
+
+        if (sectors.length)
+            await genericDAL.bulkCreateModel(VolunteeringForSectors, sectors);
+
+        await genericDAL.deleteByFieldValue('VolunteeringForGenders', 'id', volunteerId);
+
+        const genders = data.guardGenders.map(genderId => ({
+            volunteerId: Volunteer.id,
+            genderId
+        }));
+
+        if (genders.length)
+            await genericDAL.bulkCreateModel(VolunteeringForGenders, genders);
+
+        return { success: true };
+    },
+
+    updateContactProfile: async (user, data) => {
+        const ContactPeople = genericDAL.getModelByName("ContactPeople");
+        const contactArr = await genericDAL.findByField(ContactPeople, { userId: user.id });
+        console.log("user id:", user.id);
+        console.log("contactArr:", contactArr);
+
+        if (!contactArr || contactArr.length === 0) throw new Error("Contact person not found");
+
+        const contact = contactArr[0];
+
+        await genericDAL.updateFields(ContactPeople, { userId: user.id }, {
+            fullName: data.fullName,
+            phone: data.phone,
+            birthDate: data.birthDate,
+            address: data.address,
+            identity: data.identity,
+            email: data.email,
+            status: data.status,
+            notes: data.notes
         });
 
-        if (patientData.relation?.[0]) {
-            await genericDAL.create("RelationToPatients", {
+        return { success: true };
+    },
+
+    updatePatientProfile: async (user, data) => {
+        const Patients = genericDAL.getModelByName("Patients");
+        const ContactPeople = genericDAL.getModelByName("ContactPeople");
+        const contactArr = await genericDAL.findByField(ContactPeople, { user });
+        const patientArr = await genericDAL.findByField(Patients, { contactPeopleId: contactArr.id });
+        if (!patientArr || patientArr.length === 0) throw new Error("Patient not found");
+
+        const patient = patientArr[0];
+        await genericDAL.updateFields(Patients, { contactPeopleId: contactArr.id },
+            {
+                fullName: data.patientFullName,
+                dateOfBirth: data.patientDateOfBirth,
+                sector: data.patientSector,
+                gender: data.patientGender,
+                address: data.patientAddress,
+                dateOfDeath: data.patientDateOfDeath || null,
+                interestedInReceivingNotifications: data.patientInterestedInReceivingNotifications ?? true
+            });
+
+        await genericDAL.updateFields(RelationToPatients, { contactPeopleId: contactArr.id },
+            {
                 contactPeopleId: contact.id,
                 patientId: patient.id,
-                relationId: patientData.relation[0].relationId
+                relationId: data.relationId,
             });
-        }
-
-        await genericDAL.deleteWhere("Hospitalizeds", { patientId: patient.id });
-
-        if (patientData.hospitalizeds?.[0]) {
-            const h = patientData.hospitalizeds[0];
-            await genericDAL.create("Hospitalizeds", {
-                patientId: patient.id,
-                hospital: h.hospital,
-                department: h.department,
-                roomNumber: h.roomNumber,
-                hospitalizationStart: h.hospitalizationStart,
-                hospitalizationEnd: h.hospitalizationEnd
-            });
-        }
-
-        return await genericDAL.findOneWithIncludes("ContactPeople", { userId }, [
-            { model: genericDAL.getModelByName("Users") },
+        await genericDAL.updateFields(Hospitalizeds, { patientId: patient.id },
             {
-                model: genericDAL.getModelByName("Patients"),
-                as: 'patients',
-                include: [
-                    { model: genericDAL.getModelByName("RelationToPatients"), as: 'relation' },
-                    { model: genericDAL.getModelByName("Hospitalizeds"), as: 'hospitalizeds' }
-                ]
-            }
-        ]);
+                hospital: data.hospital,
+                department: data.department,
+                roomNumber: data.roomNumber,
+                hospitalizationStart: data.hospitalizationStart,
+                hospitalizationEnd: data.hospitalizationEnd
+            });
+        return { success: true };
     },
 
 };
