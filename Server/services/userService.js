@@ -255,7 +255,6 @@ const userService = {
         const Users = genericDAL.getModelByName("Users");
         const user = await genericDAL.findById(Users, userId);
         if (!user) throw new Error('User not found');
-
         if (user.type == 1) {
             return await userService.getVolunteerProfile(user, user.id);
         } else if (user.type == 2) {
@@ -270,14 +269,11 @@ const userService = {
             const Volunteers = genericDAL.getModelByName("Volunteers");
             const volunteerArr = await genericDAL.findByField(Volunteers, { userId });
             if (!volunteerArr || volunteerArr.length === 0) throw new Error("Volunteer not found");
-
             const volunteer = volunteerArr[0];
-
             const VolunteerTypes = genericDAL.getModelByName("VolunteerTypes");
             const VolunteeringInDepartments = genericDAL.getModelByName("VolunteeringInDepartments");
             const VolunteeringForSectors = genericDAL.getModelByName("VolunteeringForSectors");
             const VolunteeringForGenders = genericDAL.getModelByName("VolunteeringForGenders");
-
             const [types, departments, sectors, genders] = await Promise.all([
                 genericDAL.findByField(VolunteerTypes, { id: volunteer.id }),
                 genericDAL.findByField(VolunteeringInDepartments, { id: volunteer.id }),
@@ -303,28 +299,21 @@ const userService = {
         try {
             const ContactPeople = genericDAL.getModelByName("ContactPeople");
             const contactArr = await genericDAL.findByField(ContactPeople, { userId });
-
             if (!contactArr || contactArr.length === 0) {
                 throw new Error("Contact person not found");
             }
-
             const contact = contactArr[0];
-
-
             return {
                 ...contact.toJSON(),
-                // patients: patientsWithDetails,
                 user: user,
             };
-
         } catch (e) {
             console.error("getContactProfile error:", e);
             throw e;
         }
     },
-    updateProfile: async (userId, type, newData) => {
-        console.log("הגיע לאפדייט בסרבייסז");
 
+    updateProfile: async (userId, type, newData) => {
         const Users = genericDAL.getModelByName("Users");
         const user = await genericDAL.findById(Users, userId);
         if (!user) throw new Error('User not found');
@@ -337,15 +326,13 @@ const userService = {
         if (type == "patient") {
             return await userService.updatePatientProfile(user, newData);
         }
-
-
         throw new Error('No profile found to update');
     },
 
     updateVolunteerProfile: async (user, data) => {
         const Volunteer = await genericDAL.updateFields(
             Volunteers,
-            { userId: user.id }, 
+            { userId: user.id },
             {
                 fullName: data.fullName,
                 dateOfBirth: data.dateOfBirth,
@@ -358,26 +345,18 @@ const userService = {
                 flexible: data.flexible
             }
         );
-
         if (!Volunteer) throw new Error("Volunteer not found for update");
-
         const volunteerId = Volunteer.id;
-
-
         const volunteerIdField = 'volunteerId';
-
         await genericDAL.deleteByFieldValue('VolunteerTypes', 'id', volunteerId);
-
         const helpTypes = data.helpTypes.map(typeId => ({
             id: Volunteer.id,
             volunteerTypeId: typeId,
         }));
-
         if (helpTypes.length)
             await genericDAL.bulkCreateModel(VolunteerTypes, helpTypes);
 
         await genericDAL.deleteByFieldValue('VolunteeringInDepartments', 'id', volunteerId);
-
         const departments = [];
         for (const hospitalId of data.preferredHospitals) {
             for (const departmentId of data.preferredDepartments) {
@@ -388,30 +367,23 @@ const userService = {
                 });
             }
         }
-
         if (departments.length)
             await genericDAL.bulkCreateModel(VolunteeringInDepartments, departments);
 
         await genericDAL.deleteByFieldValue('VolunteeringForSectors', 'id', volunteerId);
-
         const sectors = data.guardSectors.map(sectorId => ({
             volunteerId: volunteerId,
             sectorId
         }));
-
         if (sectors.length)
             await genericDAL.bulkCreateModel(VolunteeringForSectors, sectors);
-
         await genericDAL.deleteByFieldValue('VolunteeringForGenders', 'id', volunteerId);
-
         const genders = data.guardGenders.map(genderId => ({
             volunteerId: Volunteer.id,
             genderId
         }));
-
         if (genders.length)
             await genericDAL.bulkCreateModel(VolunteeringForGenders, genders);
-
         return { success: true };
     },
 
@@ -420,11 +392,8 @@ const userService = {
         const contactArr = await genericDAL.findByField(ContactPeople, { userId: user.id });
         console.log("user id:", user.id);
         console.log("contactArr:", contactArr);
-
         if (!contactArr || contactArr.length === 0) throw new Error("Contact person not found");
-
         const contact = contactArr[0];
-
         await genericDAL.updateFields(ContactPeople, { userId: user.id }, {
             fullName: data.fullName,
             phone: data.phone,
@@ -435,7 +404,6 @@ const userService = {
             status: data.status,
             notes: data.notes
         });
-
         return { success: true };
     },
 
@@ -445,7 +413,6 @@ const userService = {
         const contactArr = await genericDAL.findByField(ContactPeople, { user });
         const patientArr = await genericDAL.findByField(Patients, { contactPeopleId: contactArr.id });
         if (!patientArr || patientArr.length === 0) throw new Error("Patient not found");
-
         const patient = patientArr[0];
         await genericDAL.updateFields(Patients, { contactPeopleId: contactArr.id },
             {
@@ -457,7 +424,6 @@ const userService = {
                 dateOfDeath: data.patientDateOfDeath || null,
                 interestedInReceivingNotifications: data.patientInterestedInReceivingNotifications ?? true
             });
-
         await genericDAL.updateFields(RelationToPatients, { contactPeopleId: contactArr.id },
             {
                 contactPeopleId: contact.id,
