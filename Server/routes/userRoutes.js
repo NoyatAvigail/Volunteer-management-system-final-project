@@ -11,8 +11,25 @@ router.route('/signup')
 
 router.use(verifyToken);
 
+router.route('/:type/:userId/:entityName/:id')
+    .put(userController.updateProfile)
+    .patch(userController.updateProfile);
+
+
+router.route('/:type/:userId/profile')
+    .get(userController.getProfile)
+    .put(userController.updateProfile);
+router.route('/:ContactPerson/:contactId/type')
+    .get(userController.getPatientsByContact);
+
+
+router.route('/send-edit-email/:id')
+    .post(userController.sendEditEmail);
+router.post('/verify-edit-code', userController.verifyEditCode);
+
+
 router.route('/:type/:userId/:table')
-    .all(validateUserId)
+    // .all(validateUserId)
     .get(userController.getAll)
     .post(userController.post);
 

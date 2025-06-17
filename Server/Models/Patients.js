@@ -15,4 +15,6 @@ export const Patients = sequelize.define('Patients', {
   is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false },
   deleted_at: { type: DataTypes.DATE, allowNull: true }
 });
+
+
 export default Patients;

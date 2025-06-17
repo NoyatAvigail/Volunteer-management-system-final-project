@@ -15,7 +15,7 @@ export const capitalize = async (str) => {
 const SECRET = process.env.EMAIL_TOKEN_SECRET || "your-secret";
 
 export function generateEditToken(userId) {
-  return jwt.sign({ userId }, SECRET, { expiresIn: '30m' });
+  return jwt.sign({ userId }, SECRET, { expiresIn: '15m' });
 }
 
 export function verifyEditToken(token) {
