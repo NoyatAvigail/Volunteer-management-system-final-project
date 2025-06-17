@@ -3,11 +3,10 @@
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    /* overflow-y: auto; */
 }
 
 body {
-    overflow:auto;
+    overflow: auto;
     background-color: #ffffff;
     display: flex;
     justify-content: center;
@@ -28,11 +27,10 @@ h2 {
 }
 
 .entryContainer {
-    overflow:auto;
+    overflow: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
     position: absolute;
     margin-top: 5vh;
 }
@@ -90,7 +88,7 @@ h2 {
 }
 
 .back-ground-img {
-    overflow:auto;
+    overflow: auto;
     background-image: url('../img/bg.jpg');
     background-repeat: no-repeat;
     background-position: center;
@@ -102,6 +100,41 @@ h2 {
 }
 
 input[type="date"] {
-    direction: rtl;
+    direction: ltr;
     text-align: left;
+}
+
+.preference {
+    background-color: #f0f8ff;
+    border: 1px solid #5fa79b;
+    border-radius: 10px;
+    padding: 0.75vw;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+    direction: ltr;
+    text-align: right;
+}
+
+.preference h4 {
+    color: #333;
+    position: relative;
+    left: 0;
+    direction: rtl;
+}
+
+.preference div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.3rem;
+}
+
+.preference label {
+    color: #333;
+    direction: ltr;
+}
+
+.preference input[type="checkbox"],
+.preference input[type="radio"] {
+    position: absolute;
+    left: 5vw;
 }

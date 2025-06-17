@@ -91,6 +91,25 @@ const userController = {
         }
     },
 
+    update: async (req, res) => {
+        try {
+            const updated = await userService.update(req.params.table, req.params.id, req.body);
+            res.status(200).json(updated);
+        } catch {
+            res.status(500).json({ message: 'Server error' });
+        }
+    },
+
+    patch: async (req, res) => {
+        try {
+            const updated = await userService.patch(req.params.table, req.params.id, req.body);
+            res.status(200).json(updated);
+        } catch (error) {
+            console.error('PATCH Error:', error);
+            res.status(500).json({ message: 'Server error' });
+        }
+    },
+
     sendEditEmail: async (req, res) => {
         try {
             const { id } = req.params;
@@ -132,7 +151,6 @@ const userController = {
             return res.status(400).send("Invalid or expired code");
         }
     },
-
     getProfile: async (req, res) => {
         try {
             const { userId } = req.params;
@@ -153,8 +171,7 @@ const userController = {
             console.error(" Failed to update profile", err);
             res.status(500).json({ message: "Failed to update profile" });
         }
-    },
-
+    }
 };
 
 export default userController;
