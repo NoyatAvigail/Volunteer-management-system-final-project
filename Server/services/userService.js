@@ -1,16 +1,16 @@
 import { hashPassword, isPasswordValid } from "../utils/utils.js";
 import { log } from "../utils/logger.js";
-import Users from '../Models/Users.js';
-import Passwords from '../Models/Passwords.js';
-import Volunteers from "../Models/Volunteers.js";
-import VolunteerTypes from '../Models/VolunteerTypes.js';
-import ContactPeople from "../Models/ContactPeople.js"
-import Patients from "../Models/Patients.js"
-import RelationToPatients from '../Models/RelationToPatients.js'
-import Hospitalizeds from '../Models/Hospitalizeds.js';
-import VolunteeringInDepartments from '../Models/VolunteeringInDepartments.js';
-import VolunteeringForSectors from '../Models/VolunteeringForSectors.js';
-import VolunteeringForGenders from '../Models/VolunteeringForGenders.js';
+import Users from '../models/Users.js';
+import Passwords from '../models/Passwords.js';
+import Volunteers from "../models/Volunteers.js";
+import VolunteerTypes from '../models/VolunteerTypes.js';
+import ContactPeople from "../models/ContactPeople.js"
+import Patients from "../models/Patients.js"
+import RelationToPatients from '../models/RelationToPatients.js'
+import Hospitalizeds from '../models/Hospitalizeds.js';
+import VolunteeringInDepartments from '../models/VolunteeringInDepartments.js';
+import VolunteeringForSectors from '../models/VolunteeringForSectors.js';
+import VolunteeringForGenders from '../models/VolunteeringForGenders.js';
 import { cUserType } from '../common/consts.js'
 import sequelize from '../../DB/connectionDB.mjs';
 import genericDAL from "../dal/genericDal.js";
