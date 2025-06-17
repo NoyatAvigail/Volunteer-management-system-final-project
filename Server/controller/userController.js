@@ -82,6 +82,22 @@ const userController = {
         }
     },
 
+    softDelete: async (req, res) => {
+        try {
+            const deleted = await userService.softDeleteItem(req.params.table, req.params.id);
+            res.status(200).json(deleted);
+        } catch {
+            res.status(500).json({ message: 'Server error', error });
+        }
+    },
+
+
+
+
+
+
+
+
     getProfile: async (req, res) => {
         try {
             const { userId } = req.params;
