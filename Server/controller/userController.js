@@ -91,45 +91,15 @@ const userController = {
         }
     },
 
-
-
-
-
-
-
-
-    getProfile: async (req, res) => {
-        try {
-            const { userId } = req.params;
-            const profile = await userService.getProfile(userId);
-            res.json(profile);
-        } catch (err) {
-            console.error("Get profile error:", err);
-            res.status(500).json({ message: err.message || 'Server error' });
-        }
-    },
-
- getPatientsByContact: async (req, res) => {
-        const { contactId } = req.params;
-
-        try {
-            const data = await userService.getPatientsByContact(contactId);
-            res.json(data);
-        } catch (error) {
-            console.error('Error in getPatientsByContact:', error.message, error.stack);
-            res.status(500).json({ message: 'Error retrieving patients for contact person' });
-        }
-    },
-
     sendEditEmail: async (req, res) => {
         try {
             const { id } = req.params;
+            const { email } = req.body;
+
             console.log("Received ID:", id);
-             const user = await usersDal.getUserById(id);
-            console.log("user found:", user);
             console.log("Email to send:", email);
-            if (!user) return res.status(404).send("User not found");
-            if (!user.email) return res.status(400).send("User has no email");
+
+            if (!email) return res.status(400).send("Email is required");
 
             const token = generateEditToken(id);
             console.log("Generated token:", token);
@@ -163,18 +133,28 @@ const userController = {
         }
     },
 
-    updateProfile: async (req, res) => {
+    getProfile: async (req, res) => {
         try {
-            const {userId} = req.params.userId;
-            const type =req.params.type; 
-             const user = await Users.findByPk(userId);
-            if (!user) return res.status(404).json({ message: 'User not found' });           
-            const updated = await userService.updateProfile(userId,type, req.body);
-          return res.json(updated);
-        } catch (error) {
-            res.status(500).json({ message: error.message });
+            const { userId } = req.params;
+            const profile = await userService.getProfile(userId);
+            res.json(profile);
+        } catch (err) {
+            console.error("Get profile error:", err);
+            res.status(500).json({ message: err.message || 'Server error' });
         }
     },
+    updateProfile: async (req, res) => {
+        try {
+            const userId = req.params.userId;
+            const type = req.params.type;
+            const updated = await userService.updateProfile(userId, type, req.body);
+            res.json(updated);
+        } catch (err) {
+            console.error(" Failed to update profile", err);
+            res.status(500).json({ message: "Failed to update profile" });
+        }
+    },
+
 };
 
 export default userController;
