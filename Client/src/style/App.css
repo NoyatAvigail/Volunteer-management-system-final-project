@@ -40,6 +40,8 @@ body::-webkit-scrollbar {
 .logo {
   height: 17vh;
   margin-right: 1vw;
+  position: absolute;
+  right: 0;
 }
 
 .header ul {
@@ -79,7 +81,7 @@ body::-webkit-scrollbar {
 
 .header .right {
   position: absolute;
-  right: 2vw;
+  right: 10vw;
 }
 
 .container {
@@ -186,6 +188,29 @@ input {
   font-size: 1.75vw;
 }
 
-.header ul a.patientLink {
-  font-size: 1vw;
+summary {
+  font-size: 1.5vw;
+  color: #ffffff;
+}
+
+.patientLink summary:hover {
+  color: #07223f;
+}
+
+.patientLink ul {
+  list-style: none;
+  padding: 0;
+}
+
+.patientLink ul a {
+  text-decoration: none;
+  font-size: 0.9vw;
+  color: #ffffff;
+  display: block;
+  padding: 0.1vh 0;
+  transition: color 0.3s ease;
+}
+
+.patientLink ul a:hover {
+  color: #07223f;
 }

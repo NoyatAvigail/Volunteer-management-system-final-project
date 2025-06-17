@@ -17,7 +17,6 @@ import VolunteerRequests from './volunteers/VolunteerRequests';
 import Contacts from './Contacts'
 import ContactPatientInfo from './contacts/ContactPatientInfo';
 import ContactRequests from './contacts/ContactRequests';
-// import ContactNewRequest from './contacts/ContactNewRequest';
 import ContactAddPatient from './contacts/ContactAddPatient';
 import ContactThanks from './contacts/ContactThanks';
 import ContactProfile from './contacts/ContactProfile';
@@ -56,7 +55,6 @@ function App() {
           <Route path="/contactperson/:id" element={<Contacts />} />
           <Route path="/contactperson/:id/home" element={<Contacts />} />
           <Route path="/contactperson/:id/requests" element={<ContactRequests />} />
-          {/* <Route path="/contactperson/:id/new-request" element={<ContactNewRequest />} /> */}
           <Route path="/contactperson/:id/profile" element={<ContactProfile />} />
           <Route path="/contactperson/:id/thanks" element={<ContactThanks />} />
           <Route path="/contactperson/:id/patient/patient-info" element={<ContactPatientInfo />} />
@@ -66,7 +64,6 @@ function App() {
           <Route path="/error" element={<ErrorPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
-        {isShowInfo == 1 && <Info setIsShowInfo={setIsShowInfo} />}
       </CurrentUser.Provider>
     </CodesProvider>
   )

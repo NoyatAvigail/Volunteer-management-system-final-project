@@ -31,7 +31,6 @@ function Navigation({ setIsShowInfo }) {
                                 <div className="left">
                                     <h3 className='userName'> {currentUser.fullName}</h3>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/home`}>Home page</Link></ul>
-                                    <ul><a onClick={() => setIsShowInfo(1)}>Information</a></ul>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/shifts`}>My shifts</Link></ul>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/permanentShifts`}>Permanent shifts</Link></ul>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/requests`}>Open requests</Link></ul>
@@ -50,17 +49,15 @@ function Navigation({ setIsShowInfo }) {
                                 <div className="left">
                                     <h3 className='userName'>{currentUser.fullName}</h3>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/home`}>Home page</Link></ul>
-                                    <ul><a onClick={() => setIsShowInfo(1)}>Information</a></ul>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/requests`}>My requests</Link></ul>
-                                    {/* <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/new-request`}>Add request</Link></ul> */}
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/profile`}>Profile management</Link></ul>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/thanks`}>Thanks</Link></ul>
-                                    <details>
+                                    <details className='patientLink'>
                                         <summary>Patients</summary>
-                                        <ul className='patientLink'><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/add-patient`}>Add patient</Link></ul>
-                                        <ul className='patientLink'><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/add-hospitalization`}>Add hospitalization</Link></ul>
-                                        <ul className='patientLink'><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/info`}>Patient info</Link></ul>
-                                        <ul className='patientLink'><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/profile`}>Manage patient profile</Link></ul>
+                                        <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/add-patient`}>Add patient</Link></ul>
+                                        <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/add-hospitalization`}>Add hospitalization</Link></ul>
+                                        <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/info`}>Patient info</Link></ul>
+                                        <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/profile`}>Manage patient profile</Link></ul>
                                     </details>
                                     <div className="right">
                                         <ul onClick={logOut}><a>Logout</a></ul>
