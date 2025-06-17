@@ -20,18 +20,35 @@ function VolunteerShifts() {
   }, [currentUser]);
 
   return (
-    <div className="section">
+    <div className="requests">
       <h2>My Shifts</h2>
       {shifts.length === 0 ? (
         <p>You have no shifts at the moment.</p>
       ) : (
-        shifts.map(shift => (
-          <div key={shift.id} className="post-item">
-            <p>Department: {shift.department}</p>
-            <p>Hospital: {shift.hospital}</p>
-            <p>Times: {shift.startTime} - {shift.endTime}</p>
-          </div>
-        ))
+        <table className="requests-table">
+          <thead>
+            <tr>
+              <th>תאריך</th>
+              <th>שעת התחלה</th>
+              <th>שעת סיום</th>
+              <th>מספר חדר</th>
+              <th>בית חולים</th>
+              <th>מחלקה</th>
+            </tr>
+          </thead>
+          <tbody>
+            {shifts.map(shift => (
+              <tr key={shift.id}>
+                <td>{new Date(shift.date).toISOString().split('T')[0]}</td>
+                <td>{shift.startTime}</td>
+                <td>{shift.endTime}</td>
+                <td>{shift.roomNumber}</td>
+                <td>{shift.hospital}</td>
+                <td>{shift.department}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
     </div>
   );

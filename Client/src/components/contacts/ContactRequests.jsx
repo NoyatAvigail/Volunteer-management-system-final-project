@@ -132,9 +132,18 @@ function ContactRequests() {
         return <div>No access to this form</div>;
     }
 
-    const isPastEvent = (date) => {
-        const today = new Date().setHours(0, 0, 0, 0);
-        const eventDate = new Date(date).setHours(0, 0, 0, 0);
+    function parseDateFromDDMMYYYY(dateStr) {
+        const [day, month, year] = dateStr.split('-').map(Number);
+        return new Date(year, month - 1, day);
+    }
+
+    const isPastEvent = (dateStr) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const eventDate = new Date(dateStr);
+        eventDate.setHours(0, 0, 0, 0);
+
         return eventDate < today;
     };
 
@@ -210,7 +219,7 @@ function ContactRequests() {
                             events.map((item) => {
                                 const isPast = isPastEvent(item.date);
                                 return (
-                                    <tr key={item.id} style={{ backgroundColor: isPast ? '#eee' : 'white' }}>
+                                    <tr key={item.id} style={{ backgroundColor: isPastEvent(item.date) ? '#eee' : 'white' }}>
                                         <td>{new Date(item.date).toISOString().split('T')[0]}</td>
                                         <td>{item.startTime}</td>
                                         <td>{item.endTime}</td>

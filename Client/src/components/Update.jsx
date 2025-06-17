@@ -3,10 +3,14 @@ import { useState } from "react";
 import { userService } from "../services/usersServices";
 import { useContext } from "react";
 import { CurrentUser } from "./App";
+import { CodesContext } from './Models';
+
 function Update({ type, itemId, setIsChange, inputs, onSuccess = null }) {
     const [screen, setScreen] = useState(0);
     const [formData, setFormData] = useState({});
     const { currentUser } = useContext(CurrentUser);
+    const { codes } = useContext(CodesContext);
+    const userTypeObj = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -23,7 +27,7 @@ function Update({ type, itemId, setIsChange, inputs, onSuccess = null }) {
         try {
             await userService.patch(
                 currentUser.autoId,
-                currentUser.type,
+                userTypeObj,
                 type,
                 itemId,
                 formData,
@@ -37,7 +41,7 @@ function Update({ type, itemId, setIsChange, inputs, onSuccess = null }) {
                 },
                 (error) => {
                     console.error(`Failed to update ${type} with ID ${itemId}: ${error}`);
-                    alert("עדכון נכשל. נסה שוב.");
+                    alert("Update failed. Please try again.");
                 }
             );
         } catch (error) {

@@ -46,15 +46,10 @@ const genericDAL = {
         return model.findAll({
             where: {
                 [field]: value,
-                // is_deleted: 1
+                is_deleted: 0
             }
-            // where: whereClause
         });
     },
-
-    // findAll: (model) => {
-    //     return model.findAll()
-    // },
 
     findAll: (model) => {
         return model.findAll({
@@ -111,14 +106,22 @@ const genericDAL = {
         return Model.bulkCreate(dataArray, options);
     },
 
-    updateFields: async (model, where, updatedFields) => {
-        const item = await model.findOne({ where });
-        if (!item) {
-            console.log(" Not found with where:", where);
-            return null;
+    update: async (model, id, updatedFields) => {
+        const item = await model.findByPk(id);
+        if (item) {
+            Object.assign(item, updatedFields);
+            await item.save();
         }
+        return item;
     },
 
+    updateByField: async (model, id, updatedFields) => {
+        const item = await model.findByPk(id);
+        if (!item) return null;
+        Object.assign(item, updatedFields);
+        await item.save();
+        return item;
+    },
 
     cleanupOldDeleted: async () => {
         for (const modelName in models) {
@@ -135,6 +138,7 @@ const genericDAL = {
             }
         }
     },
+
     deleteByFieldValue(modelName, fieldName, value) {
         const model = models[modelName];
         if (!model) throw new Error(`Model ${modelName} not found`);

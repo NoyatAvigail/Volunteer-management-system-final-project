@@ -2,15 +2,17 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userService } from '../../services/usersServices';
 import { CurrentUser } from '../App';
-import '../../style/VolunteerRequests.css';
+import { CodesContext } from '.././Models';
+import '../../style/Posts.css';
+
 function VolunteerRequests() {
   const [openCalls, setOpenCalls] = useState([]);
   const { currentUser } = useContext(CurrentUser);
-  const navigate = useNavigate();
+  const { codes } = useContext(CodesContext);
+  const userTypeObj = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
 
   useEffect(() => {
     if (!currentUser) return;
-
     userService.getByValue(
       currentUser.autoId,
       'volunteers',
@@ -25,7 +27,7 @@ function VolunteerRequests() {
     if (!currentUser) return;
     userService.patch(
       currentUser.autoId,
-      currentUser.type,
+      userTypeObj,
       'Events',
       callId,
       { volunteerId: currentUser.id },
@@ -40,21 +42,45 @@ function VolunteerRequests() {
 
   return (
     <div className="section">
-      <h2>Open Requests</h2>
       {openCalls.length === 0 ? (
         <p>There are currently no open requests</p>
       ) : (
-        openCalls.map(call => (
-          <div key={call.id} className="post-item">
-            <p>Department: {call.department}</p>
-            <p>Hospital: {call.hospital}</p>
-            <p>Times: {call.startTime} - {call.endTime}</p>
-            <button onClick={() => handleTakeCall(call.id)}>I'm taking</button>
-          </div>
-        ))
+        <div className="requests">
+          <h2>Open Requests</h2>
+          <table className="requests-table">
+            <thead>
+              <tr>
+                <th>תאריך</th>
+                <th>שעת התחלה</th>
+                <th>שעת סיום</th>
+                <th>מספר חדר</th>
+                <th>בית חולים</th>
+                <th>מחלקה</th>
+                <th>פעולות</th>
+              </tr>
+            </thead>
+            <tbody>
+              {openCalls.map(call => (
+                <tr key={call.id}>
+                  <td>{new Date(call.date).toISOString().split('T')[0]}</td>
+                  <td>{call.startTime}</td>
+                  <td>{call.endTime}</td>
+                  <td>{call.roomNumber}</td>
+                  <td>{call.hospital}</td>
+                  <td>{call.department}</td>
+                  <td>
+                    <button onClick={() => handleTakeCall(call.id)}>
+                      I'm taking
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
-}
+};
 
 export default VolunteerRequests;

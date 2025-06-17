@@ -18,7 +18,8 @@ router.route('/:type/:userId/:table')
 
 router.route('/:type/:userId/:table/:id')
     .all(validateUserId)
-    .delete(userController.softDelete);
+    .delete(userController.softDelete)
+    .patch(userController.patch);
 
 router.route('/:type/:userId/join-foreign/:table1/:foreignKey/:table2/:targetKey/:targetField')
     .all(validateUserId)
@@ -27,6 +28,7 @@ router.route('/:type/:userId/join-foreign/:table1/:foreignKey/:table2/:targetKey
 router.route('/:type/:userId/profile')
     .get(userController.getProfile)
     .put(userController.updateProfile);
+
 // router.route('/ContactPerson/:contactId/:type')
 //     .get(userController.getPatientsByContact);
 

@@ -8,13 +8,11 @@ import Cookies from 'js-cookie';
 import ErrorPage from './ErrorPage';
 import logo from '../style/img/logo.png';
 
-function Navigation({ setIsShowInfo }) {
+function Navigation() {
     const { currentUser, setCurrentUser } = useContext(CurrentUser);
     const navigate = useNavigate();
     const { codes, loading } = useContext(CodesContext);
     const userTypeObject = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
-    console.log("currentUser", currentUser);
-
 
     function logOut() {
         logOutFunc(navigate);

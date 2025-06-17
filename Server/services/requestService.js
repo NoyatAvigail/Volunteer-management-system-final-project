@@ -81,6 +81,14 @@ const requestsService = {
             console.error("Signup failed:", e);
             throw e;
         }
+    },
+    getContactRequests: async (contact, asOfDate) => {
+//בדיקת ה- contact למול הטוקן?
+// todo requestDal.getContactRequests
+    },
+    find: async(volunteerId, hospitalId, departmentId, patientName, asOfDate )=> {
+        // Check date?
+        
     }
 };
 

@@ -30,16 +30,12 @@ function Register() {
             return;
         }
         setUserData({ fullName: data.fullName, email: data.email, password: data.password, verifyPassword: data.verifyPassword, type: userType });
-        console.log("userData", userData);
-
         setRegisterIsCompleted(1);
         resetFirstForm();
     };
 
     const handleSignupSuccess = (createdUser) => {
-        console.log(`userType${userType.description}`);
         const user = createdUser.user;
-        console.log("User created successfully:", user);
         Cookies.set("token", createdUser.token);
         setCurrentUser(user);
         localStorage.setItem("currentUser", JSON.stringify(user));
@@ -203,82 +199,81 @@ function Register() {
                             {showMoreForm && (
                                 <div className="more-form">
                                     <h3>Additional Details</h3>
-                                    <label>Departments I am willing to volunteer in</label>
-                                    {codes?.Departments?.map((item) => (
-                                        <div key={item.id}>
-                                            <input
-                                                type="checkbox"
-                                                {...registerSecond("preferredDepartments")}
-                                                value={item.id}
-                                                id={`dept-${item.id}`}
-                                            />
-                                            <label htmlFor={`dept-${item.id}`}>{item.description}</label>
-                                        </div>
-                                    ))}
-                                    <label>Hospitals where I am willing to volunteer</label>                            {codes?.Hospitals?.map((item) => (
-                                        <div key={item.id}>
-                                            <input
-                                                type="checkbox"
-                                                {...registerSecond("preferredHospitals")}
-                                                value={item.id}
-                                                id={`hospital-${item.id}`}
-                                            />
-                                            <label htmlFor={`hospital-${item.id}`}>{item.description}</label>
-                                        </div>
-                                    ))}
-                                    <label>Sectors I am willing to keep</label>
-                                    {codes?.Sectors?.map((item) => (
-                                        <div key={item.id}>
-                                            <input
-                                                type="checkbox"
-                                                {...registerSecond("guardSectors")}
-                                                value={item.id}
-                                                id={`guard-sector-${item.id}`}
-                                            />
-                                            <label htmlFor={`guard-sector-${item.id}`}>{item.description}</label>
-                                        </div>
-                                    ))}
-                                    <label>Genders I am willing to maintain</label>
-                                    {codes?.Genders?.map((item) => (
-                                        <div key={item.id}>
-                                            <input
-                                                type="checkbox"
-                                                {...registerSecond("guardGenders")}
-                                                value={item.id}
-                                                id={`guard-gender-${item.id}`}
-                                            />
-                                            <label htmlFor={`guard-gender-${item.id}`}>{item.description}</label>
-                                        </div>
-                                    ))}
-                                    <label>Flexibility in hours</label>
-                                    <div>
-                                        <input
-                                            type="radio"
-                                            {...registerSecond("isFlexible")}
-                                            value="true"
-                                            id="flexible-yes"
-                                        />
-                                        <label htmlFor="flexible-yes">כן</label>
-                                        <input
-                                            type="radio"
-                                            {...registerSecond("isFlexible")}
-                                            value="false"
-                                            id="flexible-no"
-                                        />
-                                        <label htmlFor="flexible-no">לא</label>
+                                    <div className='preference'>
+                                        <h4>Departments I am willing to volunteer in</h4>
+                                        {codes?.Departments?.map((item) => (
+                                            <div key={item.id}>
+                                                <input
+                                                    type="checkbox"
+                                                    {...registerSecond("preferredDepartments")}
+                                                    value={item.id}
+                                                    id={`dept-${item.id}`}
+                                                />
+                                                <label htmlFor={`dept-${item.id}`}>{item.description}</label>
+                                            </div>
+                                        ))}
                                     </div>
-                                    {/* <label>באילו שעות מוכן להתנדב?</label>
-                            {CodesContext["VolunteerDiaries"]?.map((item) => (
-                                <div key={item.id}>
-                                    <input
-                                        type="checkbox"
-                                        {...registerSecond("volunteerTimes")}
-                                        value={item.id}
-                                        id={`diary-${item.id}`}
-                                    />
-                                    <label htmlFor={`diary-${item.id}`}>{item.description}</label>
-                                </div>
-                            ))} */}
+                                    <div className='preference'>
+                                        <h4>Hospitals where I am willing to volunteer</h4>
+                                        {codes?.Hospitals?.map((item) => (
+                                            <div key={item.id}>
+                                                <input
+                                                    type="checkbox"
+                                                    {...registerSecond("preferredHospitals")}
+                                                    value={item.id}
+                                                    id={`hospital-${item.id}`}
+                                                />
+                                                <label htmlFor={`hospital-${item.id}`}>{item.description}</label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className='preference'>
+                                        <h4>Sectors I am willing to keep</h4>
+                                        {codes?.Sectors?.map((item) => (
+                                            <div key={item.id}>
+                                                <input
+                                                    type="checkbox"
+                                                    {...registerSecond("guardSectors")}
+                                                    value={item.id}
+                                                    id={`guard-sector-${item.id}`}
+                                                />
+                                                <label htmlFor={`guard-sector-${item.id}`}>{item.description}</label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className='preference'>
+                                        <h4>Genders I am willing to maintain</h4>
+                                        {codes?.Genders?.map((item) => (
+                                            <div key={item.id}>
+                                                <input
+                                                    type="checkbox"
+                                                    {...registerSecond("guardGenders")}
+                                                    value={item.id}
+                                                    id={`guard-gender-${item.id}`}
+                                                />
+                                                <label htmlFor={`guard-gender-${item.id}`}>{item.description}</label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className='preference'>
+                                        <h4>Flexibility in hours</h4>
+                                        <div>
+                                            <input
+                                                type="radio"
+                                                {...registerSecond("isFlexible")}
+                                                value="true"
+                                                id="flexible-yes"
+                                            />
+                                            <label htmlFor="flexible-yes">כן</label>
+                                            <input
+                                                type="radio"
+                                                {...registerSecond("isFlexible")}
+                                                value="false"
+                                                id="flexible-no"
+                                            />
+                                            <label htmlFor="flexible-no">לא</label>
+                                        </div>
+                                    </div>
                                 </div>
                             )}
                             <button type="submit">Sign Up</button>

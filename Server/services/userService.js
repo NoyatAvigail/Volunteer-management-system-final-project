@@ -186,93 +186,40 @@ const userService = {
         const model = genericDAL.getModelByName((table));
         return genericDAL.createModel(model, data);
     },
+
     // getRequests: async (table1, targetField, table2, foreignKey, targetKey, targetValue) => {
-    //     // שלב 1: טבלת הורים ראשונה
     //     const matchingRecordsTbl1 = await genericDAL.findByField(
     //         genericDAL.getModelByName(table1),
     //         { [targetKey]: targetValue }
     //     );
-
     //     const parentIds = matchingRecordsTbl1.map(item => item[targetField]);
-
-    //     // שלב 2: טבלת ילדים
     //     const matchingRecordsTbl2 = await genericDAL.findByFieldIn(
     //         genericDAL.getModelByName(table2),
     //         foreignKey,
     //         parentIds
     //     );
-
-    //     // שלב 3: חיבור בין הורה לילד
-    //     const req = _.flatMap(matchingRecordsTbl1, parent => {
-    //         const matchingChildren = matchingRecordsTbl2.filter(child => child[foreignKey] === parent[targetField]);
-
-    //         return matchingChildren.map(child => ({
-    //             ..._.mapKeys(parent.dataValues ?? parent, (v, k) => `parent_${k}`), // אם זה Sequelize, תומך ב- dataValues
-    //             ...child.dataValues ?? child
-    //         }));
+    //     const req = userService.joinTables({
+    //         parents: matchingRecordsTbl1,
+    //         children: matchingRecordsTbl2,
+    //         parentKey: targetField,
+    //         childKey: foreignKey,
+    //         parentPrefix: ""
     //     });
-
-    //     // שלב 4: שליפת מזהים ייחודיים של patientId
     //     const distinctPatientIds = [...new Set(req.map(item => item.patientId))];
-
-    //     // שלב 5: שליפת מטופלים
     //     const patients = await genericDAL.findByFieldIn(
     //         genericDAL.getModelByName("Patients"),
     //         "userId",
     //         distinctPatientIds
     //     );
-
-    //     // שלב 6: חיבור בין כל רשומה ב־req לרשומת המטופל שלה
-    //     const req2 = _.flatMap(req, parent => {
-    //         const matchingPatient = patients.find(patient => 
-    //             (patient.userId ?? patient.dataValues?.userId) === parent.patientId
-    //         );
-
-    //         if (!matchingPatient) return [];
-
-    //         return [{
-    //             ...parent, // כבר כולל parent_ שדות
-    //             ...matchingPatient.dataValues ?? matchingPatient
-    //         }];
+    //     const req2 = userService.joinTables({
+    //         parents: req,
+    //         children: patients,
+    //         parentKey: "patientId",
+    //         childKey: "userId",
+    //         parentPrefix: ""
     //     });
-
-    //     console.log("req2", req2);
     //     return req2;
     // },
-
-    getRequests: async (table1, targetField, table2, foreignKey, targetKey, targetValue) => {
-        const matchingRecordsTbl1 = await genericDAL.findByField(
-            genericDAL.getModelByName(table1),
-            { [targetKey]: targetValue }
-        );
-        const parentIds = matchingRecordsTbl1.map(item => item[targetField]);
-        const matchingRecordsTbl2 = await genericDAL.findByFieldIn(
-            genericDAL.getModelByName(table2),
-            foreignKey,
-            parentIds
-        );
-        const req = userService.joinTables({
-            parents: matchingRecordsTbl1,
-            children: matchingRecordsTbl2,
-            parentKey: targetField,
-            childKey: foreignKey,
-            parentPrefix: ""
-        });
-        const distinctPatientIds = [...new Set(req.map(item => item.patientId))];
-        const patients = await genericDAL.findByFieldIn(
-            genericDAL.getModelByName("Patients"),
-            "userId",
-            distinctPatientIds
-        );
-        const req2 = userService.joinTables({
-            parents: req,
-            children: patients,
-            parentKey: "patientId",
-            childKey: "userId",
-            parentPrefix: ""
-        });
-        return req2;
-    },
 
     joinTables({ parents, children, parentKey, childKey, parentPrefix = "parent" }) {
         return _.flatMap(parents, parent => {
@@ -294,10 +241,21 @@ const userService = {
         return genericDAL.createModel(model, data);
     },
 
+    update: async (table, id, body) => {
+        log('[UPDATE]', { table, id, body });
+        const model = genericDAL.getModelByName((table));
+        return genericDAL.updateFields(model, id, body);
+    },
+
+    patch: async (table, id, body) => {
+        const model = genericDAL.getModelByName(table);
+        return genericDAL.updateByField(model, id, body);
+    },
+
     softDeleteItem: async (table, id) => {
         log('[DELETE]', { table, id });
         const model = genericDAL.getModelByName((table));
-        return genericDAL.updateFields(model, id, {
+        return genericDAL.update(model, id, {
             is_deleted: 1,
             deleted_at: new Date()
         });
