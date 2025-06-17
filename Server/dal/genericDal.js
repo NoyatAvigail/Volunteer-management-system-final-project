@@ -34,7 +34,6 @@ const genericDAL = {
         return models[name];
     },
 
-
     findByField: (model, query) => {
         const field = Object.keys(query)[0];
         const value = query[field];
@@ -61,7 +60,6 @@ const genericDAL = {
         return model.findOne({
             where: {
                 id,
-                // is_deleted: 1
             }
         });
     },
@@ -75,10 +73,26 @@ const genericDAL = {
         const items = await nestedModel.findAll({
             where: {
                 ...query,
-                // is_deleted: 1
             }
         });
         return items;
+    },
+
+    findByFieldIn: async (model, field, values) => {
+        return await model.findAll({
+            where: {
+                [field]: values
+            }
+        });
+    },
+
+    getItemsByFieldInList: async (tableName, field, values) => {
+        const Model = genericDAL.getModelByName(tableName);
+        return await Model.findAll({
+            where: {
+                [field]: values
+            }
+        });
     },
 
     createModel: (Model, data, options = {}) => {
@@ -89,12 +103,17 @@ const genericDAL = {
         return Model.bulkCreate(dataArray, options);
     },
 
+<<<<<<< HEAD
     updateFields: async (model, where, updatedFields) => {
         const item = await model.findOne({ where });
         if (!item) {
             console.log(" Not found with where:", where);
             return null;
         }
+=======
+    updateFields: async (model, id, updatedFields) => {
+        const item = await model.findByPk(id);
+>>>>>>> 5a0b969504d42c4cc3b39f12304bdbb3fec4d295
         if (item) {
             Object.assign(item, updatedFields);
             await item.save();
@@ -118,6 +137,7 @@ const genericDAL = {
             }
         }
     },
+<<<<<<< HEAD
     deleteByFieldValue(modelName, fieldName, value) {
         const model = models[modelName];
         if (!model) throw new Error(`Model ${modelName} not found`);
@@ -128,6 +148,8 @@ const genericDAL = {
             }
         });
     },
+=======
+>>>>>>> 5a0b969504d42c4cc3b39f12304bdbb3fec4d295
 
     findOneWithIncludes: (modelName, query, includes) => {
         const model = models[modelName];
@@ -136,7 +158,6 @@ const genericDAL = {
             include: includes
         });
     }
-
 };
 
 export default genericDAL;

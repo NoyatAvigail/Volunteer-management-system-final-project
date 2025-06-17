@@ -22,13 +22,6 @@ const service = {
         return genericDAL.findById(model, id);
     },
 
-    getNestedItems: async (base, id, nested, body) => {
-        log('[GET ALL]', { base, id, nested, body });
-        const baseModel = genericDAL.getModelByName((base));
-        const nestedModel = genericDAL.getModelByName((nested));
-        return genericDAL.findNested(baseModel, id, nestedModel, body);
-    },
-
     create: async (table, data) => {
         log('[POST]', { table, data });
         const model = genericDAL.getModelByName((table));
