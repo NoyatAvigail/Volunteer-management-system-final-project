@@ -63,7 +63,7 @@ const userController = {
             const { table1, foreignKey, table2, targetKey, targetField } = req.params;
             const targetValue = req.query.value;
             if (!targetValue) return res.status(400).json({ message: "Missing target value" });
-            const result = await userService.getByForeignJoin(table1, foreignKey, table2, targetKey,targetField, targetValue);
+            const result = await userService.getRequests(table1, foreignKey, table2, targetKey,targetField, targetValue);
             res.status(200).json(result);
         } catch (err) {
             console.error("Error in getByForeignJoin:", err);
