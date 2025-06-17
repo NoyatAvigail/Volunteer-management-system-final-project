@@ -17,7 +17,7 @@ const requestsService = {
             if (!checkIfPatientsExists)
                 throw new Error("patient not exists");
             //CheckHospitilized if exists with other details - > question??
-            let checkIfHospitailizedExists = await genericDAL.findById(Hospitalizeds, data.HospitalizedsId);
+            let checkIfHospitailizedExists = await genericDAL.findById(Hospitalizeds, data.hospitalizedsId);
             //addrequesst
 
             let newRequest = await genericDAL.createModel(Users, { email, type, phone, id }, { transaction });
