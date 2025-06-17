@@ -25,7 +25,7 @@ const models = {
     ContactPeople, Patients, RelationToPatients, VolunteerTypes,
     VolunteeringInDepartments, VolunteeringForSectors, VolunteeringForGenders
 };
- 
+
 const genericDAL = {
     getModelByName: (name) => {
         if (!models[name]) {
@@ -88,15 +88,20 @@ const genericDAL = {
     bulkCreateModel: (Model, dataArray, options = {}) => {
         return Model.bulkCreate(dataArray, options);
     },
-    
-    updateFields: async (model, id, updatedFields) => {
-        const item = await model.findByPk(id);
+
+    updateFields: async (model, where, updatedFields) => {
+        const item = await model.findOne({ where });
+        if (!item) {
+            console.log(" Not found with where:", where);
+            return null;
+        }
         if (item) {
             Object.assign(item, updatedFields);
             await item.save();
         }
         return item;
     },
+
 
     cleanupOldDeleted: async () => {
         for (const modelName in models) {
@@ -113,6 +118,17 @@ const genericDAL = {
             }
         }
     },
+    deleteByFieldValue(modelName, fieldName, value) {
+        const model = models[modelName];
+        if (!model) throw new Error(`Model ${modelName} not found`);
+
+        return model.destroy({
+            where: {
+                [fieldName]: value
+            }
+        });
+    },
+
     findOneWithIncludes: (modelName, query, includes) => {
         const model = models[modelName];
         return model.findOne({

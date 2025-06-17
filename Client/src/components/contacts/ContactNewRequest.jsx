@@ -11,6 +11,7 @@ function ContactNewRequest() {
   const [hospitalizeds, setHospitalizeds] = useState([]);
   const [patients, setPatients] = useState([]);
   const [selectedPatientId, setSelectedPatientId] = useState("");
+  console.log("codes:", codes);
 
   const didFetch = useRef(false);
 
@@ -44,6 +45,8 @@ function ContactNewRequest() {
   if (!currentUser || userTypeObj !== 'ContactPerson') {
     return <div>No access to this form</div>;
   }
+  console.log("Patients:", patients);
+  console.log("hospitalizeds:", hospitalizeds);
 
   return (
     <div className="form-container">

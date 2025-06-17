@@ -3,7 +3,6 @@ import { generateToken } from "../middleware/middleware.js";
 import Users from '../Models/Users.js';
 import { cUserType } from '../common/consts.js';
 import sendEditVerificationMail from '../services/emailService.js';
-import usersDal from '../dal/userDal.js';
 import { generateEditToken } from '../utils/utils.js';
 import { v4 as uuidv4 } from 'uuid';
 import jwt from 'jsonwebtoken';
@@ -69,7 +68,6 @@ const userController = {
             res.status(500).json({ message: 'Server error', error: err.message });
         }
     },
-
     getProfile: async (req, res) => {
         try {
             const { userId } = req.params;
@@ -81,23 +79,32 @@ const userController = {
         }
     },
 
+    getPatientsByContact: async (req, res) => {
+        const { contactId } = req.params;
+
+        try {
+            const data = await userService.getPatientsByContact(contactId);
+            res.json(data);
+        } catch (error) {
+            console.error('Error in getPatientsByContact:', error.message, error.stack);
+            res.status(500).json({ message: 'Error retrieving patients for contact person' });
+        }
+    },
 
     sendEditEmail: async (req, res) => {
         try {
             const { id } = req.params;
+            const { email } = req.body;
+
             console.log("Received ID:", id);
-            //  const user = await userService.getUserById(id);
+            console.log("Email to send:", email);
 
-            const user = await usersDal.getUserById(id);
-            console.log("user found:", user);
-
-            if (!user) return res.status(404).send("User not found");
-            if (!user.email) return res.status(400).send("User has no email");
+            if (!email) return res.status(400).send("Email is required");
 
             const token = generateEditToken(id);
             console.log("Generated token:", token);
 
-            await sendEditVerificationMail(user.email, token);
+            await sendEditVerificationMail(email, token);
             console.log("Email sent successfully");
 
             res.send("Email sent");
@@ -106,7 +113,6 @@ const userController = {
             res.status(500).send("Internal Server Error");
         }
     },
-
     verifyEditCode: async (req, res) => {
         const { code } = req.body;
 
@@ -115,60 +121,30 @@ const userController = {
         }
 
         try {
-            // אימות הטוקן וקבלת הפיילוד
             const payload = jwt.verify(code, JWT_SECRET);
 
-            // אפשר להוסיף בדיקה שהפיילוד מתאים למשתמש (לדוגמה userId)
             if (!payload.userId) {
                 return res.status(400).send("Invalid token payload");
             }
 
-            // אם הכל תקין
             return res.status(200).send({ message: "Code valid", userId: payload.userId });
         } catch (err) {
-            // שגיאה באימות (פג תוקף או טוקן לא חוקי)
             return res.status(400).send("Invalid or expired code");
         }
     },
-    // updateProfile: async (req, res) => {
-    //     try {
-    //         const { userId } = req.params;
-    //         const user = await Users.findByPk(userId);
-    //         if (!user) return res.status(404).json({ message: 'User not found' });
-    //         const data = req.body;
-    //         if (user.type === cUserType.VOLUNTEER) {
-
-    //             const updatedVolunteer = await userService.updateVolunteerProfile(userId, data);
-    //             res.json({ message: 'Volunteer profile updated', data: updatedVolunteer });
-    //         }
-    //     } catch (error) {
-    //         res.status(500).json({ message: error.message });
-    //     }
-    // },
     updateProfile: async (req, res) => {
         try {
-            const { userId } = req.params;
-            const user = await Users.findByPk(userId);
-            if (!user) return res.status(404).json({ message: 'User not found' });
-
-            const data = req.body;
-
-            if (user.type === cUserType.VOLUNTEER) {
-                const updatedVolunteer = await userService.updateVolunteerProfile(userId, data);
-                return res.json({ message: 'Volunteer profile updated', data: updatedVolunteer });
-            }
-
-            if (user.type === cUserType.CONTACTPERSON) {
-                const updatedContact = await userService.updateContactProfile(userId, data);
-                return res.json({ message: 'Contact profile updated', data: updatedContact });
-            }
-
-            return res.status(400).json({ message: 'Unsupported user type' });
-        } catch (error) {
-            res.status(500).json({ message: error.message });
+            const userId = req.params.userId;
+            const type =req.params.type;
+            console.log("הגיעה לכונטרולר");
+            
+            const updated = await userService.updateProfile(userId,type, req.body);
+            res.json(updated);
+        } catch (err) {
+            console.error(" Failed to update profile", err);
+            res.status(500).json({ message: "Failed to update profile" });
         }
     },
-
 };
 
 export default userController;

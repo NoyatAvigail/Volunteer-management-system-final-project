@@ -59,7 +59,7 @@ function App() {
           <Route path="/contactperson/:id/new-request" element={<ContactNewRequest />} />
           <Route path="/contactperson/:id/profile" element={<ContactProfile />} />
           <Route path="/contactperson/:id/thanks" element={<ContactThanks />} />
-          <Route path="/contactperson/:id/patient/patient-info" element={<ContactPatientInfo />} />
+          <Route path="/contactperson/:id/patient/info" element={<ContactPatientInfo />} />
           <Route path="/contactperson/:id/patient/add-patient" element={<ContactAddPatient />} />
           <Route path="/contactperson/:id/patient/add-hospitalization" element={<ContactAddHospitalization />} />
           <Route path="/contactperson/:id/patient/profile" element={<ContactProfile />} />
