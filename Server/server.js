@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json({ limit: '10mb' }));
 app.use(cors());
 app.use("/api/users", userRoutes);
-app.use("/api/generic", genericRoutes);
+app.use("/api/codeTables", app.use(codeTablesRoutes));
 
 const start = async () => {
   try {

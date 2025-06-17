@@ -1,36 +1,23 @@
-import React from "react";
-import { createContext, useContext, useEffect, useState } from "react";
-import { genericServices } from '../services/genericServices';
-
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { codeServices } from '../services/codeServices';
 export const CodesContext = createContext([]);
 
 export const CodesProvider = ({ children }) => {
-    const codeTables = ["UserTypes", "Sectors", "Genders", "Hospitals", "Departments", "FamilyRelations", "VolunteeringTypes"];
     const [codes, setCodes] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchAllCode = async () => {
-            const results = {};
-            await Promise.all(
-                codeTables.map(async (table) => {
-                    try {
-                        const response = await genericServices.getAll(table);
-                        if (Array.isArray(response)) {
-                            results[table] = response;
-                        } else {
-                            console.error(`Invalid data from ${table}`, response);
-                            results[table] = [];
-                        }
-                    } catch (error) {
-                        results[table] = [];
-                    }
-                })
-            );
-            setCodes(results);
-            setLoading(false);
+        const fetchCodes = async () => {
+            try {
+                const data = await codeServices.getAllCodes();
+                setCodes(data);
+            } catch (error) {
+                console.error("Failed to load codes:", error);
+            } finally {
+                setLoading(false);
+            }
         };
-        fetchAllCode();
+        fetchCodes();
     }, []);
 
     return (

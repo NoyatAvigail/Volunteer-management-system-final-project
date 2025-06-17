@@ -1,11 +1,11 @@
 import genericDAL from "../dal/genericDal.js"
 import { log } from "../utils/logger.js";
-import Users from '../Models/Users.js';
-import Passwords from '../Models/Passwords.js';
-import ContactPeople from "../Models/ContactPeople.js"
-import Patients from "../Models/Patients.js"
-import RelationToPatients from '../Models/RelationToPatients.js'
-import Hospitalizeds from '../Models/Hospitalizeds.js';
+import Users from '../models/Users.js';
+import Passwords from '../models/Passwords.js';
+import ContactPeople from "../models/ContactPeople.js"
+import Patients from "../models/Patients.js"
+import RelationToPatients from '../models/RelationToPatients.js'
+import Hospitalizeds from '../models/Hospitalizeds.js';
 import { cUserType } from '../common/consts.js'
 import sequelize from '../../DB/connectionDB.mjs';
 const requestsService = {
@@ -82,13 +82,20 @@ const requestsService = {
             throw e;
         }
     },
-    getContactRequests: async (contact, asOfDate) => {
-//בדיקת ה- contact למול הטוקן?
-// todo requestDal.getContactRequests
+
+    getContactRequests: async (contactId, asOfDate, authenticatedId) => {
+        if (contactId != authenticatedId) {
+            const error = new Error('Access denied: Contact does not match token');
+            error.status = 403;
+            throw error;
+        }
+        const requests = await RequestDAL.getContactRequests(contactId, asOfDate);
+        return requests;
     },
-    find: async(volunteerId, hospitalId, departmentId, patientName, asOfDate )=> {
+    
+    find: async (volunteerId, hospitalId, departmentId, patientName, asOfDate) => {
         // Check date?
-        
+
     }
 };
 
