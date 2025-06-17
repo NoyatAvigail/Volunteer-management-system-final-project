@@ -12,5 +12,7 @@ export const Patients = sequelize.define('Patients', {
   address: { type: DataTypes.STRING, allowNull: false },
   dateOfDeath: { type: DataTypes.DATE, allowNull: true },
   interestedInReceivingNotifications: { type: DataTypes.BOOLEAN, defaultValue: true },
+  is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false },
+  deleted_at: { type: DataTypes.DATE, allowNull: true }
 });
 export default Patients;

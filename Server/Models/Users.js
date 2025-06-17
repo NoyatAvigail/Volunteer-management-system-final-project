@@ -6,6 +6,8 @@ export const Users = sequelize.define('Users', {
   email: { type: DataTypes.STRING, allowNull: false, unique: true },
   phone: { type: DataTypes.STRING, allowNull: false, unique: true },
   type: { type: DataTypes.INTEGER, allowNull: false, references: { model: 'UserTypes', key: 'id' }, onUpdate: 'CASCADE', onDelete: 'CASCADE' },
+  is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false },
+  deleted_at: { type: DataTypes.DATE, allowNull: true }
 });
 
 export default Users;

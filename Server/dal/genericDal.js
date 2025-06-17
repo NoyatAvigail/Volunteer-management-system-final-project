@@ -52,8 +52,16 @@ const genericDAL = {
         });
     },
 
+    // findAll: (model) => {
+    //     return model.findAll()
+    // },
+
     findAll: (model) => {
-        return model.findAll()
+        return model.findAll({
+            where: {
+                is_deleted: 0
+            }
+        })
     },
 
     findById: (model, id) => {

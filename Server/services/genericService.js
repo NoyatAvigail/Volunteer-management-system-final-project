@@ -42,6 +42,7 @@ const service = {
             deleted_at: new Date()
         });
     },
+    
     cleanup: () => {
         setInterval(() => {
             genericDAL.cleanupOldDeleted();
