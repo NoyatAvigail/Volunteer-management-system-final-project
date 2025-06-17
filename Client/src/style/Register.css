@@ -7,6 +7,7 @@
 }
 
 body {
+    overflow:auto;
     background-color: #ffffff;
     display: flex;
     justify-content: center;
@@ -27,6 +28,7 @@ h2 {
 }
 
 .entryContainer {
+    overflow:auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -88,6 +90,7 @@ h2 {
 }
 
 .back-ground-img {
+    overflow:auto;
     background-image: url('../img/bg.jpg');
     background-repeat: no-repeat;
     background-position: center;
