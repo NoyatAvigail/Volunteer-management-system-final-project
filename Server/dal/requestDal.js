@@ -25,7 +25,35 @@ const models = {
     VolunteeringInDepartments, VolunteeringForSectors, VolunteeringForGenders
 };
 const requestDAL = {
-    getContactPersonRequests: async (contact, asOfDate) => {
+    getContactPersonRequests: async (contactId, startDate, endDate) => {
+            const events = await Event.findAll({
+  where: {
+    contactId: contactId,
+    date: {
+      [Op.between]: [startDate, endDate]
+    },
+    is_deleted: 0
+  },
+  include: [
+    {
+      model: Hospitalizeds,
+      include: [
+        {
+          model: Hospitals,
+          attributes: ['description']
+        },
+        {
+          model: Departments,
+          attributes: ['description']
+        },
+        {
+          model: Patients,
+          attributes: ['id', 'fullName', 'hospital', 'department']
+        }
+      ]
+    }
+  ]
+});
 
     },
     find: async (table1, targetField, table2, foreignKey, targetKey, targetValue) => {
