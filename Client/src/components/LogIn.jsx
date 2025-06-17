@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import Cookies from "js-cookie";
 import { CurrentUser } from './App';
-import { CodesContext } from './Models';
+import { useCodes } from "./Models";
 import { validateLoginForm } from '../../utils/userValidator';
 import { login } from '../services/usersServices';
 import '../style/LogIn.css';
@@ -12,7 +12,7 @@ function LogIn() {
     const { register, handleSubmit, reset } = useForm();
     const { currentUser, setCurrentUser } = useContext(CurrentUser);
     const [responsText, setResponstText] = useState("Fill the form and click the login button");
-    const { codes, loading } = useContext(CodesContext);
+    const { codes, loading } = useCodes();
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {

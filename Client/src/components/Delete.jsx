@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { userService } from "../services/usersServices";
 import { CurrentUser } from "./App";
-import { CodesContext } from './Models';
+import { useCodes } from "./Models";
 
 function Delete({
     type,
@@ -11,7 +11,7 @@ function Delete({
 }) {
     const { currentUser } = useContext(CurrentUser);
     const [process, setProcess] = useState(0);
-    const { codes } = useContext(CodesContext);
+    const { codes, loading } = useCodes();
     const userTypeObj = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
 
     async function deleteFunc(e) {

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useState, useContext } from 'react';
 import { CurrentUser } from './App';
-import { CodesContext } from './Models';
+import { useCodes } from "./Models";
 import Cookies from "js-cookie";
 import { validateFirstRegisterStep, validateSecondRegisterStep } from '../../utils/userValidator';
 import { signup } from '../services/usersServices';
@@ -17,10 +17,10 @@ function Register() {
     const [registerIsCompleted, setRegisterIsCompleted] = useState(0);
     const [responsText, setResponstText] = useState("Fill the form and click the sign up button");
     const { setCurrentUser } = useContext(CurrentUser);
-    const { setCodesContext } = useContext(CodesContext);
+    // const { setCodesContext } = useContext(CodesContext);
     const [userData, setUserData] = useState({});
     const [showMoreForm, setShowMoreForm] = useState(false);
-    const { codes, loading } = useContext(CodesContext);
+    const { codes, loading } = useCodes();
     console.log("codes:", codes);
 
     const onFirstSubmit = async (data) => {

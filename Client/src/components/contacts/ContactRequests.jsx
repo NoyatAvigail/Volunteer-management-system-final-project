@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CodesContext } from '.././Models';
+import { useCodes } from ".././Models";
 import { CurrentUser } from '.././App';
 import Add from '.././Add';
 import Search from '.././Search';
@@ -16,7 +16,7 @@ function ContactRequests() {
     const [error, setError] = useState(null);
     const [isChange, setIsChange] = useState(0);
     const { currentUser } = useContext(CurrentUser);
-    const { codes } = useContext(CodesContext);
+    const { codes, loading } = useCodes();
     const userTypeObj = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
     const navigate = useNavigate();
     const [hospitalizeds, setHospitalizeds] = useState([]);

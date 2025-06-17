@@ -1,13 +1,13 @@
 import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { CurrentUser } from "./App";
-import { CodesContext } from './Models';
+import { useCodes } from "../components/Models";
 import { userService } from "../services/usersServices";
 
 function Add({ setIsChange = () => { }, inputs, defaultValue, name = "Add", type }) {
     const { currentUser } = useContext(CurrentUser);
     const [isScreen, setIsScreen] = useState(0);
-    const { codes, loading } = useContext(CodesContext);
+    const { codes, loading } = useCodes();
     const userTypeObj = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm({

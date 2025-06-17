@@ -1,7 +1,9 @@
 import express from 'express';
-import { getCodeTables } from '../controllers/codeTablesController.js';
+import codeTablesController from '../controller/codeTablesController.js';
 
 const router = express.Router();
-router.get('/api/codetables', getCodeTables);
+
+router.route('/')
+    .get(codeTablesController.getAll);
 
 export default router;
