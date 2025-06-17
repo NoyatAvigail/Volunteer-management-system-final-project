@@ -12,7 +12,7 @@ import {
 } from '../ProfileManagement';
 
 function ContactPersonProfile() {
-    const { codes } = useContext(CodesContext);
+    const { codes, loading } = useCodes();
     const { currentUser } = useContext(CurrentUser);
     const [showCodeInput, setShowCodeInput] = useState(false);
     const [code, setCode] = useState("");

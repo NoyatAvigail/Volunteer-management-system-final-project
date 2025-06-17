@@ -1,23 +1,23 @@
 import sequelize from './connectionDB.mjs';
-import { UserTypes } from '../Server/Models/UserTypes.js';
+import { UserTypes } from '../Server/models/UserTypes.js';
 import { Genders } from '../Server/models/Genders.js';
-import { Hospitals } from '../Server/Models/Hospitals.js';
-import { Departments } from '../Server/Models/Departments.js';
-import { Sectors } from '../Server/Models/Sectors.js';
-import { VolunteeringTypes } from '../Server/Models/VolunteeringTypes.js';
-import { FamilyRelations } from '../Server/Models/FamilyRelations.js';
-import { Users } from '../Server/Models/Users.js';
-import { Passwords } from '../Server/Models/Passwords.js';
-import { Volunteers } from '../Server/Models/Volunteers.js';
-import { ContactPeople } from '../Server/Models/ContactPeople.js';
-import { Patients } from '../Server/Models/Patients.js';
-import { Hospitalizeds } from '../Server/Models/Hospitalizeds.js';
-import { RelationToPatients } from '../Server/Models/RelationToPatients.js';
-import { VolunteeringInDepartments } from '../Server/Models/VolunteeringInDepartments.js';
-import { VolunteeringForSectors } from '../Server/Models/VolunteeringForSectors.js';
-import { VolunteeringForGenders } from '../Server/Models/VolunteeringForGenders.js';
-import { VolunteerTypes } from '../Server/Models/VolunteerTypes.js';
-import { Events } from '../Server/Models/Events.js';
+import { Hospitals } from '../Server/models/Hospitals.js';
+import { Departments } from '../Server/models/Departments.js';
+import { Sectors } from '../Server/models/Sectors.js';
+import { VolunteeringTypes } from '../Server/models/VolunteeringTypes.js';
+import { FamilyRelations } from '../Server/models/FamilyRelations.js';
+import { Users } from '../Server/models/Users.js';
+import { Passwords } from '../Server/models/Passwords.js';
+import { Volunteers } from '../Server/models/Volunteers.js';
+import { ContactPeople } from '../Server/models/ContactPeople.js';
+import { Patients } from '../Server/models/Patients.js';
+import { Hospitalizeds } from '../Server/models/Hospitalizeds.js';
+import { RelationToPatients } from '../Server/models/RelationToPatients.js';
+import { VolunteeringInDepartments } from '../Server/models/VolunteeringInDepartments.js';
+import { VolunteeringForSectors } from '../Server/models/VolunteeringForSectors.js';
+import { VolunteeringForGenders } from '../Server/models/VolunteeringForGenders.js';
+import { VolunteerTypes } from '../Server/models/VolunteerTypes.js';
+import { Events } from '../Server/models/Events.js';
 
 // Users ←→ Passwords
 Users.hasMany(Passwords, { foreignKey: 'id', onDelete: 'CASCADE' });
@@ -74,6 +74,7 @@ RelationToPatients.belongsTo(FamilyRelations, { foreignKey: 'relationId', onDele
 
 ContactPeople.hasMany(Patients, { foreignKey: 'contactPeopleId', as: 'patients', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 Patients.belongsTo(ContactPeople, { foreignKey: 'contactPeopleId', as: 'contactPerson' });
+
 // Events ←→ Patients / Volunteers / ContactPeople
 Volunteers.hasMany(Events, { foreignKey: 'volunteerId', sourceKey: 'userId', onDelete: 'CASCADE' });
 Events.belongsTo(Volunteers, { foreignKey: 'volunteerId', targetKey: 'userId', onDelete: 'CASCADE' });
@@ -84,6 +85,12 @@ Events.belongsTo(ContactPeople, { foreignKey: 'contactId', targetKey: 'userId', 
 Hospitalizeds.hasMany(Events, { foreignKey: 'hospitalizedsId', onDelete: 'CASCADE' });
 Events.belongsTo(Hospitalizeds, { foreignKey: 'hospitalizedsId', onDelete: 'CASCADE' });
 
+// Hospitalizeds ←→ Hospitals / Patients 
+Hospitals.hasMany(Hospitalizeds, { foreignKey: 'hospital', onDelete: 'CASCADE' });
+Hospitalizeds.belongsTo(Hospitals, { foreignKey: 'hospital', onDelete: 'CASCADE' });
+
+Departments.hasMany(Hospitalizeds, { foreignKey: 'department', onDelete: 'CASCADE' });
+Hospitalizeds.belongsTo(Departments, { foreignKey: 'department', onDelete: 'CASCADE' });
 
 export {
   sequelize,

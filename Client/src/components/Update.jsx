@@ -3,13 +3,13 @@ import { useState } from "react";
 import { userService } from "../services/usersServices";
 import { useContext } from "react";
 import { CurrentUser } from "./App";
-import { CodesContext } from './Models';
+import { useCodes } from "../components/Models";
 
 function Update({ type, itemId, setIsChange, inputs, onSuccess = null }) {
     const [screen, setScreen] = useState(0);
     const [formData, setFormData] = useState({});
     const { currentUser } = useContext(CurrentUser);
-    const { codes } = useContext(CodesContext);
+    const { codes, loading } = useCodes();
     const userTypeObj = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
 
     const handleInputChange = (e) => {

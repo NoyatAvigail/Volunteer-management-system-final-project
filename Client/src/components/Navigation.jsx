@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CurrentUser } from './App';
-import { CodesContext } from './Models';
+import { useCodes } from "./Models";
 import { logOutFunc } from '../js/logout';
 import Cookies from 'js-cookie';
 import ErrorPage from './ErrorPage';
@@ -11,7 +11,7 @@ import logo from '../style/img/logo.png';
 function Navigation() {
     const { currentUser, setCurrentUser } = useContext(CurrentUser);
     const navigate = useNavigate();
-    const { codes, loading } = useContext(CodesContext);
+    const { codes, loading } = useCodes();
     const userTypeObject = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
 
     function logOut() {

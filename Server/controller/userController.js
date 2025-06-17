@@ -1,6 +1,6 @@
 import userService from "../services/userService.js";
 import { generateToken } from "../middleware/middleware.js";
-import Users from '../Models/Users.js';
+import Users from '../models/Users.js';
 import { cUserType } from '../common/consts.js';
 import sendEditVerificationMail from '../services/emailService.js';
 import { generateEditToken } from '../utils/utils.js';

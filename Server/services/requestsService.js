@@ -8,7 +8,9 @@ import RelationToPatients from '../models/RelationToPatients.js'
 import Hospitalizeds from '../models/Hospitalizeds.js';
 import { cUserType } from '../common/consts.js'
 import sequelize from '../../DB/connectionDB.mjs';
-const requestsService = {
+import requestDal from "../dal/requestDal.js"
+
+const requestService = {
     create: async (data) => {
         const transaction = await sequelize.transaction();
         try {
@@ -83,13 +85,13 @@ const requestsService = {
         }
     },
 
-    getContactRequests: async (contactId, asOfDate, authenticatedId) => {
+    getContactRequests: async (contactId, startDate, endDate, authenticatedId) => {
         if (contactId != authenticatedId) {
             const error = new Error('Access denied: Contact does not match token');
             error.status = 403;
             throw error;
         }
-        const requests = await RequestDAL.getContactRequests(contactId, asOfDate);
+        const requests = await requestDal.getContactRequests(contactId, startDate, endDate);
         return requests;
     },
     
@@ -99,4 +101,4 @@ const requestsService = {
     }
 };
 
-export default userService;
+export default requestService;
