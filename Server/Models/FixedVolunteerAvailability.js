@@ -7,6 +7,8 @@ export const FixedVolunteerAvailability = sequelize.define('FixedVolunteerAvaila
     dayOfWeek: { type: DataTypes.ENUM('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'), allowNull: false },
     startTime: { type: DataTypes.TIME, allowNull: false },
     endTime: { type: DataTypes.TIME, allowNull: false },
+    is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false },
+    deleted_at: { type: DataTypes.DATE, allowNull: true }
 });
 
 export default FixedVolunteerAvailability;

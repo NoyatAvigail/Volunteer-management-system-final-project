@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { userService } from "../services/usersServices";
 import { CurrentUser } from "./App";
+import { CodesContext } from './Models';
 
 function Delete({
     type,
@@ -10,6 +11,8 @@ function Delete({
 }) {
     const { currentUser } = useContext(CurrentUser);
     const [process, setProcess] = useState(0);
+    const { codes } = useContext(CodesContext);
+    const userTypeObj = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
 
     async function deleteFunc(e) {
         e.preventDefault();
@@ -17,9 +20,10 @@ function Delete({
         try {
             await userService.remove(
                 currentUser.autoId,
-                currentUser.type,
+                userTypeObj,
                 type,
                 itemId,
+                // { id: itemId },
                 (result) => {
                     console.log("Delete successful:", result);
                     if (onSuccess) {
@@ -30,7 +34,7 @@ function Delete({
                 },
                 (error) => {
                     console.error(`Failed to delete ${type} with ID ${itemId}: ${error}`);
-                    alert("מחיקה נכשלה. נסה שוב.");
+                    alert("Deletion failed. Please try again.");
                 }
             );
         } catch (error) {

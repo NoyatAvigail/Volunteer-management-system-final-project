@@ -75,8 +75,16 @@ export const userService = {
         request(userId, userType, entityName, {}, 'POST', body, onSuccess, onError),
     patch: (userId, userType, entityName, id, data, onSuccess, onError) =>
         request(userId, userType, `${entityName}/${id}`, {}, 'PATCH', data, onSuccess, onError),
-    remove: (userId, userType, entityName, id, onSuccess, onError) =>
-        request(userId, userType, `${entityName}/${id}`, {}, 'DELETE', null, onSuccess, onError),
+    remove: (userId, userType, table, id, onSuccess, onError) =>
+        request(userId, userType, `${table}/${id}`, {}, 'DELETE', null, onSuccess, onError),
+    getProfile: (userId, onSuccess, onError) =>
+        request(userId, "profile", "", {}, "GET", null, onSuccess, onError),
+    updateProfile: (userId, data, onSuccess, onError) =>
+        request(userId, "profile", "", {}, "PUT", data, onSuccess, onError),
+    sendEditEmail: (userId, onSuccess, onError) =>
+        request(userId, "send-edit-email", "", {}, "POST", null, onSuccess, onError),
+    verifyEditCode: (code, onSuccess, onError) =>
+        request(`/api/users/verify-edit-code`, 'POST', {}, { code }, false, onSuccess, onError),
 };
 
 export const signup = (body, onSuccess, onError) => registerAuth("signup", body, onSuccess, onError);

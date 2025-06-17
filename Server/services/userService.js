@@ -181,68 +181,6 @@ const userService = {
         const model = genericDAL.getModelByName((table));
         return genericDAL.findByField(model, query);
     },
-    // join: async (
-    //     joinParams = { parentTbl, targetField, childTbl, foreignKey, whereParams: { key, value } }
-    // ) => {
-
-    //     const parentModel = genericDAL.getModelByName(parentTbl);
-    //     const childModel = genericDAL.getModelByName(childTbl);
-    //     let t1;
-    //     if (whereParams) {
-    //         t1 = await genericDAL.findByField(
-    //             parentModel,
-    //             { [whereParams.key]: whereParams.value }
-    //         );
-    //     }
-    //     else {
-    //         t1 = await genericDAL.getAll(parentModel)
-    //     }
-    //     // פה תוכלי לבנות query או לבצע join בין המודלים
-    //     const parentIds = t1.map(item => item[targetField]);
-    //     const matchingRecordsTbl2 = await genericDAL.findByFieldIn(
-    //         genericDAL.getModelByName(table2),
-    //         foreignKey,
-    //         parentIds
-    //     );
-    // },
-
-
-    // getRequests: async (table1, targetField, table2, foreignKey, targetKey, targetValue) => {
-    //     const matchingRecordsTbl1 = await genericDAL.findByField(
-    //         genericDAL.getModelByName(table1),
-    //         { [targetKey]: targetValue }
-    //     );
-    //     const parentIds = matchingRecordsTbl1.map(item => item[targetField]);
-    //     const matchingRecordsTbl2 = await genericDAL.findByFieldIn(
-    //         genericDAL.getModelByName(table2),
-    //         foreignKey,
-    //         parentIds
-    //     );
-    //     const req = _.flatMap(matchingRecordsTbl1, parent => {
-    //         const matchingChildren = matchingRecordsTbl2.filter(child => child[foreignKey] === parent[targetField]);
-
-    //         return matchingChildren.map(child => ({
-    //             ..._.mapKeys(parent, (v, k) => `parent_${k}`),
-    //             ...child
-    //         }));
-    //     });
-    //     var distinctPatients = req.map(item => item.dataValues.patientId);
-    //     const patients = await genericDAL.findByFieldIn(
-    //         genericDAL.getModelByName("Patients"),
-    //         "userId",
-    //         distinctPatients
-    //     );
-    //     const req2 = _.flatMap(req.dataValues, parent => {
-    //         const matchingChildren = patients.filter(child => child.dataValues.userId === parent.dataValues.patientId);
-    //         return matchingChildren.map(child => ({
-    //             ..._.mapKeys(parent, (v, k) => `parent_${k}`),
-    //             ...child
-    //         }));
-    //     });
-    //     console.log("req2", req2);   
-    //     return req2;
-    // },
-
     create: async (table, data) => {
         log('[POST]', { table, data });
         const model = genericDAL.getModelByName((table));
@@ -301,6 +239,7 @@ const userService = {
     //     console.log("req2", req2);
     //     return req2;
     // },
+
     getRequests: async (table1, targetField, table2, foreignKey, targetKey, targetValue) => {
         const matchingRecordsTbl1 = await genericDAL.findByField(
             genericDAL.getModelByName(table1),
@@ -347,6 +286,27 @@ const userService = {
                 ...(child.dataValues ?? child)
             }));
         });
+    },
+
+    create: async (table, data) => {
+        log('[POST]', { table, data });
+        const model = genericDAL.getModelByName((table));
+        return genericDAL.createModel(model, data);
+    },
+
+    softDeleteItem: async (table, id) => {
+        log('[DELETE]', { table, id });
+        const model = genericDAL.getModelByName((table));
+        return genericDAL.updateFields(model, id, {
+            is_deleted: 1,
+            deleted_at: new Date()
+        });
+    },
+
+    cleanup: () => {
+        setInterval(() => {
+            genericDAL.cleanupOldDeleted();
+        }, 14 * 24 * 60 * 60 * 1000);
     },
 
     getProfile: async (userId) => {
