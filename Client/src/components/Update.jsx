@@ -1,15 +1,13 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useContext } from "react";
 import { userService } from "../services/usersServices";
-import { useContext } from "react";
 import { CurrentUser } from "./App";
 import { useCodes } from "../components/Models";
 
-function Update({ type, itemId, setIsChange, inputs, onSuccess = null }) {
+function Update({ type, itemId, setIsChange, inputs, defaultValue = {}, onSuccess = null }) {
     const [screen, setScreen] = useState(0);
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState(defaultValue);
     const { currentUser } = useContext(CurrentUser);
-    const { codes, loading } = useCodes();
+    const { codes } = useCodes();
     const userTypeObj = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
 
     const handleInputChange = (e) => {
@@ -22,7 +20,6 @@ function Update({ type, itemId, setIsChange, inputs, onSuccess = null }) {
 
     async function updateFunc(e) {
         e.preventDefault();
-        e.target.reset();
         setScreen(0);
         try {
             await userService.patch(
@@ -49,35 +46,62 @@ function Update({ type, itemId, setIsChange, inputs, onSuccess = null }) {
         }
     }
 
-    function handleCancel(e) {
-        e.target.reset();
+    function handleCancel() {
         setScreen(0);
     }
 
     return (
         <>
-            {screen == 0 &&
-                <button onClick={(e) => setScreen(1)} className="action-btn edit-btn">
+            {screen === 0 && (
+                <button onClick={() => setScreen(1)} className="action-btn edit-btn">
                     <i className="fa fa-edit"></i>
-                </button>}
-            {screen == 1 && <div>
+                </button>
+            )}
+            {screen === 1 && (
                 <form onSubmit={updateFunc}>
-                    {inputs.map((input, index) => (
-                        <div key={index}>
-                            <input
-                                name={input}
-                                placeholder={`Enter ${input}`}
-                                value={formData[input] || ''}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                    ))}
-                    <button type="submit" value={"OK"}>OK</button>
-                    <button onClick={handleCancel} value={"cancel"}>cancel</button>
+                    {inputs.map((input, index) => {
+                        const inputName = typeof input === "string" ? input : input.name;
+                        const inputType = typeof input === "string" ? "text" : input.type || "text";
+                        const options = typeof input === "object" && input.options;
+
+                        return (
+                            <div key={index}>
+                                {inputType === "select" ? (
+                                    <select
+                                        name={inputName}
+                                        value={formData[inputName] || ''}
+                                        onChange={(e) => {
+                                            handleInputChange(e);
+                                            if (typeof input === "object" && typeof input.onChange === "function") {
+                                                input.onChange(e);
+                                            }
+                                        }}
+                                    >
+                                        <option value="">בחר {inputName}</option>
+                                        {options?.map((option, i) => (
+                                            <option key={i} value={option.value ?? option}>
+                                                {typeof option === 'object' ? option.label : option}
+                                            </option>
+                                        ))}
+                                    </select>
+                                ) : (
+                                    <input
+                                        type={inputType}
+                                        name={inputName}
+                                        value={formData[inputName] || ''}
+                                        placeholder={`Enter ${inputName}`}
+                                        onChange={handleInputChange}
+                                    />
+                                )}
+                            </div>
+                        );
+                    })}
+                    <button type="submit">OK</button>
+                    <button type="button" onClick={handleCancel}>Cancel</button>
                 </form>
-            </div>}
+            )}
         </>
-    )
+    );
 }
 
 export default Update;
