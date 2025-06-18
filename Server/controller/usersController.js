@@ -1,10 +1,7 @@
-import userService from "../services/userService.js";
+import userService from "../services/usersService.js";
 import { generateToken } from "../middleware/middleware.js";
-import Users from '../models/Users.js';
-import { cUserType } from '../common/consts.js';
-import sendEditVerificationMail from '../services/emailService.js';
+import sendEditVerificationMail from '../services/emailsService.js';
 import { generateEditToken } from '../utils/utils.js';
-import { v4 as uuidv4 } from 'uuid';
 import jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 

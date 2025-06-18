@@ -1,9 +1,10 @@
 import express from 'express';
-import contactController from '../controller/contactController.js';
+import contactController from '../controller/contactsController.js';
 import { verifyToken } from '../middleware/middleware.js';
 
 const router = express.Router();
 router.use(verifyToken);
+
 router.route('/:id/home')
     .get(contactController.getHome);
 
@@ -18,14 +19,12 @@ router.route('/:id/profile')
 router.route('/:id/thanks')
     .get(contactController.getThanks);
 
-// ניהול פציינטים
 router.route('/:contactPersonId/patients')
-    .post(contactController.addPatient)             // יצירת פציינט חדש
-    .get(contactController.getAllPatients);         // כל הפציינטים של איש הקשר
+    .post(contactController.addPatient)           
+    .get(contactController.getAllPatients);
 
 router.route('/:contactPersonId/patients/:patientUserId')
-    .get(contactController.getPatientByUserId)      // שליפת פציינט מסוים לפי userId
-    .put(contactController.updatePatientProfile)    // עדכון פרופיל
-    .delete(contactController.deletePatient);       // מחיקה לוגית
-
+    .get(contactController.getPatientByUserId)
+    .put(contactController.updatePatientProfile)    
+    .delete(contactController.deletePatient);  
 export default router;

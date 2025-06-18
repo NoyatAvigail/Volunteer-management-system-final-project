@@ -4,11 +4,11 @@ const requestsController = {
     // GET /api/requests?contactPerson=123
     // GET /api/requests?volunteer=123
     getRequests: async (req, res) => {
-        const { user, startDate, endDate } = req.query;
+        const { startDate, endDate } = req.query;
         const authenticatedId = req.user.id.toString();
         const authenticatedType = req.user.type.toString();
         try {
-            const requests = await requestsService.getRequests(user, startDate, endDate, authenticatedId, authenticatedType);
+            const requests = await requestsService.getRequests(startDate, endDate, authenticatedId, authenticatedType);
             res.status(200).json(requests);
         } catch (error) {
             console.error("Error in getContactRequests Controller:", error);

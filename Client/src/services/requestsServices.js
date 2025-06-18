@@ -9,7 +9,7 @@ export function setTokenGetter(fn) {
     getToken = fn;
 }
 
-async function request(userId, startDate, endDate, onSuccess, onError) {
+async function request(startDate, endDate, onSuccess, onError) {
     try {
         const token = getToken();
         const config = {
@@ -19,7 +19,7 @@ async function request(userId, startDate, endDate, onSuccess, onError) {
                 authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
-            params: { user: userId, startDate, endDate }
+            params: { startDate, endDate }
         };
         const response = await axios(config);
         const data = response.data;
@@ -35,6 +35,6 @@ async function request(userId, startDate, endDate, onSuccess, onError) {
 }
 
 export const requestService = {
-    getRequestsByContactAndDate: (userId, startDate, endDate, onSuccess, onErrorr) =>
-        request(userId, startDate, endDate, onSuccess, onErrorr),
+    getAll: (startDate, endDate, onSuccess, onErrorr) =>
+        request(startDate, endDate, onSuccess, onErrorr),
 }

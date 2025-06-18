@@ -8,7 +8,7 @@ import RelationToPatients from '../models/RelationToPatients.js'
 import Hospitalizeds from '../models/Hospitalizeds.js';
 import { cUserType } from '../common/consts.js'
 import sequelize from '../../DB/connectionDB.mjs';
-import requestDal from "../dal/requestDal.js"
+import requestDal from "../dal/requestsDal.js"
 import genericDal from "../dal/genericDal.js"
 
 const requestService = {
@@ -86,12 +86,12 @@ const requestService = {
         }
     },
 
-    getRequests: async (userIdFromQuery, startDate, endDate, authenticatedId, authenticatedType) => {
+    getRequests: async (startDate, endDate, authenticatedId, authenticatedType) => {
         const type = genericDAL.getModelByName('UserTypes');
         const userType = await genericDAL.findById(type, authenticatedType);
         const userTypeDesc = userType?.description;
-        const model = userTypeDesc  == 'Volunteer' ?
-            genericDAL.getModelByName('Volunteet') :
+        const model = userTypeDesc == 'Volunteers' ?
+            genericDAL.getModelByName('Volunteers') :
             genericDAL.getModelByName('ContactPeople');
         const user = await genericDAL.findById(model, authenticatedId);
         if (!user) {
@@ -100,12 +100,7 @@ const requestService = {
             throw error;
         }
         const userIdFromToken = user.userId;
-        if (parseInt(userIdFromQuery) != userIdFromToken) {
-            const error = new Error('Access denied: UserId mismatch');
-            error.status = 403;
-            throw error;
-        }
-        const requests = userTypeDesc  == 'Volunteer' ?
+        const requests = userTypeDesc == 'Volunteers' ?
             await requestDal.getVolunteerRequests(userIdFromToken, startDate, endDate) :
             await requestDal.getContactRequests(userIdFromToken, startDate, endDate)
         return requests;
