@@ -9,11 +9,13 @@ function VolunteerShifts() {
   useEffect(() => {
     if (!currentUser?.id) return;
 
-    userService.getByValue(
-      currentUser.autoId,
-      'volunteers',
-      'Events',
-      { volunteerId: currentUser.id },
+    if (!currentUser?.id) return;
+    console.log("currentUser:", currentUser);
+
+    userService.getById(
+      currentUser.id,
+      "volunteer",
+      "shifts",
       (data) => setShifts(data),
       (error) => console.error(error)
     );

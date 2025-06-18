@@ -14,9 +14,9 @@ function VolunteerRequests() {
   useEffect(() => {
     if (!currentUser) return;
     userService.getByValue(
-      currentUser.autoId,
-      'volunteers',
-      'Events',
+      currentUser.id,
+      'volunteer',
+      "requests",
       { volunteerId: null },
       (data) => setOpenCalls(data),
       (error) => console.error(error)
@@ -26,12 +26,14 @@ function VolunteerRequests() {
   const handleTakeCall = (callId) => {
     if (!currentUser) return;
     userService.patch(
-      currentUser.autoId,
-      userTypeObj,
-      'Events',
-      callId,
-      { volunteerId: currentUser.id },
-      () => setOpenCalls(prev => prev.filter(call => call.id !== callId)),
+      currentUser.id,
+      "volunteer",
+      "requests",
+      null,
+      { callId },
+      () => {
+        setOpenCalls(prev => prev.filter(call => call.id !== callId));
+      },
       (error) => {
         console.error('Error updating call:', error);
         alert('Error updating call');
