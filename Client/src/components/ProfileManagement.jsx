@@ -1,20 +1,30 @@
 import { useEffect, useState, useContext } from 'react';
 import { userService } from '../services/usersServices';
 import { CurrentUser } from './App';
-
 export const parseProfileDataToForm = (data) => {
   const formValues = {};
 
+  // עובר על כל המפתחות באובייקט הראשי
   for (const key in data) {
-    if (Array.isArray(data[key])) {
-      formValues[key] = data[key].map(item => {
+    const value = data[key];
+
+    if (Array.isArray(value)) {
+      formValues[key] = value.map(item => {
         if (typeof item === 'object' && item !== null) {
-          return item.volunteerTypeId ?? item.id ?? item;
+          return (
+            item.volunteerTypeId ??
+            item.genderId ??
+            item.sectorId ??
+            item.department ??
+            item.hospital ??
+            item.id ??
+            item
+          );
         }
         return item;
       });
-    } else if (typeof data[key] !== 'object') {
-      formValues[key] = data[key];
+    } else if (typeof value !== 'object' || value === null) {
+      formValues[key] = value;
     }
   }
 
@@ -22,10 +32,11 @@ export const parseProfileDataToForm = (data) => {
     formValues.dateOfBirth = data.dateOfBirth.split('T')[0];
   }
 
-  if (data?.user && typeof data?.user === 'object') {
-    for (const key in data.user) {
+  const userData = data.User || data.user;
+  if (userData && typeof userData === 'object') {
+    for (const key in userData) {
       if (!(key in formValues)) {
-        formValues[key] = data.user[key];
+        formValues[key] = userData[key];
       }
     }
   }
@@ -41,6 +52,8 @@ export function useProfileData(userId, userType, table, resetForm) {
       const data = await userService.getAll(userId, userType, table);
       setInitialData(data);
       const formValues = parseProfileDataToForm(data);
+      console.log("formValues:", formValues);
+
       resetForm(formValues);
     }
     fetchData();
@@ -64,20 +77,17 @@ export function useEditModeFromSessionStorage() {
 
 export async function sendEditRequest(userId, email) {
   return new Promise((resolve, reject) => {
-    userService.create(userId, "send-edit-email", "", { email }, resolve, reject);
+    userService.create(userId, "users", "send-edit-email", { email }, resolve, reject);
   });
 }
 
-export async function updateProfile(userId, userType, entityName, id, formData) {
+export async function updateProfile(userId, setIsEditing, userType, entityName, id, formData) {
   userService.update(
     userId,
-    userType,        
+    userType,
     entityName,
-    id,      
-    formData,
-    () => {
-      setIsEditing(false);
-    },
+    formData, 
+    () => setIsEditing(false),
     (err) => {
       console.error("Update failed:", err);
       setIsEditing(false);

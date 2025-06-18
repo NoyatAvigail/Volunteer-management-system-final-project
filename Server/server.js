@@ -4,6 +4,7 @@ import userRoutes from './routes/userRoutes.js';
 import codeTablesRoutes from './routes/codeTablesRoutes.js';
 import requestRoutes from './routes/requestRoutes.js';
 import sequelize from '../DB/connectionDB.mjs';
+import volunteersRoutes from './routes/volunteersRouter.js'
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(cors());
 app.use("/api/users", userRoutes);
 app.use("/api/codetables", codeTablesRoutes);
 app.use("/api/requests", requestRoutes);
+app.use("/api/volunteer",volunteersRoutes)
 
 const start = async () => {
   try {

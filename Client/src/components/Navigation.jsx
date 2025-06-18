@@ -32,7 +32,7 @@ function Navigation() {
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/shifts`}>My shifts</Link></ul>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/permanentShifts`}>Permanent shifts</Link></ul>
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/requests`}>Open requests</Link></ul>
-                                    <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/profile`}>Profile management</Link></ul >
+                                    <ul><Link to={`/${userTypeObject}/${currentUser.id}/profile`}>Profile management</Link></ul >
                                     <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/certificate`}>Volunteer certificate</Link></ul>
                                     <div className="right">
                                         <ul onClick={logOut}><a>Logout</a></ul>

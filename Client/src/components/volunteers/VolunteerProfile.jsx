@@ -8,20 +8,21 @@ import { useProfileData, handleVerifyCode, parseProfileDataToForm, useEditModeFr
 
 function VolunteerProfile() {
   const [isEditing, setIsEditing] = useEditModeFromSessionStorage();
-    // const [isEditing, setIsEditing] = useState(true);
   const { codes, loading } = useContext(CodesContext);
   const { currentUser } = useContext(CurrentUser);
   const [showCodeInput, setShowCodeInput] = useState(false);
   const [code, setCode] = useState("");
   const { register, handleSubmit, setValue, getValues, reset, formState: { errors } } = useForm();
-  const initialData = useProfileData(currentUser.id, 'Volunteer', 'profile', reset);
+  const initialData = useProfileData(currentUser.autoId, 'Volunteer', 'profile', reset);
+  // console.log("initialData:", initialData);
+  console.log("currentUser:", currentUser);
 
   const onSubmit = async (formData) => {
     console.log("Submitting form...", formData);
     try {
-      await updateProfile(currentUser.id, "Volunteer", 'profile',currentUser.autoId, formData);
+      await updateProfile(currentUser.autoId,setIsEditing, "volunteer", 'profile', currentUser.autoId, formData);
+       setIsEditing(false);
       alert("Profile updated successfully.");
-      setIsEditing(false);
     } catch (err) {
       console.error("Update failed:", err);
       alert("Failed to update profile.");
@@ -31,13 +32,16 @@ function VolunteerProfile() {
 
   const handleRequestEdit = async () => {
     try {
-      await sendEditRequest(currentUser.id, currentUser.email);
+      // await sendEditRequest(currentUser.autoId, currentUser.email);
+      await sendEditRequest(currentUser.autoId, 'chanis9351@gmail.com');
+
       alert("נשלח מייל עם קוד אימות");
       setShowCodeInput(true);
     } catch (e) {
       alert("שליחת האימייל נכשלה");
     }
   };
+
   const onClickVerify = async () => {
     console.log("verifying with code", code);
     await handleVerifyCode(code, setIsEditing, setShowCodeInput, currentUser);

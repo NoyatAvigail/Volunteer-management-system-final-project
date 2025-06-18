@@ -76,6 +76,7 @@ const userService = {
 
                 newUser = {
                     ...rest,
+                    user:newUser,
                     type: type,
                     id: Volunteer.id,
                     autoId: userData.id
@@ -149,6 +150,7 @@ const userService = {
             const findVolunteer = await genericDAL.findByField(Volunteers, { userId: user.id });
             const volunteer = findVolunteer[0];
             if (!volunteer) return null;
+            userData.email=user.email;
             userData.fullName = volunteer.fullName;
             userData.autoId = volunteer.id;
         } else if (user.type == cUserType.CONTACTPERSON) {
@@ -160,7 +162,7 @@ const userService = {
         }
         return {
             user: userData,
-            autoId: userData.id
+            autoId: userData.id,
         };
     },
 
