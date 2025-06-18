@@ -68,8 +68,7 @@ function ContactRequests() {
         try {
             const startDate = '2025-06-01';
             const endDate = '2025-08-31';
-            await requestService.getRequestsByContactAndDate(
-                currentUser.id,
+            await requestService.getAll(
                 startDate,
                 endDate,
                 (result) => {

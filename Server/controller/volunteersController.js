@@ -1,4 +1,4 @@
-import volunteerService from '../services/volunteerService.js';
+import volunteerService from '../services/volunteersService.js';
 const volunteersController = {
   getVolunteerProfile: async (req, res) => {
     console.log("הגיע לכונטרולר");
