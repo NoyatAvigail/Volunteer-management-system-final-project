@@ -7,13 +7,12 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS
   }
 });
+
 export default async function sendEditVerificationMail(to, code) {
   await transporter.sendMail({
     from: process.env.EMAIL_USER,
     to,
-    subject: 'קוד אימות לעריכת פרופיל',
-    html: `<p>קוד האימות שלך הוא: <strong>${code}</strong></p>
-           <p>הקוד בתוקף ל־10 דקות.</p>`
+    Subject: 'Verification code for profile editing',
+    html: `<p>Your verification code is: <strong>${code}</strong></p><p>The code is valid for 10 minutes.</p>`
   });
 }
-

@@ -1,4 +1,4 @@
-import volunteerDAL from '../dal/volunteerDal.js';
+import volunteerDAL from '../dal/volunteersDal.js';
 import genericDAL from '../dal/genericDal.js';
 
 const Volunteers = genericDAL.getModelByName("Volunteers");
