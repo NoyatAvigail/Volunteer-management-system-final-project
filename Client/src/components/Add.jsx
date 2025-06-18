@@ -29,9 +29,12 @@ function Add({ setIsChange = () => { }, inputs, defaultValue, name = "Add", type
                 type,
                 body,
                 (result) => {
-                    console.log("add successful:", result);
-                    setIsChange(1);
-                    reset();
+                    console.log("Update successful:", result);
+                    if (onSuccess) {
+                        onSuccess();
+                    } else {
+                        setIsChange(prev => prev === 0 ? 1 : 0);
+                    }
                 },
                 (error) => {
                     console.log("add was unsuccessful", error);

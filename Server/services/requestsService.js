@@ -86,21 +86,28 @@ const requestService = {
         }
     },
 
-    getContactRequests: async (contactIdFromQuery, startDate, endDate, authenticatedId) => {
-        const model = genericDAL.getModelByName('ContactPeople');
-        const contactPerson = await genericDAL.findById(model, authenticatedId);
-        if (!contactPerson) {
-            const error = new Error("ContactPerson not found");
+    getRequests: async (userIdFromQuery, startDate, endDate, authenticatedId, authenticatedType) => {
+        const type = genericDAL.getModelByName('UserTypes');
+        const userType = await genericDAL.findById(type, authenticatedType);
+        const userTypeDesc = userType?.description;
+        const model = userTypeDesc  == 'Volunteer' ?
+            genericDAL.getModelByName('Volunteet') :
+            genericDAL.getModelByName('ContactPeople');
+        const user = await genericDAL.findById(model, authenticatedId);
+        if (!user) {
+            const error = new Error(`${user} not found`);
             error.status = 404;
             throw error;
         }
-        const userIdFromToken = contactPerson.userId;
-        if (parseInt(contactIdFromQuery) !== userIdFromToken) {
+        const userIdFromToken = user.userId;
+        if (parseInt(userIdFromQuery) != userIdFromToken) {
             const error = new Error('Access denied: UserId mismatch');
             error.status = 403;
             throw error;
         }
-        const requests = await requestDal.getContactRequests(userIdFromToken, startDate, endDate);
+        const requests = userTypeDesc  == 'Volunteer' ?
+            await requestDal.getVolunteerRequests(userIdFromToken, startDate, endDate) :
+            await requestDal.getContactRequests(userIdFromToken, startDate, endDate)
         return requests;
     },
 

@@ -10,7 +10,6 @@ import Update from '.././Update';
 import '../../style/Posts.css';
 import { requestService } from '../../services/requestsServices';
 import { userService } from '../../services/usersServices';
-
 function ContactRequests() {
     const [userData, setUserData] = useState([]);
     const [error, setError] = useState(null);
@@ -23,6 +22,7 @@ function ContactRequests() {
     const [patients, setPatients] = useState([]);
     const [selectedPatientId, setSelectedPatientId] = useState("");
     const [hospitalizedsPerPatient, setHospitalizedsPerPatient] = useState([]);
+    const [updateRow, setUpdateRow] = useState(null); // חדש
     const didFetch = useRef(false);
 
     const noAccess = !currentUser || userTypeObj !== 'ContactPerson';
@@ -43,65 +43,69 @@ function ContactRequests() {
 
     useEffect(() => {
         if (selectedPatientId) {
-            userService.getByValue(
-                currentUser.autoId,
-                userTypeObj,
-                "Hospitalizeds",
-                { patientId: selectedPatientId },
-                (res) => setHospitalizedsPerPatient(res || []),
-                (err) => console.error("Failed to fetch hospitalizeds:", err)
-            );
+            fetchHospitalizeds(selectedPatientId);
         }
     }, [selectedPatientId]);
-    
+
+    useEffect(() => {
+        if (updateRow && updateRow.patientId) {
+            fetchHospitalizeds(updateRow.patientId);
+        }
+    }, [updateRow]);
+
+    const fetchHospitalizeds = (patientId) => {
+        userService.getByValue(
+            currentUser.autoId,
+            userTypeObj,
+            "Hospitalizeds",
+            { patientId },
+            (res) => setHospitalizedsPerPatient(res || []),
+            (err) => console.error("Failed to fetch hospitalizeds:", err)
+        );
+    };
+
+    const fetchData = async () => {
+        try {
+            const startDate = '2025-06-01';
+            const endDate = '2025-08-31';
+            await requestService.getRequestsByContactAndDate(
+                currentUser.id,
+                startDate,
+                endDate,
+                (result) => {
+                    console.log("get successful:", result);
+                    setUserData(result);
+                    setEvents(result);
+                    setIsChange(1);
+                },
+                (error) => {
+                    console.log("get was unsuccessful", error);
+                    setError("Error loading data");
+                }
+            );
+        } catch (error) {
+            console.log("Unexpected error:", error);
+            setError("Unexpected error loading data");
+        }
+    };
+
     useEffect(() => {
         if (!currentUser || !currentUser.id) {
             setError("User not logged in");
             return;
         }
-        const fetchData = async () => {
-            try {
-                const startDate = '2025-08-01';
-                const endDate = '2025-08-31';
-                await requestService.getRequestsByContactAndDate(
-                    currentUser.id,
-                    startDate,
-                    endDate,
-                    (result) => {
-                        console.log("get successful:", result);
-                        setUserData(result);
-                        setEvents(result);
-                        setIsChange(1);
-                    },
-                    (error) => {
-                        console.log("get was unsuccessful", error);
-                        setError("Error loading data");
-                    }
-                );
-            } catch (error) {
-                console.log("Unexpected error:", error);
-                setError("Unexpected error loading data");
-            }
-        };
         fetchData();
-    }, [currentUser]);
+    }, [currentUser, isChange]);
 
     if (!currentUser || userTypeObj !== 'ContactPerson') {
         return <div>No access to this form</div>;
     }
 
-    function parseDateFromDDMMYYYY(dateStr) {
-        const [day, month, year] = dateStr.split('-').map(Number);
-        return new Date(year, month - 1, day);
-    }
-
     const isPastEvent = (dateStr) => {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-
         const eventDate = new Date(dateStr);
         eventDate.setHours(0, 0, 0, 0);
-
         return eventDate < today;
     };
 
@@ -124,7 +128,7 @@ function ContactRequests() {
                 />
                 <Add
                     type="Events"
-                    setIsChange={() => { }}
+                    setIsChange={setIsChange}
                     inputs={[
                         {
                             name: "patientId",
@@ -154,10 +158,10 @@ function ContactRequests() {
                         endTime: ""
                     }}
                     name="Add request"
+                    onSuccess={fetchData}
                 />
-            </div >
-            {error && <div className="error">{error}</div>
-            }
+            </div>
+            {error && <div className="error">{error}</div>}
             <div className="requests">
                 <table className="requests-table">
                     <thead>
@@ -178,7 +182,7 @@ function ContactRequests() {
                             events.map((item) => {
                                 const isPast = isPastEvent(item.date);
                                 return (
-                                    <tr key={item.id} style={{ backgroundColor: isPastEvent(item.date) ? '#eee' : 'white' }}>
+                                    <tr key={item.id} style={{ backgroundColor: isPast ? '#eee' : 'white' }}>
                                         <td>{item.Hospitalized.Patient?.fullName}</td>
                                         <td>{item.Hospitalized.patientId}</td>
                                         <td>{item.Hospitalized.Hospital?.description}</td>
@@ -194,15 +198,44 @@ function ContactRequests() {
                                                         type="Events"
                                                         itemId={item.id}
                                                         setIsChange={setIsChange}
-                                                        inputs={["patientId", "hospital", "department", "roomNumber", "date", "startTime", "endTime"]}
-                                                        defaultValue={item}
-                                                        disabled={isPast}
+                                                        inputs={[
+                                                            {
+                                                                name: "patientId",
+                                                                type: "select",
+                                                                options: patients.map(h => ({ label: h.userId, value: h.userId })),
+                                                                onChange: (e) => {
+                                                                    const patientId = e.target.value;
+                                                                    setUpdateRow({ ...item, patientId }); // מעדכן כדי להפעיל את useEffect
+                                                                }
+                                                            },
+                                                            {
+                                                                name: "hospitalizedsId",
+                                                                type: "select",
+                                                                options: hospitalizedsPerPatient.map(h => ({
+                                                                    label: `בית חולים: ${h.hospital}, מחלקה: ${h.department}, חדר: ${h.roomNumber}, מתחילת אשפוז: ${h.hospitalizationStart}`,
+                                                                    value: h.id
+                                                                }))
+                                                            },
+                                                            "date",
+                                                            "startTime",
+                                                            "endTime"
+                                                        ]}
+                                                        defaultValue={{
+                                                            patientId: item.Hospitalized.patientId,
+                                                            contactId: item.contactId,
+                                                            hospitalizedsId: item.hospitalizedsId,
+                                                            date: item.date,
+                                                            startTime: item.startTime,
+                                                            endTime: item.endTime
+                                                        }}
+                                                        onSuccess={fetchData}
                                                     />
                                                     <Delete
                                                         type="Events"
                                                         itemId={item.id}
                                                         setIsChange={setIsChange}
                                                         disabled={isPast}
+                                                        onSuccess={fetchData}
                                                     />
                                                 </>
                                             )}
