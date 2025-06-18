@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import userRoutes from './routes/userRoutes.js';
+import userRoutes from './routes/usersRoutes.js';
 import codeTablesRoutes from './routes/codeTablesRoutes.js';
-import requestRoutes from './routes/requestRoutes.js';
+import requestRoutes from './routes/requestsRoutes.js';
 import sequelize from '../DB/connectionDB.mjs';
-import volunteersRoutes from './routes/volunteersRouter.js'
+import volunteersRoutes from './routes/volunteersRoutes.js'
 
 const app = express();
 
@@ -14,6 +14,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/codetables", codeTablesRoutes);
 app.use("/api/requests", requestRoutes);
 app.use("/api/volunteer",volunteersRoutes)
+app.use("/api/contact",contactRoutes)
 
 const start = async () => {
   try {

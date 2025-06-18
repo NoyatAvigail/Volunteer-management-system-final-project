@@ -65,6 +65,65 @@ const requestDal = {
     return events;
   },
 
+  getVolunteerRequests: async (volunteerId, startDate, endDate) => {
+    const volunteer = await Volunteers.findByPk(volunteerId, {
+      include: [
+        { model: VolunteeringForGenders, where: { is_deleted: false }, required: false },
+        { model: VolunteeringForSectors, where: { is_deleted: false }, required: false },
+        { model: VolunteeringInDepartments, where: { is_deleted: false }, required: false }
+      ]
+    });
+    if (!volunteer) throw new Error("Volunteer not found");
+    const preferredGenders = volunteer.VolunteeringForGenders?.map(g => g.genderId) || [];
+    const preferredSectors = volunteer.VolunteeringForSectors?.map(s => s.sectorId) || [];
+    const preferredHospitalsDepartments = volunteer.VolunteeringInDepartments?.map(d => ({
+      hospital: d.hospital,
+      department: d.department
+    })) || [];
+    const events = await Events.findAll({
+      where: {
+        date: {
+          [Op.between]: [startDate, endDate]
+        },
+        is_deleted: 0
+      },
+      include: [
+        {
+          model: Hospitalizeds,
+          required: true,
+          include: [
+            {
+              model: Hospitals,
+              attributes: ['id', 'description']
+            },
+            {
+              model: Departments,
+              attributes: ['id', 'description']
+            },
+            {
+              model: Patients,
+              required: true,
+              where: {
+                ...(preferredGenders.length && { gender: { [Op.in]: preferredGenders } }),
+                ...(preferredSectors.length && { sector: { [Op.in]: preferredSectors } })
+              },
+              attributes: ['id', 'userId', 'fullName', 'gender', 'sector']
+            }
+          ]
+        }
+      ]
+    });
+    const filtered = events.filter(event => {
+      const hosp = event.Hospitalized?.Hospital;
+      const dept = event.Hospitalized?.Department;
+      return preferredHospitalsDepartments.some(pref =>
+        pref.hospital === hosp?.id && pref.department === dept?.id
+      );
+    });
+    console.log(filtered);
+    return filtered;
+  },
+
   findRequests: async (hospital, department, startDate, endDate) => {
     const filters = {
       date: {

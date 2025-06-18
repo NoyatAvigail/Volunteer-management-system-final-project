@@ -1,7 +1,7 @@
 import express from 'express';
 import volunteersController from '../controller/volunteersController.js';
 import { verifyToken } from '../middleware/middleware.js';
-import userController from '../controller/userController.js';
+import userController from '../controller/usersController.js';
 const router = express.Router();
 router.use(verifyToken);
 router.route('/:id/shifts')

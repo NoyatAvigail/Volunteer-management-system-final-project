@@ -111,8 +111,7 @@ const registerAuth = async (endpoint, body, onSuccess, onError) => {
     }
 };
 
-// הבקשה הגנרית החדשה
-async function request(userId,type, url, params = {}, method = "GET", body = null, onSuccess, onError) {
+async function request(userId, type, url, params = {}, method = "GET", body = null, onSuccess, onError) {
     try {
         const token = getToken();
         const config = {
@@ -127,7 +126,6 @@ async function request(userId,type, url, params = {}, method = "GET", body = nul
         if (method !== "DELETE" && body) {
             config.data = body;
         }
-
         const response = await axios(config);
         const data = response.data;
         if (onSuccess) onSuccess(data);
@@ -141,28 +139,21 @@ async function request(userId,type, url, params = {}, method = "GET", body = nul
     }
 }
 export const userService = {
-    getAll: (userId, type,table, onSuccess, onError) =>
-        request(userId,type, table, {}, "GET", null, onSuccess, onError),
-
-    getByValue: (userId,type, table, params, onSuccess, onError) =>
-        request(userId,type, table, params, "GET", null, onSuccess, onError),
+    getAll: (userId, type, table, onSuccess, onError) =>
+        request(userId, type, table, {}, "GET", null, onSuccess, onError),
+    getByValue: (userId, type, table, params, onSuccess, onError) =>
+        request(userId, type, table, params, "GET", null, onSuccess, onError),
     getById: (userId, type, table, onSuccess, onError) =>
-        request(userId, type,table, {}, "GET", type, onSuccess, onError),
-
-    getNested: (userId, type,base, id, nested, params, onSuccess, onError) =>
-        request(userId, type,`${base}/${id}/${nested}`, params, "GET", null, onSuccess, onError),
-
-    update: (userId, type,entityName, data, onSuccess, onError) =>
-        request(userId,type, entityName, {}, "PUT", data, onSuccess, onError),
-
-    create: (userId ,type, entityName, body, onSuccess, onError) =>
-        request(userId ,type, entityName, {}, "POST", body, onSuccess, onError),
-
-    patch: (userId,type, entityName, id, data, onSuccess, onError) =>
-        request(userId,type, `${entityName}/${id}`, {}, "PATCH", data, onSuccess, onError),
-
-    remove: (userId,type, entityName, id, onSuccess, onError) =>
-        request(userId,type, `${entityName}/${id}`, {}, "DELETE", null, onSuccess, onError),
+        request(userId, type, table, {}, "GET", type, onSuccess, onError),
+    update: (userId, type, entityName, data, onSuccess, onError) =>
+        request(userId, type, entityName, {}, "PUT", data, onSuccess, onError),
+    create: (userId, type, entityName, body, onSuccess, onError) =>
+        request(userId, type, entityName, {}, "POST", body, onSuccess, onError),
+    patch: (userId, type, entityName, id, data, onSuccess, onError) =>
+        request(userId, type, `${entityName}/${id}`, {}, "PATCH", data, onSuccess, onError),
+    remove: (userId, type, entityName, id, onSuccess, onError) =>
+        request(userId, type, `${entityName}/${id}`, {}, "DELETE", null, onSuccess, onError),
 };
+
 export const signup = (body, onSuccess, onError) => registerAuth("signup", body, onSuccess, onError);
 export const login = (body, onSuccess, onError) => registerAuth("login", body, onSuccess, onError);
