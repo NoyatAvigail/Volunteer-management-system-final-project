@@ -9,6 +9,7 @@ import Hospitalizeds from '../models/Hospitalizeds.js';
 import { cUserType } from '../common/consts.js'
 import sequelize from '../../DB/connectionDB.mjs';
 import requestDal from "../dal/requestDal.js"
+import genericDal from "../dal/genericDal.js"
 
 const requestService = {
     create: async (data) => {
@@ -85,16 +86,24 @@ const requestService = {
         }
     },
 
-    getContactRequests: async (contactId, startDate, endDate, authenticatedId) => {
-        if (contactId != authenticatedId) {
-            const error = new Error('Access denied: Contact does not match token');
+    getContactRequests: async (contactIdFromQuery, startDate, endDate, authenticatedId) => {
+        const model = genericDAL.getModelByName('ContactPeople');
+        const contactPerson = await genericDAL.findById(model, authenticatedId);
+        if (!contactPerson) {
+            const error = new Error("ContactPerson not found");
+            error.status = 404;
+            throw error;
+        }
+        const userIdFromToken = contactPerson.userId;
+        if (parseInt(contactIdFromQuery) !== userIdFromToken) {
+            const error = new Error('Access denied: UserId mismatch');
             error.status = 403;
             throw error;
         }
-        const requests = await requestDal.getContactRequests(contactId, startDate, endDate);
+        const requests = await requestDal.getContactRequests(userIdFromToken, startDate, endDate);
         return requests;
     },
-    
+
     find: async (volunteerId, hospitalId, departmentId, patientName, asOfDate) => {
         // Check date?
 
