@@ -77,20 +77,6 @@ const genericDAL = {
         });
     },
 
-    findNested: async (baseModel, id, nestedModel, query) => {
-        Object.keys(query).forEach(key => {
-            if (!isNaN(query[key])) {
-                query[key] = parseInt(query[key], 10);
-            }
-        });
-        const items = await nestedModel.findAll({
-            where: {
-                ...query,
-            }
-        });
-        return items;
-    },
-
     findByFieldIn: async (model, field, values) => {
         return await model.findAll({
             where: {

@@ -92,6 +92,9 @@ Hospitalizeds.belongsTo(Hospitals, { foreignKey: 'hospital', onDelete: 'CASCADE'
 Departments.hasMany(Hospitalizeds, { foreignKey: 'department', onDelete: 'CASCADE' });
 Hospitalizeds.belongsTo(Departments, { foreignKey: 'department', onDelete: 'CASCADE' });
 
+Hospitalizeds.belongsTo(Patients, { foreignKey: 'patientId', targetKey: 'userId' });
+Patients.hasMany(Hospitalizeds, { foreignKey: 'patientId', sourceKey: 'userId' });
+
 export {
   sequelize,
   UserTypes,

@@ -1,22 +1,3 @@
-// import Users from '../models/Users.js';
-// import Passwords from '../models/Passwords.js';
-// import Events from '../models/Events.js';
-// import Sectors from '../models/Sectors.js';
-// import Genders from '../models/Genders.js';
-// import Hospitals from '../models/Hospitals.js';
-// import Departments from '../models/Departments.js';
-// import FamilyRelations from '../models/FamilyRelations.js';
-// import VolunteeringTypes from '../models/VolunteeringTypes.js';
-// import UserTypes from '../models/UserTypes.js';
-// import Hospitalizeds from '../models/Hospitalizeds.js'
-// import Volunteers from "../models/Volunteers.js";
-// import ContactPeople from "../models/ContactPeople.js";
-// import Patients from "../models/Patients.js";
-// import RelationToPatients from "../models/RelationToPatients.js";
-// import VolunteerTypes from "../models/VolunteerTypes.js";
-// import VolunteeringInDepartments from "../models/VolunteeringInDepartments.js";
-// import VolunteeringForSectors from "../models/VolunteeringForSectors.js";
-// import VolunteeringForGenders from "../models/VolunteeringForGenders.js";
 import {
   Users,
   Passwords,
@@ -62,7 +43,7 @@ const requestDal = {
       include: [
         {
           model: Hospitalizeds,
-          attributes: ['hospital', 'department'],
+          attributes: ['hospital', 'department', 'patientId', 'roomNumber'],
           include: [
             {
               model: Hospitals,
@@ -74,13 +55,13 @@ const requestDal = {
             },
             {
               model: Patients,
-              attributes: ['id', 'fullName']
+              attributes: ['id', 'userId', 'fullName']
             }
           ]
         }
       ]
     });
-    console.log(events); 
+    console.log(events);
     return events;
   },
 
@@ -91,7 +72,6 @@ const requestDal = {
       },
       is_deleted: 0
     };
-
     const include = [
       {
         model: Hospitalizeds,
@@ -99,16 +79,16 @@ const requestDal = {
           {
             model: Hospitals,
             attributes: ['description'],
-            ...(hospital && { where: { id: hospital } }) // סינון לפי בית חולים אם קיים
+            ...(hospital && { where: { id: hospital } })
           },
           {
             model: Departments,
             attributes: ['description'],
-            ...(department && { where: { id: department } }) // סינון לפי מחלקה אם קיימת
+            ...(department && { where: { id: department } })
           },
           {
             model: Patients,
-            attributes: ['id', 'fullName', 'hospital', 'department']
+            attributes: ['userId', 'fullName', 'hospital', 'department']
           }
         ]
       }

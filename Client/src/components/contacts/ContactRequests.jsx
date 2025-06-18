@@ -8,18 +8,17 @@ import Sort from '.././Sort';
 import Delete from '.././Delete';
 import Update from '.././Update';
 import '../../style/Posts.css';
+import { requestService } from '../../services/requestsServices';
 import { userService } from '../../services/usersServices';
-import { logOutFunc } from '../../js/logout';
 
 function ContactRequests() {
     const [userData, setUserData] = useState([]);
     const [error, setError] = useState(null);
     const [isChange, setIsChange] = useState(0);
     const { currentUser } = useContext(CurrentUser);
-    const { codes, loading } = useCodes();
+    const { codes } = useCodes();
     const userTypeObj = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
     const navigate = useNavigate();
-    const [hospitalizeds, setHospitalizeds] = useState([]);
     const [events, setEvents] = useState([]);
     const [patients, setPatients] = useState([]);
     const [selectedPatientId, setSelectedPatientId] = useState("");
@@ -54,20 +53,20 @@ function ContactRequests() {
             );
         }
     }, [selectedPatientId]);
-
+    
     useEffect(() => {
-        setError(null);
         if (!currentUser || !currentUser.id) {
             setError("User not logged in");
             return;
         }
         const fetchData = async () => {
             try {
-                await userService.getByValue(
-                    currentUser.autoId,
-                    "contact",
-                    "Events",
-                    { contactId: currentUser.id },
+                const startDate = '2025-08-01';
+                const endDate = '2025-08-31';
+                await requestService.getRequestsByContactAndDate(
+                    currentUser.id,
+                    startDate,
+                    endDate,
                     (result) => {
                         console.log("get successful:", result);
                         setUserData(result);
@@ -86,47 +85,6 @@ function ContactRequests() {
         };
         fetchData();
     }, [currentUser]);
-
-    useEffect(() => {
-        if (!isChange || !events.length) return;
-        const fetchData = async () => {
-            setError(null);
-            try {
-                await userService.getByForeignJoin(
-                    currentUser.autoId,
-                    userTypeObj,
-                    "Events",
-                    "hospitalizedsId",
-                    "Hospitalizeds",
-                    "id",
-                    "contactId",
-                    currentUser.id,
-                    (result) => {
-                        console.log("get successful:", result);
-                        const arrayResult = Array.isArray(result) ? result : [result];
-                        setUserData(arrayResult);
-                        setEvents(arrayResult);
-                        const map = {};
-                        arrayResult.forEach(h => {
-                            if (!map[h.patientId]) map[h.patientId] = [];
-                            map[h.patientId].push(h);
-                        });
-                        setHospitalizeds(map);
-                        setIsChange(1);
-                    },
-                    (error) => {
-                        console.log("get was unsuccessful", error);
-                        setError("Error loading data");
-                    }
-                );
-            } catch (error) {
-                console.log("Unexpected error:", error);
-                setError("Unexpected error loading data");
-            }
-        };
-
-        fetchData();
-    }, [isChange]);
 
     if (!currentUser || userTypeObj !== 'ContactPerson') {
         return <div>No access to this form</div>;
@@ -204,14 +162,15 @@ function ContactRequests() {
                 <table className="requests-table">
                     <thead>
                         <tr>
-                            <th>תאריך</th>
-                            <th>שעת התחלה</th>
-                            <th>שעת סיום</th>
-                            <th>מספר חדר</th>
-                            <th>בית חולים</th>
-                            <th>מחלקה</th>
-                            <th>מזהה מטופל</th>
-                            <th>פעולות</th>
+                            <th>Patient name</th>
+                            <th>Patient id</th>
+                            <th>Hospital</th>
+                            <th>Department</th>
+                            <th>Room number</th>
+                            <th>Date</th>
+                            <th>Start time</th>
+                            <th>End time</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -220,13 +179,14 @@ function ContactRequests() {
                                 const isPast = isPastEvent(item.date);
                                 return (
                                     <tr key={item.id} style={{ backgroundColor: isPastEvent(item.date) ? '#eee' : 'white' }}>
+                                        <td>{item.Hospitalized.Patient?.fullName}</td>
+                                        <td>{item.Hospitalized.patientId}</td>
+                                        <td>{item.Hospitalized.Hospital?.description}</td>
+                                        <td>{item.Hospitalized.Department?.description}</td>
+                                        <td>{item.Hospitalized.roomNumber}</td>
                                         <td>{new Date(item.date).toISOString().split('T')[0]}</td>
                                         <td>{item.startTime}</td>
                                         <td>{item.endTime}</td>
-                                        <td>{item.roomNumber}</td>
-                                        <td>{item.hospital}</td>
-                                        <td>{item.department}</td>
-                                        <td>{item.patientId}</td>
                                         <td>
                                             {item.contactId === currentUser.id && (
                                                 <>
