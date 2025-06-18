@@ -4,8 +4,7 @@ const requestsController = {
     // GET /api/requests?contactPerson=123
     getContactRequests: async (req, res) => {
         const { contact, startDate, endDate } = req.query;
-        // const authenticatedId = req.header.authorization.id.toString();
-        const authenticatedId = '61227757'
+        const authenticatedId = req.user.id.toString();
         try {
             const requests = await requestsService.getContactRequests(contact, startDate, endDate, authenticatedId);
             res.status(200).json(requests);
