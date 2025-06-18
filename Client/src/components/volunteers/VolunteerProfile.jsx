@@ -33,7 +33,7 @@ function VolunteerProfile() {
   const handleRequestEdit = async () => {
     try {
       // await sendEditRequest(currentUser.autoId, currentUser.email);
-      await sendEditRequest(currentUser.autoId, 'chanis9351@gmail.com');
+      await sendEditRequest(currentUser.autoId,currentUser.email);
 
       alert("נשלח מייל עם קוד אימות");
       setShowCodeInput(true);
