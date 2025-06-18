@@ -11,28 +11,28 @@ router.route('/signup')
 
 router.use(verifyToken);
 
-router.route('/:type/:userId/:table')
-    .all(validateUserId)
-    .get(userController.getAll)
-    .post(userController.post);
+// router.route('/:type/:userId/:table')
+//     .all(validateUserId)
+//     .get(userController.getAll)
+//     .post(userController.post);
 
-router.route('/:type/:userId/:table/:id')
-    .all(validateUserId)
-    .delete(userController.softDelete)
-    .patch(userController.patch);
+// router.route('/:type/:userId/:table/:id')
+//     .all(validateUserId)
+//     .delete(userController.softDelete)
+//     .patch(userController.patch);
 
-router.route('/:type/:userId/join-foreign/:table1/:foreignKey/:table2/:targetKey/:targetField')
-    .all(validateUserId)
-    .get(userController.getByForeignJoin);
+// router.route('/:type/:userId/join-foreign/:table1/:foreignKey/:table2/:targetKey/:targetField')
+//     .all(validateUserId)
+//     .get(userController.getByForeignJoin);
 
-router.route('/:type/:userId/profile')
-    .get(userController.getProfile)
-    .put(userController.updateProfile);
+// router.route('/:type/:userId/profile')
+//     .get(userController.getProfile)
+//     .put(userController.updateProfile);
 
 // router.route('/ContactPerson/:contactId/:type')
 //     .get(userController.getPatientsByContact);
 
-router.route('/send-edit-email/:id', userController.sendEditEmail);
+router.post('/:id/send-edit-email', userController.sendEditEmail);
 router.post('/verify-edit-code', userController.verifyEditCode);
 
 export default router;
