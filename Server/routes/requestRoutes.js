@@ -6,6 +6,6 @@ const router = express.Router();
 router.use(verifyToken);
 
 router.route('/')
-    .get(requestsController.getContactRequests);
+    .get(requestsController.getRequests);
 
 export default router;
