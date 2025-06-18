@@ -1,6 +1,6 @@
 import sequelize from './connectionDB.mjs';
 import { seedStaticTables } from './seedStaticTables.mjs';
-import './index.mjs'; 
+import './index.mjs';
 
 export async function initDB() {
   try {
