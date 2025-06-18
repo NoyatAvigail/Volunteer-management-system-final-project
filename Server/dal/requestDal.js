@@ -55,13 +55,13 @@ const requestDal = {
             },
             {
               model: Patients,
-              attributes: ['id', 'fullName']
+              attributes: ['id', 'userId', 'fullName']
             }
           ]
         }
       ]
     });
-    console.log(events); 
+    console.log(events);
     return events;
   },
 
@@ -79,12 +79,12 @@ const requestDal = {
           {
             model: Hospitals,
             attributes: ['description'],
-            ...(hospital && { where: { id: hospital } }) 
+            ...(hospital && { where: { id: hospital } })
           },
           {
             model: Departments,
             attributes: ['description'],
-            ...(department && { where: { id: department } }) 
+            ...(department && { where: { id: department } })
           },
           {
             model: Patients,

@@ -9,6 +9,7 @@ import Delete from '.././Delete';
 import Update from '.././Update';
 import '../../style/Posts.css';
 import { requestService } from '../../services/requestsServices';
+import { userService } from '../../services/usersServices';
 
 function ContactRequests() {
     const [userData, setUserData] = useState([]);
@@ -26,105 +27,33 @@ function ContactRequests() {
 
     const noAccess = !currentUser || userTypeObj !== 'ContactPerson';
 
-    // useEffect(() => {
-    //     if (!didFetch.current && currentUser?.autoId && userTypeObj) {
-    //         didFetch.current = true;
-    //         userService.getByValue(
-    //             currentUser.autoId,
-    //             userTypeObj,
-    //             "Patients",
-    //             { contactPeopleId: currentUser.id },
-    //             (res) => setPatients(res || []),
-    //             (err) => console.error("Failed to fetch patients:", err)
-    //         );
-    //     }
-    // }, [currentUser?.autoId, userTypeObj]);
+    useEffect(() => {
+        if (!didFetch.current && currentUser?.autoId && userTypeObj) {
+            didFetch.current = true;
+            userService.getByValue(
+                currentUser.autoId,
+                userTypeObj,
+                "Patients",
+                { contactPeopleId: currentUser.id },
+                (res) => setPatients(res || []),
+                (err) => console.error("Failed to fetch patients:", err)
+            );
+        }
+    }, [currentUser?.autoId, userTypeObj]);
 
-    // useEffect(() => {
-    //     if (selectedPatientId) {
-    //         userService.getByValue(
-    //             currentUser.autoId,
-    //             userTypeObj,
-    //             "Hospitalizeds",
-    //             { patientId: selectedPatientId },
-    //             (res) => setHospitalizedsPerPatient(res || []),
-    //             (err) => console.error("Failed to fetch hospitalizeds:", err)
-    //         );
-    //     }
-    // }, [selectedPatientId]);
-
-    // useEffect(() => {
-    //     setError(null);
-    //     if (!currentUser || !currentUser.id) {
-    //         setError("User not logged in");
-    //         return;
-    //     }
-    //     const fetchData = async () => {
-    //         try {
-    //             await userService.getByValue(
-    //                 currentUser.autoId,
-    //                 "contact",
-    //                 "Events",
-    //                 { contactId: currentUser.id },
-    //                 (result) => {
-    //                     console.log("get successful:", result);
-    //                     setUserData(result);
-    //                     setEvents(result);
-    //                     setIsChange(1);
-    //                 },
-    //                 (error) => {
-    //                     console.log("get was unsuccessful", error);
-    //                     setError("Error loading data");
-    //                 }
-    //             );
-    //         } catch (error) {
-    //             console.log("Unexpected error:", error);
-    //             setError("Unexpected error loading data");
-    //         }
-    //     };
-    //     fetchData();
-    // }, [currentUser]);
-
-    // useEffect(() => {
-    //     if (!isChange || !events.length) return;
-    //     const fetchData = async () => {
-    //         setError(null);
-    //         try {
-    //             await userService.getByForeignJoin(
-    //                 currentUser.autoId,
-    //                 userTypeObj,
-    //                 "Events",
-    //                 "hospitalizedsId",
-    //                 "Hospitalizeds",
-    //                 "id",
-    //                 "contactId",
-    //                 currentUser.id,
-    //                 (result) => {
-    //                     console.log("get successful:", result);
-    //                     const arrayResult = Array.isArray(result) ? result : [result];
-    //                     setUserData(arrayResult);
-    //                     setEvents(arrayResult);
-    //                     const map = {};
-    //                     arrayResult.forEach(h => {
-    //                         if (!map[h.patientId]) map[h.patientId] = [];
-    //                         map[h.patientId].push(h);
-    //                     });
-    //                     setHospitalizeds(map);
-    //                     setIsChange(1);
-    //                 },
-    //                 (error) => {
-    //                     console.log("get was unsuccessful", error);
-    //                     setError("Error loading data");
-    //                 }
-    //             );
-    //         } catch (error) {
-    //             console.log("Unexpected error:", error);
-    //             setError("Unexpected error loading data");
-    //         }
-    //     };
-
-    //     fetchData();
-    // }, [isChange]);
+    useEffect(() => {
+        if (selectedPatientId) {
+            userService.getByValue(
+                currentUser.autoId,
+                userTypeObj,
+                "Hospitalizeds",
+                { patientId: selectedPatientId },
+                (res) => setHospitalizedsPerPatient(res || []),
+                (err) => console.error("Failed to fetch hospitalizeds:", err)
+            );
+        }
+    }, [selectedPatientId]);
+    
     useEffect(() => {
         if (!currentUser || !currentUser.id) {
             setError("User not logged in");
@@ -250,7 +179,7 @@ function ContactRequests() {
                                 const isPast = isPastEvent(item.date);
                                 return (
                                     <tr key={item.id} style={{ backgroundColor: isPastEvent(item.date) ? '#eee' : 'white' }}>
-                                        <td>{item.Patients}</td>
+                                        <td>{item.Hospitalized.Patient?.fullName}</td>
                                         <td>{item.Hospitalized.patientId}</td>
                                         <td>{item.Hospitalized.Hospital?.description}</td>
                                         <td>{item.Hospitalized.Department?.description}</td>
