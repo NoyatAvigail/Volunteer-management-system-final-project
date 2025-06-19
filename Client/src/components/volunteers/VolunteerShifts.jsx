@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { CurrentUser } from "../App";
-import { userService } from '../../services/usersServices';
-
+import {volunteerService} from '../../services/volunteersServices'
 function VolunteerShifts() {
   const { currentUser } = useContext(CurrentUser);
   const [shifts, setShifts] = useState([]);
@@ -12,9 +11,7 @@ function VolunteerShifts() {
     if (!currentUser?.id) return;
     console.log("currentUser:", currentUser);
 
-    userService.getById(
-      currentUser.id,
-      "volunteer",
+    volunteerService.getAll(
       "shifts",
       (data) => setShifts(data),
       (error) => console.error(error)

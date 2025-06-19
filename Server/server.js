@@ -5,6 +5,8 @@ import codeTablesRoutes from './routes/codeTablesRoutes.js';
 import requestRoutes from './routes/requestsRoutes.js';
 import sequelize from '../DB/connectionDB.mjs';
 import volunteersRoutes from './routes/volunteersRoutes.js'
+import contactsRoutes from './routes/contactsRoutes.js'
+import profiles from './routes/profilesRoutes.js'
 
 const app = express();
 
@@ -13,9 +15,9 @@ app.use(cors());
 app.use("/api/users", userRoutes);
 app.use("/api/codetables", codeTablesRoutes);
 app.use("/api/requests", requestRoutes);
-app.use("/api/volunteer",volunteersRoutes)
-app.use("/api/contact",contactRoutes)
-
+app.use("/api/volunteers", volunteersRoutes)
+app.use("/api/contacts", contactsRoutes)
+app.use("/api/profiles", profiles)
 const start = async () => {
   try {
     await sequelize.authenticate();

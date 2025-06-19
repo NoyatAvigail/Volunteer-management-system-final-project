@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { userService } from '../../services/usersServices';
 import { CurrentUser } from '../App';
 import { CodesContext } from '../Models';
 import { useForm } from "react-hook-form";
@@ -13,14 +12,13 @@ function VolunteerProfile() {
   const [showCodeInput, setShowCodeInput] = useState(false);
   const [code, setCode] = useState("");
   const { register, handleSubmit, setValue, getValues, reset, formState: { errors } } = useForm();
-  const initialData = useProfileData(currentUser.autoId, 'Volunteer', 'profile', reset);
-  // console.log("initialData:", initialData);
+  const initialData = useProfileData( 'profile', reset);
   console.log("currentUser:", currentUser);
 
   const onSubmit = async (formData) => {
     console.log("Submitting form...", formData);
     try {
-      await updateProfile(currentUser.autoId,setIsEditing, "volunteer", 'profile', currentUser.autoId, formData);
+      await updateProfile(setIsEditing, 'profile', formData);
        setIsEditing(false);
       alert("Profile updated successfully.");
     } catch (err) {
@@ -32,8 +30,7 @@ function VolunteerProfile() {
 
   const handleRequestEdit = async () => {
     try {
-      // await sendEditRequest(currentUser.autoId, currentUser.email);
-      await sendEditRequest(currentUser.autoId,currentUser.email);
+      await sendEditRequest(volunteerService);
 
       alert("נשלח מייל עם קוד אימות");
       setShowCodeInput(true);
@@ -44,7 +41,7 @@ function VolunteerProfile() {
 
   const onClickVerify = async () => {
     console.log("verifying with code", code);
-    await handleVerifyCode(code, setIsEditing, setShowCodeInput, currentUser);
+    await handleVerifyCode(volunteerService,code, setIsEditing, setShowCodeInput, currentUser);
   };
 
 
