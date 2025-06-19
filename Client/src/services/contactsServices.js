@@ -14,7 +14,7 @@ async function request(startDate, endDate, onSuccess, onError) {
         const token = getToken();
         const config = {
             method: 'GET',
-            url: `${API_URL}/api/requests`,
+            url: `${API_URL}/api/contacts`,
             headers: {
                 authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ async function request(startDate, endDate, onSuccess, onError) {
     }
 }
 
-export const requestsServices = {
+export const contactsServices = {
     getAll: (startDate, endDate, onSuccess, onErrorr) =>
         request(startDate, endDate, onSuccess, onErrorr),
 }
