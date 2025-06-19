@@ -6,8 +6,9 @@ import Add from '../Add';
 import Search from '../Search';
 import Sort from '../Sort';
 import Update from '../Update';
-import '../../style/Posts.css';
+// import '../../style/Posts.css';
 import { requestService } from '../../services/requestsServices';
+import { volunteerService } from '../../services/volunteersServices';
 
 function VolunteerRequests() {
   const [userData, setUserData] = useState([]);
@@ -54,9 +55,7 @@ function VolunteerRequests() {
 
   const handleTakeCall = (callId) => {
     if (!currentUser) return;
-    userService.patch(
-      currentUser.id,
-      'volunteer',
+    requestService.patch(
       'requests',
       null,
       { callId },

@@ -9,7 +9,6 @@ import Register from './Register'
 import Home from './Home'
 import Info from './Info'
 import Volunteers from './Volunteers'
-import VolunteerFixedShifts from './volunteers/VolunteerFixedShifts';
 import VolunteerProfile from './volunteers/VolunteerProfile';
 import VolunteerCertificate from './volunteers/VolunteerCertificate';
 import VolunteerShifts from './volunteers/VolunteerShifts';
@@ -48,7 +47,6 @@ function App() {
           <Route path="/volunteer/:id" element={<Volunteers />} />
           <Route path="/volunteer/:id/home" element={<Volunteers />} />
           <Route path="/volunteer/:id/shifts" element={<VolunteerShifts />} />
-          <Route path="/volunteer/:id/permanentShifts" element={<VolunteerFixedShifts />} />
           <Route path="/volunteer/:id/requests" element={<VolunteerRequests />} />
           <Route path="/volunteer/:id/profile" element={<VolunteerProfile />} />
           <Route path="/volunteer/:id/certificate" element={<VolunteerCertificate />} />
