@@ -16,5 +16,4 @@ export const Patients = sequelize.define('Patients', {
   deleted_at: { type: DataTypes.DATE, allowNull: true }
 });
 
-
 export default Patients;

@@ -14,6 +14,5 @@ router.route('/patients')
 
 router.route('/patients/:id')
     .put(profilesController.updatePatientProfile)
-    .delete(contactController.deletePatient);
 
 export default router;

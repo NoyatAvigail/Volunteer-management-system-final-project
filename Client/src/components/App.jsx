@@ -7,7 +7,6 @@ import Navigation from './Navigation'
 import LogIn from './LogIn'
 import Register from './Register'
 import Home from './Home'
-import Info from './Info'
 import Volunteers from './Volunteers'
 import VolunteerFixedShifts from './volunteers/VolunteerFixedShifts';
 import VolunteerProfile from './volunteers/VolunteerProfile';

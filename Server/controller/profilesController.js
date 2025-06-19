@@ -1,4 +1,4 @@
-import profilesService from "../services/profilesService";
+import profilesService from "../services/profilesService.js";
 
 const profilesController = {
     utils: async (req) => {
