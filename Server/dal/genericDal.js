@@ -33,6 +33,7 @@ const genericDAL = {
         }
         return models[name];
     },
+    
     deleteByField: (model, id) => {
         try {
             const deletedRows = model.destroy({
