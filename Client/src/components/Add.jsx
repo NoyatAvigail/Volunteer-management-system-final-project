@@ -2,15 +2,20 @@ import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { CurrentUser } from "./App";
 import { useCodes } from "../components/Models";
-import { userService } from "../services/usersServices";
+import { createHandler } from "../services/servicesSelector";
 
-function Add({ setIsChange = () => { }, inputs, defaultValue, name = "Add", type }) {
+function Add({
+    setIsChange = () => { },
+    inputs,
+    defaultValue,
+    name = "Add",
+    type,
+    onSuccess = null
+}) {
     const { currentUser } = useContext(CurrentUser);
     const [isScreen, setIsScreen] = useState(0);
-    const { codes, loading } = useCodes();
-    const userTypeObj = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
-
-    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    const { codes } = useCodes();
+    const { register, handleSubmit, reset } = useForm({
         defaultValues: {
             ...defaultValue,
         },
@@ -23,25 +28,21 @@ function Add({ setIsChange = () => { }, inputs, defaultValue, name = "Add", type
         reset();
         setIsScreen(0);
         try {
-            await userService.create(
-                currentUser.autoId,
-                userTypeObj,
+            await createHandler({
                 type,
+                currentUser,
                 body,
-                (result) => {
-                    console.log("Update successful:", result);
-                    if (onSuccess) {
-                        onSuccess();
-                    } else {
-                        setIsChange(prev => prev === 0 ? 1 : 0);
-                    }
+                onSuccess: () => {
+                    console.log("Update successful");
+                    if (onSuccess) onSuccess();
+                    else setIsChange(prev => (prev === 0 ? 1 : 0));
                 },
-                (error) => {
-                    console.log("add was unsuccessful", error);
+                onError: (error) => {
+                    console.error("Add was unsuccessful", error);
                 }
-            );
+            });
         } catch (error) {
-            console.log("Unexpected error:", error);
+            console.error("Unexpected error:", error);
         }
     };
 
@@ -61,7 +62,6 @@ function Add({ setIsChange = () => { }, inputs, defaultValue, name = "Add", type
                         const inputName = typeof input === "string" ? input : input.name;
                         const inputType = typeof input === "string" ? "text" : input.type || "text";
                         const options = typeof input === "object" && input.options;
-
                         return (
                             <div key={index}>
                                 {inputType === "select" ? (
@@ -83,7 +83,7 @@ function Add({ setIsChange = () => { }, inputs, defaultValue, name = "Add", type
                                 ) : (
                                     <input
                                         type={inputType}
-                                        {...register(inputName, inputName == "hospitalizationEnd" ? {} : { required: true })}
+                                        {...register(inputName, inputName === "hospitalizationEnd" ? {} : { required: true })}
                                         placeholder={`Enter ${inputName}`}
                                         onChange={(e) => {
                                             if (typeof input === "object" && typeof input.onChange === "function") {
