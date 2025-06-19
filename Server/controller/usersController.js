@@ -1,6 +1,6 @@
 import userService from "../services/usersService.js";
 import { generateToken } from "../middleware/middleware.js";
-import sendEditVerificationMail from '../services/emailsService.js';
+import emailsService from '../services/emailsService.js';
 import { generateEditToken } from '../utils/utils.js';
 import jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
@@ -120,7 +120,7 @@ const userController = {
             const token = generateEditToken(id);
             console.log("Generated token:", token);
 
-            await sendEditVerificationMail(email, token);
+            await emailsService.sendEditVerificationMail(email, token);
             console.log("Email sent successfully");
 
             res.send("Email sent");
