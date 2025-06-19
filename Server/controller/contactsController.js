@@ -1,113 +1,112 @@
+import contactsService from "../services/contactsService.js";
+
 const contactController = {
-  getHome: async (req, res) => {
+  utils: async (req) => {
+    const authenticatedId = req.user.id.toString();
+    const authenticatedType = req.user.type.toString();
+    return authenticatedId, authenticatedType
+  },
+
+  getPatients: async (req, res) => {
     try {
-      const { id } = req.params;
-      const data = await contactService.getHomeData(id);
-      res.json(data);
-    } catch (err) {
-      res.status(err.status || 500).json({ message: err.message });
+      const authenticated = utils(req);
+      const requests = await contactsService.getPatients(authenticated.authenticatedId);
+      res.status(200).json(requests);
+    } catch (error) {
+      console.error("Error in getPatients Controller:", error);
+      if (error.status == 403) {
+        return res.status(403).json({ message: error.message });
+      }
+      res.status(500).json({ message: 'Server error', error: error.message });
     }
   },
 
-  getMyRequests: async (req, res) => {
+  createPatient: async (req, res) => {
     try {
-      const { id } = req.params;
-      const requests = await contactService.getRequestsByContact(id);
-      res.json(requests);
-    } catch (err) {
-      res.status(err.status || 500).json({ message: err.message });
+      const authenticated = utils(req);
+      const requests = await contactsService.createPatient(authenticated.authenticatedId, req.body);
+      res.status(200).json(requests);
+    } catch (error) {
+      console.error("Error in createPatient Controller:", error);
+      if (error.status == 403) {
+        return res.status(403).json({ message: error.message });
+      }
+      res.status(500).json({ message: 'Server error', error: error.message });
     }
   },
 
-  createRequest: async (req, res) => {
+  getPatientById: async (req, res) => {
     try {
-      const { id } = req.params;
-      const newRequest = await contactService.createRequest(id, req.body);
-      res.status(201).json(newRequest);
-    } catch (err) {
-      res.status(err.status || 400).json({ message: err.message });
+      const authenticated = utils(req);
+      const patientId = req.params.patientId;
+      const requests = await contactsService.getPatientById(authenticated.authenticatedId, patientId);
+      res.status(200).json(requests);
+    } catch (error) {
+      console.error("Error in getPatientById Controller:", error);
+      if (error.status == 403) {
+        return res.status(403).json({ message: error.message });
+      }
+      res.status(500).json({ message: 'Server error', error: error.message });
     }
   },
 
-  getProfile: async (req, res) => {
+  updatePatient: async (req, res) => {
     try {
-      const { id } = req.params;
-      const profile = await contactService.getContactProfile(id);
-      res.json(profile);
-    } catch (err) {
-      res.status(err.status || 500).json({ message: err.message });
-    }
-  },
-
-  updateProfile: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const updated = await contactService.updateContactProfile(id, req.body);
-      res.json(updated);
-    } catch (err) {
-      res.status(err.status || 400).json({ message: err.message });
-    }
-  },
-
-  getThanks: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const thanks = await contactService.getThanksEntries(id);
-      res.json(thanks);
-    } catch (err) {
-      res.status(err.status || 500).json({ message: err.message });
-    }
-  },
-
-  addPatient: async (req, res) => {
-    try {
-      const { contactPersonId } = req.params;
-      const patient = await contactService.addPatient(contactPersonId, req.body);
-      res.status(201).json(patient);
-    } catch (err) {
-      res.status(err.status || 400).json({ message: err.message });
-    }
-  },
-
-  getAllPatients: async (req, res) => {
-    try {
-      const { contactPersonId } = req.params;
-      const patients = await contactService.getPatientsByContact(contactPersonId);
-      res.json(patients);
-    } catch (err) {
-      res.status(err.status || 500).json({ message: err.message });
-    }
-  },
-
-  getPatientByUserId: async (req, res) => {
-    try {
-      const { contactPersonId, patientUserId } = req.params;
-      const patient = await contactService.getPatient(contactPersonId, patientUserId);
-      res.json(patient);
-    } catch (err) {
-      res.status(err.status || 404).json({ message: err.message });
-    }
-  },
-
-  updatePatientProfile: async (req, res) => {
-    try {
-      const { contactPersonId, patientUserId } = req.params;
-      const updated = await contactService.updatePatient(contactPersonId, patientUserId, req.body);
-      res.json(updated);
-    } catch (err) {
-      res.status(err.status || 400).json({ message: err.message });
+      const authenticated = utils(req);
+      const patientId = req.params.patientId;
+      const requests = await contactsService.updatePatient(authenticated.authenticatedId, patientId, req.body);
+      res.status(200).json(requests);
+    } catch (error) {
+      console.error("Error in updatePatient Controller:", error);
+      if (error.status == 403) {
+        return res.status(403).json({ message: error.message });
+      }
+      res.status(500).json({ message: 'Server error', error: error.message });
     }
   },
 
   deletePatient: async (req, res) => {
     try {
-      const { contactPersonId, patientUserId } = req.params;
-      await contactService.deletePatient(contactPersonId, patientUserId);
-      res.json({ message: 'Patient deleted' });
-    } catch (err) {
-      res.status(err.status || 500).json({ message: err.message });
+      const authenticated = utils(req);
+      const patientId = req.params.patientId;
+      const requests = await contactsService.deletePatient(authenticated.authenticatedId, patientId);
+      res.status(200).json(requests);
+    } catch (error) {
+      console.error("Error in deletePatient Controller:", error);
+      if (error.status == 403) {
+        return res.status(403).json({ message: error.message });
+      }
+      res.status(500).json({ message: 'Server error', error: error.message });
     }
   },
-}
-export default contactController;
 
+  getThanks: async (req, res) => {
+    try {
+      const authenticated = utils(req);
+      const requests = await contactsService.getThanks(authenticated.authenticatedId);
+      res.status(200).json(requests);
+    } catch (error) {
+      console.error("Error in getThanks Controller:", error);
+      if (error.status == 403) {
+        return res.status(403).json({ message: error.message });
+      }
+      res.status(500).json({ message: 'Server error', error: error.message });
+    }
+  },
+
+  createThanks: async (req, res) => {
+    try {
+      const authenticated = utils(req);
+      const requests = await contactsService.createThanks(authenticated.authenticatedId, req.body);
+      res.status(200).json(requests);
+    } catch (error) {
+      console.error("Error in createThanks Controller:", error);
+      if (error.status == 403) {
+        return res.status(403).json({ message: error.message });
+      }
+      res.status(500).json({ message: 'Server error', error: error.message });
+    }
+  },
+};
+
+export default contactController;
