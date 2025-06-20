@@ -37,17 +37,17 @@ export async function handleVerifyCode(code, setIsEditing, setShowCodeInput) {
     }
 }
 
-async function request(method = 'GET', body = null, onSuccess, onError) {
+async function request(method = 'GET',url, body = null, onSuccess, onError) {
     try {
         const token = getToken();
         const config = {
             method,
-            url: `${API_URL}/api/profiles`,
+            url: `${API_URL}/api/profiles${url}`,
             headers: {
                 authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
-            data: body, // ✅ חשוב לשים ב־data, לא body
+            data: body, 
         };
 
         const response = await axios(config);
@@ -64,11 +64,12 @@ async function request(method = 'GET', body = null, onSuccess, onError) {
 }
 
 export const profilesServices = {
-    getAll: async () => await request('GET'),
-    update: (data, onSuccess, onError) =>
-        request('PUT', data, onSuccess, onError),
+    getAll:(url="")=>
+    request('GET',`/${url}`),
+    update: (url="",data, onSuccess, onError) =>
+        request('PUT', `/${url}`, data, onSuccess, onError),
     create: (data, onSuccess, onError) =>
-        request('POST', data, onSuccess, onError),
+        request('POST',"", data, onSuccess, onError),
 }
 
 

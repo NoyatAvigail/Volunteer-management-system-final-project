@@ -1,5 +1,5 @@
 import genericDAL from './genericDal.js';
-import { Users, Volunteers, VolunteerTypes, VolunteeringForGenders, VolunteeringForSectors, VolunteeringInDepartments, ContactPeople, Patients, Hospitalizeds } from '../../DB/index.mjs'
+import { Users, Volunteers, VolunteerTypes, sequelize, VolunteeringForGenders, VolunteeringForSectors, VolunteeringInDepartments, ContactPeople, Patients, Hospitalizeds } from '../../DB/index.mjs'
 
 const profilesDAL = {
     getVolunteerProfile: async (userId) => {
@@ -112,8 +112,10 @@ const profilesDAL = {
     },
 
     getPatients: async (contactId) => {
-        return Patients.findAll({
+
+        return await Patients.findAll({
             where: { contactPeopleId: contactId, is_deleted: 0 },
+            //לבדוק את זה
             include: [
                 { model: Hospitalizeds }
             ]
@@ -121,8 +123,12 @@ const profilesDAL = {
     },
 
     updatePatientProfile: async (patientId, data) => {
-        const transaction = await sequelize.transaction();
+        console.log("הגיע לדאל");
         try {
+            console.log("data:", data);
+            console.log("patientId:",patientId);
+            
+            const transaction = await sequelize.transaction();
             const patient = await Patients.findByPk(patientId, { transaction });
             if (!patient)
                 throw new Error(`Patient with id ${patientId} not found`);
