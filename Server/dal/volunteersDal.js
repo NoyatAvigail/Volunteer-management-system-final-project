@@ -1,4 +1,5 @@
 import Events from "../models/Events.js";
+
 const volunteerDAL = {
   getEventsByVolunteerId: async (volunteerId) => {
     return await Events.findAll({

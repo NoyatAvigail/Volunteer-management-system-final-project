@@ -1,9 +1,12 @@
 import genericDAL from "../dal/genericDal.js";
 import contactsDal from "../dal/contactsDal.js";
+import ContactPeople from '../models/ContactPeople.js';
 
 const contactsService = {
     getPatients: async (authenticatedId) => {
         try {
+            console.log("authenticatedId:",authenticatedId);
+            
             return await contactsDal.getPatients(authenticatedId);
         } catch (error) {
             console.error("Error in contactsService.getPatients:", error);
@@ -13,7 +16,22 @@ const contactsService = {
 
     createPatient: async (authenticatedId, body) => {
         try {
-            return await contactsDal.createPatient(authenticatedId, body);
+            const contact = await genericDAL.findById(ContactPeople, { userId: authenticatedId });
+
+            if (!contact) {
+                const error = new Error("Contact person not found");
+                error.status = 404;
+                throw error;
+            }
+
+            const fullData = {
+                ...body,
+                contactPeopleId: contact.id,
+                userId: body.userId,
+                is_deleted: false
+            };
+
+            return await contactsDal.createPatient(fullData);
         } catch (error) {
             console.error("Error in contactsService.createPatient:", error);
             throw error;
@@ -43,6 +61,24 @@ const contactsService = {
             return await contactsDal.deletePatient(authenticatedId, patientId);
         } catch (error) {
             console.error("Error in contactsService.deletePatient:", error);
+            throw error;
+        }
+    },
+
+    getHospitalizeds: async (authenticatedId) => {
+        try {
+            return await contactsDal.getHospitalizeds(authenticatedId);
+        } catch (error) {
+            console.error("Error in contactsService.getHospitalizeds:", error);
+            throw error;
+        }
+    },
+
+    createHospitalizeds: async (authenticatedId, patientId, body) => {
+        try {
+            return await contactsDal.createHospitalizeds(patientId, body);
+        } catch (error) {
+            console.error("Error in contactsService.createHospitalizeds:", error);
             throw error;
         }
     },

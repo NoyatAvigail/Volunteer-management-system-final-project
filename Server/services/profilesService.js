@@ -13,16 +13,22 @@ const profilesService = {
     },
 
     getProfile: async (authenticatedId, authenticatedType) => {
+        console.log("Arrived at the services");
+
         try {
             const { userTypeDesc, model } = await profilesService.utils(authenticatedType);
-            const user = await genericDAL.findById(model, authenticatedId);
-            if (!user) {
+            console.log("In getProfile service:");
+            console.log("authenticatedId:", authenticatedId);
+            console.log("authenticatedType:", authenticatedType);
+            const userArr = await genericDAL.findByField(model, { id: authenticatedId });
+            if (!userArr || userArr.length === 0) {
                 const error = new Error(`User not found`);
                 error.status = 404;
                 throw error;
             }
+            const user = userArr[0];
             const userIdFromToken = user.userId;
-            return userTypeDesc === 'Volunteers'
+            return userTypeDesc === 'Volunteer'
                 ? await profilesDal.getVolunteerProfile(userIdFromToken)
                 : await profilesDal.getContactProfile(userIdFromToken);
         } catch (error) {

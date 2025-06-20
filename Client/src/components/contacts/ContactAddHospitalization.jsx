@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { CurrentUser } from '.././App';
 import { CodesContext } from '.././Models';
-import { userService } from '../../services/usersServices'
+import { contactsServices } from '../../services/contactsServices';
 import Add from '.././Add';
 
 function ContactAddHospitalization() {
@@ -17,17 +17,14 @@ function ContactAddHospitalization() {
     useEffect(() => {
         if (!didFetch.current && currentUser?.autoId && userTypeObj) {
             didFetch.current = true;
-            userService.getByValue(
-                currentUser.autoId,
-                userTypeObj,
-                "Patients",
-                { contactPeopleId: currentUser.id }, 
+            contactsServices.getAll(
                 (res) => setPatients(res || []),
                 (err) => console.error("Failed to fetch patients:", err)
             );
 
         }
     }, [currentUser?.autoId, userTypeObj]);
+    console.log("patients:", patients);
 
     if (!currentUser || userTypeObj !== 'ContactPerson') {
         return <div>No access to this form</div>;

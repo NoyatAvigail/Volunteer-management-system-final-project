@@ -9,6 +9,7 @@ function ContactAddPatient() {
     const userTypeObj = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
     const sectorsObj = codes?.Sectors;
     const gendersObj = codes?.Genders;
+    console.log("currentUser:", currentUser);
 
     if (!currentUser || userTypeObj !== 'ContactPerson') {
         return <div>No access to this form</div>;
@@ -25,7 +26,7 @@ function ContactAddPatient() {
                         {
                             name: "userId",
                             label: "Patient ID",
-                            type: "text" 
+                            type: "text"
                         },
                         "contactPeopleId",
                         "fullName",

@@ -2,16 +2,18 @@ import profilesService from "../services/profilesService.js";
 
 const profilesController = {
     utils: async (req) => {
-        const authenticatedId = req.user.id.toString();
-        const authenticatedType = req.user.type.toString();
-        return authenticatedId, authenticatedType
+        const authenticatedId = req.user.id?.toString();
+        const authenticatedType = req.user.type?.toString();
+        return { authenticatedId, authenticatedType };
     },
 
     getProfile: async (req, res) => {
-        const authenticated = utils(req);
+        console.log("Arrived at the controller, req");
+
+        const authenticated = await profilesController.utils(req);
         try {
             const requests = await profilesService.getProfile(authenticated.authenticatedId, authenticated.authenticatedType);
-            res.status(200).json(requests);
+            return res.status(200).json(requests);
         } catch (error) {
             console.error("Error in getProfile Controller:", error);
             if (error.status == 403) {

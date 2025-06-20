@@ -14,9 +14,16 @@ export const capitalize = async (str) => {
 };
 const SECRET = process.env.EMAIL_TOKEN_SECRET || "your-secret";
 
-export function generateEditToken(userId) {
-  return jwt.sign({ userId }, SECRET, { expiresIn: '15m' });
+export function generateEditToken() {
+  const length = Math.floor(Math.random() * 4) + 6; 
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let code = '';
+  for (let i = 0; i < length; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
 }
+
 
 export function verifyEditToken(token) {
   return jwt.verify(token, SECRET);

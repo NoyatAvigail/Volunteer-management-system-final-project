@@ -45,6 +45,7 @@ const genericDAL = {
             throw err;
         }
     },
+    
     findByField: (model, query) => {
         const field = Object.keys(query)[0];
         const value = query[field];

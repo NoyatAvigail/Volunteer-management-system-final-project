@@ -9,17 +9,19 @@ export function setTokenGetter(fn) {
     getToken = fn;
 }
 
-async function request(startDate, endDate, onSuccess, onError) {
+async function request(body, url, method = 'GET', onSuccess, onError) {
+    console.log("body:",body);
+    
     try {
         const token = getToken();
         const config = {
-            method: 'GET',
-            url: `${API_URL}/api/contacts`,
+            method,
+            url: `${API_URL}/api/contacts${url}`,
             headers: {
                 authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
-            params: { startDate, endDate }
+            data: body
         };
         const response = await axios(config);
         const data = response.data;
@@ -35,6 +37,8 @@ async function request(startDate, endDate, onSuccess, onError) {
 }
 
 export const contactsServices = {
-    getAll: (startDate, endDate, onSuccess, onErrorr) =>
-        request(startDate, endDate, onSuccess, onErrorr),
+    getAll: (onSuccess, onErrorr) =>
+        request("",'/patients', 'GET', onSuccess, onErrorr),
+    create: (body ,type ,onSuccess, onErrorr) =>
+        request(body, `/${type}`, 'POST', onSuccess, onErrorr),
 }

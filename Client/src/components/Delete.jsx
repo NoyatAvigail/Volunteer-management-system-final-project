@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { userService } from "../services/usersServices";
+import { deleteHandler } from "../services/servicesSelector";
 import { CurrentUser } from "./App";
 import { useCodes } from "./Models";
 
@@ -18,7 +18,7 @@ function Delete({
         e.preventDefault();
         setProcess(1);
         try {
-            await userService.remove(
+            await servicesSelector.remove(
                 currentUser.autoId,
                 userTypeObj,
                 type,

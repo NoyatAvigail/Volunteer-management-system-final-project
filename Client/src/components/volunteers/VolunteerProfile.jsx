@@ -12,13 +12,13 @@ function VolunteerProfile() {
   const [showCodeInput, setShowCodeInput] = useState(false);
   const [code, setCode] = useState("");
   const { register, handleSubmit, setValue, getValues, reset, formState: { errors } } = useForm();
-  const initialData = useProfileData( 'profile', reset);
-  console.log("currentUser:", currentUser);
+  const initialData = useProfileData(reset);
+  console.log("initialData:", initialData);
 
   const onSubmit = async (formData) => {
     console.log("Submitting form...", formData);
     try {
-      await updateProfile(setIsEditing, 'profile', formData);
+      await updateProfile(setIsEditing,formData);
        setIsEditing(false);
       alert("Profile updated successfully.");
     } catch (err) {
