@@ -24,8 +24,9 @@ const profilesController = {
     },
 
     updateProfile: async (req, res) => {
-        const authenticated = utils(req);
+        console.log("הגיע לאפדייט בכונטרול");
         try {
+            const authenticated = await profilesController.utils(req);
             const requests = await profilesService.updateProfile(authenticated.authenticatedId, authenticated.authenticatedType, req.body);
             res.status(200).json(requests);
         } catch (error) {
@@ -38,8 +39,10 @@ const profilesController = {
     },
 
     getPatients: async (req, res) => {
-        const authenticated = utils(req);
         try {
+            const authenticated = await profilesController.utils(req);
+            console.log("הגיע לכונטרולר");
+            console.log("authenticated:", authenticated);
             const requests = await profilesService.getPatients(authenticated.authenticatedId, authenticated.authenticatedType);
             res.status(200).json(requests);
         } catch (error) {
@@ -52,9 +55,10 @@ const profilesController = {
     },
 
     updatePatientProfile: async (req, res) => {
-        const patientId = req.params.id;
-        const authenticated = utils(req);
+        console.log("הגיע לכונטקט");
         try {
+            const patientId = req.params.id;
+            const authenticated =await profilesController.utils(req);
             const requests = await profilesService.updatePatientProfile(patientId, authenticated.authenticatedId, authenticated.authenticatedType, req.body);
             res.status(200).json(requests);
         } catch (error) {

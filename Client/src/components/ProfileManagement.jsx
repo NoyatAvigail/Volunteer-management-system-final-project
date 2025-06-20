@@ -84,8 +84,9 @@ export async function sendEditRequest(setShowCodeInput) {
   });
 }
 
-export async function updateProfile(setIsEditing, formData) {
+export async function updateProfile(type="",setIsEditing, formData) {
   profilesServices.update(
+    type,
     formData,
     () => setIsEditing(false),
     (err) => {
@@ -150,12 +151,12 @@ export const parseProfileDataToForm = (data) => {
   return formValues;
 };
 
-export function useProfileData(resetForm) {
+export function useProfileData(type="",resetForm) {
   const [initialData, setInitialData] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
-      const data = await profilesServices.getAll();
+      const data = await profilesServices.getAll(type);
       console.log("data:", data);
 
       setInitialData(data);
