@@ -1,9 +1,7 @@
 import userService from "../services/usersService.js";
 import { generateToken } from "../middleware/middleware.js";
 import emailsService from '../services/emailsService.js';
-import { generateEditToken } from '../utils/utils.js';
-import jwt from 'jsonwebtoken';
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+// import { generateSimpleCode } from '../utils/utils.js';
 
 const userController = {
     signup: async (req, res) => {
@@ -42,20 +40,16 @@ const userController = {
 
     sendEditEmail: async (req, res) => {
         try {
-            console.log("sendEditEmail");
-            
             const authenticatedId = req.user.id?.toString();
             const authenticatedEmail = req.user.email?.toString();
-            console.log("Received ID:", authenticatedId);
-            console.log("Email to send:", authenticatedEmail);
 
-            if (!authenticatedEmail) return res.status(400).send("Email is required");
+            if (!authenticatedId || !authenticatedEmail)
+                return res.status(400).send("Missing user ID or email");
 
-            const token = generateEditToken(authenticatedId);
-            console.log("Generated token:", token);
-
-            await emailsService.sendEditVerificationMail(authenticatedEmail, token);
-            console.log("Email sent successfully");
+            // const code =generateSimpleCode();
+            const code = emailsService.generateSimple();
+            emailsService.storeEditCode(authenticatedId, code);
+            await emailsService.sendEditVerificationMail(authenticatedEmail, code);
 
             res.send("Email sent");
         } catch (err) {
@@ -65,24 +59,26 @@ const userController = {
     },
 
     verifyEditCode: async (req, res) => {
-        const { code } = req.body;
-
-        if (!code) {
-            return res.status(400).send("Missing code");
-        }
-
         try {
-            const payload = jwt.verify(code, JWT_SECRET);
+            const { code } = req.body;
+            const authenticatedId = req.user.id?.toString();
 
-            if (!payload.userId) {
-                return res.status(400).send("Invalid token payload");
+            if (!code || !authenticatedId)
+                return res.status(400).send("Missing code or user ID");
+
+            const isValid = emailsService.verifyStoredCode(authenticatedId, code);
+
+            if (!isValid) {
+                return res.status(400).send("Invalid or expired code");
             }
 
-            return res.status(200).send({ message: "Code valid", userId: payload.userId });
+            res.status(200).send({ message: "Code valid" });
         } catch (err) {
-            return res.status(400).send("Invalid or expired code");
+            console.error("Error verifying code:", err);
+            res.status(500).send("Internal Server Error");
         }
-    },
+    }
+
 };
 
 export default userController;

@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
-import {sendEditRequests} from '../services/profilesService'
-import {profilesServices} from '../services/profilesService'
+import { handleVerifyCodes, sendEditRequests } from '../services/profilesService'
+import { profilesServices } from '../services/profilesService'
 
 // import { userService } from '../services/usersServices';
 // import {volunteerService} from '../services/volunteersServices'
@@ -84,7 +84,7 @@ export async function sendEditRequest(setShowCodeInput) {
   });
 }
 
-export async function updateProfile(type="",setIsEditing, formData) {
+export async function updateProfile(type = "", setIsEditing, formData) {
   profilesServices.update(
     type,
     formData,
@@ -96,13 +96,26 @@ export async function updateProfile(type="",setIsEditing, formData) {
   );
 };
 
-
 export const handleVerifyCode = async (code, setIsEditing, setShowCodeInput) => {
+  // try {
+  //   await handleVerifyCodes(code, setIsEditing, setShowCodeInput);
+  //   setIsEditing(true);
+  //   setShowCodeInput(false);
+  //   alert("Verification successful. You may now edit the profile.");
+  // } catch (err) {
+  //   console.error("Verification failed:", err);
+  //   alert("Invalid or expired code.");
+  // }
+  const success = await handleVerifyCodes(code);
   try {
-    await profilesServices.create("send-edit-email", "",);
-    setIsEditing(true);
-    setShowCodeInput(false);
-    alert("Verification successful. You may now edit the profile.");
+    await handleVerifyCodes(code, setIsEditing, setShowCodeInput);
+    if (success) {
+      setIsEditing(true);
+      alert("Verification successful. You may now edit the profile.");
+      setShowCodeInput(false);
+    } else {
+      alert("Invalid or expired code.");
+    }
   } catch (err) {
     console.error("Verification failed:", err);
     alert("Invalid or expired code.");
@@ -151,7 +164,7 @@ export const parseProfileDataToForm = (data) => {
   return formValues;
 };
 
-export function useProfileData(type="",resetForm) {
+export function useProfileData(type = "", resetForm) {
   const [initialData, setInitialData] = useState(null);
 
   useEffect(() => {
