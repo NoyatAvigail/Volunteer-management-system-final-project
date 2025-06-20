@@ -106,9 +106,8 @@ export const handleVerifyCode = async (code, setIsEditing, setShowCodeInput) => 
   //   console.error("Verification failed:", err);
   //   alert("Invalid or expired code.");
   // }
-  const success = await handleVerifyCodes(code);
   try {
-    await handleVerifyCodes(code, setIsEditing, setShowCodeInput);
+    const success = await handleVerifyCodes(code, setIsEditing, setShowCodeInput);
     if (success) {
       setIsEditing(true);
       alert("Verification successful. You may now edit the profile.");
