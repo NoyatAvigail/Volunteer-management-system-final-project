@@ -30,7 +30,6 @@ function Add({
         try {
             await createHandler({
                 type,
-                currentUser,
                 body,
                 onSuccess: () => {
                     console.log("Update successful");

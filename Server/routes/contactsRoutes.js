@@ -14,6 +14,11 @@ router.route('/patients/:id')
     .put(contactController.updatePatient)
     .delete(contactController.deletePatient);
 
+
+router.route('/hospitalizeds')
+    .get(contactController.getHospitalizeds)
+    .post(contactController.createHospitalizeds)
+    
 router.route('/thanks')
     .get(contactController.getThanks)
     .post(contactController.createThanks);

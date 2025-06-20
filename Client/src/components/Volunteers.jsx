@@ -7,7 +7,7 @@ import Add from './Add';
 import Delete from './Delete';
 import Update from './Update';
 import '../style/Posts.css';
-import { userService } from '../services/usersServices';
+// import { userService } from '../services/usersServices';
 
 function Volunteers() {
     const [shifts, setShifts] = useState([]);

@@ -8,7 +8,6 @@ router.use(verifyToken);
 
 router.route('/shifts')
     .get(volunteersController.getShifts)
-// .put(volunteersController.updateShift)
 
 router.route('/certificate')
     .get(volunteersController.getCertificate);

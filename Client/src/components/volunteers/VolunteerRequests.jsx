@@ -7,8 +7,8 @@ import Search from '../Search';
 import Sort from '../Sort';
 import Update from '../Update';
 // import '../../style/Posts.css';
-import { requestService } from '../../services/requestsServices';
-import { volunteerService } from '../../services/volunteersServices';
+import { requestsServices } from '../../services/requestsServices';
+// import { volunteersService } from '../../services/volunteersServices';
 
 function VolunteerRequests() {
   const [userData, setUserData] = useState([]);
@@ -26,7 +26,7 @@ function VolunteerRequests() {
     try {
       const startDate = '2025-06-01';
       const endDate = '2025-08-31';
-      await requestService.getAll(
+      await requestsServices.getAll(
         startDate,
         endDate,
         (result) => {
@@ -55,7 +55,7 @@ function VolunteerRequests() {
 
   const handleTakeCall = (callId) => {
     if (!currentUser) return;
-    requestService.patch(
+    requestsServices.patch(
       'requests',
       null,
       { callId },

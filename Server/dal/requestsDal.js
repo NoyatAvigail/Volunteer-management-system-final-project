@@ -31,6 +31,8 @@ const models = {
 
 const requestDal = {
   getContactRequests: async (contactId, startDate, endDate) => {
+    console.log("contactId", contactId);
+
     console.log(Events.associations);
     const events = await Events.findAll({
       where: {
@@ -157,7 +159,37 @@ const requestDal = {
       where: filters,
       include: include
     });
-  }
+  },
+
+  createEvent: async (eventData) => {
+    try {
+      const newEvent = await Events.create(eventData);
+      return newEvent;
+    } catch (error) {
+      console.error("Error creating Event:", error);
+      throw error;
+    }
+  },
+  
+  assignVolunteerToEvent: async (eventId, volunteerId) => {
+    const event = await Events.findByPk(eventId);
+    if (!event) throw new Error("Event not found");
+
+    event.volunteerId = volunteerId;
+    await event.save();
+
+    return event;
+  },
+
+  updateEventDetails: async (eventId, updatedFields) => {
+    const event = await Events.findByPk(eventId);
+    if (!event) throw new Error("Event not found");
+
+    Object.assign(event, updatedFields);
+    await event.save();
+
+    return event;
+  },
   // find: async (table1, targetField, table2, foreignKey, targetKey, targetValue) => {
   //   const matchingRecordsTbl1 = await genericDAL.findByField(
   //     genericDAL.getModelByName(table1),

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { CurrentUser } from '.././App';
-import { userService } from '../../services/usersServices';
+// import { userService } from '../../services/usersServices';
 
 function ContactThanks() {
     const { currentUser } = useContext(CurrentUser);

@@ -34,7 +34,7 @@ async function request(endpoint, method = 'GET', body, onSuccess, onError) {
     }
 }
 
-export const volunteerService = {
+export const volunteersService = {
     getAll: (table, onSuccess, onError) =>
         request(table, "GET", null, onSuccess, onError),
     getByValue: (table, params, onSuccess, onError) =>

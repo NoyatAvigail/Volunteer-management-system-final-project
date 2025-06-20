@@ -8,8 +8,9 @@ import Sort from '.././Sort';
 import Delete from '.././Delete';
 import Update from '.././Update';
 import '../../style/Posts.css';
-import { requestService } from '../../services/requestsServices';
-import { userService } from '../../services/usersServices';
+import { requestsServices } from '../../services/requestsServices';
+import {contactsServices} from '../../services/contactsServices'
+// import { usersServices} from '../../services/usersServices';
 function ContactRequests() {
     const [userData, setUserData] = useState([]);
     const [error, setError] = useState(null);
@@ -22,7 +23,7 @@ function ContactRequests() {
     const [patients, setPatients] = useState([]);
     const [selectedPatientId, setSelectedPatientId] = useState("");
     const [hospitalizedsPerPatient, setHospitalizedsPerPatient] = useState([]);
-    const [updateRow, setUpdateRow] = useState(null); // חדש
+    const [updateRow, setUpdateRow] = useState(null); 
     const didFetch = useRef(false);
 
     const noAccess = !currentUser || userTypeObj !== 'ContactPerson';
@@ -30,14 +31,11 @@ function ContactRequests() {
     useEffect(() => {
         if (!didFetch.current && currentUser?.autoId && userTypeObj) {
             didFetch.current = true;
-            userService.getByValue(
-                currentUser.autoId,
-                userTypeObj,
-                "Patients",
-                { contactPeopleId: currentUser.id },
+            contactsServices.getAll(
                 (res) => setPatients(res || []),
                 (err) => console.error("Failed to fetch patients:", err)
             );
+
         }
     }, [currentUser?.autoId, userTypeObj]);
 
@@ -54,7 +52,7 @@ function ContactRequests() {
     }, [updateRow]);
 
     const fetchHospitalizeds = (patientId) => {
-        userService.getByValue(
+        requestsServices.getByValue(
             currentUser.autoId,
             userTypeObj,
             "Hospitalizeds",
@@ -68,7 +66,7 @@ function ContactRequests() {
         try {
             const startDate = '2025-06-01';
             const endDate = '2025-08-31';
-            await requestService.getAll(
+            await requestsServices.getAll(
                 startDate,
                 endDate,
                 (result) => {

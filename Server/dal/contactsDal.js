@@ -1,19 +1,24 @@
-import { Patients, Hospitalizeds } from '../../DB/index.mjs';
+import { Patients, Hospitalizeds, ContactPeople } from '../../DB/index.mjs';
 
 const contactsDal = {
     getPatients: async (contactId) => {
+        const contact = await ContactPeople.findOne({
+            where: { id: contactId }
+        });
+
+        if (!contact) return [];
+
         return await Patients.findAll({
-            where: { contactPeopleId: contactId, is_deleted: false },
+            where: {
+                contactPeopleId: contact.userId,
+                is_deleted: false
+            },
             include: [{ model: Hospitalizeds }]
         });
     },
 
-    createPatient: async (contactId, data) => {
-        return await Patients.create({
-            ...data,
-            contactPeopleId: contactId,
-            is_deleted: false
-        });
+    createPatient: async (data) => {
+        return await Patients.create(data);
     },
 
     getPatientById: async (contactId, patientId) => {
@@ -71,6 +76,28 @@ const contactsDal = {
         return patient;
     },
 
+    getHospitalizeds: async (contactId) => {
+        return await Hospitalizeds.findAll({
+            where: {
+                is_deleted: false
+            },
+            include: [{
+                model: Patients,
+                required: true,
+                where: {
+                    contactPeopleId: contactId
+                }
+            }]
+        });
+    },
+
+    createHospitalizeds: async (patientId, body) => {
+        return await Hospitalizeds.create({
+            ...body,
+            patientId
+        });
+    },
+    
     getThanks: async (userId) => {
         return await Thanks.findAll({
             where: {

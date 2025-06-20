@@ -9,8 +9,9 @@ export function setTokenGetter(fn) {
     getToken = fn;
 }
 
-export async function sendEditRequest() {
+export async function sendEditRequests() {
     try {
+         const token = getToken();
         await axios.post(`${API_URL}/api/profiles/send-edit-email`, {}, {
             headers: {
                 authorization: `Bearer ${token}`,
@@ -62,11 +63,12 @@ async function request(method = 'GET', body = null, onSuccess, onError) {
     }
 }
 
-export const profilesService = {
+export const profilesServices = {
     getAll: async () => await request('GET'),
     update: (data, onSuccess, onError) =>
         request('PUT', data, onSuccess, onError),
     create: (data, onSuccess, onError) =>
         request('POST', data, onSuccess, onError),
 }
+
 

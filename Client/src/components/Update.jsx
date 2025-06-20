@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { userService } from "../services/usersServices";
+import { updatHandler } from "../services/servicesSelector";
 import { CurrentUser } from "./App";
 import { useCodes } from "../components/Models";
 
@@ -22,7 +22,7 @@ function Update({ type, itemId, setIsChange, inputs, defaultValue = {}, onSucces
         e.preventDefault();
         setScreen(0);
         try {
-            await userService.patch(
+            await updatHandler.patch(
                 currentUser.autoId,
                 userTypeObj,
                 type,
