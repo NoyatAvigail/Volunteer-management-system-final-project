@@ -6,9 +6,9 @@ import { CurrentUser } from '../App';
 import {
   useProfileData,
   useEditModeFromSessionStorage,
-  sendEditRequest,
   updateProfile,
-  handleVerifyCode
+  handleVerifyCode,
+  sendEditRequest
 } from '../ProfileManagement';
 
 function ContactPersonProfile() {
@@ -18,13 +18,13 @@ function ContactPersonProfile() {
   const [showCodeInput, setShowCodeInput] = useState(false);
   const [code, setCode] = useState("");
   const { register, handleSubmit, setValue, getValues, reset, formState: { errors } } = useForm();
-  const initialData = useProfileData(reset);
+  const initialData = useProfileData("", reset);
   console.log("currentUser:", currentUser);
 
   const onSubmit = async (formData) => {
     console.log("Submitting form...", formData);
     try {
-      await updateProfile(setIsEditing, formData);
+      await updateProfile("", setIsEditing, formData);
       setIsEditing(false);
       alert("Profile updated successfully.");
     } catch (err) {
@@ -45,54 +45,57 @@ function ContactPersonProfile() {
     }
   };
 
-
   const verifyCode = async () => {
-    await handleVerifyCode(code, setIsEditing, setShowCodeInput, currentUser);
-  };
+    try {
+      await handleVerifyCode(code, setIsEditing, setShowCodeInput);
+     } catch (e) {
+    alert("Failed to send email.");
+  }
+};
 
-  if (!initialData) return <div>Loading profile...</div>;
+if (!initialData) return <div>Loading profile...</div>;
 
-  return (
-    <div>
-      <h2>Contact Person Profile</h2>
+return (
+  <div>
+    <h2>Contact Person Profile</h2>
 
-      {!isEditing && <button onClick={handleRequestEdit}>Edit Profile</button>}
-      {!isEditing && showCodeInput && (
-        <div>
+    {!isEditing && <button onClick={handleRequestEdit}>Edit Profile</button>}
+    {!isEditing && showCodeInput && (
+      <div>
+        <input
+          placeholder="Enter verification code"
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+        />
+        <button onClick={verifyCode}>Verify</button>
+      </div>
+    )}
+
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input placeholder="ID" {...register("userId", { required: true })} readOnly={!isEditing} />
+      <input placeholder="Full Name" {...register("fullName", { required: true })} readOnly={!isEditing} />
+      <input placeholder="Email" {...register("email", { required: true })} readOnly={!isEditing} />
+      <input placeholder="Phone" {...register("phone", { required: true })} readOnly={!isEditing} />
+      <input placeholder="Address" {...register("address", { required: true })} readOnly={!isEditing} />
+
+      <label>Family Relation</label>
+      {codes?.FamilyRelations?.map((item) => (
+        <div key={item.id}>
           <input
-            placeholder="Enter verification code"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
+            type="radio"
+            {...register("relationId", { required: true })}
+            value={item.id}
+            id={`relation-${item.id}`}
+            disabled={!isEditing}
           />
-          <button onClick={verifyCode}>Verify</button>
+          <label htmlFor={`relation-${item.id}`}>{item.description}</label>
         </div>
-      )}
-
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input placeholder="ID" {...register("userId", { required: true })} readOnly={!isEditing} />
-        <input placeholder="Full Name" {...register("fullName", { required: true })} readOnly={!isEditing} />
-        <input placeholder="Email" {...register("email", { required: true })} readOnly={!isEditing} />
-        <input placeholder="Phone" {...register("phone", { required: true })} readOnly={!isEditing} />
-        <input placeholder="Address" {...register("address", { required: true })} readOnly={!isEditing} />
-
-        <label>Family Relation</label>
-        {codes?.FamilyRelations?.map((item) => (
-          <div key={item.id}>
-            <input
-              type="radio"
-              {...register("relationId", { required: true })}
-              value={item.id}
-              id={`relation-${item.id}`}
-              disabled={!isEditing}
-            />
-            <label htmlFor={`relation-${item.id}`}>{item.description}</label>
-          </div>
-        ))}
-        {errors.relationId && <p>Please select a relation</p>}
-        {isEditing && <button type="submit">Save Changes</button>}
-      </form>
-    </div>
-  );
+      ))}
+      {errors.relationId && <p>Please select a relation</p>}
+      {isEditing && <button type="submit">Save Changes</button>}
+    </form>
+  </div>
+);
 }
 
 export default ContactPersonProfile;

@@ -50,7 +50,7 @@ function ContactRequests() {
             fetchHospitalizeds(updateRow.patientId);
         }
     }, [updateRow]);
-
+//לטפל בזה דחוף!
     const fetchHospitalizeds = (patientId) => {
         requestsServices.getByValue(
             currentUser.autoId,
