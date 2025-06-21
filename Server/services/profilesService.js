@@ -13,13 +13,8 @@ const profilesService = {
     },
 
     getProfile: async (authenticatedId, authenticatedType) => {
-        console.log("Arrived at the services");
-
         try {
             const { userTypeDesc, model } = await profilesService.utils(authenticatedType);
-            console.log("In getProfile service:");
-            console.log("authenticatedId:", authenticatedId);
-            console.log("authenticatedType:", authenticatedType);
             const userArr = await genericDAL.findByField(model, { id: authenticatedId });
             if (!userArr || userArr.length === 0) {
                 const error = new Error(`User not found`);
@@ -28,6 +23,8 @@ const profilesService = {
             }
             const user = userArr[0];
             const userIdFromToken = user.userId;
+            console.log("userIdFromToken:",userIdFromToken);
+            
             return userTypeDesc === 'Volunteer'
                 ? await profilesDal.getVolunteerProfile(userIdFromToken)
                 : await profilesDal.getContactProfile(userIdFromToken);
@@ -38,11 +35,8 @@ const profilesService = {
     },
 
     updateProfile: async (authenticatedId, authenticatedType, body) => {
-        try {            
+        try {
             const { userTypeDesc, model } = await profilesService.utils(authenticatedType);
-            console.log("userTypeDesc:",userTypeDesc);
-            console.log("model:", model);
-            console.log("authenticatedId:", authenticatedId);
             const user = await genericDAL.findById(model, authenticatedId);
             if (!user) {
                 const error = new Error(`User not found`);
@@ -60,9 +54,6 @@ const profilesService = {
     },
 
     getPatients: async (authenticatedId, authenticatedType) => {
-        console.log("הגיע לסרביס");
-        console.log("authenticatedId:", authenticatedId);
-
         try {
             const { userTypeDesc, model } = await profilesService.utils(authenticatedType);
             console.log("In getProfile service:");
@@ -88,8 +79,6 @@ const profilesService = {
 
     updatePatientProfile: async (patientId, authenticatedId, authenticatedType, body) => {
         try {
-            console.log("הגיע לסרביס");
-            
             const { userTypeDesc, model } = await profilesService.utils(authenticatedType);
             const user = await genericDAL.findById(model, authenticatedId);
             if (!user) {
@@ -98,7 +87,7 @@ const profilesService = {
                 throw error;
             }
             if (userTypeDesc == 'ContactPerson') {
-                return await profilesDal.updatePatientProfile(patientId,body);
+                return await profilesDal.updatePatientProfile(patientId, body);
             }
         } catch (error) {
             console.error("Error in updatePatientProfile:", error);

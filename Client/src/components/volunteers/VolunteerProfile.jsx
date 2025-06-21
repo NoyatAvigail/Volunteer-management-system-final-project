@@ -1,25 +1,38 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { CurrentUser } from '../App';
-import { CodesContext } from '../Models';
 import { useForm } from "react-hook-form";
-// import '../../style/VolunteerRequests.css';
-import { useProfileData, handleVerifyCode, parseProfileDataToForm, useEditModeFromSessionStorage, sendEditRequest, updateProfile } from '../ProfileManagement';
-
+import { CodesContext } from '../Models';
+import { CurrentUser } from '../App';
+import {
+  useProfileData,
+  useEditModeFromSessionStorage,
+  updateProfile,
+  handleVerifyCode,
+  sendEditRequest
+} from '../ProfileManagement';
 function VolunteerProfile() {
+  // const [isEditing, setIsEditing] = useEditModeFromSessionStorage();
+  // const { codes, loading } = useContext(CodesContext);
+  // const { currentUser } = useContext(CurrentUser);
+  // const [showCodeInput, setShowCodeInput] = useState(false);
+  // const [code, setCode] = useState("");
+  // const { register, handleSubmit, setValue, getValues, reset, formState: { errors } } = useForm();
+  // const initialData = useProfileData(reset);
+  // console.log("initialData:", initialData);
   const [isEditing, setIsEditing] = useEditModeFromSessionStorage();
   const { codes, loading } = useContext(CodesContext);
   const { currentUser } = useContext(CurrentUser);
   const [showCodeInput, setShowCodeInput] = useState(false);
   const [code, setCode] = useState("");
   const { register, handleSubmit, setValue, getValues, reset, formState: { errors } } = useForm();
-  const initialData = useProfileData(reset);
-  console.log("initialData:", initialData);
-
+  const initialData = useProfileData("", reset);
+  console.log("initialData:",initialData);
+  
+  console.log("currentUser:", currentUser);
   const onSubmit = async (formData) => {
     console.log("Submitting form...", formData);
     try {
-      await updateProfile(setIsEditing,formData);
-       setIsEditing(false);
+      await updateProfile("", setIsEditing, formData);
+      setIsEditing(false);
       alert("Profile updated successfully.");
     } catch (err) {
       console.error("Update failed:", err);
@@ -30,21 +43,24 @@ function VolunteerProfile() {
 
   const handleRequestEdit = async () => {
     try {
-      await sendEditRequest(volunteerService);
+      alert("Verification email sent.");
+      await sendEditRequest(setShowCodeInput);
+      // setShowCodeInput(true);
 
-      alert("נשלח מייל עם קוד אימות");
-      setShowCodeInput(true);
     } catch (e) {
-      alert("שליחת האימייל נכשלה");
+      alert("Failed to send email.");
     }
   };
 
-  const onClickVerify = async () => {
-    console.log("verifying with code", code);
-    await handleVerifyCode(volunteerService,code, setIsEditing, setShowCodeInput, currentUser);
+  const verifyCode = async () => {
+    try {
+      await handleVerifyCode(code, setIsEditing, setShowCodeInput);
+    } catch (e) {
+      alert("Failed to send email.");
+    }
   };
 
-
+  if (!initialData) return <div>Loading profile...</div>;
 
   return (
     <div>
