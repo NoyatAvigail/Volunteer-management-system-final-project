@@ -10,9 +10,11 @@ const requestsController = {
     // GET /api/requests?contactPerson=123
     // GET /api/requests?volunteer=123
     getRequests: async (req, res) => {
-        const { startDate, endDate } = req.query;
-        const authenticated = await requestsController.utils(req);
         try {
+            const { startDate, endDate } = req.query;
+            const authenticated = await requestsController.utils(req);
+            console.log("startDate:", startDate, "endDate:", endDate);
+
             const requests = await requestsService.getRequests(authenticated.authenticatedId, authenticated.authenticatedType, startDate, endDate);
             res.status(200).json(requests);
         } catch (error) {
@@ -25,10 +27,9 @@ const requestsController = {
     },
 
     createRequests: async (req, res) => {
-        const authenticated = utils(req);
-        const body = req.body;
-
         try {
+            const authenticated = await requestsController.utils(req);
+            const body = req.body;
             const newEvent = await requestsService.createRequests(body, authenticated.authenticatedId, authenticated.authenticatedType);
             res.status(200).json(newEvent);
         } catch (error) {
@@ -57,7 +58,7 @@ const requestsController = {
             });
         }
     },
-    
+
     updatRequests: async (req, res) => {
         const authenticated = utils(req);
         const { id } = req.params;

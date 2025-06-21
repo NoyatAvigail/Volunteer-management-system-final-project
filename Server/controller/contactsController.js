@@ -84,10 +84,11 @@ const contactController = {
     }
   },
 
-  getHospitalizeds: async (req, res) => {
-    try {
-      const authenticated = utils(req);
-      const requests = await contactsService.getHospitalizeds(authenticated.authenticatedId);
+  getHospitalizedsById: async (req, res) => {
+    try {      
+      const authenticated = contactController.utils(req);
+      const patientId = req.params.id;
+      const requests = await contactsService.getHospitalizedsById(authenticated.authenticatedId,patientId);
       res.status(200).json(requests);
     } catch (error) {
       console.error("Error in getHospitalizeds Controller:", error);

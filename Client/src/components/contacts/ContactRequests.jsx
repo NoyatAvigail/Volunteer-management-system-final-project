@@ -32,6 +32,7 @@ function ContactRequests() {
         if (!didFetch.current && currentUser?.autoId && userTypeObj) {
             didFetch.current = true;
             contactsServices.getAll(
+                'patients',
                 (res) => setPatients(res || []),
                 (err) => console.error("Failed to fetch patients:", err)
             );
@@ -52,11 +53,9 @@ function ContactRequests() {
     }, [updateRow]);
 //לטפל בזה דחוף!
     const fetchHospitalizeds = (patientId) => {
-        requestsServices.getByValue(
-            currentUser.autoId,
-            userTypeObj,
+          contactsServices.getByValue(
             "Hospitalizeds",
-            { patientId },
+            patientId ,
             (res) => setHospitalizedsPerPatient(res || []),
             (err) => console.error("Failed to fetch hospitalizeds:", err)
         );

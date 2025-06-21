@@ -4,9 +4,7 @@ import ContactPeople from '../models/ContactPeople.js';
 
 const contactsService = {
     getPatients: async (authenticatedId) => {
-        try {
-            console.log("authenticatedId:",authenticatedId);
-            
+        try {            
             return await contactsDal.getPatients(authenticatedId);
         } catch (error) {
             console.error("Error in contactsService.getPatients:", error);
@@ -65,9 +63,9 @@ const contactsService = {
         }
     },
 
-    getHospitalizeds: async (authenticatedId) => {
-        try {
-            return await contactsDal.getHospitalizeds(authenticatedId);
+    getHospitalizedsById: async (authenticatedId,patientId) => {
+        try {            
+            return await contactsDal.getHospitalizedsById(patientId);
         } catch (error) {
             console.error("Error in contactsService.getHospitalizeds:", error);
             throw error;
