@@ -48,7 +48,7 @@ function ContactPatientInfo() {
 
     const onSubmit = async (formData) => {
         try {
-            await updateProfile(`patients/${profileData.id}`,setIsEditing,formData);
+            await updateProfile(`patients/${profileData.id}`, setIsEditing, formData);
             alert("Profile updated successfully.");
             setIsEditing(false);
         } catch (err) {
@@ -148,7 +148,7 @@ function ContactPatientInfo() {
                     ))}
                 </select>
 
-                {/* <select {...register("departmentId", { required: true })} disabled={!isEditing}>
+                <select {...register("departmentId", { required: true })} disabled={!isEditing}>
                     <option value="">Select Department</option>
                     {codes?.Departments?.map((d) => (
                         <option key={d.id} value={d.id}>{d.description}</option>
@@ -160,7 +160,7 @@ function ContactPatientInfo() {
                     {codes?.Hospitals?.map((h) => (
                         <option key={h.id} value={h.id}>{h.description}</option>
                     ))}
-                </select> */}
+                </select>
 
                 {isEditing && <button type="submit">Update</button>}
             </form>

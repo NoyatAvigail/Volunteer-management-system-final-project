@@ -8,7 +8,6 @@ const profilesController = {
     },
 
     getProfile: async (req, res) => {
-        console.log("Arrived at the controller, req");
 
         const authenticated = await profilesController.utils(req);
         try {
@@ -57,7 +56,7 @@ const profilesController = {
     updatePatientProfile: async (req, res) => {
         try {
             const patientId = req.params.id;
-            const authenticated =await profilesController.utils(req);
+            const authenticated = await profilesController.utils(req);
             const requests = await profilesService.updatePatientProfile(patientId, authenticated.authenticatedId, authenticated.authenticatedType, req.body);
             res.status(200).json(requests);
         } catch (error) {

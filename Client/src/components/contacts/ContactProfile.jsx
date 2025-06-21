@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useForm } from "react-hook-form";
-import { profilesServices } from '../../services/profilesService';
 import { CodesContext } from '../Models';
 import { CurrentUser } from '../App';
 import {
@@ -36,9 +35,9 @@ function ContactPersonProfile() {
 
   const handleRequestEdit = async () => {
     try {
+      alert("Verification email sent.");
       await sendEditRequest(setShowCodeInput);
       // setShowCodeInput(true);
-      alert("Verification email sent.");
 
     } catch (e) {
       alert("Failed to send email.");
@@ -48,54 +47,54 @@ function ContactPersonProfile() {
   const verifyCode = async () => {
     try {
       await handleVerifyCode(code, setIsEditing, setShowCodeInput);
-     } catch (e) {
-    alert("Failed to send email.");
-  }
-};
+    } catch (e) {
+      alert("Failed to send email.");
+    }
+  };
 
-if (!initialData) return <div>Loading profile...</div>;
+  if (!initialData) return <div>Loading profile...</div>;
 
-return (
-  <div>
-    <h2>Contact Person Profile</h2>
+  return (
+    <div>
+      <h2>Contact Person Profile</h2>
 
-    {!isEditing && <button onClick={handleRequestEdit}>Edit Profile</button>}
-    {!isEditing && showCodeInput && (
-      <div>
-        <input
-          placeholder="Enter verification code"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-        />
-        <button onClick={verifyCode}>Verify</button>
-      </div>
-    )}
-
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input placeholder="ID" {...register("userId", { required: true })} readOnly={!isEditing} />
-      <input placeholder="Full Name" {...register("fullName", { required: true })} readOnly={!isEditing} />
-      <input placeholder="Email" {...register("email", { required: true })} readOnly={!isEditing} />
-      <input placeholder="Phone" {...register("phone", { required: true })} readOnly={!isEditing} />
-      <input placeholder="Address" {...register("address", { required: true })} readOnly={!isEditing} />
-
-      <label>Family Relation</label>
-      {codes?.FamilyRelations?.map((item) => (
-        <div key={item.id}>
+      {!isEditing && <button onClick={handleRequestEdit}>Edit Profile</button>}
+      {!isEditing && showCodeInput && (
+        <div>
           <input
-            type="radio"
-            {...register("relationId", { required: true })}
-            value={item.id}
-            id={`relation-${item.id}`}
-            disabled={!isEditing}
+            placeholder="Enter verification code"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
           />
-          <label htmlFor={`relation-${item.id}`}>{item.description}</label>
+          <button onClick={verifyCode}>Verify</button>
         </div>
-      ))}
-      {errors.relationId && <p>Please select a relation</p>}
-      {isEditing && <button type="submit">Save Changes</button>}
-    </form>
-  </div>
-);
+      )}
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <input placeholder="ID" {...register("userId", { required: true })} readOnly={!isEditing} />
+        <input placeholder="Full Name" {...register("fullName", { required: true })} readOnly={!isEditing} />
+        <input placeholder="Email" {...register("email", { required: true })} readOnly={!isEditing} />
+        <input placeholder="Phone" {...register("phone", { required: true })} readOnly={!isEditing} />
+        <input placeholder="Address" {...register("address", { required: true })} readOnly={!isEditing} />
+
+        <label>Family Relation</label>
+        {codes?.FamilyRelations?.map((item) => (
+          <div key={item.id}>
+            <input
+              type="radio"
+              {...register("relationId", { required: true })}
+              value={item.id}
+              id={`relation-${item.id}`}
+              disabled={!isEditing}
+            />
+            <label htmlFor={`relation-${item.id}`}>{item.description}</label>
+          </div>
+        ))}
+        {errors.relationId && <p>Please select a relation</p>}
+        {isEditing && <button type="submit">Save Changes</button>}
+      </form>
+    </div>
+  );
 }
 
 export default ContactPersonProfile;
