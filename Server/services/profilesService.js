@@ -6,7 +6,7 @@ const profilesService = {
         const type = genericDAL.getModelByName('UserTypes');
         const userType = await genericDAL.findById(type, authenticatedType);
         const userTypeDesc = userType?.description;
-        const model = userTypeDesc === 'Volunteers'
+        const model = userTypeDesc === 'Volunteer'
             ? genericDAL.getModelByName('Volunteers')
             : genericDAL.getModelByName('ContactPeople');
         return { userTypeDesc, model };
@@ -22,9 +22,7 @@ const profilesService = {
                 throw error;
             }
             const user = userArr[0];
-            const userIdFromToken = user.userId;
-            console.log("userIdFromToken:",userIdFromToken);
-            
+            const userIdFromToken = user.userId;            
             return userTypeDesc === 'Volunteer'
                 ? await profilesDal.getVolunteerProfile(userIdFromToken)
                 : await profilesDal.getContactProfile(userIdFromToken);
