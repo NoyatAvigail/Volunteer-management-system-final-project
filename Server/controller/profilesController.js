@@ -55,7 +55,6 @@ const profilesController = {
     },
 
     updatePatientProfile: async (req, res) => {
-        console.log("הגיע לכונטקט");
         try {
             const patientId = req.params.id;
             const authenticated =await profilesController.utils(req);

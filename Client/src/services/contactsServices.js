@@ -37,8 +37,10 @@ async function request(body, url, method = 'GET', onSuccess, onError) {
 }
 
 export const contactsServices = {
-    getAll: (onSuccess, onErrorr) =>
-        request("",'/patients', 'GET', onSuccess, onErrorr),
+    getAll: (url,onSuccess, onErrorr) =>
+        request("",`/${url}`, 'GET', onSuccess, onErrorr),
+    getByValue:(url,id,onSuccess, onErrorr) =>
+        request("",`/${url}/${id}`, 'GET', onSuccess, onErrorr),
     create: (body ,type ,onSuccess, onErrorr) =>
         request(body, `/${type}`, 'POST', onSuccess, onErrorr),
 }

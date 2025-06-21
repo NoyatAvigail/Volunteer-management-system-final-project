@@ -77,8 +77,8 @@ export const requestsServices = {
     getAll: (startDate, endDate, onSuccess, onError) =>
         request({ method: 'GET', params: { startDate, endDate },data:null, onSuccess, onError, }),
 
-    createEvent: (body, onSuccess, onError) =>
-        request({ method: 'POST', params:null,body, onSuccess, onError, }),
+    createEvent: (data, onSuccess, onError) =>
+        request({ method: 'POST', params:null,data, onSuccess, onError, }),
 
     deleteEvent: (body, onSuccess, onError) =>
         request({method: 'DELETE',params:null,body,onSuccess,onError,

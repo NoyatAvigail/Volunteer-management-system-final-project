@@ -76,18 +76,18 @@ const contactsDal = {
         return patient;
     },
 
-    getHospitalizeds: async (contactId) => {
+    getHospitalizedsById: async (patientId) => {
         return await Hospitalizeds.findAll({
             where: {
-                is_deleted: false
-            },
-            include: [{
-                model: Patients,
-                required: true,
-                where: {
-                    contactPeopleId: contactId
-                }
-            }]
+                patientId: patientId, is_deleted: 0
+            }
+            // include: [{
+            //     model: Patients,
+            //     required: true,
+            //     where: {
+            //         id: patientId
+            //     }
+            // }]
         });
     },
 
@@ -97,7 +97,7 @@ const contactsDal = {
             patientId
         });
     },
-    
+
     getThanks: async (userId) => {
         return await Thanks.findAll({
             where: {

@@ -101,12 +101,12 @@ const requestService = {
         const userIdFromToken = user.userId;
         const requests = utils.userTypeDesc == 'Volunteers' ?
             await requestsDal.getVolunteerRequests(userIdFromToken) :
-            await requestsDal.getContactRequests(userIdFromToken)
+            await requestsDal.getContactRequests(userIdFromToken,startDate, endDate)
         return requests;
     },
 
     createRequests: async (body, authenticatedId, authenticatedType) => {
-        const userUtils = utils(authenticatedType);
+        const userUtils =await requestService.utils(authenticatedType);
         const user = await genericDAL.findById(userUtils.model, authenticatedId);
         if (!user) {
             const error = new Error(`User not found`);
@@ -116,7 +116,7 @@ const requestService = {
 
         const userIdFromToken = user.userId;
 
-        if (userUtils.userTypeDesc !== 'ContactPeople') {
+        if (userUtils.userTypeDesc !== 'ContactPerson') {
             const error = new Error('Only ContactPeople can create requests');
             error.status = 403;
             throw error;
