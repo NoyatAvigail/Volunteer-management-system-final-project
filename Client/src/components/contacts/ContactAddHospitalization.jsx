@@ -18,6 +18,7 @@ function ContactAddHospitalization() {
         if (!didFetch.current && currentUser?.autoId && userTypeObj) {
             didFetch.current = true;
             contactsServices.getAll(
+                'patients',
                 (res) => setPatients(res || []),
                 (err) => console.error("Failed to fetch patients:", err)
             );
