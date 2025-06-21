@@ -76,7 +76,7 @@ function VolunteerProfile() {
             value={code}
             onChange={(e) => setCode(e.target.value)}
           />
-          <button onClick={onClickVerify}>אמת קוד </button>
+          <button onClick={verifyCode}>אמת קוד </button>
 
         </div>
       )}
