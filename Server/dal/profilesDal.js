@@ -3,20 +3,17 @@ import { Users, Volunteers, VolunteerTypes, sequelize, VolunteeringForGenders, V
 
 const profilesDAL = {
     getVolunteerProfile: async (userId) => {
-        console.log("userId:",userId);
-        const vol = await Volunteers.findOne({
-            where: { userId , is_deleted: 0 }
+        
+        return Volunteers.findOne({
+            where: { userId, is_deleted: 0 },
+            include: [
+                { model: Users },
+                { model: VolunteerTypes },
+                { model: VolunteeringInDepartments },
+                { model: VolunteeringForSectors },
+                { model: VolunteeringForGenders }
+            ]
         });
-        // include: [
-        //     { model: Users },
-        // { model: VolunteerTypes },
-        // { model: VolunteeringInDepartments },
-        // { model: VolunteeringForSectors },
-        // { model: VolunteeringForGenders }
-        // ]
-        // });
-        console.log("volunteer:", vol);
-        return vol;
     },
 
     getContactProfile: async (userId) => {
@@ -129,8 +126,8 @@ const profilesDAL = {
     updatePatientProfile: async (patientId, data) => {
         try {
             console.log("data:", data);
-            console.log("patientId:", patientId);
-
+            console.log("patientId:",patientId);
+            
             const transaction = await sequelize.transaction();
             const patient = await Patients.findByPk(patientId, { transaction });
             if (!patient)
