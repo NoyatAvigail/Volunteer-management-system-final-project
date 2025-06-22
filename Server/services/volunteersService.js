@@ -13,10 +13,11 @@ const volunteerService = {
     },
 
     getShifts: async (authenticatedId, authenticatedType) => {
-        console.log("סרביסז");
-        
-        const { model } = await profilesService.utils(authenticatedType);
-        const user = await genericDAL.findById(model, authenticatedId);
+        console.log("סרביסז", authenticatedId);
+
+        // const { model } = profilesService.utils(authenticatedType);
+        const volunteer = genericDAL.getModelByName('Volunteers')
+        const user = await genericDAL.findById(volunteer, authenticatedId);
         if (!user) {
             const error = new Error(`User not found`);
             error.status = 404;

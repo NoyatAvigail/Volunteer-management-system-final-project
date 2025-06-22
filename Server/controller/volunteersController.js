@@ -4,14 +4,16 @@ const volunteersController = {
   utils: async (req) => {
     const authenticatedId = req.user.id.toString();
     const authenticatedType = req.user.type.toString();
-    return authenticatedId, authenticatedType
+    return { authenticatedId, authenticatedType }
   },
 
   getShifts: async (req, res) => {
-    const authenticated = utils(req);
     try {
-      const shifts = await volunteerService.getShifts(authenticated.authenticatedId);
-      res.json(shifts);
+      console.log("כונטרולר");
+      
+      const authenticated =await volunteersController.utils(req);
+      const shifts = await volunteerService.getShifts(authenticated.authenticatedId, authenticated.authenticatedType);
+      return res.json(shifts);
     } catch (err) {
       res.status(500).json({ error: err.message });
     }

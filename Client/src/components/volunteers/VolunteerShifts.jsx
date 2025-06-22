@@ -17,6 +17,7 @@ function VolunteerShifts() {
       (error) => console.error(error)
     );
   }, [currentUser]);
+  console.log("shifts:", shifts);
 
   return (
     <div className="requests">
@@ -30,23 +31,29 @@ function VolunteerShifts() {
               <th>תאריך</th>
               <th>שעת התחלה</th>
               <th>שעת סיום</th>
+              <th>פציינט</th>
+              <th>איש קשר</th>
               <th>מספר חדר</th>
               <th>בית חולים</th>
               <th>מחלקה</th>
             </tr>
           </thead>
+
           <tbody>
-            {shifts.map(shift => (
+            {shifts.map((shift) => (
               <tr key={shift.id}>
                 <td>{new Date(shift.date).toISOString().split('T')[0]}</td>
                 <td>{shift.startTime}</td>
                 <td>{shift.endTime}</td>
-                <td>{shift.roomNumber}</td>
-                <td>{shift.hospital}</td>
-                <td>{shift.department}</td>
+                <td>{shift.Hospitalized?.Patient?.fullName || "—"}</td>
+                <td>{shift.ContactPerson?.fullName || "—"}</td>
+                <td>{shift.Hospitalized?.roomNumber || "—"}</td>
+                <td>{shift.Hospitalized?.Hospital?.description || "—"}</td>
+                <td>{shift.Hospitalized?.Department?.description || "—"}</td>
               </tr>
             ))}
           </tbody>
+
         </table>
       )}
     </div>
