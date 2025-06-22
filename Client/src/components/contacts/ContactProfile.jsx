@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useForm } from "react-hook-form";
 import { CodesContext } from '../Models';
 import { CurrentUser } from '../App';
+import '../../style/Profile.css'
 import {
   useProfileData,
   useEditModeFromSessionStorage,
@@ -18,10 +19,8 @@ function ContactPersonProfile() {
   const [code, setCode] = useState("");
   const { register, handleSubmit, setValue, getValues, reset, formState: { errors } } = useForm();
   const initialData = useProfileData("", reset);
-  console.log("currentUser:", currentUser);
 
   const onSubmit = async (formData) => {
-    console.log("Submitting form...", formData);
     try {
       await updateProfile("", setIsEditing, formData);
       setIsEditing(false);
@@ -52,43 +51,104 @@ function ContactPersonProfile() {
   if (!initialData) return <div>Loading profile...</div>;
 
   return (
-    <div>
-      <h2>Contact Person Profile</h2>
-      {!isEditing && <button onClick={handleRequestEdit}>Edit Profile</button>}
-      {!isEditing && showCodeInput && (
-        <div>
-          <input
-            placeholder="Enter verification code"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-          />
-          <button onClick={verifyCode}>Verify</button>
-        </div>
-      )}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input placeholder="ID" {...register("userId", { required: true })} readOnly={!isEditing} />
-        <input placeholder="Full Name" {...register("fullName", { required: true })} readOnly={!isEditing} />
-        <input placeholder="Email" {...register("email", { required: true })} readOnly={!isEditing} />
-        <input placeholder="Phone" {...register("phone", { required: true })} readOnly={!isEditing} />
-        <input placeholder="Address" {...register("address", { required: true })} readOnly={!isEditing} />
-        <label>Family Relation</label>
-        {codes?.FamilyRelations?.map((item) => (
-          <div key={item.id}>
+    <div className="entryContainer">
+      <form onSubmit={handleSubmit(onSubmit)} className="entryForm">
+        <h2>Contact Person Profile</h2>
+        {!isEditing && <button onClick={handleRequestEdit}>Edit Profile</button>}
+        {!isEditing && showCodeInput && (
+          <div>
             <input
-              type="radio"
-              {...register("relationId", { required: true })}
-              value={item.id}
-              id={`relation-${item.id}`}
-              disabled={!isEditing}
+              className="entryForm-input"
+              placeholder="Enter verification code"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
             />
-            <label htmlFor={`relation-${item.id}`}>{item.description}</label>
+            <button onClick={verifyCode}>Verify</button>
           </div>
-        ))}
+        )}
+        <input
+          placeholder="ID"
+          {...register("userId", { required: true })}
+          readOnly={!isEditing}
+        />
+        <input
+          placeholder="Full Name"
+          {...register("fullName", { required: true })}
+          readOnly={!isEditing}
+        />
+        <input
+          placeholder="Email"
+          {...register("email", { required: true })}
+          readOnly={!isEditing}
+        />
+        <input
+          placeholder="Phone"
+          {...register("phone", { required: true })}
+          readOnly={!isEditing}
+        />
+        <input
+          placeholder="Address"
+          {...register("address", { required: true })}
+          readOnly={!isEditing}
+        />
+        <label>Family Relation</label>
+        <div className="preference">
+          {codes?.FamilyRelations?.map((item) => (
+            <div key={item.id}>
+              <input
+                type="radio"
+                {...register("relationId", { required: true })}
+                value={item.id}
+                id={`relation-${item.id}`}
+                disabled={!isEditing}
+              />
+              <label htmlFor={`relation-${item.id}`}>{item.description}</label>
+            </div>
+          ))}
+        </div>
         {errors.relationId && <p>Please select a relation</p>}
         {isEditing && <button type="submit">Save Changes</button>}
       </form>
     </div>
   );
+  // return (
+  //   <div>
+  //     <h2>Contact Person Profile</h2>
+  //     {!isEditing && <button onClick={handleRequestEdit}>Edit Profile</button>}
+  //     {!isEditing && showCodeInput && (
+  //       <div>
+  //         <input
+  //           placeholder="Enter verification code"
+  //           value={code}
+  //           onChange={(e) => setCode(e.target.value)}
+  //         />
+  //         <button onClick={verifyCode}>Verify</button>
+  //       </div>
+  //     )}
+  //     <form onSubmit={handleSubmit(onSubmit)}>
+  //       <input placeholder="ID" {...register("userId", { required: true })} readOnly={!isEditing} />
+  //       <input placeholder="Full Name" {...register("fullName", { required: true })} readOnly={!isEditing} />
+  //       <input placeholder="Email" {...register("email", { required: true })} readOnly={!isEditing} />
+  //       <input placeholder="Phone" {...register("phone", { required: true })} readOnly={!isEditing} />
+  //       <input placeholder="Address" {...register("address", { required: true })} readOnly={!isEditing} />
+  //       <label>Family Relation</label>
+  //       {codes?.FamilyRelations?.map((item) => (
+  //         <div key={item.id}>
+  //           <input
+  //             type="radio"
+  //             {...register("relationId", { required: true })}
+  //             value={item.id}
+  //             id={`relation-${item.id}`}
+  //             disabled={!isEditing}
+  //           />
+  //           <label htmlFor={`relation-${item.id}`}>{item.description}</label>
+  //         </div>
+  //       ))}
+  //       {errors.relationId && <p>Please select a relation</p>}
+  //       {isEditing && <button type="submit">Save Changes</button>}
+  //     </form>
+  //   </div>
+  // );
 }
 
 export default ContactPersonProfile;

@@ -7,7 +7,7 @@ import Search from '.././Search';
 import Sort from '.././Sort';
 import Delete from '.././Delete';
 import Update from '.././Update';
-import '../../style/Posts.css';
+import '../../style/Requests.css';
 import { requestsServices } from '../../services/requestsServices';
 import { contactsServices } from '../../services/contactsServices'
 function ContactRequests() {
@@ -160,6 +160,7 @@ function ContactRequests() {
             </div>
             {error && <div className="error">{error}</div>}
             <div className="requests">
+                <h2>My Requests</h2>
                 <table className="requests-table">
                     <thead>
                         <tr>

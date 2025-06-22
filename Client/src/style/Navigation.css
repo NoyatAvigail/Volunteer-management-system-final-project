@@ -1,13 +1,9 @@
-/* Navigation.css - עיצוב חדשני לסרגל ניווט */
-
-/* איפוס בסיסי */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* סרגל הניווט הראשי */
 .header {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   backdrop-filter: blur(10px);
@@ -21,7 +17,6 @@
   direction: rtl;
 }
 
-/* המכולה הפנימית */
 .left {
   display: flex;
   align-items: center;
@@ -32,7 +27,6 @@
   width: 100%;
 }
 
-/* שם המשתמש */
 .userName {
   color: #ffffff;
   font-size: 1.5rem;
@@ -46,7 +40,6 @@
   background-clip: text;
 }
 
-/* רשימת הניווט */
 .left ul {
   list-style: none;
   display: inline-block;
@@ -71,7 +64,6 @@
   cursor: pointer;
 }
 
-/* אפקט hover */
 .left ul a:hover,
 .left ul Link:hover {
   background: rgba(255, 255, 255, 0.25);
@@ -80,7 +72,6 @@
   border-color: rgba(255, 255, 255, 0.4);
 }
 
-/* אפקט גלי בלחיצה */
 .left ul a::before,
 .left ul Link::before {
   content: '';
@@ -134,7 +125,6 @@
   animation-fill-mode: both;
 }
 
-/* עיכוב אנימציה לכל פריט */
 .left ul:nth-child(2) {
   animation-delay: 0.1s;
 }
@@ -167,7 +157,6 @@
   animation: fadeInScale 1s ease-out 0.2s both;
 }
 
-/* עיצוב רספונסיבי */
 @media (max-width: 1024px) {
   .header {
     padding: 0 1rem;
@@ -245,7 +234,6 @@
   }
 }
 
-/* אפקטים נוספים */
 .header::before {
   content: '';
   position: absolute;
@@ -268,7 +256,6 @@
   }
 }
 
-/* מצב פוקוס לנגישות */
 .left ul a:focus,
 .left ul Link:focus {
   outline: 2px solid #ffffff;
@@ -276,7 +263,6 @@
   background: rgba(255, 255, 255, 0.25);
 }
 
-/* אפקט loading עדין */
 .header.loading {
   position: relative;
   overflow: hidden;
