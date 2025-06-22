@@ -12,10 +12,30 @@ const contactsService = {
         }
     },
 
+    // createPatient: async (authenticatedId, body) => {
+    //     try {
+    //         const contact = await genericDAL.findById(ContactPeople, authenticatedId );
+    //         if (!contact) {
+    //             const error = new Error("Contact person not found");
+    //             error.status = 404;
+    //             throw error;
+    //         }
+    //         const fullData = {
+    //             ...body,
+    //             contactPeopleId: contact.id,
+    //             userId: body.userId,
+    //             is_deleted: false
+    //         };
+    //         return await contactsDal.createPatient(fullData);
+    //     } catch (error) {
+    //         console.error("Error in contactsService.createPatient:", error);
+    //         throw error;
+    //     }
+    // },
     createPatient: async (authenticatedId, body) => {
         try {
-            const contact = await genericDAL.findById(ContactPeople, { userId: authenticatedId });
-
+            // שימי לב: חיפוש לפי ID של טבלת ContactPeople (שולח מהלקוח)
+            const contact = await genericDAL.findById(ContactPeople, authenticatedId);
             if (!contact) {
                 const error = new Error("Contact person not found");
                 error.status = 404;
@@ -24,8 +44,8 @@ const contactsService = {
 
             const fullData = {
                 ...body,
-                contactPeopleId: contact.id,
-                userId: body.userId,
+                // חובה: להציב כאן את userId של contactPerson, כי זה מה שמקושר לפציינט
+                contactPeopleId: contact.userId,
                 is_deleted: false
             };
 
@@ -34,8 +54,8 @@ const contactsService = {
             console.error("Error in contactsService.createPatient:", error);
             throw error;
         }
-    },
-
+    }, 
+    
     getPatientById: async (authenticatedId, patientId) => {
         try {
             return await contactsDal.getPatientById(authenticatedId, patientId);
@@ -75,7 +95,7 @@ const contactsService = {
     createHospitalized: async (authenticatedId, body) => {
         try {
             const patientId = body.patientId;
-            return await contactsDal.createHospitalized(patientId,body);
+            return await contactsDal.createHospitalized(patientId, body);
         } catch (error) {
             console.error("Error in contactsService.createHospitalized:", error);
             throw error;

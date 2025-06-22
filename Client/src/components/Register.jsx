@@ -100,7 +100,7 @@ function Register() {
                 patientGender: mergedData.gender,
                 patientAddress: mergedData.patientAddress,
                 dateOfDeath: null,
-                patientInterestedInReceivingNotifications: !!mergedData.notifications,
+                patientInterestedInReceivingNotifications: true,
                 relationId: Number(mergedData.relationId),
                 hospital: mergedData.hospital,
                 department: mergedData.department,
@@ -337,12 +337,12 @@ function Register() {
                                 ))}
                             </div>
                             <input placeholder="address" {...registerSecond("patientAddress", { required: true })} />
-                            <div className="preference">
+                            {/* <div className="preference">
                                 <label>
                                     <input type="checkbox" {...registerSecond("notifications")} />
                                     Interested in notifications
                                 </label>
-                            </div>
+                            </div> */}
                             <h4>Choose a hospital</h4>
                             <div className="preference">
                                 {codes?.Hospitals?.map((item) => (

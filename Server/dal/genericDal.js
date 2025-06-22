@@ -39,7 +39,6 @@ const genericDAL = {
             const deletedRows = model.destroy({
                 where: { id: id }
             });
-            // return deletedRows;
         } catch (err) {
             console.error(`Failed to delete from ${model.name} where ${fieldName} = ${id}:`, err);
             throw err;
