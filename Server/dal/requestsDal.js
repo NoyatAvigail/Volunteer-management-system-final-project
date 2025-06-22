@@ -90,7 +90,7 @@ const requestDal = {
         // date: {
         //   [Op.between]: [startDate, endDate]
         // },
-        volunteerId:null,
+        volunteerId: null,
         is_deleted: 0
       },
       include: [
@@ -176,11 +176,36 @@ const requestDal = {
     }
   },
 
+  // assignVolunteerToEvent: async (eventId, volunteerId) => {
+  //   return await Events.update(
+  //     { volunteerId },
+  //     { where: { id: eventId } }
+  //   );
+  // },
   assignVolunteerToEvent: async (eventId, volunteerId) => {
-    return await Events.update(
-      { volunteerId },
-      { where: { id: eventId } }
-    );
+    await Events.update({ volunteerId }, { where: { id: eventId } });
+
+    const event = await Events.findByPk(eventId, {
+      include: [
+        {
+          model: Volunteers,
+          attributes: ['fullName'],
+          include: [{ model: Users, attributes: ['email', 'phone'] }]
+        },
+        {
+          model: Hospitalizeds,
+          attributes: ['roomNumber', 'hospital', 'department'],
+          include: [{ model: Patients }]
+        },
+        {
+          model: ContactPeople,
+          attributes: ['fullName'],
+          include: [{ model: Users, attributes: ['email', 'phone'] }]
+        }
+      ]
+    });
+
+    return event;
   },
 
   updateEventDetails: async (eventId, updatedFields) => {
@@ -224,10 +249,10 @@ const requestDal = {
   //   });
   //   return req2;
   // }
-  softDeleteEvent:async(eventId)=>{
-    
+  softDeleteEvent: async (eventId) => {
+
     Events.update(
-      { is_deleted:1 },
+      { is_deleted: 1 },
       { where: { id: eventId } })
   }
 }
