@@ -156,3 +156,9 @@ input[type="date"] {
     position: absolute;
     left: 5vw;
 }
+
+.entryForm select {
+    appearance: auto;
+    -webkit-appearance: menulist;
+    -moz-appearance: menulist;
+}
