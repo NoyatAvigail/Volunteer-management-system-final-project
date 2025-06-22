@@ -45,14 +45,15 @@ function VolunteerShifts() {
                 <td>{new Date(shift.date).toISOString().split('T')[0]}</td>
                 <td>{shift.startTime}</td>
                 <td>{shift.endTime}</td>
-                <td>{shift.hospitalized?.patient?.fullName || "—"}</td>
-                <td>{shift.contactPerson?.fullName || "—"}</td>
-                <td>{shift.hospitalized?.roomNumber || "—"}</td>
-                <td>{shift.hospitalized?.hospital || "—"}</td>
-                <td>{shift.hospitalized?.department || "—"}</td>
+                <td>{shift.Hospitalized?.Patient?.fullName || "—"}</td>
+                <td>{shift.ContactPerson?.fullName || "—"}</td>
+                <td>{shift.Hospitalized?.roomNumber || "—"}</td>
+                <td>{shift.Hospitalized?.Hospital?.description || "—"}</td>
+                <td>{shift.Hospitalized?.Department?.description || "—"}</td>
               </tr>
             ))}
           </tbody>
+
         </table>
       )}
     </div>
