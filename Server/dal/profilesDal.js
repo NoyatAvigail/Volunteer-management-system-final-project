@@ -2,7 +2,7 @@ import genericDAL from './genericDal.js';
 import { Users, Volunteers, VolunteerTypes, sequelize, VolunteeringForGenders, VolunteeringForSectors, VolunteeringInDepartments, ContactPeople, Patients, Hospitalizeds } from '../../DB/index.mjs'
 
 const profilesDAL = {
-    getVolunteerProfile: async (userId) => {        
+    getVolunteerProfile: async (userId) => {
         return Volunteers.findOne({
             where: { userId, is_deleted: 0 },
             include: [
@@ -48,7 +48,7 @@ const profilesDAL = {
                 flexible: data.flexible
             }, { transaction });
             const volunteerId = volunteer.id;
-                genericDAL.deleteByField(VolunteerTypes, volunteerId),
+            genericDAL.deleteByField(VolunteerTypes, volunteerId),
                 genericDAL.deleteByField(VolunteeringForGenders, volunteerId),
                 genericDAL.deleteByField(VolunteeringForSectors, volunteerId),
                 genericDAL.deleteByField(VolunteeringInDepartments, volunteerId)
@@ -71,7 +71,7 @@ const profilesDAL = {
                 id: volunteerId,
                 genderId
             }));
-                helpTypes.length && genericDAL.bulkCreateModel(VolunteerTypes, helpTypes, transaction),
+            helpTypes.length && genericDAL.bulkCreateModel(VolunteerTypes, helpTypes, transaction),
                 departments.length && genericDAL.bulkCreateModel(VolunteeringInDepartments, departments, transaction),
                 sectors.length && genericDAL.bulkCreateModel(VolunteeringForSectors, sectors, transaction),
                 genders.length && genericDAL.bulkCreateModel(VolunteeringForGenders, genders, transaction)
@@ -117,7 +117,7 @@ const profilesDAL = {
     },
 
     updatePatientProfile: async (patientId, data) => {
-        try {            
+        try {
             const transaction = await sequelize.transaction();
             const patient = await Patients.findByPk(patientId, { transaction });
             if (!patient)
