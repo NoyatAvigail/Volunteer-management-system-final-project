@@ -3,11 +3,7 @@ import { useNavigate, Outlet } from 'react-router-dom';
 import { CurrentUser } from './App';
 
 function Volunteers() {
-    const [shifts, setShifts] = useState([]);
-    const [fixedShifts, setFixedShifts] = useState([]);
-    const [openCalls, setOpenCalls] = useState([]);
     const [error, setError] = useState(null);
-    const [isChange, setIsChange] = useState(0);
     const { currentUser } = useContext(CurrentUser);
     const navigate = useNavigate();
 

@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { CurrentUser } from '.././App';
-// import { userService } from '../../services/usersServices';
 
 function ContactThanks() {
     const { currentUser } = useContext(CurrentUser);
@@ -14,12 +13,10 @@ function ContactThanks() {
         e.preventDefault();
         setError(null);
         setSuccess(null);
-
         if (!message.trim()) {
             setError("Please enter a thank you message");
             return;
         }
-
         try {
             await userService.addNew(currentUser.id, "thanks", { contactId: currentUser.id, message });
             setSuccess("Thanks sent successfully");

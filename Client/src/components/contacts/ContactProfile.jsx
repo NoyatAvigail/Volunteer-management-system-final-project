@@ -32,13 +32,10 @@ function ContactPersonProfile() {
     }
   };
 
-
   const handleRequestEdit = async () => {
     try {
       alert("Verification email sent.");
       await sendEditRequest(setShowCodeInput);
-      // setShowCodeInput(true);
-
     } catch (e) {
       alert("Failed to send email.");
     }
@@ -57,7 +54,6 @@ function ContactPersonProfile() {
   return (
     <div>
       <h2>Contact Person Profile</h2>
-
       {!isEditing && <button onClick={handleRequestEdit}>Edit Profile</button>}
       {!isEditing && showCodeInput && (
         <div>
@@ -69,14 +65,12 @@ function ContactPersonProfile() {
           <button onClick={verifyCode}>Verify</button>
         </div>
       )}
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <input placeholder="ID" {...register("userId", { required: true })} readOnly={!isEditing} />
         <input placeholder="Full Name" {...register("fullName", { required: true })} readOnly={!isEditing} />
         <input placeholder="Email" {...register("email", { required: true })} readOnly={!isEditing} />
         <input placeholder="Phone" {...register("phone", { required: true })} readOnly={!isEditing} />
         <input placeholder="Address" {...register("address", { required: true })} readOnly={!isEditing} />
-
         <label>Family Relation</label>
         {codes?.FamilyRelations?.map((item) => (
           <div key={item.id}>

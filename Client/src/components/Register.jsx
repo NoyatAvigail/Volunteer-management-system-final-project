@@ -20,7 +20,6 @@ function Register() {
     const [userData, setUserData] = useState({});
     const [showMoreForm, setShowMoreForm] = useState(false);
     const { codes, loading } = useCodes();
-    console.log("codes:", codes);
 
     const onFirstSubmit = async (data) => {
         const error = validateFirstRegisterStep(data);
@@ -288,7 +287,6 @@ function Register() {
                             <input value={userData.email} readOnly {...registerSecond("email", { required: true })} />
                             <input placeholder="phone" {...registerSecond("phone", { required: true })} />
                             <input placeholder="address" {...registerSecond("address", { required: true })} />
-
                             <div className="preference">
                                 <h4>Family Closeness</h4>
                                 {codes?.FamilyRelations?.map((item) => (
@@ -304,7 +302,6 @@ function Register() {
                                 ))}
                             </div>
                             {errorsSecond.relationId && <p>Must select a family relationship</p>}
-
                             <h3>Patient details</h3>
                             <input placeholder="ID" {...registerSecond("patientId", { required: true })} />
                             <input placeholder="Name" {...registerSecond("patientName", { required: true })} />
@@ -314,7 +311,6 @@ function Register() {
                                 {...registerSecond("birthDate", { required: true })}
                             />
                             {errorsSecond.birthDate && <p>Must enter a date of birth</p>}
-
                             <div className="preference">
                                 <h4>Gender</h4>
                                 {codes?.Genders?.map((item) => (
@@ -329,7 +325,6 @@ function Register() {
                                     </div>
                                 ))}
                             </div>
-
                             <div className="preference">
                                 <h4>Sector</h4>
                                 {codes?.Sectors?.map((item) => (
@@ -344,16 +339,13 @@ function Register() {
                                     </div>
                                 ))}
                             </div>
-
                             <input placeholder="address" {...registerSecond("patientAddress", { required: true })} />
-
                             <div className="preference">
                                 <label>
                                     <input type="checkbox" {...registerSecond("notifications")} />
                                     Interested in notifications
                                 </label>
                             </div>
-
                             <div className="preference">
                                 <h4>Choose a hospital</h4>
                                 {codes?.Hospitals?.map((item) => (
@@ -368,7 +360,6 @@ function Register() {
                                     </div>
                                 ))}
                             </div>
-
                             <div className="preference">
                                 <h4>Choose a department</h4>
                                 {codes?.Departments?.map((item) => (
@@ -383,11 +374,9 @@ function Register() {
                                     </div>
                                 ))}
                             </div>
-
                             <input placeholder="Room Number" {...registerSecond("roomNumber", { required: true })} />
                             <input placeholder="Hospitalization Start" {...registerSecond("hospitalizationStart", { required: true })} />
-
-                            <button type="submit">Subscribe</button>
+                            <button type="submit">Sign Up</button>
                         </form>
                     </div>
                 )}

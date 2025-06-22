@@ -8,7 +8,6 @@ function Update({ type, itemId, setIsChange, inputs, defaultValue = {}, onSucces
     const [formData, setFormData] = useState(defaultValue);
     const { currentUser } = useContext(CurrentUser);
     const { codes } = useCodes();
-    const userTypeObj = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -61,7 +60,6 @@ function Update({ type, itemId, setIsChange, inputs, defaultValue = {}, onSucces
                         const inputName = typeof input === "string" ? input : input.name;
                         const inputType = typeof input === "string" ? "text" : input.type || "text";
                         const options = typeof input === "object" && input.options;
-
                         return (
                             <div key={index}>
                                 {inputType === "select" ? (
@@ -75,7 +73,7 @@ function Update({ type, itemId, setIsChange, inputs, defaultValue = {}, onSucces
                                             }
                                         }}
                                     >
-                                        <option value="">בחר {inputName}</option>
+                                        <option value="">Choose {inputName}</option>
                                         {options?.map((option, i) => (
                                             <option key={i} value={option.value ?? option}>
                                                 {typeof option === 'object' ? option.label : option}

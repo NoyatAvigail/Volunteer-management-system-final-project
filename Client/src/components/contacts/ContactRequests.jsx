@@ -124,8 +124,10 @@ function ContactRequests() {
                 />
                 <Add
                     type="Events"
-                    onSuccess={triggerRefresh}
-                    // setIsChange={triggerRefresh}
+                    onSuccess={(newItem) => {
+                        setUserData(prev => [...prev, newItem]);
+                        setEvents(prev => [...prev, newItem]);
+                    }}
                     inputs={[
                         {
                             name: "patientId",
@@ -138,8 +140,7 @@ function ContactRequests() {
                             name: "hospitalizedsId",
                             type: "select",
                             options: hospitalizedsPerPatient.map(h => ({
-                                label: `בית חולים: ${h.hospital}, מחלקה: ${h.department}, חדר: ${h.roomNumber}, מתחילת אשפוז: ${h.hospitalizationStart}`,
-                                value: h.id
+                                label: `Hospital: ${h.hospital}, Department: ${h.department}, Room: ${h.roomNumber}, Hospitalization Start: ${h.hospitalizationStart}`, value: h.id
                             }))
                         },
                         "date",
@@ -155,7 +156,6 @@ function ContactRequests() {
                         endTime: ""
                     }}
                     name="Add request"
-                // onSuccess={triggerRefresh}
                 />
             </div>
             {error && <div className="error">{error}</div>}
@@ -194,7 +194,10 @@ function ContactRequests() {
                                                     <Update
                                                         type="Events"
                                                         itemId={item.id}
-                                                        setIsChange={triggerRefresh}
+                                                        onSuccess={(updatedItem) => {
+                                                            setUserData(prev => prev.map(i => i.id === updatedItem.id ? updatedItem : i));
+                                                            setEvents(prev => prev.map(i => i.id === updatedItem.id ? updatedItem : i));
+                                                        }}
                                                         inputs={[
                                                             {
                                                                 name: "patientId",
@@ -224,14 +227,12 @@ function ContactRequests() {
                                                             startTime: item.startTime,
                                                             endTime: item.endTime
                                                         }}
-                                                    // onSuccess={fetchData}
                                                     />
                                                     <Delete
                                                         type="Events"
                                                         itemId={item.id}
                                                         setIsChange={triggerRefresh}
                                                         disabled={isPast}
-                                                    // onSuccess={fetchData}
                                                     />
                                                 </>
                                             )}

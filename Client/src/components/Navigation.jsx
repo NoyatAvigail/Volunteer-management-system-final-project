@@ -53,7 +53,6 @@ function Navigation() {
                                         <summary>Patients</summary>
                                         <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/add-patient`}>Add patient</Link></ul>
                                         <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/add-hospitalization`}>Add hospitalization</Link></ul>
-                                        {/* <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/info`}>Patient info</Link></ul> */}
                                         <ul><Link to={`/${userTypeObject}/${currentUser.autoId}/patient/profile`}>Manage patient profile</Link></ul>
                                     </details>
                                     <div className="right">

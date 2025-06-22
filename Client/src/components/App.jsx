@@ -13,7 +13,6 @@ import VolunteerCertificate from './volunteers/VolunteerCertificate';
 import VolunteerShifts from './volunteers/VolunteerShifts';
 import VolunteerRequests from './volunteers/VolunteerRequests';
 import Contacts from './Contacts'
-// import ContactPatientInfo from './contacts/ContactPatientInfo';
 import ContactRequests from './contacts/ContactRequests';
 import ContactAddPatient from './contacts/ContactAddPatient';
 import ContactThanks from './contacts/ContactThanks';
@@ -54,7 +53,6 @@ function App() {
           <Route path="/contactperson/:id/requests" element={<ContactRequests />} />
           <Route path="/contactperson/:id/profile" element={<ContactProfile />} />
           <Route path="/contactperson/:id/thanks" element={<ContactThanks />} />
-          {/* <Route path="/contactperson/:id/patient/info" element={<ContactPatientInfo />} /> */}
           <Route path="/contactperson/:id/patient/add-patient" element={<ContactAddPatient />} />
           <Route path="/contactperson/:id/patient/add-hospitalization" element={<ContactAddHospitalization />} />
           <Route path="/contactperson/:id/patient/profile" element={<ContactProfile />} />

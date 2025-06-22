@@ -11,8 +11,6 @@ const requestsController = {
         try {
             const { startDate, endDate } = req.query;
             const authenticated = await requestsController.utils(req);
-            console.log("startDate:", startDate, "endDate:", endDate);
-
             const requests = await requestsService.getRequests(authenticated.authenticatedId, authenticated.authenticatedType, startDate, endDate);
             res.status(200).json(requests);
         } catch (error) {
@@ -39,9 +37,7 @@ const requestsController = {
         }
     },
 
-    deleteRequests: async (req, res) => {
-        console.log("בכונטרולר");
-        
+    deleteRequests: async (req, res) => {        
         const { id } = req.params;
         const authenticated =await requestsController.utils(req);
         if (!id) {
