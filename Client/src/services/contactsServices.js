@@ -41,6 +41,6 @@ export const contactsServices = {
         request("",`/${url}`, 'GET', onSuccess, onErrorr),
     getByValue:(url,id,onSuccess, onErrorr) =>
         request("",`/${url}/${id}`, 'GET', onSuccess, onErrorr),
-    create: (body ,type ,onSuccess, onErrorr) =>
-        request(body, `/${type}`, 'POST', onSuccess, onErrorr),
+    create: (body ,url ,onSuccess, onErrorr) =>
+        request(body, `/${url}`, 'POST', onSuccess, onErrorr),
 }

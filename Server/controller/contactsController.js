@@ -101,10 +101,11 @@ const contactController = {
 
   createHospitalized: async (req, res) => {
     try {
-      const authenticatedId = req.authenticatedId;
-      const { patientId, ...restBody } = req.body;
-
-      const newHospitalized = await contactsService.createHospitalized(authenticatedId, patientId, restBody);
+      console.log("כונטרולר");
+      
+      const authenticated =await contactController.utils(req);
+      const restBody =await req.body;
+      const newHospitalized = await contactsService.createHospitalized(authenticated.authenticatedId, restBody);
       res.status(201).json(newHospitalized);
 
     } catch (error) {

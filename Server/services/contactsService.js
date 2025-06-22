@@ -72,9 +72,12 @@ const contactsService = {
         }
     },
 
-    createHospitalized: async (authenticatedId, patientId, body) => {
+    createHospitalized: async (authenticatedId, body) => {
         try {
-            return await contactsDal.createHospitalized(patientId, body);
+            const patientId = body.patientId;
+            console.log("body:", body);
+            console.log("restBody.patientId", patientId);
+            return await contactsDal.createHospitalized(patientId,body);
         } catch (error) {
             console.error("Error in contactsService.createHospitalized:", error);
             throw error;
