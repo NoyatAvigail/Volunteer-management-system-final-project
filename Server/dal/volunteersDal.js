@@ -1,15 +1,39 @@
-import Events from "../models/Events.js";
+import { Patients, Hospitalizeds, Events, ContactPeople, Hospitals, Departments } from '../../DB/index.mjs';
 
 const volunteerDAL = {
-  getEventsByVolunteerId: async (userId) => {   
+  getEventsByVolunteerId: async (userId) => {
     console.log("הגיע לדאל");
-     
-    return await Events.findAll({
+
+    // return await Events.findAll({
+    //   where: {
+    //     volunteerId:userId,
+    //     is_deleted: 0
+    //   }, 
+    // });
+    const volunteer = await Events.findAll({
       where: {
-        volunteerId:userId,
+        volunteerId: userId,
         is_deleted: 0
-      }
+      },
+      include: [
+        {
+          model: ContactPeople,
+        },
+        {
+          model: Hospitalizeds,
+          include: [
+            { model: Hospitals },
+            { model: Departments },
+            {
+              model: Patients,
+            }
+          ]
+        }
+      ]
     });
+
+    console.log("volunteer:", volunteer);
+    return volunteer;
   },
 };
 export default volunteerDAL;
