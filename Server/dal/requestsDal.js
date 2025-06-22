@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import {
   Users,
   Passwords,
@@ -67,14 +68,16 @@ const requestDal = {
     return events;
   },
 
-  getVolunteerRequests: async (volunteerId, startDate, endDate) => {
-    const volunteer = await Volunteers.findByPk(volunteerId, {
+  getVolunteerRequests: async (userId, startDate, endDate) => {
+    const volunteer = await Volunteers.findOne({
+      where: { userId, is_deleted: 0 },
       include: [
-        { model: VolunteeringForGenders, where: { is_deleted: false }, required: false },
-        { model: VolunteeringForSectors, where: { is_deleted: false }, required: false },
-        { model: VolunteeringInDepartments, where: { is_deleted: false }, required: false }
+        { model: VolunteeringInDepartments },
+        { model: VolunteeringForSectors },
+        { model: VolunteeringForGenders }
       ]
     });
+
     if (!volunteer) throw new Error("Volunteer not found");
     const preferredGenders = volunteer.VolunteeringForGenders?.map(g => g.genderId) || [];
     const preferredSectors = volunteer.VolunteeringForSectors?.map(s => s.sectorId) || [];
@@ -115,6 +118,7 @@ const requestDal = {
         }
       ]
     });
+
     const filtered = events.filter(event => {
       const hosp = event.Hospitalized?.Hospital;
       const dept = event.Hospitalized?.Department;
@@ -170,15 +174,23 @@ const requestDal = {
       throw error;
     }
   },
-  
+
   assignVolunteerToEvent: async (eventId, volunteerId) => {
-    const event = await Events.findByPk(eventId);
-    if (!event) throw new Error("Event not found");
+    console.log("הגיע לדאל");
+    // const event = await Events.findByPk(eventId);
+    // if (!event) throw new Error("Event not found");
 
-    event.volunteerId = volunteerId;
-    await event.save();
+    // event.volunteerId = volunteerId;
+    // await event.save();
 
-    return event;
+    // return event;
+    console.log("volunteerId:", volunteerId);
+
+    return await Events.update(
+      { volunteerId },
+      { where: { id: eventId } }
+    );
+
   },
 
   updateEventDetails: async (eventId, updatedFields) => {

@@ -24,8 +24,8 @@ function VolunteerRequests() {
 
   const fetchData = async () => {
     try {
-      const startDate = '2025-06-01';
-      const endDate = '2025-08-31';
+      const startDate = '2020-06-01';
+      const endDate = '2027-08-31';
       await requestsServices.getAll(
         startDate,
         endDate,
@@ -56,9 +56,7 @@ function VolunteerRequests() {
   const handleTakeCall = (callId) => {
     if (!currentUser) return;
     requestsServices.patch(
-      'requests',
-      null,
-      { callId },
+       callId ,
       () => {
         setEvents(prev => prev.filter(call => call.id !== callId));
       },
