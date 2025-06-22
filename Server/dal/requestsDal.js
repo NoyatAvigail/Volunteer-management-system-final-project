@@ -90,7 +90,11 @@ const requestDal = {
         // date: {
         //   [Op.between]: [startDate, endDate]
         // },
+<<<<<<< HEAD
         volunteerId:null,
+=======
+        volunteerId: null,
+>>>>>>> 64cd2724609e2a8db492d93739976c531be22f2e
         is_deleted: 0
       },
       include: [
@@ -197,12 +201,11 @@ const requestDal = {
   updateEventDetails: async (eventId, updatedFields) => {
     const event = await Events.findByPk(eventId);
     if (!event) throw new Error("Event not found");
-
     Object.assign(event, updatedFields);
     await event.save();
-
     return event;
   },
+
   // find: async (table1, targetField, table2, foreignKey, targetKey, targetValue) => {
   //   const matchingRecordsTbl1 = await genericDAL.findByField(
   //     genericDAL.getModelByName(table1),

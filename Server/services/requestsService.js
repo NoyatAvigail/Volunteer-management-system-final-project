@@ -86,11 +86,7 @@ const requestService = {
     },
 
     getRequests: async (authenticatedId, authenticatedType, startDate, endDate) => {
-        console.log("authenticatedId:", authenticatedId);
-
         const utils = await requestService.utils(authenticatedType);
-        console.log("authenticatedType:", utils);
-
         const users = await genericDAL.findByField(utils.model, { id: authenticatedId });
         const user = users[0];
         if (!user) {

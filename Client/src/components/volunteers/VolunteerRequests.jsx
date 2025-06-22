@@ -8,7 +8,6 @@ import Sort from '../Sort';
 import Update from '../Update';
 // import '../../style/Posts.css';
 import { requestsServices } from '../../services/requestsServices';
-// import { volunteersService } from '../../services/volunteersServices';
 
 function VolunteerRequests() {
   const [userData, setUserData] = useState([]);
@@ -56,7 +55,7 @@ function VolunteerRequests() {
   const handleTakeCall = (callId) => {
     if (!currentUser) return;
     requestsServices.patch(
-       callId ,
+      callId,
       () => {
         setEvents(prev => prev.filter(call => call.id !== callId));
       },
@@ -123,7 +122,7 @@ function VolunteerRequests() {
               ))
             ) : (
               <tr>
-                <td colSpan={7}>אין קריאות זמינות כרגע</td>
+                <td colSpan={7}>No readings available at this time</td>
               </tr>
             )}
           </tbody>

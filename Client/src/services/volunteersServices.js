@@ -19,7 +19,7 @@ async function request(endpoint, method = 'GET', body, onSuccess, onError) {
                 authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
-            ...(method === "GET" ? { params: body } : { data: body })
+            ...(method == "GET" ? { params: body } : { data: body })
         };
         const response = await axios(config);
         const data = response.data;

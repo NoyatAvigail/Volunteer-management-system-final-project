@@ -7,8 +7,6 @@ const requestsController = {
         return { authenticatedId, authenticatedType }
     },
 
-    // GET /api/requests?contactPerson=123
-    // GET /api/requests?volunteer=123
     getRequests: async (req, res) => {
         try {
             const { startDate, endDate } = req.query;
