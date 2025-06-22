@@ -60,8 +60,6 @@ function ContactPatientProfile() {
 
     const handleRequestEdit = async () => {
         try {
-            await sendEditRequest(currentUser.id, currentUser.email);
-            setShowCodeInput(true);
             await sendEditRequest(setShowCodeInput);
             alert("A verification code has been sent to your email.");
         } catch (err) {
