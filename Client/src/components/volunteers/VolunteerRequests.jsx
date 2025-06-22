@@ -52,9 +52,9 @@ function VolunteerRequests() {
     }
   }, [currentUser, userTypeObj]);
 
-  const handleTakeCall = (callId) => {
+  const handleTakeCall = async (callId) => {
     if (!currentUser) return;
-    requestsServices.patch(
+    await requestsServices.update(
       callId,
       {},
       () => {
@@ -62,7 +62,7 @@ function VolunteerRequests() {
       },
       (err) => {
         console.error("Error taking call:", err);
-        alert("שגיאה בעת ניסיון לקחת את הקריאה");
+        alert("Error while trying to take the reading");
       }
     );
   };
