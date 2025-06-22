@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { handleVerifyCodes, sendEditRequests } from '../services/profilesService'
 import { profilesServices } from '../services/profilesService'
-// //לבדוק איפה באמת צריך להיות
+
 export async function sendEditRequest(setShowCodeInput) {
   return new Promise(() => {
     sendEditRequests();
@@ -39,10 +39,8 @@ export async function updateProfile(type = "", setIsEditing, formData) {
 
 export const parseProfileDataToForm = (data) => {
   const formValues = {};
-
   for (const key in data) {
     const value = data[key];
-
     if (Array.isArray(value)) {
       formValues[key] = value.map(item => {
         if (typeof item === 'object' && item !== null) {
@@ -62,11 +60,9 @@ export const parseProfileDataToForm = (data) => {
       formValues[key] = value;
     }
   }
-
   if (data?.dateOfBirth) {
     formValues.dateOfBirth = data.dateOfBirth.split('T')[0];
   }
-
   const userData = data?.User || data?.user;
   if (userData && typeof userData === 'object') {
     for (const key in userData) {
@@ -81,19 +77,16 @@ export const parseProfileDataToForm = (data) => {
 
 export function useProfileData(type = "", resetForm) {
   const [initialData, setInitialData] = useState(null);
-
   useEffect(() => {
     async function fetchData() {
       const data = await profilesServices.getAll(type);
       console.log("data:", data);
-
       setInitialData(data);
       const formValues = parseProfileDataToForm(data);
       resetForm(formValues);
     }
     fetchData();
   }, [resetForm]);
-
   return initialData;
 }
 
@@ -105,6 +98,5 @@ export function useEditModeFromSessionStorage() {
   useEffect(() => {
     sessionStorage.setItem('isEditing', isEditing);
   }, [isEditing]);
-
   return [isEditing, setIsEditing];
 }

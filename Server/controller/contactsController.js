@@ -84,11 +84,11 @@ const contactController = {
     }
   },
 
-  getHospitalizedsById: async (req, res) => {
-    try {      
+  getHospitalizeds: async (req, res) => {
+    try {
       const authenticated = contactController.utils(req);
       const patientId = req.params.id;
-      const requests = await contactsService.getHospitalizedsById(authenticated.authenticatedId,patientId);
+      const requests = await contactsService.getHospitalizeds(authenticated.authenticatedId, patientId);
       res.status(200).json(requests);
     } catch (error) {
       console.error("Error in getHospitalizeds Controller:", error);
@@ -99,16 +99,16 @@ const contactController = {
     }
   },
 
-  createHospitalizeds: async (req, res) => {
+  createHospitalized: async (req, res) => {
     try {
       const authenticatedId = req.authenticatedId;
       const { patientId, ...restBody } = req.body;
 
-      const newHospitalized = await contactsService.createHospitalizeds(authenticatedId, patientId, restBody);
+      const newHospitalized = await contactsService.createHospitalized(authenticatedId, patientId, restBody);
       res.status(201).json(newHospitalized);
 
     } catch (error) {
-      console.error("Error in createHospitalizeds Controller:", error);
+      console.error("Error in createHospitalized Controller:", error);
       res.status(500).json({ message: 'Server error', error: error.message });
     }
   },

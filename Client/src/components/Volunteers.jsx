@@ -1,13 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { CurrentUser } from './App';
-import Search from './Search';
-import Sort from './Sort';
-import Add from './Add';
-import Delete from './Delete';
-import Update from './Update';
-import '../style/Posts.css';
-// import { userService } from '../services/usersServices';
 
 function Volunteers() {
     const [shifts, setShifts] = useState([]);

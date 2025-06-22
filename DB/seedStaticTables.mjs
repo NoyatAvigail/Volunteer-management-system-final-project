@@ -8,7 +8,7 @@ import { UserTypes } from '../Server/models/UserTypes.js';
 
 export async function seedStaticTables() {
     try {
-        const userTypes = ['Volunteer', 'ContactPerson','Patients'];
+        const userTypes = ['Volunteer', 'ContactPerson'];
         for (const type of userTypes) {
             await UserTypes.findOrCreate({ where: { description: type } });
         }

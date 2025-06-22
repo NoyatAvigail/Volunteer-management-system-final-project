@@ -20,6 +20,7 @@ export const createHandler = async ({ type, body, onSuccess, onError }) => {
         throw error;
     }
 };
+
 export const deleteHandler = async ({ type, currentUser, body, onSuccess, onError }) => {
     try {
         switch (type) {
@@ -35,6 +36,7 @@ export const deleteHandler = async ({ type, currentUser, body, onSuccess, onErro
         throw error;
     }
 };
+
 export const updatHandler = async ({ type, currentUser, body, onSuccess, onError }) => {
     try {
         switch (type) {
