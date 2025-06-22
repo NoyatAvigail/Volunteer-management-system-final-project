@@ -79,13 +79,13 @@ const requestService = {
         const type = genericDAL.getModelByName('UserTypes');
         const userType = await genericDAL.findById(type, authenticatedType);
         const userTypeDesc = userType?.description;
-        const model = userTypeDesc === 'Volunteers'
+        const model = userTypeDesc === 'Volunteer'
             ? genericDAL.getModelByName('Volunteers')
             : genericDAL.getModelByName('ContactPeople');
         return { userTypeDesc, model };
     },
-    
-    getRequests: async (authenticatedId, authenticatedType,startDate, endDate) => {
+
+    getRequests: async (authenticatedId, authenticatedType, startDate, endDate) => {
         console.log("authenticatedId:", authenticatedId);
 
         const utils = await requestService.utils(authenticatedType);
@@ -99,14 +99,14 @@ const requestService = {
             throw error;
         }
         const userIdFromToken = user.userId;
-        const requests = utils.userTypeDesc == 'Volunteers' ?
+        const requests = utils.userTypeDesc == 'Volunteer' ?
             await requestsDal.getVolunteerRequests(userIdFromToken) :
-            await requestsDal.getContactRequests(userIdFromToken,startDate, endDate)
+            await requestsDal.getContactRequests(userIdFromToken, startDate, endDate)
         return requests;
     },
 
     createRequests: async (body, authenticatedId, authenticatedType) => {
-        const userUtils =await requestService.utils(authenticatedType);
+        const userUtils = await requestService.utils(authenticatedType);
         const user = await genericDAL.findById(userUtils.model, authenticatedId);
         if (!user) {
             const error = new Error(`User not found`);
@@ -136,18 +136,20 @@ const requestService = {
     },
 
     updatRequests: async (body, authenticatedId, authenticatedType, eventId) => {
-        if (authenticatedType === 'Volunteers') {
-            return await requestsDal.assignVolunteerToEvent(eventId, authenticatedId);
-        } else if (authenticatedType === 'ContactPeople') {
-            if ('volunteerId' in body) {
-                delete body.volunteerId; 
-            }
-            return await requestsDal.updateEventDetails(eventId, body);
-        } else {
-            const error = new Error("User type not authorized to update events.");
-            error.status = 403;
+        console.log("הגיע לסרביס באפדייט");
+        const utils = await requestService.utils(authenticatedType);
+        console.log("authenticatedId:",authenticatedId);
+        const users = await genericDAL.findByField(utils.model, { id: authenticatedId });
+        const user = users[0];
+        if (!user) {
+            const error = new Error(`${user} not found`);
+            error.status = 404;
             throw error;
         }
+        const userIdFromToken = user.userId;
+        return utils.userTypeDesc == 'Volunteer' ?
+            await requestsDal.assignVolunteerToEvent(eventId, userIdFromToken) :
+            await requestsDal.updateEventDetails(eventId, body);
     },
 }
 

@@ -49,18 +49,18 @@ export function setTokenGetter(fn) {
     getToken = fn;
 }
 
-async function request({ method, params = null, data = null, onSuccess, onError }) {
+async function request({ method,url="", params = null, data = null, onSuccess, onError }) {
     try {
         const token = getToken();
         const response = await axios({
             method,
-            url: `${API_URL}/api/requests`,
+            url: `${API_URL}/api/requests${url}`,
             headers: {
                 authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
-            params, 
-            data,  
+            params,
+            data,
         });
         const result = response.data;
         if (onSuccess) onSuccess(result);
@@ -75,12 +75,12 @@ async function request({ method, params = null, data = null, onSuccess, onError 
 }
 export const requestsServices = {
     getAll: (startDate, endDate, onSuccess, onError) =>
-        request({ method: 'GET', params: { startDate, endDate },data:null, onSuccess, onError, }),
-
+        request({ method: 'GET',url:'', params: { startDate, endDate }, data: null, onSuccess, onError, }),
     createEvent: (data, onSuccess, onError) =>
-        request({ method: 'POST', params:null,data, onSuccess, onError, }),
-
+        request({ method: 'POST',url:'', params: null, data, onSuccess, onError, }),
+    patch: (id, onSuccess, onError) =>
+        request({ method: 'PUT',url:`/${id}`, params: null, data:{}, onSuccess, onError, }),
     deleteEvent: (body, onSuccess, onError) =>
-        request({method: 'DELETE',params:null,body,onSuccess,onError,
-        }),
+        request({ method: 'DELETE',url:'', params: null, body, onSuccess, onError, }),
+
 }
