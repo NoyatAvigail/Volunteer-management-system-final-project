@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { CurrentUser } from "../App";
-import {volunteersService} from '../../services/volunteersServices'
+import { volunteersService } from '../../services/volunteersServices'
 function VolunteerShifts() {
   const { currentUser } = useContext(CurrentUser);
   const [shifts, setShifts] = useState([]);
@@ -17,6 +17,7 @@ function VolunteerShifts() {
       (error) => console.error(error)
     );
   }, [currentUser]);
+  console.log("shifts:", shifts);
 
   return (
     <div className="requests">
@@ -30,20 +31,25 @@ function VolunteerShifts() {
               <th>תאריך</th>
               <th>שעת התחלה</th>
               <th>שעת סיום</th>
+              <th>פציינט</th>
+              <th>איש קשר</th>
               <th>מספר חדר</th>
               <th>בית חולים</th>
               <th>מחלקה</th>
             </tr>
           </thead>
+
           <tbody>
-            {shifts.map(shift => (
+            {shifts.map((shift) => (
               <tr key={shift.id}>
                 <td>{new Date(shift.date).toISOString().split('T')[0]}</td>
                 <td>{shift.startTime}</td>
                 <td>{shift.endTime}</td>
-                <td>{shift.roomNumber}</td>
-                <td>{shift.hospital}</td>
-                <td>{shift.department}</td>
+                <td>{shift.hospitalized?.patient?.fullName || "—"}</td>
+                <td>{shift.contactPerson?.fullName || "—"}</td>
+                <td>{shift.hospitalized?.roomNumber || "—"}</td>
+                <td>{shift.hospitalized?.hospital || "—"}</td>
+                <td>{shift.hospitalized?.department || "—"}</td>
               </tr>
             ))}
           </tbody>
