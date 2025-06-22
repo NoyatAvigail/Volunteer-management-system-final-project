@@ -2,16 +2,28 @@ import volunteerDAL from '../dal/volunteersDal.js';
 import genericDAL from '../dal/genericDal.js';
 
 const volunteerService = {
-    utils: async (authenticatedId) => {
-        const Volunteeers = genericDAL.getModelByName('Volunteeers');
-        const volunteer = await genericDAL.findById(Volunteeers, authenticatedId);
-        const volnteerId = volunteer.id;
-        return volnteerId;
+    utils: async (authenticatedType) => {
+        const type = genericDAL.getModelByName('UserTypes');
+        const userType = await genericDAL.findById(type, authenticatedType);
+        const userTypeDesc = userType?.description;
+        const model = userTypeDesc === 'Volunteer'
+            ? genericDAL.getModelByName('Volunteers')
+            : genericDAL.getModelByName('ContactPeople');
+        return { userTypeDesc, model };
     },
 
-    getShifts: async (authenticatedId) => {
-        const utils = utils(authenticatedId);
-        return await volunteerDAL.getEventsByVolunteerId(utils.volnteerId);
+    getShifts: async (authenticatedId, authenticatedType) => {
+        console.log("סרביסז");
+        
+        const { model } = await profilesService.utils(authenticatedType);
+        const user = await genericDAL.findById(model, authenticatedId);
+        if (!user) {
+            const error = new Error(`User not found`);
+            error.status = 404;
+            throw error;
+        }
+        const userIdFromToken = user.userId;
+        return await volunteerDAL.getEventsByVolunteerId(userIdFromToken);
     },
 
     getCertificate: async (authenticatedId) => {
