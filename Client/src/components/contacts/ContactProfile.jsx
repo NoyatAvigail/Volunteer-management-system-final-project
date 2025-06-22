@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useForm } from "react-hook-form";
 import { CodesContext } from '../Models';
 import { CurrentUser } from '../App';
-import '../../style/Profile.css'
+import '../../style/ContactProfile.css'
 import {
   useProfileData,
   useEditModeFromSessionStorage,
@@ -111,44 +111,6 @@ function ContactPersonProfile() {
       </form>
     </div>
   );
-  // return (
-  //   <div>
-  //     <h2>Contact Person Profile</h2>
-  //     {!isEditing && <button onClick={handleRequestEdit}>Edit Profile</button>}
-  //     {!isEditing && showCodeInput && (
-  //       <div>
-  //         <input
-  //           placeholder="Enter verification code"
-  //           value={code}
-  //           onChange={(e) => setCode(e.target.value)}
-  //         />
-  //         <button onClick={verifyCode}>Verify</button>
-  //       </div>
-  //     )}
-  //     <form onSubmit={handleSubmit(onSubmit)}>
-  //       <input placeholder="ID" {...register("userId", { required: true })} readOnly={!isEditing} />
-  //       <input placeholder="Full Name" {...register("fullName", { required: true })} readOnly={!isEditing} />
-  //       <input placeholder="Email" {...register("email", { required: true })} readOnly={!isEditing} />
-  //       <input placeholder="Phone" {...register("phone", { required: true })} readOnly={!isEditing} />
-  //       <input placeholder="Address" {...register("address", { required: true })} readOnly={!isEditing} />
-  //       <label>Family Relation</label>
-  //       {codes?.FamilyRelations?.map((item) => (
-  //         <div key={item.id}>
-  //           <input
-  //             type="radio"
-  //             {...register("relationId", { required: true })}
-  //             value={item.id}
-  //             id={`relation-${item.id}`}
-  //             disabled={!isEditing}
-  //           />
-  //           <label htmlFor={`relation-${item.id}`}>{item.description}</label>
-  //         </div>
-  //       ))}
-  //       {errors.relationId && <p>Please select a relation</p>}
-  //       {isEditing && <button type="submit">Save Changes</button>}
-  //     </form>
-  //   </div>
-  // );
 }
 
 export default ContactPersonProfile;

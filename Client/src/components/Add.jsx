@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { CurrentUser } from "./App";
 import { useCodes } from "../components/Models";
 import { createHandler } from "../services/servicesSelector";
+import '../style/Add.css'
 
 function Add({
     setIsChange = () => { },
@@ -23,8 +24,8 @@ function Add({
 
     function formatDateForSql(input) {
         const date = new Date(input);
-        if (isNaN(date)) return null; 
-        return date.toISOString().slice(0, 19).replace('T', ' '); 
+        if (isNaN(date)) return null;
+        return date.toISOString().slice(0, 19).replace('T', ' ');
     }
 
     const addFunc = async (body) => {
@@ -61,7 +62,7 @@ function Add({
     };
 
     return (
-        <>
+        <div className="add-form">
             {isScreen === 0 && (
                 <button className="addBtn" onClick={() => setIsScreen(1)}>{name}</button>
             )}
@@ -108,7 +109,7 @@ function Add({
                     <button type="button" onClick={handleCancel}>Cancel</button>
                 </form>
             )}
-        </>
+        </div>
     );
 }
 
