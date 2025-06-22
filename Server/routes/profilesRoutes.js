@@ -1,7 +1,7 @@
 import express from 'express';
 import profilesController from '../controller/profilesController.js';
 import { verifyToken } from '../middleware/middleware.js';
-import usersController from '../controller/usersController.js'
+import emailController from '../controller/emailController.js';
 const router = express.Router();
 router.use(verifyToken);
 
@@ -15,8 +15,8 @@ router.route('/patients')
 router.route('/patients/:id')
     .put(profilesController.updatePatientProfile)
     
-router.post('/send-edit-email', usersController.sendEditEmail);
-router.post('/verify-edit-code', usersController.verifyEditCode);
+router.post('/send-edit-email', emailController.sendEditEmail);
+router.post('/verify-edit-code', emailController.verifyEditCode);
 
 
 export default router;
