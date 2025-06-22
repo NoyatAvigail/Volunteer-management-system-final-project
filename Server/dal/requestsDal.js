@@ -90,11 +90,7 @@ const requestDal = {
         // date: {
         //   [Op.between]: [startDate, endDate]
         // },
-<<<<<<< HEAD
         volunteerId:null,
-=======
-        volunteerId: null,
->>>>>>> 64cd2724609e2a8db492d93739976c531be22f2e
         is_deleted: 0
       },
       include: [

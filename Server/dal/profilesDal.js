@@ -49,12 +49,12 @@ const profilesDAL = {
                 flexible: data.flexible
             }, { transaction });
             const volunteerId = volunteer.id;
-            await Promise.all([
+            // await Promise.all([
                 genericDAL.deleteByField(VolunteerTypes, volunteerId),
                 genericDAL.deleteByField(VolunteeringForGenders, volunteerId),
                 genericDAL.deleteByField(VolunteeringForSectors, volunteerId),
                 genericDAL.deleteByField(VolunteeringInDepartments, volunteerId)
-            ]);
+            // ]);
             const helpTypes = data.helpTypes.map(typeId => ({
                 id: volunteerId,
                 volunteerTypeId: typeId
@@ -74,12 +74,12 @@ const profilesDAL = {
                 id: volunteerId,
                 genderId
             }));
-            await Promise.all([
+            // await Promise.all([
                 helpTypes.length && genericDAL.bulkCreateModel(VolunteerTypes, helpTypes, transaction),
                 departments.length && genericDAL.bulkCreateModel(VolunteeringInDepartments, departments, transaction),
                 sectors.length && genericDAL.bulkCreateModel(VolunteeringForSectors, sectors, transaction),
                 genders.length && genericDAL.bulkCreateModel(VolunteeringForGenders, genders, transaction)
-            ]);
+            // ]);
             await transaction.commit();
         } catch (error) {
             await transaction.rollback();
