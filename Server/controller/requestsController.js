@@ -40,8 +40,10 @@ const requestsController = {
     },
 
     deleteRequests: async (req, res) => {
+        console.log("בכונטרולר");
+        
         const { id } = req.params;
-        const authenticated = utils(req);
+        const authenticated =await requestsController.utils(req);
         if (!id) {
             return res.status(400).json({ message: "Missing event ID" });
         }
