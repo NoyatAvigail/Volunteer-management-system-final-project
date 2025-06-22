@@ -23,7 +23,6 @@ const profilesController = {
     },
 
     updateProfile: async (req, res) => {
-        console.log("הגיע לאפדייט בכונטרול");
         try {
             const authenticated = await profilesController.utils(req);
             const requests = await profilesService.updateProfile(authenticated.authenticatedId, authenticated.authenticatedType, req.body);

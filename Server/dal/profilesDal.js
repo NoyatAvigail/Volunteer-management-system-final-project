@@ -2,8 +2,7 @@ import genericDAL from './genericDal.js';
 import { Users, Volunteers, VolunteerTypes, sequelize, VolunteeringForGenders, VolunteeringForSectors, VolunteeringInDepartments, ContactPeople, Patients, Hospitalizeds } from '../../DB/index.mjs'
 
 const profilesDAL = {
-    getVolunteerProfile: async (userId) => {
-        
+    getVolunteerProfile: async (userId) => {        
         return Volunteers.findOne({
             where: { userId, is_deleted: 0 },
             include: [

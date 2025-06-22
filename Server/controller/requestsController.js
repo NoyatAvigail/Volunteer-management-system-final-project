@@ -60,7 +60,9 @@ const requestsController = {
     },
 
     updatRequests: async (req, res) => {
-        const authenticated = utils(req);
+        console.log("הגיע לכונטרולר");
+        
+        const authenticated = await requestsController.utils(req);
         const { id } = req.params;
         const body = req.body;
 
