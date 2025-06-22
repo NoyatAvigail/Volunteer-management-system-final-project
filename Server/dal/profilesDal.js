@@ -27,7 +27,6 @@ const profilesDAL = {
     updateVolunteerProfile: async (userId, data) => {
         const transaction = await sequelize.transaction();
         try {
-            console.log("userId:",userId);
             const volunteer = await Volunteers.findOne({ where: { userId }, transaction });
             const user = await Users.findByPk(userId, { transaction });
             if (!volunteer || !user)
@@ -109,10 +108,8 @@ const profilesDAL = {
     },
 
     getPatients: async (contactId) => {
-
         return await Patients.findAll({
             where: { contactPeopleId: contactId, is_deleted: 0 },
-            //לבדוק את זה
             include: [
                 { model: Hospitalizeds }
             ]
@@ -120,10 +117,7 @@ const profilesDAL = {
     },
 
     updatePatientProfile: async (patientId, data) => {
-        try {
-            console.log("data:", data);
-            console.log("patientId:",patientId);
-            
+        try {            
             const transaction = await sequelize.transaction();
             const patient = await Patients.findByPk(patientId, { transaction });
             if (!patient)

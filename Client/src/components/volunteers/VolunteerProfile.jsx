@@ -21,7 +21,6 @@ function VolunteerProfile() {
   const initialData = useProfileData("", reset);
 
   const onSubmit = async (formData) => {
-    console.log("Submitting form...", formData);
     try {
       await updateProfile("", setIsEditing, formData);
       setIsEditing(false);

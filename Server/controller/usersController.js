@@ -1,13 +1,11 @@
 import userService from "../services/usersService.js";
 import { generateToken } from "../middleware/middleware.js";
 import emailsService from '../services/emailsService.js';
-// import { generateSimpleCode } from '../utils/utils.js';
 
 const userController = {
     signup: async (req, res) => {
         try {
             const newUser = await userService.signup(req.body);
-            console.log("New user created:", newUser);
             const token = generateToken(newUser.id, newUser.email, newUser.type);
             console.log("User created successfully:", newUser, "Token generated:", token);
             return res.status(201).json({
@@ -16,7 +14,6 @@ const userController = {
                 user: newUser,
             });
         } catch (e) {
-            console.log("Received signup body:", req.body);
             res.status(400).json({ message: e.message });
         }
     },
@@ -24,7 +21,6 @@ const userController = {
     login: async (req, res) => {
         try {
             const loginUser = await userService.login(req.body);
-            console.log("Login user found:", loginUser);
             if (!loginUser) return res.status(401).json({ message: 'Invalid credentials' });
             const token = generateToken(loginUser.user.autoId, loginUser.user.email, loginUser.user.type);
             console.log("User logged in successfully:", loginUser, "Token generated:", token);
@@ -42,15 +38,11 @@ const userController = {
         try {
             const authenticatedId = req.user.id?.toString();
             const authenticatedEmail = req.user.email?.toString();
-
             if (!authenticatedId || !authenticatedEmail)
                 return res.status(400).send("Missing user ID or email");
-
-            // const code =generateSimpleCode();
             const code = emailsService.generateSimple();
             emailsService.storeEditCode(authenticatedId, code);
             await emailsService.sendEditVerificationMail(authenticatedEmail, code);
-
             res.send("Email sent");
         } catch (err) {
             console.error("Error sending edit email:", err);
@@ -62,23 +54,18 @@ const userController = {
         try {
             const { code } = req.body;
             const authenticatedId = req.user.id?.toString();
-
             if (!code || !authenticatedId)
                 return res.status(400).send("Missing code or user ID");
-
             const isValid = emailsService.verifyStoredCode(authenticatedId, code);
-
             if (!isValid) {
                 return res.status(400).send("Invalid or expired code");
             }
-
             res.status(200).send({ message: "Code valid" });
         } catch (err) {
             console.error("Error verifying code:", err);
             res.status(500).send("Internal Server Error");
         }
     }
-
 };
 
 export default userController;

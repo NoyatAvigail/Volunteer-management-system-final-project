@@ -9,9 +9,7 @@ export function setTokenGetter(fn) {
     getToken = fn;
 }
 
-async function request(body, url, method = 'GET', onSuccess, onError) {
-    console.log("body:",body);
-    
+async function request(body, url, method = 'GET', onSuccess, onError) {    
     try {
         const token = getToken();
         const config = {

@@ -22,7 +22,6 @@ export const verifyToken = (req, res, next) => {
 export const validateUserId = (req, res, next) => {
   const requestedId = req.params.userId;
   const authenticatedId = req.user.id.toString();
-  console.log("Authenticated ID:", req.user);
   if (requestedId != authenticatedId) {
     return res.status(403).json({ error: 'Access denied' });
   }

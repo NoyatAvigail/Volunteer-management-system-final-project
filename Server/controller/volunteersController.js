@@ -8,9 +8,7 @@ const volunteersController = {
   },
 
   getShifts: async (req, res) => {
-    try {
-      console.log("כונטרולר");
-      
+    try {      
       const authenticated =await volunteersController.utils(req);
       const shifts = await volunteerService.getShifts(authenticated.authenticatedId, authenticated.authenticatedType);
       return res.json(shifts);

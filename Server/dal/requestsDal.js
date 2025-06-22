@@ -32,9 +32,6 @@ const models = {
 
 const requestDal = {
   getContactRequests: async (contactId, startDate, endDate) => {
-    console.log("contactId", contactId);
-
-    console.log(Events.associations);
     const events = await Events.findAll({
       where: {
         contactId: contactId,
@@ -64,7 +61,6 @@ const requestDal = {
         }
       ]
     });
-    console.log(events);
     return events;
   },
 
@@ -96,24 +92,15 @@ const requestDal = {
       include: [
         {
           model: Hospitalizeds,
-          // required: true,
           include: [
             {
               model: Hospitals,
-              // attributes: ['id', 'description']
             },
             {
               model: Departments,
-              // attributes: ['id', 'description']
             },
             {
               model: Patients,
-              // required: true,
-              // where: {
-              //   ...(preferredGenders.length && { gender: { [Op.in]: preferredGenders } }),
-              //   ...(preferredSectors.length && { sector: { [Op.in]: preferredSectors } })
-              // },
-              // attributes: ['id', 'userId', 'fullName', 'gender', 'sector']
             }
           ]
         }
@@ -127,7 +114,6 @@ const requestDal = {
         pref.hospital === hosp?.id && pref.department === dept?.id
       );
     });
-    console.log(filtered);
     return filtered;
   },
 
@@ -176,15 +162,8 @@ const requestDal = {
     }
   },
 
-  // assignVolunteerToEvent: async (eventId, volunteerId) => {
-  //   return await Events.update(
-  //     { volunteerId },
-  //     { where: { id: eventId } }
-  //   );
-  // },
   assignVolunteerToEvent: async (eventId, volunteerId) => {
     await Events.update({ volunteerId }, { where: { id: eventId } });
-
     const event = await Events.findByPk(eventId, {
       include: [
         {
@@ -204,7 +183,6 @@ const requestDal = {
         }
       ]
     });
-
     return event;
   },
 
@@ -216,41 +194,7 @@ const requestDal = {
     return event;
   },
 
-  // find: async (table1, targetField, table2, foreignKey, targetKey, targetValue) => {
-  //   const matchingRecordsTbl1 = await genericDAL.findByField(
-  //     genericDAL.getModelByName(table1),
-  //     { [targetKey]: targetValue }
-  //   );
-  //   const parentIds = matchingRecordsTbl1.map(item => item[targetField]);
-  //   const matchingRecordsTbl2 = await genericDAL.findByFieldIn(
-  //     genericDAL.getModelByName(table2),
-  //     foreignKey,
-  //     parentIds
-  //   );
-  //   const req = userService.joinTables({
-  //     parents: matchingRecordsTbl1,
-  //     children: matchingRecordsTbl2,
-  //     parentKey: targetField,
-  //     childKey: foreignKey,
-  //     parentPrefix: ""
-  //   });
-  //   const distinctPatientIds = [...new Set(req.map(item => item.patientId))];
-  //   const patients = await genericDAL.findByFieldIn(
-  //     genericDAL.getModelByName("Patients"),
-  //     "userId",
-  //     distinctPatientIds
-  //   );
-  //   const req2 = userService.joinTables({
-  //     parents: req,
-  //     children: patients,
-  //     parentKey: "patientId",
-  //     childKey: "userId",
-  //     parentPrefix: ""
-  //   });
-  //   return req2;
-  // }
   softDeleteEvent: async (eventId) => {
-
     Events.update(
       { is_deleted: 1 },
       { where: { id: eventId } })

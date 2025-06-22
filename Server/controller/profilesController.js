@@ -39,8 +39,6 @@ const profilesController = {
     getPatients: async (req, res) => {
         try {
             const authenticated = await profilesController.utils(req);
-            console.log("הגיע לכונטרולר");
-            console.log("authenticated:", authenticated);
             const requests = await profilesService.getPatients(authenticated.authenticatedId, authenticated.authenticatedType);
             res.status(200).json(requests);
         } catch (error) {
