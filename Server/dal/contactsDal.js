@@ -76,22 +76,16 @@ const contactsDal = {
         return patient;
     },
 
-    getHospitalizedsById: async (patientId) => {
+    getHospitalizeds: async (patientId) => {
         return await Hospitalizeds.findAll({
             where: {
-                patientId: patientId, is_deleted: 0
+                patientId: patientId,
+                is_deleted: 0
             }
-            // include: [{
-            //     model: Patients,
-            //     required: true,
-            //     where: {
-            //         id: patientId
-            //     }
-            // }]
         });
     },
 
-    createHospitalizeds: async (patientId, body) => {
+    createHospitalized: async (patientId, body) => {
         return await Hospitalizeds.create({
             ...body,
             patientId

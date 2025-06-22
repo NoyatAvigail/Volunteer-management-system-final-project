@@ -4,7 +4,7 @@ import ContactPeople from '../models/ContactPeople.js';
 
 const contactsService = {
     getPatients: async (authenticatedId) => {
-        try {            
+        try {
             return await contactsDal.getPatients(authenticatedId);
         } catch (error) {
             console.error("Error in contactsService.getPatients:", error);
@@ -63,20 +63,20 @@ const contactsService = {
         }
     },
 
-    getHospitalizedsById: async (authenticatedId,patientId) => {
-        try {            
-            return await contactsDal.getHospitalizedsById(patientId);
+    getHospitalizeds: async (authenticatedId, patientId) => {
+        try {
+            return await contactsDal.getHospitalizeds(patientId);
         } catch (error) {
             console.error("Error in contactsService.getHospitalizeds:", error);
             throw error;
         }
     },
 
-    createHospitalizeds: async (authenticatedId, patientId, body) => {
+    createHospitalized: async (authenticatedId, patientId, body) => {
         try {
-            return await contactsDal.createHospitalizeds(patientId, body);
+            return await contactsDal.createHospitalized(patientId, body);
         } catch (error) {
-            console.error("Error in contactsService.createHospitalizeds:", error);
+            console.error("Error in contactsService.createHospitalized:", error);
             throw error;
         }
     },

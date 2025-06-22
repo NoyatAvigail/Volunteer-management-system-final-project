@@ -17,7 +17,6 @@ function Register() {
     const [registerIsCompleted, setRegisterIsCompleted] = useState(0);
     const [responsText, setResponstText] = useState("Fill the form and click the sign up button");
     const { setCurrentUser } = useContext(CurrentUser);
-    // const { setCodesContext } = useContext(CodesContext);
     const [userData, setUserData] = useState({});
     const [showMoreForm, setShowMoreForm] = useState(false);
     const { codes, loading } = useCodes();
@@ -284,24 +283,28 @@ function Register() {
                     <div className="entryContainer">
                         <form onSubmit={handleSecondSubmit(onSecondSubmit)} className="entryForm">
                             <h2>Contact form</h2>
-                            <input placeholder="T.Z." {...registerSecond("userId", { required: true })} />
+                            <input placeholder="ID" {...registerSecond("userId", { required: true })} />
                             <input value={userData.fullName} readOnly {...registerSecond("fullName", { required: true })} />
                             <input value={userData.email} readOnly {...registerSecond("email", { required: true })} />
                             <input placeholder="phone" {...registerSecond("phone", { required: true })} />
                             <input placeholder="address" {...registerSecond("address", { required: true })} />
-                            <label>family closeness</label>
-                            {codes?.FamilyRelations?.map((item) => (
-                                <div key={item.id}>
-                                    <input
-                                        type="radio"
-                                        {...registerSecond("relationId")}
-                                        value={item.id}
-                                        id={`FamilyRelations-${item.id}`}
-                                    />
-                                    <label htmlFor={`guard-FamilyRelations-${item.id}`}>{item.description}</label>
-                                </div>
-                            ))}
+
+                            <div className="preference">
+                                <h4>Family Closeness</h4>
+                                {codes?.FamilyRelations?.map((item) => (
+                                    <div key={item.id}>
+                                        <input
+                                            type="radio"
+                                            {...registerSecond("relationId")}
+                                            value={item.id}
+                                            id={`FamilyRelations-${item.id}`}
+                                        />
+                                        <label htmlFor={`FamilyRelations-${item.id}`}>{item.description}</label>
+                                    </div>
+                                ))}
+                            </div>
                             {errorsSecond.relationId && <p>Must select a family relationship</p>}
+
                             <h3>Patient details</h3>
                             <input placeholder="ID" {...registerSecond("patientId", { required: true })} />
                             <input placeholder="Name" {...registerSecond("patientName", { required: true })} />
@@ -311,67 +314,87 @@ function Register() {
                                 {...registerSecond("birthDate", { required: true })}
                             />
                             {errorsSecond.birthDate && <p>Must enter a date of birth</p>}
-                            <label> Gender </label>
-                            {codes?.Genders?.map((item) => (
-                                <div key={item.id}>
-                                    <input
-                                        type="radio"
-                                        {...registerSecond("gender")}
-                                        value={item.id}
-                                        id={`guard-gender-${item.id}`}
-                                    />
-                                    <label htmlFor={`guard-gender-${item.id}`}>{item.description}</label>
-                                </div>
-                            ))}
-                            <label>Sector</label>
-                            {codes?.Sectors?.map((item) => (
-                                <div key={item.id}>
-                                    <input
-                                        type="radio"
-                                        {...registerSecond("sector")}
-                                        value={item.id}
-                                        id={`guard-sector-${item.id}`}
-                                    />
-                                    <label htmlFor={`guard-sector-${item.id}`}>{item.description}</label>
-                                </div>
-                            ))}
+
+                            <div className="preference">
+                                <h4>Gender</h4>
+                                {codes?.Genders?.map((item) => (
+                                    <div key={item.id}>
+                                        <input
+                                            type="radio"
+                                            {...registerSecond("gender")}
+                                            value={item.id}
+                                            id={`gender-${item.id}`}
+                                        />
+                                        <label htmlFor={`gender-${item.id}`}>{item.description}</label>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="preference">
+                                <h4>Sector</h4>
+                                {codes?.Sectors?.map((item) => (
+                                    <div key={item.id}>
+                                        <input
+                                            type="radio"
+                                            {...registerSecond("sector")}
+                                            value={item.id}
+                                            id={`sector-${item.id}`}
+                                        />
+                                        <label htmlFor={`sector-${item.id}`}>{item.description}</label>
+                                    </div>
+                                ))}
+                            </div>
+
                             <input placeholder="address" {...registerSecond("patientAddress", { required: true })} />
-                            <label>
-                                <input type="checkbox" {...registerSecond("notifications")} />
-                                interested in notifications
-                            </label>
-                            <label>Choose a hospital</label>
-                            {codes?.Hospitals?.map((item) => (
-                                <div key={item.id}>
-                                    <input
-                                        type="radio"
-                                        {...registerSecond("hospital")}
-                                        value={item.id}
-                                        id={`Hospitals-${item.id}`}
-                                    />
-                                    <label htmlFor={`Hospitals-${item.id}`}>{item.description}</label>
-                                </div>
-                            ))}
-                            <label>Choose a department</label>
-                            {codes?.Departments?.map((item) => (
-                                <div key={item.id}>
-                                    <input
-                                        type="radio"
-                                        {...registerSecond("department")}
-                                        value={item.id}
-                                        id={`Departments-${item.id}`}
-                                    />
-                                    <label htmlFor={`Departments-${item.id}`}>{item.description}</label>
-                                </div>
-                            ))}
+
+                            <div className="preference">
+                                <label>
+                                    <input type="checkbox" {...registerSecond("notifications")} />
+                                    Interested in notifications
+                                </label>
+                            </div>
+
+                            <div className="preference">
+                                <h4>Choose a hospital</h4>
+                                {codes?.Hospitals?.map((item) => (
+                                    <div key={item.id}>
+                                        <input
+                                            type="radio"
+                                            {...registerSecond("hospital")}
+                                            value={item.id}
+                                            id={`hospital-${item.id}`}
+                                        />
+                                        <label htmlFor={`hospital-${item.id}`}>{item.description}</label>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="preference">
+                                <h4>Choose a department</h4>
+                                {codes?.Departments?.map((item) => (
+                                    <div key={item.id}>
+                                        <input
+                                            type="radio"
+                                            {...registerSecond("department")}
+                                            value={item.id}
+                                            id={`department-${item.id}`}
+                                        />
+                                        <label htmlFor={`department-${item.id}`}>{item.description}</label>
+                                    </div>
+                                ))}
+                            </div>
+
                             <input placeholder="Room Number" {...registerSecond("roomNumber", { required: true })} />
-                            <input placeholder="hospitalization Start" {...registerSecond("hospitalizationStart", { required: true })} />
+                            <input placeholder="Hospitalization Start" {...registerSecond("hospitalizationStart", { required: true })} />
+
                             <button type="submit">Subscribe</button>
                         </form>
                     </div>
                 )}
+
             </div>
         </div >
     );
 }
+
 export default Register;
