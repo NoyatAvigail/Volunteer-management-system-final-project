@@ -26,5 +26,6 @@ const volunteersController = {
     }
   },
 }
+
 export default volunteersController;
 
