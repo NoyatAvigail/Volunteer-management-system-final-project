@@ -124,10 +124,8 @@ const userService = {
                     autoId: contact.id
                 };
             }
-
             await transaction.commit();
             return newUser;
-
         } catch (e) {
             await transaction.rollback();
             console.error("Signup failed:", e);
