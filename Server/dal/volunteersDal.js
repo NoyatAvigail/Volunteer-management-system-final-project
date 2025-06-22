@@ -1,4 +1,4 @@
-import { Patients, Hospitalizeds, Events, ContactPeople } from '../../DB/index.mjs';
+import { Patients, Hospitalizeds, Events, ContactPeople, Hospitals, Departments } from '../../DB/index.mjs';
 
 const volunteerDAL = {
   getEventsByVolunteerId: async (userId) => {
@@ -22,6 +22,8 @@ const volunteerDAL = {
         {
           model: Hospitalizeds,
           include: [
+            { model: Hospitals },
+            { model: Departments },
             {
               model: Patients,
             }
