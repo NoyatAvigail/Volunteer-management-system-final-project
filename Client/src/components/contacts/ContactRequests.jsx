@@ -51,7 +51,6 @@ function ContactRequests() {
             fetchHospitalizeds(updateRow.patientId);
         }
     }, [updateRow]);
-//לטפל בזה דחוף!
     const fetchHospitalizeds = (patientId) => {
           contactsServices.getByValue(
             "Hospitalizeds",
@@ -63,8 +62,8 @@ function ContactRequests() {
 
     const fetchData = async () => {
         try {
-            const startDate = '2025-06-01';
-            const endDate = '2025-08-31';
+            const startDate = '2000-06-01';
+            const endDate = '2029-08-31';
             await requestsServices.getAll(
                 startDate,
                 endDate,
