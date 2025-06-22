@@ -13,9 +13,6 @@ const volunteerService = {
     },
 
     getShifts: async (authenticatedId, authenticatedType) => {
-        console.log("סרביסז", authenticatedId);
-
-        // const { model } = profilesService.utils(authenticatedType);
         const volunteer = genericDAL.getModelByName('Volunteers')
         const user = await genericDAL.findById(volunteer, authenticatedId);
         if (!user) {
@@ -31,14 +28,12 @@ const volunteerService = {
         const utils = utils(authenticatedId);
         const events = await volunteerDAL.getEventsByVolunteerId(utils.volnteerId);
         let totalMinutes = 0;
-
         events.forEach(event => {
             const start = new Date(`1970-01-01T${event.startTime}Z`);
             const end = new Date(`1970-01-01T${event.endTime}Z`);
             const diff = (end - start) / 60000;
             totalMinutes += diff;
         });
-
         return {
             totalHours: Math.floor(totalMinutes / 60),
             totalMinutes: totalMinutes % 60,

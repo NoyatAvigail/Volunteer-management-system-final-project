@@ -8,8 +8,6 @@ function Volunteers() {
     const { currentUser } = useContext(CurrentUser);
     const navigate = useNavigate();
 
-    console.log("Volunteers component loaded");
-
     useEffect(() => {
         if (!currentUser?.id) {
             setError("User is not logged in");

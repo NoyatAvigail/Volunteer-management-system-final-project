@@ -50,13 +50,11 @@ function Register() {
             email: userData.email,
         };
         const error = validateSecondRegisterStep(mergedData);
-        console.log("Validation error:", error);
         if (error) {
             setResponstText(error);
             return;
         }
         if (userType.description == "Volunteer") {
-            console.log("Registering as a volunteer with data:", mergedData);
             const user = {
                 id: Number(mergedData.userId),
                 fullName: userData.fullName,
@@ -374,7 +372,11 @@ function Register() {
                                 ))}
                             </div>
                             <input placeholder="Room Number" {...registerSecond("roomNumber", { required: true })} />
-                            <input placeholder="Hospitalization Start" {...registerSecond("hospitalizationStart", { required: true })} />
+                            <input
+                                type="date"
+                                placeholder="Hospitalization Start"
+                                {...registerSecond("hospitalizationStart", { required: true })}
+                            />
                             <button type="submit">Sign Up</button>
                         </form>
                     </div>

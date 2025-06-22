@@ -10,8 +10,6 @@ const contactController = {
   getPatients: async (req, res) => {
     try {
       const authenticated = contactController.utils(req);
-      console.log("authenticated:", authenticated);
-
       const requests = await contactsService.getPatients(authenticated.authenticatedId);
       res.status(200).json(requests);
     } catch (error) {
@@ -27,8 +25,6 @@ const contactController = {
     try {
       const authenticated = contactController.utils(req);
       const requests = await contactsService.createPatient(authenticated.authenticatedId, req.body);
-      console.log("requests:", requests);
-
       res.status(200).json(requests);
     } catch (error) {
       console.error("Error in createPatient Controller:", error);
@@ -100,9 +96,7 @@ const contactController = {
   },
 
   createHospitalized: async (req, res) => {
-    try {
-      console.log("כונטרולר");
-      
+    try {      
       const authenticated =await contactController.utils(req);
       const restBody =await req.body;
       const newHospitalized = await contactsService.createHospitalized(authenticated.authenticatedId, restBody);

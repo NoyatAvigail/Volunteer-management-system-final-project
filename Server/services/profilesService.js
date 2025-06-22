@@ -54,9 +54,6 @@ const profilesService = {
     getPatients: async (authenticatedId, authenticatedType) => {
         try {
             const { userTypeDesc, model } = await profilesService.utils(authenticatedType);
-            console.log("In getProfile service:");
-            console.log("authenticatedId:", authenticatedId);
-            console.log("authenticatedType:", authenticatedType);
             const contactArr = await genericDAL.findByField(model, { id: authenticatedId });
             const contact = contactArr?.[0];
             if (!contact) {
@@ -64,8 +61,6 @@ const profilesService = {
                 error.status = 404;
                 throw error;
             }
-            console.log("model:", model);
-
             if (userTypeDesc == 'ContactPerson') {
                 return await profilesDal.getPatients(contact.userId);
             }

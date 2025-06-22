@@ -75,8 +75,6 @@ const contactsService = {
     createHospitalized: async (authenticatedId, body) => {
         try {
             const patientId = body.patientId;
-            console.log("body:", body);
-            console.log("restBody.patientId", patientId);
             return await contactsDal.createHospitalized(patientId,body);
         } catch (error) {
             console.error("Error in contactsService.createHospitalized:", error);

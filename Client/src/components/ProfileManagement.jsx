@@ -80,7 +80,6 @@ export function useProfileData(type = "", resetForm) {
   useEffect(() => {
     async function fetchData() {
       const data = await profilesServices.getAll(type);
-      console.log("data:", data);
       setInitialData(data);
       const formValues = parseProfileDataToForm(data);
       resetForm(formValues);

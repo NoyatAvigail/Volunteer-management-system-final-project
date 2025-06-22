@@ -34,7 +34,6 @@ function Certificate() {
     const element = document.getElementById('certificate');
     html2pdf().from(element).save(`${currentUser.fullName}-certificate.pdf`);
   };
-  console.log("currentUser.fullName:", currentUser.fullName);
 
   return (
     <div className="certificate-container">
