@@ -196,9 +196,8 @@ function Register() {
                             <button type="button" onClick={() => setShowMoreForm(true)}>More details</button>
                             {showMoreForm && (
                                 <div className="more-form">
-                                    <h3>Additional Details</h3>
+                                    <h4>Departments I am willing to volunteer in</h4>
                                     <div className='preference'>
-                                        <h4>Departments I am willing to volunteer in</h4>
                                         {codes?.Departments?.map((item) => (
                                             <div key={item.id}>
                                                 <input
@@ -211,8 +210,8 @@ function Register() {
                                             </div>
                                         ))}
                                     </div>
+                                    <h4>Hospitals where I am willing to volunteer</h4>
                                     <div className='preference'>
-                                        <h4>Hospitals where I am willing to volunteer</h4>
                                         {codes?.Hospitals?.map((item) => (
                                             <div key={item.id}>
                                                 <input
@@ -225,8 +224,8 @@ function Register() {
                                             </div>
                                         ))}
                                     </div>
+                                    <h4>Sectors I am willing to keep</h4>
                                     <div className='preference'>
-                                        <h4>Sectors I am willing to keep</h4>
                                         {codes?.Sectors?.map((item) => (
                                             <div key={item.id}>
                                                 <input
@@ -239,8 +238,8 @@ function Register() {
                                             </div>
                                         ))}
                                     </div>
+                                    <h4>Genders I am willing to maintain</h4>
                                     <div className='preference'>
-                                        <h4>Genders I am willing to maintain</h4>
                                         {codes?.Genders?.map((item) => (
                                             <div key={item.id}>
                                                 <input
@@ -253,8 +252,8 @@ function Register() {
                                             </div>
                                         ))}
                                     </div>
+                                    <h4>Flexibility in hours</h4>
                                     <div className='preference'>
-                                        <h4>Flexibility in hours</h4>
                                         <div>
                                             <input
                                                 type="radio"
@@ -262,14 +261,14 @@ function Register() {
                                                 value="true"
                                                 id="flexible-yes"
                                             />
-                                            <label htmlFor="flexible-yes">כן</label>
+                                            <label htmlFor="flexible-yes">Yes</label>
                                             <input
                                                 type="radio"
                                                 {...registerSecond("isFlexible")}
                                                 value="false"
                                                 id="flexible-no"
                                             />
-                                            <label htmlFor="flexible-no">לא</label>
+                                            <label htmlFor="flexible-no">No</label>
                                         </div>
                                     </div>
                                 </div>
@@ -287,8 +286,8 @@ function Register() {
                             <input value={userData.email} readOnly {...registerSecond("email", { required: true })} />
                             <input placeholder="phone" {...registerSecond("phone", { required: true })} />
                             <input placeholder="address" {...registerSecond("address", { required: true })} />
+                            <h4>Family Closeness</h4>
                             <div className="preference">
-                                <h4>Family Closeness</h4>
                                 {codes?.FamilyRelations?.map((item) => (
                                     <div key={item.id}>
                                         <input
@@ -311,8 +310,8 @@ function Register() {
                                 {...registerSecond("birthDate", { required: true })}
                             />
                             {errorsSecond.birthDate && <p>Must enter a date of birth</p>}
+                            <h4>Gender</h4>
                             <div className="preference">
-                                <h4>Gender</h4>
                                 {codes?.Genders?.map((item) => (
                                     <div key={item.id}>
                                         <input
@@ -325,8 +324,8 @@ function Register() {
                                     </div>
                                 ))}
                             </div>
+                            <h4>Sector</h4>
                             <div className="preference">
-                                <h4>Sector</h4>
                                 {codes?.Sectors?.map((item) => (
                                     <div key={item.id}>
                                         <input
@@ -346,8 +345,8 @@ function Register() {
                                     Interested in notifications
                                 </label>
                             </div>
+                            <h4>Choose a hospital</h4>
                             <div className="preference">
-                                <h4>Choose a hospital</h4>
                                 {codes?.Hospitals?.map((item) => (
                                     <div key={item.id}>
                                         <input
@@ -360,8 +359,8 @@ function Register() {
                                     </div>
                                 ))}
                             </div>
+                            <h4>Choose a department</h4>
                             <div className="preference">
-                                <h4>Choose a department</h4>
                                 {codes?.Departments?.map((item) => (
                                     <div key={item.id}>
                                         <input
