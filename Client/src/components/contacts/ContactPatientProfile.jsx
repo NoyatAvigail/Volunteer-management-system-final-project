@@ -1,7 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useForm } from "react-hook-form";
-// import '../../style/VolunteerRequests.css';
-
 import { CodesContext } from '../Models';
 import { CurrentUser } from '../App';
 import {
@@ -26,9 +24,6 @@ function ContactPatientProfile() {
         reset,
         formState: { errors }
     } = useForm();
-
-    // const dataArray = useProfileData(currentUser.id, "ContactPerson", "Patients", () => { });
-    // console.log("dataArray:", dataArray);
     const dataArray = useProfileData('patients', reset);
 
     useEffect(() => {
