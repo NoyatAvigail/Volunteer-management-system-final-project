@@ -9,7 +9,7 @@ export const createHandler = async ({ type, body, onSuccess, onError }) => {
             case 'Hospitalizeds':
                 return await contactsServices.create(body,'hospitalizeds');
             case 'Events':
-                return await requestsServices.createEvent(body);
+                return await requestsServices.create(body);
             default:
                 throw new Error(`Unsupported type: ${type}`);
         }
@@ -21,11 +21,11 @@ export const createHandler = async ({ type, body, onSuccess, onError }) => {
     }
 };
 
-export const deleteHandler = async ({ type, currentUser, body, onSuccess, onError }) => {
+export const deleteHandler = async ({ type, id, onSuccess, onError }) => {
     try {
         switch (type) {
             case 'Events':
-                return await requestsServices.deleteEvent(body);
+                return await requestsServices.delete(id, onSuccess, onError);
             default:
                 throw new Error(`Unsupported type: ${type}`);
         }
@@ -37,11 +37,11 @@ export const deleteHandler = async ({ type, currentUser, body, onSuccess, onErro
     }
 };
 
-export const updatHandler = async ({ type, currentUser, body, onSuccess, onError }) => {
+export const updatHandler = async ({ type, body, onSuccess, onError }) => {
     try {
         switch (type) {
             case 'Events':
-                return await requestsServices.uptatEvent(body);
+                return await requestsServices.update(body);
             default:
                 throw new Error(`Unsupported type: ${type}`);
         }

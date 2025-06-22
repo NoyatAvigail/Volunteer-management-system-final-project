@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import html2pdf from 'html2pdf.js';
 import axios from 'axios';
 import { CurrentUser } from "../App";
-import {volunteersService} from '../../services/volunteersServices';
+import {volunteersServices} from '../../services/volunteersServices';
 function Certificate() {
   const { currentUser } = useContext(CurrentUser);
   const [hours, setHours] = useState(null);
@@ -12,7 +12,7 @@ function Certificate() {
   useEffect(() => {
     const fetchCertificate = async () => {
       try {
-        const data = await volunteersService.getAll(
+        const data = await volunteersServices.getAll(
           "certificate",
           {},
           (data) => {

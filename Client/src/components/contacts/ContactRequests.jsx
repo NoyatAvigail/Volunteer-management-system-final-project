@@ -9,7 +9,7 @@ import Delete from '.././Delete';
 import Update from '.././Update';
 import '../../style/Posts.css';
 import { requestsServices } from '../../services/requestsServices';
-import {contactsServices} from '../../services/contactsServices'
+import { contactsServices } from '../../services/contactsServices'
 // import { usersServices} from '../../services/usersServices';
 function ContactRequests() {
     const [userData, setUserData] = useState([]);
@@ -23,7 +23,7 @@ function ContactRequests() {
     const [patients, setPatients] = useState([]);
     const [selectedPatientId, setSelectedPatientId] = useState("");
     const [hospitalizedsPerPatient, setHospitalizedsPerPatient] = useState([]);
-    const [updateRow, setUpdateRow] = useState(null); 
+    const [updateRow, setUpdateRow] = useState(null);
     const didFetch = useRef(false);
 
     const noAccess = !currentUser || userTypeObj !== 'ContactPerson';
@@ -52,9 +52,9 @@ function ContactRequests() {
         }
     }, [updateRow]);
     const fetchHospitalizeds = (patientId) => {
-          contactsServices.getByValue(
+        contactsServices.getByValue(
             "Hospitalizeds",
-            patientId ,
+            patientId,
             (res) => setHospitalizedsPerPatient(res || []),
             (err) => console.error("Failed to fetch hospitalizeds:", err)
         );
@@ -200,15 +200,14 @@ function ContactRequests() {
                                                                 options: patients.map(h => ({ label: h.userId, value: h.userId })),
                                                                 onChange: (e) => {
                                                                     const patientId = e.target.value;
-                                                                    setUpdateRow({ ...item, patientId }); // מעדכן כדי להפעיל את useEffect
+                                                                    setUpdateRow({ ...item, patientId });
                                                                 }
                                                             },
                                                             {
                                                                 name: "hospitalizedsId",
                                                                 type: "select",
                                                                 options: hospitalizedsPerPatient.map(h => ({
-                                                                    label: `בית חולים: ${h.hospital}, מחלקה: ${h.department}, חדר: ${h.roomNumber}, מתחילת אשפוז: ${h.hospitalizationStart}`,
-                                                                    value: h.id
+                                                                    label: `Hospital: ${h.hospital}, Department: ${h.department}, Room: ${h.roomNumber}, Hospitalization Start: ${h.hospitalizationStart}`, value: h.id
                                                                 }))
                                                             },
                                                             "date",
@@ -240,7 +239,7 @@ function ContactRequests() {
                             })
                         ) : (
                             <tr>
-                                <td colSpan={8}>אין נתונים להצגה</td>
+                                <td colSpan={8}>No data to display</td>
                             </tr>
                         )}
                     </tbody>

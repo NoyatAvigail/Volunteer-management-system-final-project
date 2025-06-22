@@ -17,26 +17,39 @@ function Delete({
     async function deleteFunc(e) {
         e.preventDefault();
         setProcess(1);
+        // try {
+        //     await deleteHandler(
+        //         type,
+        //         itemId,
+        //         (result) => {
+        //             console.log("Delete successful:", result);
+        //             if (onSuccess) {
+        //                 onSuccess();
+        //             } else {
+        //                 setIsChange(prev => prev == 0 ? 1 : 0);
+        //             }
+        //         },
+        //         (error) => {
+        //             console.error(`Failed to delete ${type} with ID ${itemId}: ${error}`);
+        //             alert("Deletion failed. Please try again.");
+        //         }
+        //     );
+        // } catch (error) {
+        //     console.error("Unexpected error:", error);
+        // }
         try {
-            await servicesSelector.remove(
-                currentUser.autoId,
-                userTypeObj,
+            await deleteHandler({
                 type,
-                itemId,
-                // { id: itemId },
-                (result) => {
+                id: itemId,
+                onSuccess: () => {
                     console.log("Delete successful:", result);
-                    if (onSuccess) {
-                        onSuccess();
-                    } else {
-                        setIsChange(prev => prev == 0 ? 1 : 0);
-                    }
+                    if (onSuccess) onSuccess();
+                    else setIsChange(prev => (prev === 0 ? 1 : 0));
                 },
-                (error) => {
-                    console.error(`Failed to delete ${type} with ID ${itemId}: ${error}`);
-                    alert("Deletion failed. Please try again.");
+                onError: (error) => {
+                    console.error("Deletion was unsuccessful", error);
                 }
-            );
+            });
         } catch (error) {
             console.error("Unexpected error:", error);
         }

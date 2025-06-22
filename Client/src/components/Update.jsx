@@ -22,7 +22,7 @@ function Update({ type, itemId, setIsChange, inputs, defaultValue = {}, onSucces
         e.preventDefault();
         setScreen(0);
         try {
-            await updatHandler.patch(
+            await updatHandler(
                 currentUser.autoId,
                 userTypeObj,
                 type,
@@ -41,6 +41,23 @@ function Update({ type, itemId, setIsChange, inputs, defaultValue = {}, onSucces
                     alert("Update failed. Please try again.");
                 }
             );
+            // await updatHandler({
+            //     //     currentUser.autoId,
+            //     type,
+            //     body: formData,
+            //     onSuccess: (result) => {
+            //         console.log("Update successful:", result);
+            //         if (onSuccess) {
+            //             onSuccess();
+            //         } else {
+            //             setIsChange(prev => prev === 0 ? 1 : 0);
+            //         }
+            //     },
+            //     onError: (error) => {
+            //         console.error(`Failed to update ${type} with ID ${itemId}: ${error}`);
+            //         alert("Update failed. Please try again.");
+            //     }
+            // });
         } catch (error) {
             console.error("Unexpected error:", error);
         }

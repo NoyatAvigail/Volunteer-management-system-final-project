@@ -132,9 +132,7 @@ const requestService = {
     },
 
     updatRequests: async (body, authenticatedId, authenticatedType, eventId) => {
-        console.log("הגיע לסרביס באפדייט");
         const utils = await requestService.utils(authenticatedType);
-        console.log("authenticatedId:",authenticatedId);
         const users = await genericDAL.findByField(utils.model, { id: authenticatedId });
         const user = users[0];
         if (!user) {
