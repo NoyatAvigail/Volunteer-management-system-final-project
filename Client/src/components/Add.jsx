@@ -21,10 +21,20 @@ function Add({
         },
     });
 
+    function formatDateForSql(input) {
+        const date = new Date(input);
+        if (isNaN(date)) return null; // לא תקין
+        return date.toISOString().slice(0, 19).replace('T', ' '); // פורמט: YYYY-MM-DD HH:mm:ss
+    }
+
     const addFunc = async (body) => {
-        if (!body.hospitalizationEnd || body.hospitalizationEnd === "Invalid date" || body.hospitalizationEnd.trim() === "") {
+        if (!body.hospitalizationEnd || body.hospitalizationEnd == "Invalid date" || body.hospitalizationEnd.trim() === "") {
             body.hospitalizationEnd = null;
         }
+        if (body.hospitalizationStart)
+            body.hospitalizationStart = formatDateForSql(body.hospitalizationStart);
+        if (body.hospitalizationEnd)
+            body.hospitalizationEnd = formatDateForSql(body.hospitalizationEnd);
         reset();
         setIsScreen(0);
         try {

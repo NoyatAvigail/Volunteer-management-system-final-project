@@ -39,7 +39,7 @@ export const requestsServices = {
     create: (data, onSuccess, onError) =>
         request({ method: 'POST', url: '', params: null, data, onSuccess, onError, }),
     update: (id, body, onSuccess, onError) =>
-        request({ method: 'PUT', url: `/${id}`, body, params: null, data: {}, onSuccess, onError, }),
+        request({ method: 'PUT', url: `/${id}`, body, params: null, onSuccess, onError, }),
     delete: (id, onSuccess, onError) =>
         request({ method: 'DELETE', url: `/${id}`, params: null, onSuccess, onError, }),
 }

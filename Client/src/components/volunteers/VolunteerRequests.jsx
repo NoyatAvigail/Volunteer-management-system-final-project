@@ -56,6 +56,7 @@ function VolunteerRequests() {
     if (!currentUser) return;
     requestsServices.patch(
       callId,
+      {},
       () => {
         setEvents(prev => prev.filter(call => call.id !== callId));
       },
