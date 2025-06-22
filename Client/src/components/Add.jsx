@@ -23,8 +23,8 @@ function Add({
 
     function formatDateForSql(input) {
         const date = new Date(input);
-        if (isNaN(date)) return null; // לא תקין
-        return date.toISOString().slice(0, 19).replace('T', ' '); // פורמט: YYYY-MM-DD HH:mm:ss
+        if (isNaN(date)) return null; 
+        return date.toISOString().slice(0, 19).replace('T', ' '); 
     }
 
     const addFunc = async (body) => {

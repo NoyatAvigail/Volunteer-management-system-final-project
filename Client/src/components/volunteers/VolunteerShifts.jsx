@@ -1,23 +1,19 @@
 import React, { useEffect, useState, useContext } from "react";
 import { CurrentUser } from "../App";
-import {volunteersServices} from '../../services/volunteersServices'
+import { volunteersServices } from '../../services/volunteersServices'
 function VolunteerShifts() {
   const { currentUser } = useContext(CurrentUser);
   const [shifts, setShifts] = useState([]);
 
   useEffect(() => {
     if (!currentUser?.id) return;
-
     if (!currentUser?.id) return;
-    console.log("currentUser:", currentUser);
-
     volunteersServices.getAll(
       "shifts",
       (data) => setShifts(data),
       (error) => console.error(error)
     );
   }, [currentUser]);
-  console.log("shifts:", shifts);
 
   return (
     <div className="requests">
@@ -28,17 +24,16 @@ function VolunteerShifts() {
         <table className="requests-table">
           <thead>
             <tr>
-              <th>תאריך</th>
-              <th>שעת התחלה</th>
-              <th>שעת סיום</th>
-              <th>פציינט</th>
-              <th>איש קשר</th>
-              <th>מספר חדר</th>
-              <th>בית חולים</th>
-              <th>מחלקה</th>
+              <th>Date</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Patient</th>
+              <th>Contact Person</th>
+              <th>Room Number</th>
+              <th>Hospital</th>
+              <th>Department</th>
             </tr>
           </thead>
-
           <tbody>
             {shifts.map((shift) => (
               <tr key={shift.id}>
@@ -53,7 +48,6 @@ function VolunteerShifts() {
               </tr>
             ))}
           </tbody>
-
         </table>
       )}
     </div>

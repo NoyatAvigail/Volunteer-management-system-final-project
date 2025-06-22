@@ -2,11 +2,8 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCodes } from '../Models';
 import { CurrentUser } from '../App';
-import Add from '../Add';
 import Search from '../Search';
 import Sort from '../Sort';
-import Update from '../Update';
-// import '../../style/Posts.css';
 import { requestsServices } from '../../services/requestsServices';
 
 function VolunteerRequests() {
@@ -117,7 +114,7 @@ function VolunteerRequests() {
                   <td>{item.startTime}</td>
                   <td>{item.endTime}</td>
                   <td>
-                    <button onClick={() => handleTakeCall(item.id)}>אני לוקח</button>
+                    <button onClick={() => handleTakeCall(item.id)}>I'm taking</button>
                   </td>
                 </tr>
               ))

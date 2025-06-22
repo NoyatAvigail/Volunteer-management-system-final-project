@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useForm } from "react-hook-form";
 import { CodesContext } from '../Models';
 import { CurrentUser } from '../App';
-// import '../../style/Profile.css';
 import {
   useProfileData,
   useEditModeFromSessionStorage,
