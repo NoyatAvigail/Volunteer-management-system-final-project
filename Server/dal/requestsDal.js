@@ -224,6 +224,12 @@ const requestDal = {
   //   });
   //   return req2;
   // }
+  softDeleteEvent:async(eventId)=>{
+    
+    Events.update(
+      { is_deleted:1 },
+      { where: { id: eventId } })
+  }
 }
 
 export default requestDal;

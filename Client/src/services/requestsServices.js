@@ -41,5 +41,5 @@ export const requestsServices = {
     update: (id, body, onSuccess, onError) =>
         request({ method: 'PUT', url: `/${id}`, body, params: null, onSuccess, onError, }),
     delete: (id, onSuccess, onError) =>
-        request({ method: 'DELETE', url: `/${id}`, params: null, onSuccess, onError, }),
+        request({ method: 'DELETE', url: `/${id}`, params: null,data:{}, onSuccess, onError, }),
 }

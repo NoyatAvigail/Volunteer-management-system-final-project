@@ -10,11 +10,10 @@ import Update from '.././Update';
 import '../../style/Posts.css';
 import { requestsServices } from '../../services/requestsServices';
 import { contactsServices } from '../../services/contactsServices'
-// import { usersServices} from '../../services/usersServices';
 function ContactRequests() {
     const [userData, setUserData] = useState([]);
     const [error, setError] = useState(null);
-    const [isChange, setIsChange] = useState(0);
+    const [isChange, setIsChange] = useState(false);
     const { currentUser } = useContext(CurrentUser);
     const { codes } = useCodes();
     const userTypeObj = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
@@ -27,6 +26,13 @@ function ContactRequests() {
     const didFetch = useRef(false);
 
     const noAccess = !currentUser || userTypeObj !== 'ContactPerson';
+    useEffect(() => {
+        if (!currentUser || !currentUser.id) {
+            setError("User not logged in");
+            return;
+        }
+        fetchData();
+    }, [isChange, currentUser]);
 
     useEffect(() => {
         if (!didFetch.current && currentUser?.autoId && userTypeObj) {
@@ -71,7 +77,7 @@ function ContactRequests() {
                     console.log("get successful:", result);
                     setUserData(result);
                     setEvents(result);
-                    setIsChange(1);
+                    setIsChange(prev => !prev);
                 },
                 (error) => {
                     console.log("get was unsuccessful", error);
@@ -84,13 +90,8 @@ function ContactRequests() {
         }
     };
 
-    useEffect(() => {
-        if (!currentUser || !currentUser.id) {
-            setError("User not logged in");
-            return;
-        }
-        fetchData();
-    }, [currentUser, isChange]);
+
+    const triggerRefresh = () => setIsChange(prev => !prev);
 
     if (!currentUser || userTypeObj !== 'ContactPerson') {
         return <div>No access to this form</div>;
@@ -109,21 +110,22 @@ function ContactRequests() {
             <div className='control'>
                 <Sort
                     type="requests"
-                    setIsChange={setIsChange}
+                    setIsChange={triggerRefresh}
                     options={["date", "hospital", "department", "patientId"]}
                     userData={userData}
                     setData={setEvents}
                 />
                 <Search
                     type="requests"
-                    setIsChange={setIsChange}
+                    setIsChange={triggerRefresh}
                     options={["All", "hospital", "department", "patientId"]}
                     data={userData}
                     setData={setEvents}
                 />
                 <Add
                     type="Events"
-                    setIsChange={setIsChange}
+                    onSuccess={triggerRefresh}
+                    // setIsChange={triggerRefresh}
                     inputs={[
                         {
                             name: "patientId",
@@ -153,7 +155,7 @@ function ContactRequests() {
                         endTime: ""
                     }}
                     name="Add request"
-                    onSuccess={fetchData}
+                // onSuccess={triggerRefresh}
                 />
             </div>
             {error && <div className="error">{error}</div>}
@@ -192,7 +194,7 @@ function ContactRequests() {
                                                     <Update
                                                         type="Events"
                                                         itemId={item.id}
-                                                        setIsChange={setIsChange}
+                                                        setIsChange={triggerRefresh}
                                                         inputs={[
                                                             {
                                                                 name: "patientId",
@@ -222,14 +224,14 @@ function ContactRequests() {
                                                             startTime: item.startTime,
                                                             endTime: item.endTime
                                                         }}
-                                                        onSuccess={fetchData}
+                                                    // onSuccess={fetchData}
                                                     />
                                                     <Delete
                                                         type="Events"
                                                         itemId={item.id}
-                                                        setIsChange={setIsChange}
+                                                        setIsChange={triggerRefresh}
                                                         disabled={isPast}
-                                                        onSuccess={fetchData}
+                                                    // onSuccess={fetchData}
                                                     />
                                                 </>
                                             )}

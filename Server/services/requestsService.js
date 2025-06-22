@@ -122,9 +122,9 @@ const requestService = {
         return newEvent;
     },
 
-    deleteEvent: async (authenticatedType, eventId) => {
-        const userUtils = utils(authenticatedType);
-        if (userUtils.userTypeDesc == 'ContactPeople') {
+    deleteEvent: async (authenticatedId,authenticatedType, eventId) => {
+        const userUtils = await requestService.utils(authenticatedType);
+        if (userUtils.userTypeDesc == 'ContactPerson') {
             const result = await requestsDal.softDeleteEvent(eventId);
             return result;
         }
