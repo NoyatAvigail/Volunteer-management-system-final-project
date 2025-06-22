@@ -45,7 +45,6 @@ const requestsController = {
         if (!id) {
             return res.status(400).json({ message: "Missing event ID" });
         }
-
         try {
             const deletedEvent = await requestsService.deleteEvent(authenticated.authenticatedId, authenticated.authenticatedType, id);
             res.status(200).json(deletedEvent);
@@ -57,13 +56,10 @@ const requestsController = {
         }
     },
 
-    updatRequests: async (req, res) => {
-        console.log("הגיע לכונטרולר");
-        
+    updatRequests: async (req, res) => {        
         const authenticated = await requestsController.utils(req);
         const { id } = req.params;
         const body = req.body;
-
         try {
             const updatedEvent = await requestsService.updatRequests(body, authenticated.authenticatedId, authenticated.authenticatedType, id);
             res.status(200).json(updatedEvent);

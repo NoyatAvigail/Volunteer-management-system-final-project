@@ -90,11 +90,8 @@ const requestDal = {
         // date: {
         //   [Op.between]: [startDate, endDate]
         // },
-<<<<<<< HEAD
-        volunteerId:null,
-=======
         volunteerId: null,
->>>>>>> 64cd2724609e2a8db492d93739976c531be22f2e
+        volunteerId: null,
         is_deleted: 0
       },
       include: [
@@ -181,21 +178,10 @@ const requestDal = {
   },
 
   assignVolunteerToEvent: async (eventId, volunteerId) => {
-    console.log("הגיע לדאל");
-    // const event = await Events.findByPk(eventId);
-    // if (!event) throw new Error("Event not found");
-
-    // event.volunteerId = volunteerId;
-    // await event.save();
-
-    // return event;
-    console.log("volunteerId:", volunteerId);
-
     return await Events.update(
       { volunteerId },
       { where: { id: eventId } }
     );
-
   },
 
   updateEventDetails: async (eventId, updatedFields) => {
