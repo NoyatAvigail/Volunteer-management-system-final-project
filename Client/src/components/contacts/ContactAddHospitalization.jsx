@@ -55,8 +55,14 @@ function ContactAddHospitalization() {
                             options: departmentsObj.map(h => ({ label: h.description, value: h.id }))
                         },
                         "roomNumber",
-                        "hospitalizationStart",
-                        "hospitalizationEnd"
+                        {
+                            name: "hospitalizationStart",
+                            type: "date"
+                        },
+                        {
+                            name: "hospitalizationEnd",
+                            type: "date"
+                        }
                     ]}
                     defaultValue={{
                         patientId: "",
