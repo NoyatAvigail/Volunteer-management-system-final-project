@@ -4,6 +4,7 @@ import { CurrentUser } from './App';
 
 function Volunteers() {
     const [error, setError] = useState(null);
+    const [isChange, setIsChange] = useState(0);
     const { currentUser } = useContext(CurrentUser);
     const navigate = useNavigate();
 
