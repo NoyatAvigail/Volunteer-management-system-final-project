@@ -18,6 +18,7 @@ import ContactAddPatient from './contacts/ContactAddPatient';
 import ContactThanks from './contacts/ContactThanks';
 import ContactProfile from './contacts/ContactProfile';
 import ContactAddHospitalization from './contacts/ContactAddHospitalization';
+import ContactPatientProfile from '../components/contacts/ContactPatientProfile';
 import { CodesProvider } from './Models';
 import ErrorPage from './ErrorPage'
 import '../style/App.css'
@@ -55,7 +56,7 @@ function App() {
           <Route path="/contactperson/:id/thanks" element={<ContactThanks />} />
           <Route path="/contactperson/:id/patient/add-patient" element={<ContactAddPatient />} />
           <Route path="/contactperson/:id/patient/add-hospitalization" element={<ContactAddHospitalization />} />
-          <Route path="/contactperson/:id/patient/profile" element={<ContactProfile />} />
+          <Route path="/contactperson/:id/patient/profile" element={<ContactPatientProfile />} />
           <Route path="/error" element={<ErrorPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
