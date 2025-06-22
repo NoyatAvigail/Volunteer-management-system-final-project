@@ -5,9 +5,9 @@ export const createHandler = async ({ type, body, onSuccess, onError }) => {
     try {
         switch (type) {
             case 'Patients':
-                return await contactsServices.create(body,'patients');
+                return await contactsServices.create(body, 'patients');
             case 'Hospitalizeds':
-                return await contactsServices.create(body,'hospitalizeds');
+                return await contactsServices.create(body, 'hospitalizeds');
             case 'Events':
                 return await requestsServices.create(body);
             default:
@@ -37,11 +37,11 @@ export const deleteHandler = async ({ type, id, onSuccess, onError }) => {
     }
 };
 
-export const updatHandler = async ({ type, body, onSuccess, onError }) => {
+export const updatHandler = async (type, id, body, onSuccess, onError) => {
     try {
         switch (type) {
             case 'Events':
-                return await requestsServices.update(body);
+                return await requestsServices.update(id, body);
             default:
                 throw new Error(`Unsupported type: ${type}`);
         }
