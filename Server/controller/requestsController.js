@@ -4,7 +4,8 @@ const requestsController = {
     utils: async (req) => {
         const authenticatedId = req.user.id.toString();
         const authenticatedType = req.user.type.toString();
-        return { authenticatedId, authenticatedType }
+        const authenticatedEmail = req.user.email.toString();
+        return { authenticatedId, authenticatedEmail, authenticatedType }
     },
 
     getRequests: async (req, res) => {
@@ -37,9 +38,9 @@ const requestsController = {
         }
     },
 
-    deleteRequests: async (req, res) => {        
+    deleteRequests: async (req, res) => {
         const { id } = req.params;
-        const authenticated =await requestsController.utils(req);
+        const authenticated = await requestsController.utils(req);
         if (!id) {
             return res.status(400).json({ message: "Missing event ID" });
         }
@@ -54,12 +55,12 @@ const requestsController = {
         }
     },
 
-    updatRequests: async (req, res) => {        
+    updatRequests: async (req, res) => {
         const authenticated = await requestsController.utils(req);
         const { id } = req.params;
         const body = req.body;
         try {
-            const updatedEvent = await requestsService.updatRequests(body, authenticated.authenticatedId, authenticated.authenticatedType, id);
+            const updatedEvent = await requestsService.updatRequests(body, authenticated.authenticatedId, authenticated.authenticatedEmail, authenticated.authenticatedType, id);
             res.status(200).json(updatedEvent);
         } catch (error) {
             console.error("Error in updatRequests Controller:", error);
