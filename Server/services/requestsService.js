@@ -73,7 +73,7 @@
 // },
 import genericDAL from "../dal/genericDal.js"
 import requestsDal from "../dal/requestsDal.js"
-
+import emailsService from "./emailsService.js";
 const requestService = {
     utils: async (authenticatedType) => {
         const type = genericDAL.getModelByName('UserTypes');
@@ -122,7 +122,7 @@ const requestService = {
         return newEvent;
     },
 
-    deleteEvent: async (authenticatedId,authenticatedType, eventId) => {
+    deleteEvent: async (authenticatedId, authenticatedType, eventId) => {
         const userUtils = await requestService.utils(authenticatedType);
         if (userUtils.userTypeDesc == 'ContactPerson') {
             const result = await requestsDal.softDeleteEvent(eventId);
@@ -131,20 +131,48 @@ const requestService = {
 
     },
 
-    updatRequests: async (body, authenticatedId, authenticatedType, eventId) => {
+    updatRequests: async (body, authenticatedId, authenticatedEmail, authenticatedType, eventId) => {
         const utils = await requestService.utils(authenticatedType);
         const users = await genericDAL.findByField(utils.model, { id: authenticatedId });
         const user = users[0];
+
         if (!user) {
-            const error = new Error(`${user} not found`);
+            const error = new Error(`${authenticatedType} with id ${authenticatedId} not found`);
             error.status = 404;
             throw error;
         }
+
         const userIdFromToken = user.userId;
-        return utils.userTypeDesc == 'Volunteer' ?
-            await requestsDal.assignVolunteerToEvent(eventId, userIdFromToken) :
-            await requestsDal.updateEventDetails(eventId, body);
-    },
+
+        if (utils.userTypeDesc === 'Volunteer') {
+            const event = await requestsDal.assignVolunteerToEvent(eventId, userIdFromToken);
+
+            await emailsService.sendVolunteerAssignmentEmail(authenticatedEmail, {
+                volunteerName: event.Volunteer.fullName,
+                date: event.date,
+                startTime: event.startTime,
+                endTime: event.endTime,
+                hospital: event.Hospitalized.hospital,
+                department: event.Hospitalized.department,
+                room: event.Hospitalized.roomNumber,
+                patientName: event.Hospitalized.Patient.fullName,
+            });
+
+            await emailsService.sendContactNotificationEmail(event.ContactPerson.User.email, {
+                contactName: event.ContactPerson.fullName,
+                volunteerName: event.Volunteer.fullName,
+                volunteerPhone: event.Volunteer.User.phone,
+                date: event.date,
+                startTime: event.startTime,
+                endTime: event.endTime,
+            });
+
+            return event;
+        }
+
+        return await requestsDal.updateEventDetails(eventId, body);
+    }
+
 }
 
 export default requestService;
