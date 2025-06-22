@@ -73,7 +73,6 @@ function ContactPatientProfile() {
     const onVerifyCode = async () => {
         await handleVerifyCode(code, setIsEditing, setShowCodeInput, currentUser);
     };
-
     if (!profileData || loading) return <div>Loading...</div>;
 
     return (
