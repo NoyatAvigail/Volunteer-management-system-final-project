@@ -33,13 +33,14 @@ async function request({ method, url = "", params = null, data = null, onSuccess
         if (onError) onError(error.message);
     }
 }
+
 export const requestsServices = {
     getAll: (startDate, endDate, onSuccess, onError) =>
         request({ method: 'GET', url: '', params: { startDate, endDate }, data: null, onSuccess, onError, }),
     create: (data, onSuccess, onError) =>
         request({ method: 'POST', url: '', params: null, data, onSuccess, onError, }),
-    update: (id, body, onSuccess, onError) =>
-        request({ method: 'PUT', url: `/${id}`, body, params: null, onSuccess, onError, }),
+    update: (id, body = {}, onSuccess, onError) =>
+        request({ method: 'PUT', url: `/${id}`, data: body, params: null, onSuccess, onError }),
     delete: (id, onSuccess, onError) =>
         request({ method: 'DELETE', url: `/${id}`, params: null,data:{}, onSuccess, onError, }),
 }
