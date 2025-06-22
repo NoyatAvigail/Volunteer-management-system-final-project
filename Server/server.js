@@ -9,7 +9,6 @@ import contactRoutes from './routes/contactsRoutes.js'
 import profilesRoutes from './routes/profilesRoutes.js'
 
 const app = express();
-
 app.use(express.json({ limit: '10mb' }));
 app.use(cors());
 app.use("/api/users", userRoutes);

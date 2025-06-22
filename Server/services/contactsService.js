@@ -12,26 +12,6 @@ const contactsService = {
         }
     },
 
-    // createPatient: async (authenticatedId, body) => {
-    //     try {
-    //         const contact = await genericDAL.findById(ContactPeople, authenticatedId );
-    //         if (!contact) {
-    //             const error = new Error("Contact person not found");
-    //             error.status = 404;
-    //             throw error;
-    //         }
-    //         const fullData = {
-    //             ...body,
-    //             contactPeopleId: contact.id,
-    //             userId: body.userId,
-    //             is_deleted: false
-    //         };
-    //         return await contactsDal.createPatient(fullData);
-    //     } catch (error) {
-    //         console.error("Error in contactsService.createPatient:", error);
-    //         throw error;
-    //     }
-    // },
     createPatient: async (authenticatedId, body) => {
         try {
             // שימי לב: חיפוש לפי ID של טבלת ContactPeople (שולח מהלקוח)
@@ -54,8 +34,8 @@ const contactsService = {
             console.error("Error in contactsService.createPatient:", error);
             throw error;
         }
-    }, 
-    
+    },
+
     getPatientById: async (authenticatedId, patientId) => {
         try {
             return await contactsDal.getPatientById(authenticatedId, patientId);

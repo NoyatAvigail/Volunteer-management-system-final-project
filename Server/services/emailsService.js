@@ -10,6 +10,19 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+function formatDate(date) {
+  return new Date(date).toLocaleDateString('en-US');
+}
+
+function formatToGoogleCalendarDate(date, startTime, endTime) {
+  const d = new Date(date);
+  const [sh, sm] = startTime.split(':');
+  const [eh, em] = endTime.split(':');
+  const start = new Date(d.setHours(sh, sm)).toISOString().replace(/-|:|\.\d\d\d/g, '');
+  const end = new Date(d.setHours(eh, em)).toISOString().replace(/-|:|\.\d\d\d/g, '');
+  return `${start}/${end}`;
+}
+
 const emailsService = {
   generateSimple: () => {
     const length = Math.floor(Math.random() * 4) + 6;
@@ -24,7 +37,7 @@ const emailsService = {
   storeEditCode: (userId, code) => {
     editCodesStore.set(userId, {
       code,
-      expiresAt: Date.now() + 10 * 60 * 1000 // 10 דקות
+      expiresAt: Date.now() + 10 * 60 * 1000 
     });
   },
 
@@ -88,22 +101,6 @@ const emailsService = {
     `
     });
   }
-
 };
 
 export default emailsService;
-function formatDate(date) {
-  return new Date(date).toLocaleDateString('en-US');
-}
-
-function formatToGoogleCalendarDate(date, startTime, endTime) {
-  const d = new Date(date);
-  const [sh, sm] = startTime.split(':');
-  const [eh, em] = endTime.split(':');
-
-  const start = new Date(d.setHours(sh, sm)).toISOString().replace(/-|:|\.\d\d\d/g, '');
-  const end = new Date(d.setHours(eh, em)).toISOString().replace(/-|:|\.\d\d\d/g, '');
-
-  return `${start}/${end}`;
-}
-

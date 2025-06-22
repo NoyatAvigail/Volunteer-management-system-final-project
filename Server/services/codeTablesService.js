@@ -19,10 +19,15 @@ const codeTablesServise = {
     },
 
     getAllCodeTables: async () => {
-        if (!codeTablesCache) {
-            await codeTablesServise.loadCodeTables();
+        try {
+            if (!codeTablesCache) {
+                await codeTablesServise.loadCodeTables();
+            }
+            return codeTablesCache;
+        } catch (error) {
+            console.error("Failed to load code tables:", error);
+            throw new Error("Could not retrieve code tables");
         }
-        return codeTablesCache;
     }
 }
 export default codeTablesServise;
