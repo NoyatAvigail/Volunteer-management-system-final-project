@@ -85,10 +85,9 @@ const contactsDal = {
         });
     },
 
-    createHospitalized: async (patientId, body) => {
+    createHospitalized: async (body) => {
         return await Hospitalizeds.create({
             ...body,
-            patientId
         });
     },
 

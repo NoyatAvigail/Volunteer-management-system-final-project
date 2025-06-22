@@ -33,7 +33,7 @@ const profilesService = {
     },
 
     updateProfile: async (authenticatedId, authenticatedType, body) => {
-        try {
+        try {            
             const { userTypeDesc, model } = await profilesService.utils(authenticatedType);
             const user = await genericDAL.findById(model, authenticatedId);
             if (!user) {
@@ -42,7 +42,7 @@ const profilesService = {
                 throw error;
             }
             const userIdFromToken = user.userId;
-            return userTypeDesc === 'Volunteers'
+            return userTypeDesc === 'Volunteer'
                 ? await profilesDal.updateVolunteerProfile(userIdFromToken, body)
                 : await profilesDal.updateContactProfile(userIdFromToken, body);
         } catch (error) {

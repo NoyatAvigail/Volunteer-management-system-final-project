@@ -1,10 +1,12 @@
 import Events from "../models/Events.js";
 
 const volunteerDAL = {
-  getEventsByVolunteerId: async (volunteerId) => {
+  getEventsByVolunteerId: async (userId) => {   
+    console.log("הגיע לדאל");
+     
     return await Events.findAll({
       where: {
-        volunteerId,
+        volunteerId:userId,
         is_deleted: 0
       }
     });

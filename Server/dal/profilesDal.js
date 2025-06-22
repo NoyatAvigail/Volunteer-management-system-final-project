@@ -27,6 +27,7 @@ const profilesDAL = {
     updateVolunteerProfile: async (userId, data) => {
         const transaction = await sequelize.transaction();
         try {
+            console.log("userId:",userId);
             const volunteer = await Volunteers.findOne({ where: { userId }, transaction });
             const user = await Users.findByPk(userId, { transaction });
             if (!volunteer || !user)
@@ -49,10 +50,10 @@ const profilesDAL = {
             }, { transaction });
             const volunteerId = volunteer.id;
             await Promise.all([
-                genericDAL.deleteByField(VolunteerTypes, volunteerId, transaction),
-                genericDAL.deleteByField(VolunteeringForGenders, volunteerId, transaction),
-                genericDAL.deleteByField(VolunteeringForSectors, volunteerId, transaction),
-                genericDAL.deleteByField(VolunteeringInDepartments, volunteerId, transaction)
+                genericDAL.deleteByField(VolunteerTypes, volunteerId),
+                genericDAL.deleteByField(VolunteeringForGenders, volunteerId),
+                genericDAL.deleteByField(VolunteeringForSectors, volunteerId),
+                genericDAL.deleteByField(VolunteeringInDepartments, volunteerId)
             ]);
             const helpTypes = data.helpTypes.map(typeId => ({
                 id: volunteerId,
