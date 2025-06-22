@@ -13,10 +13,12 @@ router.route('/patients/:id')
     .get(contactController.getPatientById)
     .put(contactController.updatePatient)
     .delete(contactController.deletePatient);
-
+router.route('/hospitalizeds')
+    .post(contactController.createHospitalized);
+   
 router.route('/hospitalizeds/:id')
     .get(contactController.getHospitalizeds)
-    .post(contactController.createHospitalized)
+    .post(contactController.createHospitalized);
     
 router.route('/thanks')
     .get(contactController.getThanks)
