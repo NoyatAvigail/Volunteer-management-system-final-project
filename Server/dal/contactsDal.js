@@ -1,80 +1,80 @@
 import { Patients, Hospitalizeds, ContactPeople } from '../../DB/index.mjs';
 
 const contactsDal = {
-    getPatients: async (contactId) => {
-        const contact = await ContactPeople.findOne({
-            where: { id: contactId }
-        });
+    // getPatients: async (contactId) => {
+    //     const contact = await ContactPeople.findOne({
+    //         where: { id: contactId }
+    //     });
 
-        if (!contact) return [];
+    //     if (!contact) return [];
 
-        return await Patients.findAll({
-            where: {
-                contactPeopleId: contact.userId,
-                is_deleted: false
-            },
-            include: [{ model: Hospitalizeds }]
-        });
-    },
+    //     return await Patients.findAll({
+    //         where: {
+    //             contactPeopleId: contact.userId,
+    //             is_deleted: false
+    //         },
+    //         include: [{ model: Hospitalizeds }]
+    //     });
+    // },
 
-    createPatient: async (data) => {
-        return await Patients.create(data);
-    },
+    // createPatient: async (data) => {
+    //     return await Patients.create(data);
+    // },
 
-    getPatientById: async (contactId, patientId) => {
-        const patient = await Patients.findOne({
-            where: {
-                id: patientId,
-                contactPeopleId: contactId,
-                is_deleted: false
-            },
-            include: [{ model: Hospitalizeds }]
-        });
-        if (!patient) {
-            const error = new Error("Patient not found or unauthorized access");
-            error.status = 403;
-            throw error;
-        }
-        return patient;
-    },
+    // getPatientById: async (contactId, patientId) => {
+    //     const patient = await Patients.findOne({
+    //         where: {
+    //             id: patientId,
+    //             contactPeopleId: contactId,
+    //             is_deleted: false
+    //         },
+    //         include: [{ model: Hospitalizeds }]
+    //     });
+    //     if (!patient) {
+    //         const error = new Error("Patient not found or unauthorized access");
+    //         error.status = 403;
+    //         throw error;
+    //     }
+    //     return patient;
+    // },
 
-    updatePatient: async (contactId, patientId, data) => {
-        const patient = await Patients.findOne({
-            where: {
-                id: patientId,
-                contactPeopleId: contactId,
-                is_deleted: false
-            }
-        });
-        if (!patient) {
-            const error = new Error("Patient not found or unauthorized access");
-            error.status = 403;
-            throw error;
-        }
-        await patient.update(data);
-        return patient;
-    },
+    // updatePatient: async (contactId, patientId, data) => {
+    //     const patient = await Patients.findOne({
+    //         where: {
+    //             id: patientId,
+    //             contactPeopleId: contactId,
+    //             is_deleted: false
+    //         }
+    //     });
+    //     if (!patient) {
+    //         const error = new Error("Patient not found or unauthorized access");
+    //         error.status = 403;
+    //         throw error;
+    //     }
+    //     await patient.update(data);
+    //     return patient;
+    // },
 
-    deletePatient: async (contactId, patientId) => {
-        const patient = await Patients.findOne({
-            where: {
-                id: patientId,
-                contactPeopleId: contactId,
-                is_deleted: false
-            }
-        });
-        if (!patient) {
-            const error = new Error("Patient not found or unauthorized access");
-            error.status = 403;
-            throw error;
-        }
-        await patient.update({
-            is_deleted: true,
-            deleted_at: new Date()
-        });
+    // deletePatient: async (contactId, patientId) => {
+    //     const patient = await Patients.findOne({
+    //         where: {
+    //             id: patientId,
+    //             contactPeopleId: contactId,
+    //             is_deleted: false
+    //         }
+    //     });
+    //     if (!patient) {
+    //         const error = new Error("Patient not found or unauthorized access");
+    //         error.status = 403;
+    //         throw error;
+    //     }
+    //     await patient.update({
+    //         is_deleted: true,
+    //         deleted_at: new Date()
+    //     });
 
-        return patient;
-    },
+    //     return patient;
+    // },
 
     getHospitalizeds: async (patientId) => {
         return await Hospitalizeds.findAll({
