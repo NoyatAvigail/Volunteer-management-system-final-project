@@ -1,6 +1,6 @@
 import { contactsServices } from './contactsServices';
 import { requestsServices } from './requestsServices';
-
+import { thankYousService } from './thankYousService';
 export const createHandler = async ({ type, body, onSuccess, onError }) => {
     try {
         switch (type) {
@@ -10,6 +10,8 @@ export const createHandler = async ({ type, body, onSuccess, onError }) => {
                 return await contactsServices.create(body, 'hospitalizeds');
             case 'Events':
                 return await requestsServices.create(body);
+            case 'ThankYous':
+                return await thankYousService.create(body, onSuccess, onError )
             default:
                 throw new Error(`Unsupported type: ${type}`);
         }
@@ -26,6 +28,8 @@ export const deleteHandler = async ({ type, id, onSuccess, onError }) => {
         switch (type) {
             case 'Events':
                 return await requestsServices.delete(id, onSuccess, onError);
+            case 'ThankYous':
+                return await thankYousService.deleteNote(id, onSuccess, onError)
             default:
                 throw new Error(`Unsupported type: ${type}`);
         }
@@ -42,6 +46,8 @@ export const updatHandler = async (type, id, body, onSuccess, onError) => {
         switch (type) {
             case 'Events':
                 return await requestsServices.update(id, body);
+                 case 'ThankYous':
+                 return await thankYousService.updateNote(id,body, onSuccess, onError )
             default:
                 throw new Error(`Unsupported type: ${type}`);
         }
