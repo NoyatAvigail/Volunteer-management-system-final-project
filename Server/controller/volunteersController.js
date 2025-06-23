@@ -18,7 +18,8 @@ const volunteersController = {
   },
 
   getCertificate: async (req, res) => {
-    const authenticated = utils(req); try {
+    const authenticated = await volunteersController.utils(req);
+     try {
       const certificate = await volunteerService.getCertificate(authenticated.authenticatedId);
       res.json(certificate);
     } catch (err) {
