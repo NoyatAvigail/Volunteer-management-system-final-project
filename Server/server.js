@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import userRoutes from './routes/usersRoutes.js';
+import homeRoutes from './routes/homeRoutes.js'
 import codeTablesRoutes from './routes/codeTablesRoutes.js';
 import requestRoutes from './routes/requestsRoutes.js';
 import sequelize from '../DB/connectionDB.mjs';
@@ -12,11 +13,12 @@ const app = express();
 app.use(express.json({ limit: '10mb' }));
 app.use(cors());
 app.use("/api/users", userRoutes);
+app.use("/api/home", homeRoutes);
 app.use("/api/codetables", codeTablesRoutes);
 app.use("/api/requests", requestRoutes);
-app.use("/api/volunteers",volunteersRoutes)
-app.use("/api/contacts",contactRoutes)
-app.use("/api/profiles",profilesRoutes)
+app.use("/api/volunteers", volunteersRoutes);
+app.use("/api/contacts", contactRoutes);
+app.use("/api/profiles", profilesRoutes);
 
 const start = async () => {
   try {
