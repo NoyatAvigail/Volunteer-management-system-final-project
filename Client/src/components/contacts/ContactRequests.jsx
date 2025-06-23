@@ -372,7 +372,6 @@ function ContactRequests() {
                     setData={setEvents}
                 />
                 <Search
-                    type="requests"
                     setIsChange={triggerRefresh}
                     options={["All", "hospital", "department", "patientId"]}
                     data={userData}
