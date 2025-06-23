@@ -1,8 +1,59 @@
+// import React, { useState, useEffect, useContext } from 'react';
+// import { useForm } from "react-hook-form";
+// import { CodesContext } from '../Models';
+// import { CurrentUser } from '../App';
+// import '../../style/ContactProfile.css'
+// import {
+//   useProfileData,
+//   useEditModeFromSessionStorage,
+//   updateProfile,
+//   handleVerifyCode,
+//   sendEditRequest
+// } from '../ProfileManagement';
+
+// function ContactPersonProfile() {
+//   const [isEditing, setIsEditing] = useEditModeFromSessionStorage();
+//   const { codes, loading } = useContext(CodesContext);
+//   const { currentUser } = useContext(CurrentUser);
+//   const [showCodeInput, setShowCodeInput] = useState(false);
+//   const [code, setCode] = useState("");
+//   const { register, handleSubmit, setValue, getValues, reset, formState: { errors } } = useForm();
+//   const initialData = useProfileData("", reset);
+
+//   const onSubmit = async (formData) => {
+//     try {
+//       await updateProfile("", setIsEditing, formData);
+//       setIsEditing(false);
+//       alert("Profile updated successfully.");
+//     } catch (err) {
+//       console.error("Update failed:", err);
+//       alert("Failed to update profile.");
+//     }
+//   };
+
+//   const handleRequestEdit = async () => {
+//     try {
+//       alert("Verification email sent.");
+//       await sendEditRequest(setShowCodeInput);
+//     } catch (e) {
+//       alert("Failed to send email.");
+//     }
+//   };
+
+//   const verifyCode = async () => {
+//     try {
+//       await handleVerifyCode(code, setIsEditing, setShowCodeInput);
+//     } catch (e) {
+//       alert("Failed to send email.");
+//     }
+//   };
+
+//   if (!initialData) return <div>Loading profile...</div>;
 import React, { useState, useEffect, useContext } from 'react';
 import { useForm } from "react-hook-form";
 import { CodesContext } from '../Models';
 import { CurrentUser } from '../App';
-import '../../style/ContactProfile.css'
+import '../../style/ContactProfile.css';
 import {
   useProfileData,
   useEditModeFromSessionStorage,
@@ -23,7 +74,6 @@ function ContactPersonProfile() {
   const onSubmit = async (formData) => {
     try {
       await updateProfile("", setIsEditing, formData);
-      setIsEditing(false);
       alert("Profile updated successfully.");
     } catch (err) {
       console.error("Update failed:", err);
@@ -33,8 +83,8 @@ function ContactPersonProfile() {
 
   const handleRequestEdit = async () => {
     try {
-      alert("Verification email sent.");
       await sendEditRequest(setShowCodeInput);
+      alert("Verification email sent.");
     } catch (e) {
       alert("Failed to send email.");
     }
@@ -44,7 +94,7 @@ function ContactPersonProfile() {
     try {
       await handleVerifyCode(code, setIsEditing, setShowCodeInput);
     } catch (e) {
-      alert("Failed to send email.");
+      alert("Verification failed.");
     }
   };
 

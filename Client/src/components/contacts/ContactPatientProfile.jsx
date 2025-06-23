@@ -1,3 +1,78 @@
+// import React, { useState, useContext, useEffect } from 'react';
+// import { useForm } from "react-hook-form";
+// import { CodesContext } from '../Models';
+// import { CurrentUser } from '../App';
+// import {
+//     useProfileData,
+//     useEditModeFromSessionStorage,
+//     sendEditRequest,
+//     updateProfile,
+//     handleVerifyCode
+// } from '../ProfileManagement';
+
+// function ContactPatientProfile() {
+//     const { codes, loading } = useContext(CodesContext);
+//     const { currentUser } = useContext(CurrentUser);
+//     const [showCodeInput, setShowCodeInput] = useState(false);
+//     const [code, setCode] = useState("");
+//     const [profileData, setProfileData] = useState(null);
+//     const [isEditing, setIsEditing] = useEditModeFromSessionStorage();
+
+//     const {
+//         register,
+//         handleSubmit,
+//         reset,
+//         formState: { errors }
+//     } = useForm();
+//     const dataArray = useProfileData('patients', reset);
+
+//     useEffect(() => {
+//         if (Array.isArray(dataArray) && dataArray.length > 0) {
+//             const profile = dataArray[0];
+//             setProfileData(profile);
+//             reset(profile);
+//             const defaultPatient = normalizePatientData(dataArray[0]);
+//             setProfileData(defaultPatient);
+//             reset(defaultPatient);
+//         }
+//     }, [dataArray, reset]);
+
+//     const normalizePatientData = (patient) => {
+//         const hosp = patient.Hospitalizeds?.[0];
+//         return {
+//             ...patient,
+//             dateOfBirth: patient.dateOfBirth?.slice(0, 10),
+//             hospitalId: hosp?.hospital ?? '',
+//             departmentId: hosp?.department ?? ''
+//         };
+//     };
+
+//     const onSubmit = async (formData) => {
+//         try {
+//             await updateProfile(`contact/patients/${profileData.id}`, setIsEditing, formData);
+//             alert("Profile updated successfully.");
+//             setIsEditing(false);
+//         } catch (err) {
+//             console.error("Update failed:", err);
+//             alert("Failed to update profile.");
+//         }
+//     };
+
+//     const handleRequestEdit = async () => {
+//         try {
+//             await sendEditRequest(setShowCodeInput);
+//             alert("A verification code has been sent to your email.");
+//         } catch (err) {
+//             console.error("Sending email failed:", err);
+//             alert("Failed to send verification email.");
+//         }
+//     };
+
+//     const onVerifyCode = async () => {
+//         await handleVerifyCode(code, setIsEditing, setShowCodeInput, currentUser);
+//     };
+
+//     if (!profileData || loading) return <div>Loading...</div>;
 import React, { useState, useContext, useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import { CodesContext } from '../Models';
@@ -24,13 +99,11 @@ function ContactPatientProfile() {
         reset,
         formState: { errors }
     } = useForm();
+
     const dataArray = useProfileData('patients', reset);
 
     useEffect(() => {
         if (Array.isArray(dataArray) && dataArray.length > 0) {
-            const profile = dataArray[0];
-            setProfileData(profile);
-            reset(profile);
             const defaultPatient = normalizePatientData(dataArray[0]);
             setProfileData(defaultPatient);
             reset(defaultPatient);
@@ -49,10 +122,8 @@ function ContactPatientProfile() {
 
     const onSubmit = async (formData) => {
         try {
-            await updateProfile(currentUser.id, "ContactPerson", "patients", currentUser.autoId, formData);
-            await updateProfile(`patients/${profileData.id}`, setIsEditing, formData);
+            await updateProfile("patients", setIsEditing, formData);
             alert("Profile updated successfully.");
-            setIsEditing(false);
         } catch (err) {
             console.error("Update failed:", err);
             alert("Failed to update profile.");
@@ -70,7 +141,7 @@ function ContactPatientProfile() {
     };
 
     const onVerifyCode = async () => {
-        await handleVerifyCode(code, setIsEditing, setShowCodeInput, currentUser);
+        await handleVerifyCode(code, setIsEditing, setShowCodeInput);
     };
 
     if (!profileData || loading) return <div>Loading...</div>;
