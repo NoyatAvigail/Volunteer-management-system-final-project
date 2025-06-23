@@ -8,7 +8,7 @@ import sequelize from '../DB/connectionDB.mjs';
 import volunteersRoutes from './routes/volunteersRoutes.js'
 import contactRoutes from './routes/contactsRoutes.js'
 import profilesRoutes from './routes/profilesRoutes.js'
-import thankYousRoutes from './routes/thankYousRoutes.js';
+import thanksRoutes from './routes/thanksRoutes.js';
 
 const app = express();
 app.use(express.json({ limit: '10mb' }));
@@ -20,7 +20,7 @@ app.use("/api/requests", requestRoutes);
 app.use("/api/volunteers",volunteersRoutes)
 app.use("/api/contacts",contactRoutes)
 app.use("/api/profiles",profilesRoutes)
-app.use('/api/thankyous', thankYousRoutes);
+app.use('/api/thanks', thanksRoutes);
 
 
 const start = async () => {
