@@ -6,13 +6,13 @@
 //     },
 // }
 // export default thankYousService;
-import { thankYousDal } from '../dal/thankYousDal.js';
+import { thanksDal } from '../dal/thanksDal.js';
 
-export const thankYousService = {
+export const thanksService = {
   createNote: async (contactId, data) => {
     console.log("הגיע לסרביס");
     
-    return await thankYousDal.createNote({
+    return await thanksDal.createNote({
       contactId,
       fromName: data.fromName,
       message: data.message,
@@ -20,18 +20,18 @@ export const thankYousService = {
   },
 
   getAllNotes: async () => {
-    return await thankYousDal.getAllNotes();
+    return await thanksDal.getAllNotes();
   },
    getNotesByFromId: async (contactId) => {
-    return await thankYousDal.getNotesByFromId(contactId);
+    return await thanksDal.getNotesByFromId(contactId);
   },
 
   updateNote: async (id, data) => {
     
-    return await thankYousDal.updateNote(id, data);
+    return await thanksDal.updateNote(id, data);
   },
 
   softDeleteNote: async (id) => {
-    return await thankYousDal.softDeleteNote(id);
+    return await thanksDal.softDeleteNote(id);
   },
 };

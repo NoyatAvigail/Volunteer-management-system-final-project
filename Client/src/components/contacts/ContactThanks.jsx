@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { thankYousService } from '../../services/thankYousService';
+import { thanksService } from '../../services/thanksService';
 import Add from '../Add';
 import Update from '../Update';
 import Delete from '../Delete';
@@ -13,7 +13,7 @@ function ThankYouManager() {
         setLoading(true);
         setError('');
         try {
-            const data = await thankYousService.getNotesByFromId();
+            const data = await thanksService.getNotesByFromId();
             setNotes(data);
         } catch (e) {
             setError('Failed to fetch notes.');
@@ -31,7 +31,7 @@ function ThankYouManager() {
             <h2>Your Thank You Notes</h2>
             <>
                 <Add
-                    type="ThankYous"
+                    type="Thanks"
                     onSuccess={() => fetchNotes()}
                     inputs={["message"]}
                     defaultValue={{ message: "" }}
@@ -43,7 +43,7 @@ function ThankYouManager() {
                             <p>{note.message}</p>
 
                             <Update
-                                type="ThankYous"
+                                type="Thanks"
                                 itemId={note.id}
                                 onSuccess={() => fetchNotes()}
                                 inputs={["message"]}
@@ -51,7 +51,7 @@ function ThankYouManager() {
                             />
 
                             <Delete
-                                type="ThankYous"
+                                type="Thanks"
                                 itemId={note.id}
                                 setIsChange={fetchNotes}
 
