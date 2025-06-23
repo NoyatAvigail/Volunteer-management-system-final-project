@@ -144,12 +144,11 @@ export function useProfileData(type = "", resetForm) {
 
 export async function updateProfile(type = "", setIsEditing, formData) {
   let service = profilesServices;
-  let url = formData.id || formData.userId;
-
+  let url = '';
   if (type === "patients") {
     service = patientsService;
+    url = formData.id || formData.userId;
   }
-
   service.update(
     url,
     formData,
