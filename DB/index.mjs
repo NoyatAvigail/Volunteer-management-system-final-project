@@ -18,7 +18,7 @@ import { VolunteeringForSectors } from '../Server/models/VolunteeringForSectors.
 import { VolunteeringForGenders } from '../Server/models/VolunteeringForGenders.js';
 import { VolunteerTypes } from '../Server/models/VolunteerTypes.js';
 import { Events } from '../Server/models/Events.js';
-
+import { ThankYous } from '../Server/models/ThankYous.js'
 // Users ←→ Passwords
 Users.hasMany(Passwords, { foreignKey: 'id', onDelete: 'CASCADE' });
 Passwords.belongsTo(Users, { foreignKey: 'id', onDelete: 'CASCADE' });
@@ -95,6 +95,8 @@ Hospitalizeds.belongsTo(Departments, { foreignKey: 'department', onDelete: 'CASC
 Hospitalizeds.belongsTo(Patients, { foreignKey: 'patientId', targetKey: 'userId' });
 Patients.hasMany(Hospitalizeds, { foreignKey: 'patientId', sourceKey: 'userId' });
 
+ContactPeople.hasMany(ThankYous, { foreignKey: 'contactId', targetKey: 'userId' });
+ThankYous.belongsTo(ContactPeople, { foreignKey: 'contactId', sourceKey: 'userId' });
 export {
   sequelize,
   UserTypes,
@@ -115,5 +117,6 @@ export {
   VolunteeringForSectors,
   VolunteeringForGenders,
   VolunteerTypes,
-  Events
+  Events,
+  ThankYous
 };
