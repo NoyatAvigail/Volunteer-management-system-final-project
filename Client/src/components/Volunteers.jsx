@@ -1,24 +1,28 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, Outlet } from 'react-router-dom';
-import { CurrentUser } from './App';
+import React from 'react';
+import '../style/Home.css'; 
 
 function Volunteers() {
-    const [error, setError] = useState(null);
-    const [isChange, setIsChange] = useState(0);
-    const { currentUser } = useContext(CurrentUser);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (!currentUser?.id) {
-            setError("User is not logged in");
-            return;
-        }
-    }, [currentUser.id, isChange]);
-
-    if (error) return <div>{error}</div>;
-
     return (
-        <div className='volunteer-dashboard'>
+        <div className="home-container">
+            <h1>Welcome, dear volunteer!</h1>
+            <p className="slogan">MAKING A DIFFERENCE TOGETHER</p>
+            <p>
+                You’re not just a user in our system — <strong>you’re the heartbeat of our community</strong>.<br />
+                Your willingness to give, your time, your care, and your presence — it truly inspires us all.
+            </p>
+            <p>
+                Thanks to people like you, <strong>lives are changed every day</strong>.<br />
+                We’re here to help you find the perfect place where you can shine, make an impact, and touch hearts.
+            </p>
+            <h2>What you can do:</h2>
+            <ul>
+                <li>Choose your preferences (sector, gender, hospital, department)</li>
+                <li>Receive personalized shift suggestions</li>
+                <li>Accept shifts that fit your schedule</li>
+                <li>Manage your profile and download your certificate of appreciation</li>
+            </ul>
+            <p className="highlight">You're not alone. We're with you.</p>
+            <p className="highlight">Together – we are MAKING A DIFFERENCE.</p>
         </div>
     );
 }

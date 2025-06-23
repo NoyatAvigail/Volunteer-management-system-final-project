@@ -51,9 +51,9 @@ function LogIn() {
 
     return (
         <div className="back-ground-img">
-            <h2>Login</h2>
             <div className="entryContainer">
                 <form onSubmit={handleSubmit(onSubmit)} className="entryForm">
+                    <h2>Login</h2>
                     <input type="email" placeholder="email" {...register("email")} required />
                     <input type="password" placeholder="password" {...register("password")} required />
                     <button type="submit">Log In</button>
