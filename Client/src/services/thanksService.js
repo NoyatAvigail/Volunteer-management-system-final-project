@@ -20,7 +20,7 @@ async function request({ method, url = "", data = null, onSuccess, onError }) {
     const token = getToken();
     const response = await axios({
       method,
-      url: `${API_URL}/api/thankyous${url}`,
+      url: `${API_URL}/api/thanks${url}`,
       headers: {
         authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ async function request({ method, url = "", data = null, onSuccess, onError }) {
   }
 }
 
-export const thankYousService = {
+export const thanksService = {
   getNotesByFromId: (onSuccess, onError) =>
     request({ method: 'GET', url: '', data: null, onSuccess, onError, }),
   create: (data, onSuccess, onError) =>

@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../../DB/connectionDB.mjs';
 
-export const ThankYous = sequelize.define('ThankYous', {
+export const Thanks = sequelize.define('Thanks', {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     contactId: { type: DataTypes.INTEGER, allowNull: false, references: { model: 'ContactPeople', key: 'id' }, onUpdate: 'CASCADE', onDelete: 'CASCADE', },
     fromName: { type: DataTypes.STRING, allowNull: false, },
@@ -11,4 +11,4 @@ export const ThankYous = sequelize.define('ThankYous', {
     deleted_at: { type: DataTypes.DATE, allowNull: true, },
 });
 
-export default ThankYous;
+export default Thanks;

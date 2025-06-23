@@ -13,9 +13,9 @@
 // },
 // }
 // export default { addThankYou };
-import { thankYousService } from '../services/thankYousService.js';
+import { thanksService } from '../services/thanksService.js';
 
-export const thankYousController = {
+export const thanksController = {
     createNote: async (req, res) => {        
         try {
             const contactId = req.user.id?.toString();
@@ -24,7 +24,7 @@ export const thankYousController = {
                 message: req.body.message,
             };
 
-            const newNote = await thankYousService.createNote(contactId, noteData);
+            const newNote = await thanksService.createNote(contactId, noteData);
             res.status(201).json(newNote);
         } catch (err) {
             console.error('Error creating thank you note:', err);
@@ -34,7 +34,7 @@ export const thankYousController = {
 
     getAllNotes: async (req, res) => {
         try {
-            const notes = await thankYousService.getAllNotes();
+            const notes = await thanksService.getAllNotes();
             res.status(200).json(notes);
         } catch (err) {
             console.error('Error fetching thank you notes:', err);
@@ -45,7 +45,7 @@ export const thankYousController = {
     getNotesByFromId: async (req, res) => {
         try {
             const contactId = req.user.id?.toString();
-            const notes = await thankYousService.getNotesByFromId(contactId);
+            const notes = await thanksService.getNotesByFromId(contactId);
             res.status(200).json(notes);
         } catch (err) {
             console.error('Get notes error:', err);
@@ -57,7 +57,7 @@ export const thankYousController = {
         try {            
             const id = req.params.id;
             const data = req.body;
-            const updatedNote = await thankYousService.updateNote(id, data);
+            const updatedNote = await thanksService.updateNote(id, data);
             res.status(200).json(updatedNote);
         } catch (err) {
             console.error('Update note error:', err);
@@ -68,7 +68,7 @@ export const thankYousController = {
     softDeleteNote: async (req, res) => {
         try {
             const id = req.params.id;
-            await thankYousService.softDeleteNote(id);
+            await thanksService.softDeleteNote(id);
             res.status(200).json({ message: 'Note deleted successfully' });
         } catch (err) {
             console.error('Delete note error:', err);
@@ -76,4 +76,4 @@ export const thankYousController = {
         }
     },
 };
-export default thankYousController;
+export default thanksController;
