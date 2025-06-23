@@ -29,9 +29,6 @@ function ThankYouManager() {
     return (
         <div>
             <h2>Your Thank You Notes</h2>
-            {/* {loading ? (
-                <p>Loading...</p>
-            ) : ( */}
             <>
                 <Add
                     type="ThankYous"

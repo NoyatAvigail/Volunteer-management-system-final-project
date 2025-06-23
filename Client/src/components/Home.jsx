@@ -89,8 +89,8 @@ function Home() {
             <p className="slogan">MAKING A DIFFERENCE TOGETHER</p>
             {renderStat("Active Volunteers:", "volunteerCount")}
             {renderStat("Total Volunteer Hours:", "totalHours")}
-            {renderStat("Hospitals:", "hospitalCount")}
-            {renderStat("Departments:", "departmentCount")}
+            {renderStat("Volunteering in hospitals in Israel:", "hospitalCount")}
+            {renderStat("Volunteering in several departments:", "departmentCount")}
             <h2><br /><br /></h2>
             <h2>A little about us</h2>
             <p>Our website is a unique and inclusive space where giving and compassion meet the human heart.</p>

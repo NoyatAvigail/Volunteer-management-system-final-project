@@ -1,9 +1,6 @@
 import express from 'express';
 import contactController from '../controller/contactsController.js';
-import { verifyToken } from '../middleware/middleware.js';
-
 const router = express.Router();
-router.use(verifyToken);
 
 router.route('/patients')
     .get(contactController.getPatients)
