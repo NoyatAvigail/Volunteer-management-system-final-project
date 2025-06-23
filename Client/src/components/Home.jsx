@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import '../style/Home.css';
 import { homeServices } from '../services/homeServices';
+import winSound from '../audio/win-sound.mp3';
 
 function Home() {
     const [stats, setStats] = useState({
@@ -17,7 +18,14 @@ function Home() {
         departmentCount: 0
     });
 
+    const audioRef = useRef(null);
+
+    const finishedAnimations = useRef(0);
+    const totalAnimations = 4;
+
     useEffect(() => {
+        audioRef.current = new Audio(winSound);
+
         homeServices.getStats(
             (data) => {
                 setStats(data);
@@ -39,18 +47,25 @@ function Home() {
             const progress = Math.min(elapsed / duration, 1);
             const currentValue = Math.floor(progress * target);
             setDisplayed(prev => ({ ...prev, [field]: currentValue }));
+
             if (progress < 1) {
                 requestAnimationFrame(step);
+            } else {
+                finishedAnimations.current += 1;
+                if (finishedAnimations.current === totalAnimations && audioRef.current) {
+                    audioRef.current.play().catch(e => console.warn("Audio play failed:", e));
+                }
             }
         }
+
         requestAnimationFrame(step);
     };
 
     const maxValues = {
         volunteerCount: Math.max(stats.volunteerCount, 100),
         totalHours: Math.max(stats.totalHours, 100),
-        hospitalCount: Math.max(stats.hospitalCount, 18),
-        departmentCount: Math.max(stats.departmentCount, 18)
+        hospitalCount: Math.max(stats.hospitalCount, 100),
+        departmentCount: Math.max(stats.departmentCount, 100)
     };
 
     const renderStat = (label, field) => (
@@ -76,23 +91,12 @@ function Home() {
             {renderStat("Total Volunteer Hours:", "totalHours")}
             {renderStat("Hospitals:", "hospitalCount")}
             {renderStat("Departments:", "departmentCount")}
-            <h2>
-                <br></br>
-                <br></br>
-            </h2>
-            <h2>
-                A little about us
-            </h2>
-            <p>
-                Our website is a unique and inclusive space where giving and compassion meet the human heart.
-            </p>
-            <p>
-                Here, motivated volunteers from all backgrounds come together, driven by a genuine desire to contribute...
-            </p>
+            <h2><br /><br /></h2>
+            <h2>A little about us</h2>
+            <p>Our website is a unique and inclusive space where giving and compassion meet the human heart.</p>
+            <p>Here, motivated volunteers from all backgrounds come together, driven by a genuine desire to contribute...</p>
             <h2>How does it work?</h2>
-            <p>
-                Every volunteer registers by filling in their personal details along with preferences...
-            </p>
+            <p>Every volunteer registers by filling in their personal details along with preferences...</p>
             <h2 className="highlight">Our platform is more than a system — </h2>
             <h2 className="highlight">It’s a community of giving, partnership, and hope.</h2>
             <p>Every volunteer is a hero here, and every patient is cared for with compassionate hands.</p>
