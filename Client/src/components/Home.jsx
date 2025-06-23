@@ -71,11 +71,15 @@ function Home() {
     return (
         <div className="home-container">
             <h1>Welcome to our Volunteers Platform</h1>
-            <h2><strong>MAKING A DIFFERENCE TOGETHER.</strong></h2>
+            <p className="slogan">MAKING A DIFFERENCE TOGETHER</p>
             {renderStat("Active Volunteers:", "volunteerCount")}
             {renderStat("Total Volunteer Hours:", "totalHours")}
             {renderStat("Hospitals:", "hospitalCount")}
             {renderStat("Departments:", "departmentCount")}
+            <h2>
+                <br></br>
+                <br></br>
+            </h2>
             <h2>
                 A little about us
             </h2>
