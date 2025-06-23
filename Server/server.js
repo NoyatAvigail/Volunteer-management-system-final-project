@@ -25,7 +25,7 @@ app.use(verifyToken);
 app.use("/api/requests", requestRoutes);
 app.use("/api/volunteers", volunteersRoutes);
 app.use("/api/contacts", contactsRoutes);
-app.use("/api/contacts/patients", patientsRouts);
+app.use("/api/patients", patientsRouts);
 app.use("/api/profiles", profilesRoutes);
 app.use("/api/thanks", thanksRoutes);
 
