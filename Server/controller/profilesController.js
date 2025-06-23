@@ -23,7 +23,7 @@ const profilesController = {
     },
 
     updateProfile: async (req, res) => {
-        try {            
+        try {                        
             const authenticated = await profilesController.utils(req);
             const requests = await profilesService.updateProfile(authenticated.authenticatedId, authenticated.authenticatedType, req.body);
             res.status(200).json(requests);

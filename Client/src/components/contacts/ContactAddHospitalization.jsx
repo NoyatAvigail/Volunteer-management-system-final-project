@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { CurrentUser } from '.././App';
 import { CodesContext } from '.././Models';
-import { contactsServices } from '../../services/contactsServices';
+import { patientsService } from '../../services/patientsServices.js';
 import Add from '.././Add';
 
 function ContactAddHospitalization() {
@@ -17,8 +17,7 @@ function ContactAddHospitalization() {
     useEffect(() => {
         if (!didFetch.current && currentUser?.autoId && userTypeObj) {
             didFetch.current = true;
-            contactsServices.getAll(
-                'patients',
+            patientsService.getAll(
                 (res) => setPatients(res || []),
                 (err) => console.error("Failed to fetch patients:", err)
             );

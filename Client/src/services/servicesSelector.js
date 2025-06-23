@@ -1,4 +1,4 @@
-import { contactsServices } from './contactsServices';
+import { hospitalizedsService } from './hospitalizedsServices';
 import { patientsService } from './patientsServices';
 import { requestsServices } from './requestsServices';
 import { thanksService } from './thanksService';
@@ -6,11 +6,11 @@ export const createHandler = async ({ type, body, onSuccess, onError }) => {
     try {
         switch (type) {
             case 'Patients':
-                return await patientsService.create(body, 'patients');
+                return await patientsService.create(body, onSuccess, onError);
             case 'Hospitalizeds':
-                return await contactsServices.create(body, 'hospitalizeds');
+                return await hospitalizedsService.create(body, onSuccess, onError);
             case 'Events':
-                return await requestsServices.create(body);
+                return await requestsServices.create(body, onSuccess, onError);
             case 'Thanks':
                 return await thanksService.create(body, onSuccess, onError)
             default:

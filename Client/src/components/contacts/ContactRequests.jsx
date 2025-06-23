@@ -9,7 +9,9 @@ import Delete from '.././Delete';
 import Update from '.././Update';
 import '../../style/Requests.css';
 import { requestsServices } from '../../services/requestsServices';
-import { contactsServices } from '../../services/contactsServices'
+import { hospitalizedsService } from '../../services/hospitalizedsServices'
+import { patientsService } from '../../services/patientsServices'
+
 function ContactRequests() {
     const [userData, setUserData] = useState([]);
     const [error, setError] = useState(null);
@@ -37,8 +39,7 @@ function ContactRequests() {
     useEffect(() => {
         if (!didFetch.current && currentUser?.autoId && userTypeObj) {
             didFetch.current = true;
-            contactsServices.getAll(
-                'patients',
+            patientsService.getAll(
                 (res) => setPatients(res || []),
                 (err) => console.error("Failed to fetch patients:", err)
             );
@@ -55,15 +56,17 @@ function ContactRequests() {
     useEffect(() => {
         if (updateRow && updateRow.patientId) {
             fetchHospitalizeds(updateRow.patientId);
+            console.log("hospitalizedsPerPatient:", hospitalizedsPerPatient);
+
         }
     }, [updateRow]);
     const fetchHospitalizeds = (patientId) => {
-        contactsServices.getByValue(
-            "Hospitalizeds",
+        hospitalizedsService.getByValue(
             patientId,
             (res) => setHospitalizedsPerPatient(res || []),
             (err) => console.error("Failed to fetch hospitalizeds:", err)
         );
+
     };
 
     const fetchData = async () => {
@@ -140,7 +143,7 @@ function ContactRequests() {
                             name: "hospitalizedsId",
                             type: "select",
                             options: hospitalizedsPerPatient.map(h => ({
-                                label: `Hospital: ${h.hospital}, Department: ${h.department}, Room: ${h.roomNumber}, Hospitalization Start: ${h.hospitalizationStart}`, value: h.id
+                                label: `Hospital: ${h.Hospital.description}, Department: ${h.Department.description}, Room: ${h.roomNumber}`, value: h.id
                             }))
                         },
                         "date",
@@ -213,7 +216,7 @@ function ContactRequests() {
                                                                 name: "hospitalizedsId",
                                                                 type: "select",
                                                                 options: hospitalizedsPerPatient.map(h => ({
-                                                                    label: `Hospital: ${h.hospital}, Department: ${h.department}, Room: ${h.roomNumber}, Hospitalization Start: ${h.hospitalizationStart}`, value: h.id
+                                                                    label: `Hospital: ${h.Hospital.description}, Department: ${h.Department.description}, Room: ${h.roomNumber}, Hospitalization Start: ${h.hospitalizationStart}`, value: h.id
                                                                 }))
                                                             },
                                                             "date",
