@@ -21,7 +21,7 @@ function Delete({
                 type,
                 id: itemId,
                 onSuccess: () => {
-                    console.log("Delete successful:", result);
+                    console.log("Delete successful");
                     if (onSuccess) onSuccess();
                     else setIsChange(prev => (prev === 0 ? 1 : 0));
                 },
