@@ -21,7 +21,7 @@ async function request({ method, url = "", data = null, onSuccess, onError }) {
       },
       data,
     });
-    const result = response.data;
+    const result = response.data ?? {};
     if (onSuccess) onSuccess(result);
     return result;
   } catch (error) {
