@@ -9,7 +9,7 @@ import requestRoutes from './routes/requestsRoutes.js';
 import volunteersRoutes from './routes/volunteersRoutes.js';
 import contactsRoutes from './routes/contactsRoutes.js';
 import patientsRouts from './routes/patientsRouts.js'
-
+import hospitalizedsRoutes from './routes/hospitalizedsRoutes.js'
 import profilesRoutes from './routes/profilesRoutes.js';
 import thanksRoutes from './routes/thanksRoutes.js';
 import { verifyToken } from './middleware/middleware.js';
@@ -28,6 +28,7 @@ app.use("/api/contacts", contactsRoutes);
 app.use("/api/patients", patientsRouts);
 app.use("/api/profiles", profilesRoutes);
 app.use("/api/thanks", thanksRoutes);
+app.use("/api/hospitalizeds", hospitalizedsRoutes);
 
 const start = async () => {
   try {

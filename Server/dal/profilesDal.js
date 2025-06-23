@@ -48,14 +48,14 @@ const profilesDAL = {
                 flexible: data.flexible
             }, { transaction });
             const volunteerId = volunteer.id;
-            genericDAL.deleteByField(VolunteerTypes, volunteerId),
+            // genericDAL.deleteByField(VolunteerTypes, volunteerId),
                 genericDAL.deleteByField(VolunteeringForGenders, volunteerId),
                 genericDAL.deleteByField(VolunteeringForSectors, volunteerId),
                 genericDAL.deleteByField(VolunteeringInDepartments, volunteerId)
-            const helpTypes = data.helpTypes.map(typeId => ({
-                id: volunteerId,
-                volunteerTypeId: typeId
-            }));
+            // const helpTypes = data.helpTypes.map(typeId => ({
+            //     id: volunteerId,
+            //     volunteerTypeId: typeId
+            // }));
             const departments = data.preferredHospitals.flatMap(hospitalId =>
                 data.preferredDepartments.map(departmentId => ({
                     id: volunteerId,
@@ -71,7 +71,7 @@ const profilesDAL = {
                 id: volunteerId,
                 genderId
             }));
-            helpTypes.length && genericDAL.bulkCreateModel(VolunteerTypes, helpTypes, transaction),
+            // helpTypes.length && genericDAL.bulkCreateModel(VolunteerTypes, helpTypes, transaction),
                 departments.length && genericDAL.bulkCreateModel(VolunteeringInDepartments, departments, transaction),
                 sectors.length && genericDAL.bulkCreateModel(VolunteeringForSectors, sectors, transaction),
                 genders.length && genericDAL.bulkCreateModel(VolunteeringForGenders, genders, transaction)
