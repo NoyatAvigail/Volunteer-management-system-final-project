@@ -13,17 +13,13 @@ body {
     height: 100vh;
 }
 
-h2 {
-    margin-top: 23vh;
-}
-
 .entryContainer {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     position: absolute;
-    margin-top: 5vh;
+    margin-top: 12vh;
 }
 
 .entryForm {
@@ -46,7 +42,7 @@ h2 {
 }
 
 .entryForm input {
-  color: #4c4b4b !important;
+    color: #4c4b4b !important;
 }
 
 .entryForm input:focus {

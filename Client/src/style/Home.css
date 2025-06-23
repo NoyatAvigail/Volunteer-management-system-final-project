@@ -1,0 +1,97 @@
+*{
+    text-align: left;
+}
+
+.home-container {
+    max-width: 900px;
+    margin-top: 5vw;
+    padding: 30px 40px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #444;
+    line-height: 1.6;
+}
+
+.home-container h1,
+.home-container h2,
+.home-container h3 {
+    color: #ffbd59;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.home-container h1 {
+    color: #5fa79b;
+    font-size: 2.6rem;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+.home-container h2 {
+    font-size: 1.5vw;
+}
+
+.home-container p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.home-container strong {
+    color: #5fa79b;
+}
+
+.home-container .highlight {
+    color: #e06eb2;
+    font-weight: 600;
+}
+
+.home-container .slogan {
+    font-size: 1.4rem;
+    color: #ffbd59;
+    font-weight: 700;
+    margin-top: 40px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.home-container ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.home-container li {
+    padding-left: 1.2em;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.home-container li::before {
+    content: "✔";
+    position: absolute;
+    left: 0;
+    color: #ffbd59;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    .home-container {
+        padding: 20px 15px;
+    }
+
+    .home-container h1 {
+        font-size: 2rem;
+    }
+
+    .home-container h2 {
+        font-size: 1.4rem;
+    }
+
+    .home-container p {
+        font-size: 1rem;
+    }
+}
