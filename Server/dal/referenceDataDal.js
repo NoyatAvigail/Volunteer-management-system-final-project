@@ -1,6 +1,6 @@
 import genericDAL from './genericDal.js';
 
-const codeTablesDal = {
+const referenceDataDal = {
     getTableData: async (tableName) => {
         const model = genericDAL.getModelByName(tableName);
         const data = await genericDAL.findAll(model);
@@ -8,4 +8,4 @@ const codeTablesDal = {
     }
 }
 
-export default codeTablesDal;
+export default referenceDataDal;

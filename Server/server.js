@@ -4,7 +4,7 @@ import sequelize from '../DB/connectionDB.mjs';
 
 import userRoutes from './routes/usersRoutes.js';
 import homeRoutes from './routes/homeRoutes.js';
-import codeTablesRoutes from './routes/codeTablesRoutes.js';
+import referenceDataRoutes from './routes/referenceDataRoutes.js';
 import requestRoutes from './routes/requestsRoutes.js';
 import volunteersRoutes from './routes/volunteersRoutes.js';
 import contactRoutes from './routes/contactsRoutes.js';
@@ -18,7 +18,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/home", homeRoutes);
-app.use("/api/codetables", codeTablesRoutes);
+app.use("/api/referenceData", referenceDataRoutes);
 app.use(verifyToken);
 app.use("/api/requests", requestRoutes);
 app.use("/api/volunteers", volunteersRoutes);

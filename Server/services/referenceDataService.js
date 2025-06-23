@@ -1,33 +1,33 @@
-import codeTablesDAL from '../dal/codeTablesDal.js';
-let codeTablesCache = null;
+import referenceDataDAL from '../dal/referenceDataDal.js';
+let referenceDataCache = null;
 
-const codeTablesServise = {
-    loadCodeTables: async () => {
+const referenceDataServise = {
+    loadReferenceData: async () => {
         const tables = ["UserTypes", "Sectors", "Genders", "Hospitals", "Departments", "FamilyRelations", "VolunteeringTypes"];
         const results = {};
         for (const table of tables) {
             try {
-                const data = await codeTablesDAL.getTableData(table);
+                const data = await referenceDataDAL.getTableData(table);
                 results[table] = data;
             } catch (error) {
                 console.error(`Error loading table ${table}:`, error);
                 results[table] = [];
             }
         }
-        codeTablesCache = results;
+        referenceDataCache = results;
         console.log("Code Tables Cache Loaded");
     },
 
-    getAllCodeTables: async () => {
+    getAllreferenceData: async () => {
         try {
-            if (!codeTablesCache) {
-                await codeTablesServise.loadCodeTables();
+            if (!referenceDataCache) {
+                await referenceDataServise.loadReferenceData();
             }
-            return codeTablesCache;
+            return referenceDataCache;
         } catch (error) {
             console.error("Failed to load code tables:", error);
             throw new Error("Could not retrieve code tables");
         }
     }
 }
-export default codeTablesServise;
+export default referenceDataServise;
