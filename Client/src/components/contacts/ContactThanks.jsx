@@ -33,15 +33,14 @@ function ThankYouManager() {
                 <Add
                     type="Thanks"
                     onSuccess={() => fetchNotes()}
-                    inputs={["message"]}
-                    defaultValue={{ message: "" }}
+                    inputs={["fromName", "message"]}
+                    defaultValue={{ fromName: "", message: "" }}
                     name="Add Thank You"
                 />
                 <ul>
                     {notes.map(note => (
                         <li key={note.id}>
                             <p>{note.message}</p>
-
                             <Update
                                 type="Thanks"
                                 itemId={note.id}
@@ -49,18 +48,19 @@ function ThankYouManager() {
                                 inputs={["message"]}
                                 defaultValue={{ message: note.message }}
                             />
-
                             <Delete
                                 type="Thanks"
                                 itemId={note.id}
-                                setIsChange={fetchNotes}
+                                setIsChange={(result) => {
+                                    console.log("Delete successful:", result); 
+                                    fetchNotes();
+                                }}
 
                             />
                         </li>
                     ))}
                 </ul>
             </>
-            {/* )} */}
         </div>
     );
 }
