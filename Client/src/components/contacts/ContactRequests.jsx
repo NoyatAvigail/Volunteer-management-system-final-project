@@ -284,6 +284,8 @@ function ContactRequests() {
     const [selectedPatientId, setSelectedPatientId] = useState("");
     const [hospitalizedsPerPatient, setHospitalizedsPerPatient] = useState([]);
     const [updateRow, setUpdateRow] = useState(null);
+    const [startDate, setStartDate] = useState('01/01/2025');
+    const [endDate, setEndDate] = useState('01/07/2025');
     const didFetch = useRef(false);
 
     const noAccess = !currentUser || userTypeObj !== 'ContactPerson';
@@ -326,10 +328,35 @@ function ContactRequests() {
         );
     };
 
+    // const fetchData = async () => {
+    //     try {
+    //         const startDate = '2000-06-01';
+    //         const endDate = '2029-08-31';
+    //         await requestsServices.getAll(
+    //             startDate,
+    //             endDate,
+    //             (result) => {
+    //                 setUserData(result);
+    //                 setEvents(result);
+    //                 setIsChange(prev => !prev);
+    //             },
+    //             (error) => {
+    //                 console.log("get was unsuccessful", error);
+    //                 setError("Error loading data");
+    //             }
+    //         );
+    //     } catch (error) {
+    //         console.log("Unexpected error:", error);
+    //         setError("Unexpected error loading data");
+    //     }
+    // };
     const fetchData = async () => {
+        if (!startDate || !endDate) {
+            setError("Please select start and end dates");
+            return;
+        }
+
         try {
-            const startDate = '2000-06-01';
-            const endDate = '2029-08-31';
             await requestsServices.getAll(
                 startDate,
                 endDate,
@@ -366,6 +393,26 @@ function ContactRequests() {
     return (
         <>
             <div className='control'>
+                <div className="date-filter">
+                    <label>
+                        From date:
+                        <input
+                            type="date"
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                        />
+                    </label>
+                    <label>
+                        To date:
+                        <input
+                            type="date"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                        />
+                    </label>
+                    <button onClick={fetchData}>Show Events</button>
+                </div>
+
                 <Sort
                     type="requests"
                     userData={userData}
