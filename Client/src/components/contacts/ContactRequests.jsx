@@ -216,7 +216,7 @@ function ContactRequests() {
                                                                 name: "hospitalizedsId",
                                                                 type: "select",
                                                                 options: hospitalizedsPerPatient.map(h => ({
-                                                                    label: `Hospital: ${h.Hospital.description}, Department: ${h.Department.description}, Room: ${h.roomNumber}, Hospitalization Start: ${h.hospitalizationStart}`, value: h.id
+                                                                    label: `Hospital: ${h.Hospital.description}, Department: ${h.Department.description}, Room: ${h.roomNumber}`, value: h.id
                                                                 }))
                                                             },
                                                             "date",
