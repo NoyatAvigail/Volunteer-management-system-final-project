@@ -45,6 +45,7 @@ const volunteerService = {
             }
 
             const events = await volunteerDAL.getEventsByVolunteerId(user.userId);
+            
             let totalMinutes = 0;
 
             events.forEach(event => {

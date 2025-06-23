@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
 import html2pdf from 'html2pdf.js';
-import axios from 'axios';
 import { CurrentUser } from "../App";
-import {volunteersServices} from '../../services/volunteersServices';
+import { volunteersServices } from '../../services/volunteersServices';
+
 function Certificate() {
   const { currentUser } = useContext(CurrentUser);
   const [hours, setHours] = useState(null);
@@ -12,27 +11,22 @@ function Certificate() {
   useEffect(() => {
     const fetchCertificate = async () => {
       try {
-        const data = await volunteersServices.getAll(
-          "certificate",
-          {},
-          (data) => {
-            setHours(data.totalHours);
-            setFullName(data.fullName);
-          },
-          (err) => {
-            console.error("Failed to load certificate:", err);
-          }
-        );
+        const data = await volunteersServices.getAll('certificate');
+        setHours(data.totalHours);
+        setFullName(data.fullName);
       } catch (err) {
-        console.error("Unexpected error:", err);
+        console.error("Failed to load certificate:", err);
       }
     };
 
-    if (CurrentUser.id) fetchCertificate();
-  }, [CurrentUser.id]);
+    if (currentUser?.id) {
+      fetchCertificate();
+    }
+  }, [currentUser?.id]);
+
   const downloadPDF = () => {
     const element = document.getElementById('certificate');
-    html2pdf().from(element).save(`${currentUser.fullName}-certificate.pdf`);
+    html2pdf().from(element).save(`${fullName}-certificate.pdf`);
   };
 
   return (
@@ -40,7 +34,7 @@ function Certificate() {
       <div id="certificate" className="certificate-box">
         <h1>Certificate of Appreciation</h1>
         <p>This certificate is proudly presented to</p>
-        <h2>{currentUser.fullName}</h2>
+        <h2>{fullName}</h2>
         <p>For dedicated volunteer service and contributing a total of</p>
         <h3>{hours !== null ? `${hours} hours` : '0'}</h3>
         <p>of community service.</p>
