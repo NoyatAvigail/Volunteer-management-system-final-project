@@ -1,9 +1,3 @@
-// import axios from 'axios';
-
-// export const addThankYou = async ({ contactId, message }) => {
-//   const res = await axios.post('/api/thank-you', { contactId, message });
-//   return res.data;
-// };
 import axios from "axios";
 import Cookies from "js-cookie";
 import { logOutFunc } from "../js/logout.js";

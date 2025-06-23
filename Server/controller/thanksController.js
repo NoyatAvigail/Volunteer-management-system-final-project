@@ -1,18 +1,3 @@
-// import thankYousService from '../services/thankYousService.js';
-// const thankYousController={
-// addThankYou: async (req, res) => {
-//     try {
-//         const authenticatedId = req.user.id?.toString();
-//         const { message } = req.body;
-//         const newThankYou = await thankYousService.addThankYou(authenticatedId, message);
-//         res.status(201).json(newThankYou);
-//     } catch (err) {
-//         console.error('Error adding thank you:', err);
-//         res.status(500).json({ error: 'Failed to add thank you' });
-//     }
-// },
-// }
-// export default { addThankYou };
 import { thanksService } from '../services/thanksService.js';
 
 export const thanksController = {
@@ -23,7 +8,6 @@ export const thanksController = {
                 fromName: req.body.fromName,
                 message: req.body.message,
             };
-
             const newNote = await thanksService.createNote(contactId, noteData);
             res.status(201).json(newNote);
         } catch (err) {
