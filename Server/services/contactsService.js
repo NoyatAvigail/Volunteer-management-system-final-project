@@ -3,65 +3,65 @@ import contactsDal from "../dal/contactsDal.js";
 import ContactPeople from '../models/ContactPeople.js';
 
 const contactsService = {
-    getPatients: async (authenticatedId) => {
-        try {
-            return await contactsDal.getPatients(authenticatedId);
-        } catch (error) {
-            console.error("Error in contactsService.getPatients:", error);
-            throw error;
-        }
-    },
+    // getPatients: async (authenticatedId) => {
+    //     try {
+    //         return await contactsDal.getPatients(authenticatedId);
+    //     } catch (error) {
+    //         console.error("Error in contactsService.getPatients:", error);
+    //         throw error;
+    //     }
+    // },
 
-    createPatient: async (authenticatedId, body) => {
-        try {
-            // שימי לב: חיפוש לפי ID של טבלת ContactPeople (שולח מהלקוח)
-            const contact = await genericDAL.findById(ContactPeople, authenticatedId);
-            if (!contact) {
-                const error = new Error("Contact person not found");
-                error.status = 404;
-                throw error;
-            }
+    // createPatient: async (authenticatedId, body) => {
+    //     try {
+    //         // שימי לב: חיפוש לפי ID של טבלת ContactPeople (שולח מהלקוח)
+    //         const contact = await genericDAL.findById(ContactPeople, authenticatedId);
+    //         if (!contact) {
+    //             const error = new Error("Contact person not found");
+    //             error.status = 404;
+    //             throw error;
+    //         }
 
-            const fullData = {
-                ...body,
-                // חובה: להציב כאן את userId של contactPerson, כי זה מה שמקושר לפציינט
-                contactPeopleId: contact.userId,
-                is_deleted: false
-            };
+    //         const fullData = {
+    //             ...body,
+    //             // חובה: להציב כאן את userId של contactPerson, כי זה מה שמקושר לפציינט
+    //             contactPeopleId: contact.userId,
+    //             is_deleted: false
+    //         };
 
-            return await contactsDal.createPatient(fullData);
-        } catch (error) {
-            console.error("Error in contactsService.createPatient:", error);
-            throw error;
-        }
-    },
+    //         return await contactsDal.createPatient(fullData);
+    //     } catch (error) {
+    //         console.error("Error in contactsService.createPatient:", error);
+    //         throw error;
+    //     }
+    // },
 
-    getPatientById: async (authenticatedId, patientId) => {
-        try {
-            return await contactsDal.getPatientById(authenticatedId, patientId);
-        } catch (error) {
-            console.error("Error in contactsService.getPatientById:", error);
-            throw error;
-        }
-    },
+    // getPatientById: async (authenticatedId, patientId) => {
+    //     try {
+    //         return await contactsDal.getPatientById(authenticatedId, patientId);
+    //     } catch (error) {
+    //         console.error("Error in contactsService.getPatientById:", error);
+    //         throw error;
+    //     }
+    // },
 
-    updatePatient: async (authenticatedId, patientId, body) => {
-        try {
-            return await contactsDal.updatePatient(authenticatedId, patientId, body);
-        } catch (error) {
-            console.error("Error in contactsService.updatePatient:", error);
-            throw error;
-        }
-    },
+    // updatePatient: async (authenticatedId, patientId, body) => {
+    //     try {
+    //         return await contactsDal.updatePatient(authenticatedId, patientId, body);
+    //     } catch (error) {
+    //         console.error("Error in contactsService.updatePatient:", error);
+    //         throw error;
+    //     }
+    // },
 
-    deletePatient: async (authenticatedId, patientId) => {
-        try {
-            return await contactsDal.deletePatient(authenticatedId, patientId);
-        } catch (error) {
-            console.error("Error in contactsService.deletePatient:", error);
-            throw error;
-        }
-    },
+    // deletePatient: async (authenticatedId, patientId) => {
+    //     try {
+    //         return await contactsDal.deletePatient(authenticatedId, patientId);
+    //     } catch (error) {
+    //         console.error("Error in contactsService.deletePatient:", error);
+    //         throw error;
+    //     }
+    // },
 
     getHospitalizeds: async (authenticatedId, patientId) => {
         try {

@@ -42,9 +42,11 @@ export const thanksController = {
         }
     },
 
-    getNotesByFromId: async (req, res) => {
+    getNotesByFromId: async (req, res) => {        
         try {
             const contactId = req.user.id?.toString();
+            console.log("contactId:",contactId);
+            
             const notes = await thanksService.getNotesByFromId(contactId);
             res.status(200).json(notes);
         } catch (err) {

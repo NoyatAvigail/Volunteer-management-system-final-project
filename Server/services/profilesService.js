@@ -51,60 +51,7 @@ const profilesService = {
         }
     },
 
-    getPatients: async (authenticatedId, authenticatedType) => {
-        try {
-            const { userTypeDesc, model } = await profilesService.utils(authenticatedType);
-            const contactArr = await genericDAL.findByField(model, { id: authenticatedId });
-            const contact = contactArr?.[0];
-            if (!contact) {
-                const error = new Error(`User not found`);
-                error.status = 404;
-                throw error;
-            }
-            if (userTypeDesc == 'ContactPerson') {
-                return await profilesDal.getPatients(contact.userId);
-            }
-        } catch (error) {
-            console.error("Error in getPatients:", error);
-            throw error;
-        }
-    },
-
-    updatePatientProfile: async (patientId, authenticatedId, authenticatedType, body) => {
-        try {
-            const { userTypeDesc, model } = await profilesService.utils(authenticatedType);
-            const user = await genericDAL.findById(model, authenticatedId);
-            if (!user) {
-                const error = new Error(`User not found`);
-                error.status = 404;
-                throw error;
-            }
-            if (userTypeDesc == 'ContactPerson') {
-                return await profilesDal.updatePatientProfile(patientId, body);
-            }
-        } catch (error) {
-            console.error("Error in updatePatientProfile:", error);
-            throw error;
-        }
-    },
-
-    deletePatient: async (patientId, authenticatedId, authenticatedType) => {
-        try {
-            const { userTypeDesc, model } = await profilesService.utils(authenticatedType);
-            const user = await genericDAL.findById(model, authenticatedId);
-            if (!user) {
-                const error = new Error(`User not found`);
-                error.status = 404;
-                throw error;
-            }
-            if (userTypeDesc === 'ContactPeople') {
-                return await profilesDal.deletePatient(patientId);
-            }
-        } catch (error) {
-            console.error("Error in deletePatient:", error);
-            throw error;
-        }
-    }
+   
 };
 
 export default profilesService;
