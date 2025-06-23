@@ -28,7 +28,7 @@ function ThankYouManager() {
 
     return (
         <div>
-            <h2>Your Thank You Notes</h2>
+            <h2>Your Thanks Notes</h2>
             <>
                 <Add
                     type="Thanks"
