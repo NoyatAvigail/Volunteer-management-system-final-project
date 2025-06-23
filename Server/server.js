@@ -1,27 +1,30 @@
 import express from 'express';
 import cors from 'cors';
+import sequelize from '../DB/connectionDB.mjs';
+
 import userRoutes from './routes/usersRoutes.js';
-import homeRoutes from './routes/homeRoutes.js'
+import homeRoutes from './routes/homeRoutes.js';
 import codeTablesRoutes from './routes/codeTablesRoutes.js';
 import requestRoutes from './routes/requestsRoutes.js';
-import sequelize from '../DB/connectionDB.mjs';
-import volunteersRoutes from './routes/volunteersRoutes.js'
-import contactRoutes from './routes/contactsRoutes.js'
-import profilesRoutes from './routes/profilesRoutes.js'
+import volunteersRoutes from './routes/volunteersRoutes.js';
+import contactRoutes from './routes/contactsRoutes.js';
+import profilesRoutes from './routes/profilesRoutes.js';
 import thankYousRoutes from './routes/thankYousRoutes.js';
+import { verifyToken } from './middleware/middleware.js';
 
 const app = express();
-app.use(express.json({ limit: '10mb' }));
+
 app.use(cors());
+app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/home", homeRoutes);
 app.use("/api/codetables", codeTablesRoutes);
+app.use(verifyToken);
 app.use("/api/requests", requestRoutes);
-app.use("/api/volunteers",volunteersRoutes)
-app.use("/api/contacts",contactRoutes)
-app.use("/api/profiles",profilesRoutes)
-app.use('/api/thankyous', thankYousRoutes);
-
+app.use("/api/volunteers", volunteersRoutes);
+app.use("/api/contacts", contactRoutes);
+app.use("/api/profiles", profilesRoutes);
+app.use("/api/thankyous", thankYousRoutes);
 
 const start = async () => {
   try {

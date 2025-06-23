@@ -1,9 +1,7 @@
 import express from 'express';
 import profilesController from '../controller/profilesController.js';
-import { verifyToken } from '../middleware/middleware.js';
 import emailController from '../controller/emailController.js';
 const router = express.Router();
-router.use(verifyToken);
 
 router.route('/')
     .get(profilesController.getProfile)
