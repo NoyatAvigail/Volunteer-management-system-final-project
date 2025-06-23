@@ -41,7 +41,7 @@ function VolunteerRequests() {
       setError("Unexpected error loading data");
     }
   };
-
+  // const triggerRefresh = () => setIsChange(prev => !prev);
   useEffect(() => {
     if (!didFetch.current && currentUser?.id && userTypeObj === 'Volunteer') {
       didFetch.current = true;
@@ -73,9 +73,8 @@ function VolunteerRequests() {
           setData={setEvents}
         />
         <Search
-          type="requests"
           setIsChange={setIsChange}
-          options={["All", "hospital", "department", "roomNumber"]}
+          options={["All", "hospital", "department"]}
           data={userData}
           setData={setEvents}
         />
