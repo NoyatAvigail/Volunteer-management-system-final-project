@@ -22,7 +22,7 @@ import {
 
 async function fakerSeed() {
     try {
-        await sequelize.sync({ force: false });
+        await sequelize.sync({ force: true });
         await seedStaticTables();
 
         function generateIsraeliId() {
@@ -37,6 +37,11 @@ async function fakerSeed() {
             const fullId = id + checkDigit;
             return parseInt(fullId, 10);
         }
+
+        function generateIsraeliPhone() {
+            return faker.phone.number('05#-#######');
+        }
+
 
         async function seedVolunteerDepartments(volunteerId) {
             const allHospitals = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
@@ -106,7 +111,7 @@ async function fakerSeed() {
         for (let i = 0; i < 15; i++) {
             try {
                 const email = faker.internet.email();
-                const phone = faker.phone.number();
+                const phone = generateIsraeliPhone();
                 const password = faker.internet.password();
                 const user = await Users.create({
                     id: generateIsraeliId(),
@@ -146,7 +151,7 @@ async function fakerSeed() {
 
         for (let i = 0; i < 15; i++) {
             const email = faker.internet.email();
-            const phone = faker.phone.number();
+            const phone = generateIsraeliPhone();
             const password = faker.internet.password();
 
             const user = await Users.create({
@@ -171,6 +176,7 @@ async function fakerSeed() {
                 const patientUser = await Users.create({
                     id: generateIsraeliId(),
                     email: faker.internet.email(),
+                    phone: generateIsraeliPhone(),
                     phone: faker.phone.number(),
                     type: contactType.id,
                 });
