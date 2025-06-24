@@ -121,56 +121,57 @@ const requestService = {
         throw error;
       }
       const userIdFromToken = user.userId;
+
       if (utils.userTypeDesc === 'Volunteer') {
         const event = await requestsDal.assignVolunteerToEvent(eventId, userIdFromToken);
         const volunteerEmailData = {
-          volunteerName: event.Volunteer?.fullName,
+          volunteerName: event.Volunteer.fullName,
           date: event.date,
           startTime: event.startTime,
           endTime: event.endTime,
           hospital: event.Hospitalized?.Hospital?.description,
           department: event.Hospitalized?.Department?.description,
-          room: event.Hospitalized?.roomNumber,
+          room: event.Hospitalized.roomNumber,
           patientName: event.Hospitalized?.Patient?.fullName,
         };
+
         const contactEmailData = {
-          contactName: event.ContactPerson?.fullName,
-          volunteerName: event.Volunteer?.fullName,
-          volunteerPhone: event.Volunteer?.User?.phone,
+          contactName: event.ContactPerson.fullName,
+          volunteerName: event.Volunteer.fullName,
+          volunteerPhone: event.Volunteer.User.phone,
           date: event.date,
           startTime: event.startTime,
           endTime: event.endTime,
         };
-        if (event.Volunteer && event.ContactPerson?.User) {
-          await emailsService.sendVolunteerAssignmentEmail(authenticatedEmail, volunteerEmailData);
-          await emailsService.sendContactNotificationEmail(event.ContactPerson.User.email, contactEmailData);
-        }
+
+        await emailsService.sendVolunteerAssignmentEmail(authenticatedEmail, volunteerEmailData);
+        await emailsService.sendContactNotificationEmail(event.ContactPerson.User.email, contactEmailData);
+
         return event;
-      } else {
+      }
+      else {
         const fullEvent = await requestsDal.updateEventDetails(eventId, body);
-        if (fullEvent.Volunteer && fullEvent.Volunteer.User) {
-          const emailData = {
-            volunteerName: fullEvent.Volunteer.fullName,
-            date: fullEvent.date,
-            startTime: fullEvent.startTime,
-            endTime: fullEvent.endTime,
-            hospital: fullEvent.Hospitalized?.Hospital?.description,
-            department: fullEvent.Hospitalized?.Department?.description,
-            room: fullEvent.Hospitalized?.roomNumber,
-            patientName: fullEvent.Hospitalized?.Patient?.fullName,
-            contactName: fullEvent.ContactPerson?.fullName,
-            contactEmail: fullEvent.ContactPerson?.User?.email,
-            contactPhone: fullEvent.ContactPerson?.User?.phone,
-          };
-          await emailsService.sendVolunteerShiftUpdatedEmail(fullEvent.Volunteer.User.email, emailData);
-        }
-        return fullEvent;
+        const emailData = {
+          volunteerName: fullEvent.Volunteer.fullName,
+          date: fullEvent.date,
+          startTime: fullEvent.startTime,
+          endTime: fullEvent.endTime,
+          hospital: fullEvent.Hospitalized?.Hospital?.description,
+          department: fullEvent.Hospitalized?.Department?.description,
+          room: fullEvent.Hospitalized?.roomNumber,
+          patientName: fullEvent.Hospitalized?.Patient?.fullName,
+          contactName: fullEvent.ContactPerson?.fullName,
+          contactEmail: fullEvent.ContactPerson?.User?.email,
+          contactPhone: fullEvent.ContactPerson?.User?.phone,
+        };
+
+        await emailsService.sendVolunteerShiftUpdatedEmail(fullEvent.Volunteer.User.email, emailData);
       }
     } catch (error) {
       console.error("Error in updatRequests:", error);
       throw error;
     }
-  },
+  }
 };
 
 export default requestService;
