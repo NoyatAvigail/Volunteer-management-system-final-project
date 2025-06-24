@@ -1,26 +1,12 @@
 import genericDAL from "../dal/genericDal.js";
 import requestsDal from "../dal/requestsDal.js";
 import emailsService from "./emailsService.js";
+import genericService from '../services/genericService.js'
 
 const requestService = {
-  utils: async (authenticatedType) => {
-    try {
-      const type = genericDAL.getModelByName('UserTypes');
-      const userType = await genericDAL.findById(type, authenticatedType);
-      const userTypeDesc = userType?.description;
-      const model = userTypeDesc === 'Volunteer'
-        ? genericDAL.getModelByName('Volunteers')
-        : genericDAL.getModelByName('ContactPeople');
-      return { userTypeDesc, model };
-    } catch (error) {
-      console.error("Error in utils:", error);
-      throw error;
-    }
-  },
-
   getRequests: async (authenticatedId, authenticatedType, startDate, endDate) => {
     try {
-      const utils = await requestService.utils(authenticatedType);
+      const utils = await genericService.utils(authenticatedType);
       const users = await genericDAL.findByField(utils.model, { id: authenticatedId });
       const user = users[0];
       if (!user) {
@@ -74,7 +60,7 @@ const requestService = {
 
   createRequest: async (body, authenticatedId, authenticatedType) => {
     try {
-      const userUtils = await requestService.utils(authenticatedType);
+      const userUtils = await genericService.utils(authenticatedType);
       const user = await genericDAL.findById(userUtils.model, authenticatedId);
       if (!user) {
         const error = new Error(`User not found`);
@@ -97,7 +83,7 @@ const requestService = {
 
   deleteRequest: async (authenticatedId, authenticatedType, eventId) => {
     try {
-      const userUtils = await requestService.utils(authenticatedType);
+      const userUtils = await genericService.utils(authenticatedType);
       if (userUtils.userTypeDesc == 'ContactPerson') {
         const result = await requestsDal.softDeleteRequests(eventId);
         if (result.volunteerId != null) {
@@ -126,7 +112,7 @@ const requestService = {
 
   updatRequest: async (body, authenticatedId, authenticatedEmail, authenticatedType, eventId) => {
     try {
-      const utils = await requestService.utils(authenticatedType);
+      const utils = await genericService.utils(authenticatedType);
       const users = await genericDAL.findByField(utils.model, { id: authenticatedId });
       const user = users[0];
       if (!user) {
@@ -135,57 +121,56 @@ const requestService = {
         throw error;
       }
       const userIdFromToken = user.userId;
-
       if (utils.userTypeDesc === 'Volunteer') {
         const event = await requestsDal.assignVolunteerToEvent(eventId, userIdFromToken);
         const volunteerEmailData = {
-          volunteerName: event.Volunteer.fullName,
+          volunteerName: event.Volunteer?.fullName,
           date: event.date,
           startTime: event.startTime,
           endTime: event.endTime,
           hospital: event.Hospitalized?.Hospital?.description,
           department: event.Hospitalized?.Department?.description,
-          room: event.Hospitalized.roomNumber,
+          room: event.Hospitalized?.roomNumber,
           patientName: event.Hospitalized?.Patient?.fullName,
         };
-
         const contactEmailData = {
-          contactName: event.ContactPerson.fullName,
-          volunteerName: event.Volunteer.fullName,
-          volunteerPhone: event.Volunteer.User.phone,
+          contactName: event.ContactPerson?.fullName,
+          volunteerName: event.Volunteer?.fullName,
+          volunteerPhone: event.Volunteer?.User?.phone,
           date: event.date,
           startTime: event.startTime,
           endTime: event.endTime,
         };
-
-        await emailsService.sendVolunteerAssignmentEmail(authenticatedEmail, volunteerEmailData);
-        await emailsService.sendContactNotificationEmail(event.ContactPerson.User.email, contactEmailData);
-
+        if (event.Volunteer && event.ContactPerson?.User) {
+          await emailsService.sendVolunteerAssignmentEmail(authenticatedEmail, volunteerEmailData);
+          await emailsService.sendContactNotificationEmail(event.ContactPerson.User.email, contactEmailData);
+        }
         return event;
-      }
-      else {
+      } else {
         const fullEvent = await requestsDal.updateEventDetails(eventId, body);
-        const emailData = {
-          volunteerName: fullEvent.Volunteer.fullName,
-          date: fullEvent.date,
-          startTime: fullEvent.startTime,
-          endTime: fullEvent.endTime,
-          hospital: fullEvent.Hospitalized?.Hospital?.description,
-          department: fullEvent.Hospitalized?.Department?.description,
-          room: fullEvent.Hospitalized?.roomNumber,
-          patientName: fullEvent.Hospitalized?.Patient?.fullName,
-          contactName: fullEvent.ContactPerson?.fullName,
-          contactEmail: fullEvent.ContactPerson?.User?.email,
-          contactPhone: fullEvent.ContactPerson?.User?.phone,
-        };
-
-        await emailsService.sendVolunteerShiftUpdatedEmail(fullEvent.Volunteer.User.email, emailData);
+        if (fullEvent.Volunteer && fullEvent.Volunteer.User) {
+          const emailData = {
+            volunteerName: fullEvent.Volunteer.fullName,
+            date: fullEvent.date,
+            startTime: fullEvent.startTime,
+            endTime: fullEvent.endTime,
+            hospital: fullEvent.Hospitalized?.Hospital?.description,
+            department: fullEvent.Hospitalized?.Department?.description,
+            room: fullEvent.Hospitalized?.roomNumber,
+            patientName: fullEvent.Hospitalized?.Patient?.fullName,
+            contactName: fullEvent.ContactPerson?.fullName,
+            contactEmail: fullEvent.ContactPerson?.User?.email,
+            contactPhone: fullEvent.ContactPerson?.User?.phone,
+          };
+          await emailsService.sendVolunteerShiftUpdatedEmail(fullEvent.Volunteer.User.email, emailData);
+        }
+        return fullEvent;
       }
     } catch (error) {
       console.error("Error in updatRequests:", error);
       throw error;
     }
-  }
+  },
 };
 
 export default requestService;

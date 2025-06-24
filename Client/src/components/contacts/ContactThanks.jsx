@@ -7,11 +7,10 @@ import '../../style/Thanks.css';
 
 const colors = ['#ffbd59', '#5fa79b', '#e06eb2', '#f15a3c'];
 
-function ThankYouManager() {
+function ContactThanks() {
     const [notes, setNotes] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-
     const fetchNotes = async () => {
         setLoading(true);
         setError('');
@@ -68,4 +67,4 @@ function ThankYouManager() {
     );
 }
 
-export default ThankYouManager;
+export default ContactThanks;

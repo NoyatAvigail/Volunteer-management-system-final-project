@@ -1,15 +1,10 @@
 import contactsService from "../services/contactsService.js";
+import genericController from '../controller/genericController.js'
 
 const contactController = {
-  utils: (req) => {
-    const authenticatedId = req.user.id?.toString();
-    const authenticatedType = req.user.type?.toString();
-    return { authenticatedId, authenticatedType };
-  },
-
   getThanks: async (req, res) => {
     try {
-      const authenticated = utils(req);
+      const authenticated = await genericController.utils(req);
       const requests = await contactsService.getThanks(authenticated.authenticatedId);
       res.status(200).json(requests);
     } catch (error) {
@@ -23,7 +18,7 @@ const contactController = {
 
   createThanks: async (req, res) => {
     try {
-      const authenticated = utils(req);
+      const authenticated = await genericController.utils(req);
       const requests = await contactsService.createThanks(authenticated.authenticatedId, req.body);
       res.status(200).json(requests);
     } catch (error) {

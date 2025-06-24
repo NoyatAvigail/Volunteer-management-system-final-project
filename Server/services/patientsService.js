@@ -1,19 +1,12 @@
 import genericDAL from "../dal/genericDal.js";
 import patientsDal from "../dal/patientsDal.js";
 import ContactPeople from '../models/ContactPeople.js';
+import genericService from '../services/genericService.js'
 
 const patientsService = {
-    utils: async (authenticatedType) => {
-        const type = genericDAL.getModelByName('UserTypes');
-        const userType = await genericDAL.findById(type, authenticatedType);
-        const userTypeDesc = userType?.description;
-        const model = genericDAL.getModelByName('ContactPeople');
-        return { userTypeDesc, model };
-    },
-
     getPatients: async (authenticatedId, authenticatedType) => {
         try {
-            const { userTypeDesc, model } = await patientsService.utils(authenticatedType);
+            const { userTypeDesc, model } = await genericService.utils(authenticatedType);
             const contactArr = await genericDAL.findByField(model, { id: authenticatedId });
             const contact = contactArr?.[0];
             if (!contact) {
@@ -47,13 +40,11 @@ const patientsService = {
                 error.status = 404;
                 throw error;
             }
-
             const fullData = {
                 ...body,
                 contactPeopleId: contact.userId,
                 is_deleted: false
             };
-
             return await patientsDal.createPatient(fullData);
         } catch (error) {
             console.error("Error in patientsService.createPatient:", error);
@@ -63,7 +54,7 @@ const patientsService = {
 
     updatePatient: async (patientId, authenticatedId, authenticatedType, body) => {
         try {
-            const { userTypeDesc, model } = await patientsService.utils(authenticatedType);
+            const { userTypeDesc, model } = await genericService.utils(authenticatedType);
             const user = await genericDAL.findById(model, authenticatedId);
             if (!user) {
                 const error = new Error(`User not found`);
@@ -81,7 +72,7 @@ const patientsService = {
 
     deletePatient: async (patientId, authenticatedId, authenticatedType) => {
         try {
-            const { userTypeDesc, model } = await patientsService.utils(authenticatedType);
+            const { userTypeDesc, model } = await genericService.utils(authenticatedType);
             const user = await genericDAL.findById(model, authenticatedId);
             if (!user) {
                 const error = new Error(`User not found`);
