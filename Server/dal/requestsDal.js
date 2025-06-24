@@ -193,7 +193,8 @@ getContactRequests: async (contactId, startDate, endDate) => {
       include: [
         {
           model: Volunteers,
-          include: [Users]
+          include: [Users],
+          required: false,
         },
         {
           model: Hospitalizeds,
