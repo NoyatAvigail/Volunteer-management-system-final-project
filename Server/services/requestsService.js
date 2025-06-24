@@ -30,8 +30,8 @@ const requestService = {
       }
       const userIdFromToken = user.userId;
       const requests = utils.userTypeDesc == 'Volunteer'
-        ? await requestsDal.getVolunteerRequests(userIdFromToken)
-        : await requestsDal.getContactRequests(userIdFromToken, startDate, endDate);
+        ? await requestService.getVolunteerRequests(userIdFromToken)
+        : await requestService.getContactRequests(userIdFromToken, startDate, endDate);
       return requests;
     } catch (error) {
       console.error("Error in getRequests:", error);
@@ -39,7 +39,40 @@ const requestService = {
     }
   },
 
-  createRequests: async (body, authenticatedId, authenticatedType) => {
+  getVolunteerRequests: async (userIdFromToken) => {
+    try {
+      const { events, preferredGenders, preferredSectors, preferredHospitalsDepartments } = await requestsDal.getVolunteerRequests(userIdFromToken);
+      const filtered = events.filter(event => {
+        const hosp = event.Hospitalized?.Hospital;
+        const dept = event.Hospitalized?.Department;
+        const sect = event.Sectors;
+        const gend = event.Genders;
+        return (preferredHospitalsDepartments.some(pref =>
+          pref.hospital === hosp?.id && pref.department === dept?.id
+        ) && (preferredGenders.some(pref =>
+          pref.genders === gend?.id
+        )) && preferredSectors.some(pref =>
+          pref.sectors === sect?.id
+        ));
+      });
+      return filtered;
+    } catch (error) {
+      console.error("Error in getVolunteerRequests:", error);
+      throw error;
+    }
+  },
+
+  getContactRequests: async (userIdFromToken, startDate, endDate) => {
+    try {
+      const events = await requestsDal.getContactRequests(userIdFromToken, startDate, endDate);
+      return events;
+    } catch (error) {
+      console.error("Error in getContactRequests:", error);
+      throw error;
+    }
+  },
+
+  createRequest: async (body, authenticatedId, authenticatedType) => {
     try {
       const userUtils = await requestService.utils(authenticatedType);
       const user = await genericDAL.findById(userUtils.model, authenticatedId);
@@ -62,7 +95,7 @@ const requestService = {
     }
   },
 
-  deleteRequests: async (authenticatedId, authenticatedType, eventId) => {
+  deleteRequest: async (authenticatedId, authenticatedType, eventId) => {
     try {
       const userUtils = await requestService.utils(authenticatedType);
       if (userUtils.userTypeDesc == 'ContactPerson') {
@@ -91,7 +124,7 @@ const requestService = {
     }
   },
 
-  updatRequests: async (body, authenticatedId, authenticatedEmail, authenticatedType, eventId) => {
+  updatRequest: async (body, authenticatedId, authenticatedEmail, authenticatedType, eventId) => {
     try {
       const utils = await requestService.utils(authenticatedType);
       const users = await genericDAL.findByField(utils.model, { id: authenticatedId });

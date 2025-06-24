@@ -23,11 +23,11 @@ const requestsController = {
         }
     },
 
-    createRequests: async (req, res) => {
+    createRequest: async (req, res) => {
         try {
             const authenticated = await requestsController.utils(req);
             const body = req.body;
-            const newEvent = await requestsService.createRequests(body, authenticated.authenticatedId, authenticated.authenticatedType);
+            const newEvent = await requestsService.createRequest(body, authenticated.authenticatedId, authenticated.authenticatedType);
             res.status(200).json(newEvent);
         } catch (error) {
             console.error("Error in createRequests Controller:", error);
@@ -38,14 +38,14 @@ const requestsController = {
         }
     },
 
-    deleteRequests: async (req, res) => {
+    deleteRequest: async (req, res) => {
         const { id } = req.params;
         const authenticated = await requestsController.utils(req);
         if (!id) {
             return res.status(400).json({ message: "Missing event ID" });
         }
         try {
-            const deletedEvent = await requestsService.deleteRequests(authenticated.authenticatedId, authenticated.authenticatedType, id);
+            const deletedEvent = await requestsService.deleteRequest(authenticated.authenticatedId, authenticated.authenticatedType, id);
             res.status(200).json(deletedEvent);
         } catch (error) {
             console.error("Error in deleteRequests Controller:", error);
@@ -55,12 +55,12 @@ const requestsController = {
         }
     },
 
-    updatRequests: async (req, res) => {
+    updatRequest: async (req, res) => {
         const authenticated = await requestsController.utils(req);
         const { id } = req.params;
         const body = req.body;
         try {
-            const updatedEvent = await requestsService.updatRequests(body, authenticated.authenticatedId, authenticated.authenticatedEmail, authenticated.authenticatedType, id);
+            const updatedEvent = await requestsService.updatRequest(body, authenticated.authenticatedId, authenticated.authenticatedEmail, authenticated.authenticatedType, id);
             res.status(200).json(updatedEvent);
         } catch (error) {
             console.error("Error in updatRequests Controller:", error);
