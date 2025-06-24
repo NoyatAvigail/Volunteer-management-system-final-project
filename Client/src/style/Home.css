@@ -146,6 +146,37 @@
     flex-shrink: 0;
 }
 
+.thank-you-header {
+    font-size: 1.8em;
+    margin-top: 40px;
+    color: #444;
+}
+
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5em;
+    margin: 20px 0;
+}
+
+.note-card {
+    border-radius: 12px;
+    padding: 16px;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.note-message {
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+
+.note-author {
+    font-size: 0.9em;
+    font-style: italic;
+    text-align: right;
+}
+
 @media (max-width: 600px) {
     .home-container {
         padding: 20px 15px;

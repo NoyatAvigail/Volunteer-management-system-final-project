@@ -207,7 +207,7 @@ async function fakerSeed() {
                     });
                 }
             }
-            for (let k = 0; k < 15; k++) {
+            for (let k = 0; k < 10; k++) {
                 await Thanks.create({
                     contactId: contact.id,
                     fromName: faker.person.fullName(),
