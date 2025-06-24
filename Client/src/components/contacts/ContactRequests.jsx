@@ -284,8 +284,8 @@ function ContactRequests() {
     const [selectedPatientId, setSelectedPatientId] = useState("");
     const [hospitalizedsPerPatient, setHospitalizedsPerPatient] = useState([]);
     const [updateRow, setUpdateRow] = useState(null);
-    const [startDate, setStartDate] = useState('01/01/2025');
-    const [endDate, setEndDate] = useState('01/07/2025');
+    const [startDate, setStartDate] = useState('01/01/2020');
+    const [endDate, setEndDate] = useState('01/07/2027');
     const didFetch = useRef(false);
 
     const noAccess = !currentUser || userTypeObj !== 'ContactPerson';
