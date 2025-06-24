@@ -14,9 +14,9 @@ function Certificate() {
       try {
         const data = await volunteersServices.getAll('certificate');
         setHours(data.totalHours);
-        console.log("currentUser:",currentUser);
-        console.log("currentUser.fullName:",currentUser.fullName);
-        
+        console.log("currentUser:", currentUser);
+        console.log("currentUser.fullName:", currentUser.fullName);
+
         setFullName(currentUser.fullName);
       } catch (err) {
         console.error("Failed to load certificate:", err);
@@ -28,10 +28,24 @@ function Certificate() {
     }
   }, [currentUser?.id]);
 
+  // const downloadPDF = () => {
+  //   const element = document.getElementById('certificate');
+  //   html2pdf().from(element).save(`${fullName}-certificate.pdf`);
+  // };
+
   const downloadPDF = () => {
     const element = document.getElementById('certificate');
-    html2pdf().from(element).save(`${fullName}-certificate.pdf`);
+    const opt = {
+      margin: 1, 
+      filename: `${fullName}-certificate.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save();
   };
+
 
   return (
     <div className="certificate-container">
