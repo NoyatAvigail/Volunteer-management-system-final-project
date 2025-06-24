@@ -141,6 +141,12 @@ body::-webkit-scrollbar {
   min-width: 150px;
 }
 
+input[type="date"] {
+  background-color: #5fa79b;
+  color: #fff;
+}
+
+
 .control select {
   height: 38px;
   line-height: 1.2;
@@ -214,7 +220,7 @@ summary {
 
 .patientLink ul a {
   text-decoration: none;
-  font-size: 0.9vw;
+  font-size: 0.9vw; 
   color: #ffffff;
   display: block;
   padding: 0.1vh 0;
