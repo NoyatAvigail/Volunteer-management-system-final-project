@@ -67,18 +67,19 @@ const requestService = {
       const userUtils = await requestService.utils(authenticatedType);
       if (userUtils.userTypeDesc == 'ContactPerson') {
         const result = await requestsDal.softDeleteRequests(eventId);
-        const volunteerEmailData = {
-          volunteerName: result.Volunteer.fullName,
-          date: result.date,
-          startTime: result.startTime,
-          endTime: result.endTime,
-          hospital: result.Hospitalized?.Hospital?.description,
-          department: result.Hospitalized?.Department?.description,
-          room: result.Hospitalized?.roomNumber,
-          patientName: result.Hospitalized?.Patient?.fullName,
-        }
-        const event = await requestsDal.sendVolunteerShiftCancellationEmail(Volunteer.User.email, volunteerEmailData);
-        return result;
+        if (result.volunteerId != null) {
+          const volunteerEmailData = {
+            volunteerName: result.Volunteer.fullName,
+            date: result.date,
+            startTime: result.startTime,
+            endTime: result.endTime,
+            hospital: result.Hospitalized?.Hospital?.description,
+            department: result.Hospitalized?.Department?.description,
+            room: result.Hospitalized?.roomNumber,
+            patientName: result.Hospitalized?.Patient?.fullName,
+          }
+          const event = await emailsService.sendVolunteerShiftCancellationEmail(result.Volunteer.User.email, volunteerEmailData);
+        } return result;
       } else {
         const error = new Error("Unauthorized to delete");
         error.status = 403;
