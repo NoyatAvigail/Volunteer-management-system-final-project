@@ -37,7 +37,7 @@ const emailsService = {
   storeEditCode: (userId, code) => {
     editCodesStore.set(userId, {
       code,
-      expiresAt: Date.now() + 10 * 60 * 1000 
+      expiresAt: Date.now() + 10 * 60 * 1000
     });
   },
 
@@ -61,7 +61,7 @@ const emailsService = {
       html: `<p>Your verification code is: <strong>${code}</strong></p><p>The code is valid for 10 minutes.</p>`
     });
   },
-  
+
   sendVolunteerAssignmentEmail: async (to, { volunteerName, date, startTime, endTime, hospital, department, room, patientName }) => {
     const googleCalendarLink = `https://calendar.google.com/calendar/u/0/r/eventedit?text=Volunteer+Shift+at+${hospital}&dates=${formatToGoogleCalendarDate(date, startTime, endTime)}&details=Patient:+${patientName}&location=${hospital}`;
     await transporter.sendMail({
@@ -101,23 +101,8 @@ const emailsService = {
     `
     });
   },
-  
-    sendVolunteerShiftUpdatedEmail: async (
-    to,
-    {
-      volunteerName,
-      date,
-      startTime,
-      endTime,
-      hospital,
-      department,
-      room,
-      patientName,
-      contactName,
-      contactEmail,
-      contactPhone
-    }
-  ) => {
+
+  sendVolunteerShiftUpdatedEmail: async (to,{ volunteerName, date, startTime,endTime, hospital, department, room,patientName,contactName, contactEmail, contactPhone }) => {
     const googleCalendarLink = `https://calendar.google.com/calendar/u/0/r/eventedit?text=Updated+Volunteer+Shift+at+${hospital}&dates=${formatToGoogleCalendarDate(date, startTime, endTime)}&details=Patient:+${patientName}&location=${hospital}`;
 
     await transporter.sendMail({
@@ -146,6 +131,29 @@ const emailsService = {
     `
     });
   },
+  sendVolunteerShiftCancellationEmail: async (to, { volunteerName, date, startTime, endTime, hospital, department, room, patientName }) => {
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to,
+      subject: 'Notice: Your Volunteer Shift Has Been Canceled',
+      html: `
+      <p>Dear ${volunteerName},</p>
+      <p>We apologize, but your upcoming volunteer shift has been <strong>canceled</strong>. We hope the cancellation is due to positive circumstances.</p>
+      <p>Here are the details of the canceled shift:</p>
+      <ul>
+        <li><strong>Patient:</strong> ${patientName}</li>
+        <li><strong>Hospital:</strong> ${hospital}</li>
+        <li><strong>Department:</strong> ${department}</li>
+        <li><strong>Room:</strong> ${room}</li>
+        <li><strong>Date:</strong> ${formatDate(date)}</li>
+        <li><strong>Time:</strong> ${startTime} - ${endTime}</li>
+      </ul>
+      <p>We truly appreciate your readiness to help and your generous spirit. Thank you for your understanding.</p>
+      <p>Looking forward to coordinating future volunteer opportunities with you.</p>
+      <p>Warm regards,<br/>The Volunteer Coordination Team</p>
+    `
+    });
+  }
 
 };
 
