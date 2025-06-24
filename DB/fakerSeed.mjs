@@ -207,12 +207,13 @@ async function fakerSeed() {
                     });
                 }
             }
-
-            await Thanks.create({
-                contactId: contact.id,
-                fromName: faker.person.fullName(),
-                message: faker.lorem.sentences(2),
-            });
+            for (let k = 0; k < 10; k++) {
+                await Thanks.create({
+                    contactId: contact.id,
+                    fromName: faker.person.fullName(),
+                    message: faker.lorem.sentences(2),
+                });
+            }
 
             const allVolunteers = await Volunteers.findAll({ attributes: ['userId'] });
             const hospitalizedsOfContact = await Hospitalizeds.findAll({

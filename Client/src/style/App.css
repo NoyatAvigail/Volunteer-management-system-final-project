@@ -89,7 +89,8 @@ body::-webkit-scrollbar {
 }
 
 .addBtn {
-  background-color: rgba(255, 255, 255, 0);
+  color: #ffffff;
+  background: #5fa79b;
   margin-left: 1vw;
 }
 
@@ -99,10 +100,11 @@ body::-webkit-scrollbar {
 }
 
 .control {
-  width: 58vw;
-  right: 21.4vw;
   position: fixed;
+  right: 0;
+  left: 0;
   top: 16vh;
+  margin-bottom: 6vw;
   background-color: #ffffff;
   border-bottom: 1px solid #ddd;
   padding: 10px 15px;
@@ -137,6 +139,14 @@ body::-webkit-scrollbar {
 .control input {
   flex: 1;
   min-width: 150px;
+}
+
+.control select {
+  height: 38px;
+  line-height: 1.2;
+  padding: 8px 12px;
+  box-sizing: border-box;
+  background-color: #fff;
 }
 
 .info {
@@ -213,4 +223,167 @@ summary {
 
 .patientLink ul a:hover {
   color: #07223f;
+}
+
+.control-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background-color: #ffffff;
+  padding: 2vh 2vw;
+  gap: 2vw;
+  border-bottom: 1px solid #ddd;
+  margin-top: 16vh;
+}
+
+.control-section {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 1vh;
+}
+
+.control-section label {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-weight: bold;
+}
+
+.control-section input,
+.control-section select,
+.control-section button {
+  width: 100%;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #fff;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.control-section button {
+  background-color: #5fa79b;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.control-section button:hover {
+  background-color: #4d9489;
+}
+
+@media screen and (max-width: 768px) {
+  #root {
+    padding: 1rem;
+  }
+
+  .header {
+    flex-direction: column;
+    height: auto;
+    padding: 1vh 2vw;
+    text-align: center;
+  }
+
+  .logo {
+    height: 12vh;
+    margin: 1vh auto;
+    position: static;
+  }
+
+  .header ul {
+    flex-direction: column;
+    gap: 2vh;
+    align-items: center;
+  }
+
+  .header ul a {
+    font-size: 1rem;
+  }
+
+  .fullName {
+    position: static;
+    transform: none;
+    font-size: 1.2rem;
+    margin-top: 1vh;
+  }
+
+  .header .right,
+  .header .left {
+    position: static;
+    flex-direction: column;
+    gap: 1vh;
+  }
+
+  .container {
+    margin-top: 20vh;
+    padding: 1rem;
+  }
+
+  .control {
+    flex-direction: column;
+    gap: 1vh;
+    padding: 1vh 2vw;
+    position: static;
+    margin-top: 2vh;
+  }
+
+  .control button,
+  .control select,
+  .control input {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .info {
+    position: static;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid black;
+    padding: 1vh;
+    text-align: center;
+  }
+
+  .info-title {
+    font-size: 1.2rem;
+    margin-top: 2vh;
+    text-align: center;
+  }
+
+  summary {
+    font-size: 1rem;
+  }
+
+  .patientLink ul a {
+    font-size: 0.9rem;
+  }
+
+  .control-grid {
+    display: block;
+    margin-top: 2vh;
+  }
+
+  .control-section {
+    margin-bottom: 2vh;
+  }
+
+  .control-section input,
+  .control-section select,
+  .control-section button {
+    height: 45px;
+    font-size: 1rem;
+  }
+
+  .addBtn {
+    margin: 1vh auto;
+    width: 90%;
+    font-size: 1rem;
+  }
+
+  .todo-checkbox {
+    width: auto;
+  }
 }

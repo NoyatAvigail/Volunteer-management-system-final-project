@@ -3,11 +3,11 @@ import Cookies from 'js-cookie';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
-async function request(method = 'GET', url, body = null, onSuccess, onError) {
+async function request(method = 'GET', body = null, onSuccess, onError) {
     try {
         const config = {
             method,
-            url: `${API_URL}/api/home/${url}`,
+            url: `${API_URL}/api/home`,
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -24,6 +24,6 @@ async function request(method = 'GET', url, body = null, onSuccess, onError) {
 }
 
 export const homeServices = {
-    getStats: (onSuccess, onError) =>
-        request('GET', 'stats', null, onSuccess, onError),
+    getHome: (onSuccess, onError) =>
+        request('GET', null, onSuccess, onError),
 };

@@ -4,6 +4,9 @@ import { homeServices } from '../services/homeServices';
 import winSound from '../audio/win-sound.mp3';
 
 function Home() {
+    const [thanksNotes, setThanksNotes] = useState([]);
+    const colors = ['#ffbd59', '#5fa79b', '#e06eb2', '#f15a3c'];
+
     const [stats, setStats] = useState({
         volunteerCount: 0,
         totalHours: 0,
@@ -26,9 +29,14 @@ function Home() {
     useEffect(() => {
         audioRef.current = new Audio(winSound);
 
-        homeServices.getStats(
+        homeServices.getHome(
             (data) => {
                 setStats(data);
+                setThanksNotes(data.thanksNotes.map(note => ({
+                    ...note,
+                    color: colors[Math.floor(Math.random() * colors.length)]
+                })));
+
                 animateBar('volunteerCount', data.volunteerCount, 1500);
                 animateBar('totalHours', data.totalHours, 1500);
                 animateBar('hospitalCount', data.hospitalCount, 1500);
@@ -102,6 +110,15 @@ function Home() {
             <p>Every volunteer is a hero here, and every patient is cared for with compassionate hands.</p>
             <p>Join us and be part of a change that starts with one small act of kindness —</p>
             <h2><strong>MAKING A DIFFERENCE TOGETHER.</strong></h2>
+            <h2 className="thank-you-header">What our contact people say:</h2>
+            <div className="notes-grid">
+                {thanksNotes.map(note => (
+                    <div className="note-card" key={note.id} style={{ backgroundColor: note.color }}>
+                        <div className="note-message">{note.message}</div>
+                        <div className="note-author">— {note.fromName}</div>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }

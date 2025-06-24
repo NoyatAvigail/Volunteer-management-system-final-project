@@ -112,12 +112,8 @@
     text-align: center;
 }
 
-.requests-table tr:nth-child(even):not(:first-child) {
-    background-color: #f9f9f9;
-}
-
-.requests-table tr:hover {
-    background-color: #f1f1f1;
+.requests-table tbody tr {
+    background-color: #ffffff;
 }
 
 .requests-table td:last-child {
@@ -128,4 +124,90 @@ button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .post-item {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 90vw;
+        padding: 1rem;
+    }
+
+    .post-actions {
+        margin-top: 1rem;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .post-details button {
+        margin-top: 1vh;
+        margin-right: 0;
+        width: 100%;
+    }
+
+    .details {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 100vw;
+        height: 100vh;
+        padding: 2rem 1rem 1rem 1rem;
+        z-index: 1000;
+        overflow-y: auto;
+        border-left: none;
+        border-top: 2px solid black;
+    }
+
+    .more-details-h2 {
+        font-size: 5vw;
+        margin-top: 2vh;
+        text-align: center;
+    }
+
+    .more-details-h3 {
+        font-size: 4vw;
+        text-align: center;
+    }
+
+    .requests {
+        margin-top: 4vh;
+    }
+
+    .requests-table {
+        font-size: 0.85rem;
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+    }
+
+    .requests-table thead {
+        display: none;
+    }
+
+    .requests-table tbody,
+    .requests-table tr,
+    .requests-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .requests-table tr {
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #ccc;
+        padding: 0.5rem 0;
+    }
+
+    .requests-table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: inline-block;
+        width: 40%;
+        color: #5fa79b;
+    }
+
+    .requests-table td {
+        padding: 0.5rem 0;
+        text-align: right;
+    }
 }

@@ -137,7 +137,6 @@ function ContactRequests() {
                     </label>
                     <button onClick={fetchData}>Show Events</button>
                 </div>
-
                 <Sort
                     type="requests"
                     userData={userData}
@@ -186,7 +185,7 @@ function ContactRequests() {
                     name="Add request"
                 />
             </div>
-
+            
             {error && <div className="error">{error}</div>}
 
             <div className="requests">
