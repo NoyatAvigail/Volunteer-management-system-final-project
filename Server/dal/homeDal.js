@@ -1,6 +1,7 @@
 import { Volunteers } from '../models/Volunteers.js';
 import { Events } from '../models/Events.js';
 import { VolunteeringInDepartments } from '../models/VolunteeringInDepartments.js';
+import { Thanks } from '../models/Thanks.js';
 import { Sequelize } from 'sequelize';
 
 const homeDal = {
@@ -50,6 +51,14 @@ const homeDal = {
             raw: true,
         });
         return departments.length;
+    },
+
+    async getAllThanksNotes() {
+        return await Thanks.findAll({
+            where: { is_deleted: false },
+            order: [['createdAt', 'DESC']],
+            raw: true
+        });
     }
 };
 

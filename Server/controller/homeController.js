@@ -1,7 +1,7 @@
 import homeService from '../services/homeService.js';
 
 const homeController = {
-    async getStats(req, res) {
+    async getHome(req, res) {
         try {
             const stats = await homeService.gethome();
             res.status(200).json(stats);

@@ -1,0 +1,96 @@
+.thank-you-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    margin-top: 6vw;
+    padding: 1rem;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.thank-you-header {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #5fa79b;
+}
+
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.note-card {
+    padding: 1rem;
+    border-radius: 16px;
+    color: white;
+    position: relative;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.note-card:hover {
+    transform: translateY(-3px);
+}
+
+.note-message {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.note-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.4rem;
+    margin-top: 1rem;
+}
+
+.note-actions>* {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    transition: background-color 0.2s;
+}
+
+.note-actions>*:hover {
+    background-color: rgba(255, 255, 255, 0.35);
+}
+
+@media (max-width: 768px) {
+    .thank-you-container {
+        padding: 1rem 0.5rem;
+        margin-top: 10vh;
+    }
+
+    .thank-you-header {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .notes-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .note-card {
+        padding: 0.8rem;
+        min-height: auto;
+    }
+
+    .note-message {
+        font-size: 1rem;
+    }
+
+    .note-actions>* {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.6rem;
+    }
+}
