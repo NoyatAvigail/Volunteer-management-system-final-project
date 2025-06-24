@@ -28,6 +28,7 @@ function ContactRequests() {
     const [startDate, setStartDate] = useState('01/01/2020');
     const [endDate, setEndDate] = useState('01/07/2027');
     const didFetch = useRef(false);
+    const [expandedRows, setExpandedRows] = useState([]);
 
     const noAccess = !currentUser || userTypeObj !== 'ContactPerson';
 
@@ -95,6 +96,12 @@ function ContactRequests() {
     };
 
     const triggerRefresh = () => setIsChange(prev => !prev);
+
+    const toggleRow = (id) => {
+        setExpandedRows((prev) =>
+            prev.includes(id) ? prev.filter((rowId) => rowId !== id) : [...prev, id]
+        );
+    };
 
     const isPastEvent = (dateStr) => {
         const today = new Date();
@@ -194,6 +201,7 @@ function ContactRequests() {
                             <th>Date</th>
                             <th>Start time</th>
                             <th>End time</th>
+                            <th>Volunteer Info</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -202,71 +210,95 @@ function ContactRequests() {
                             events.map((item) => {
                                 if (!item || !item.date) return null;
                                 const isPast = isPastEvent(item.date);
+                                const isExpanded = expandedRows.includes(item.id);
+
                                 return (
-                                    <tr key={item?.id} style={{ backgroundColor: isPast ? '#ddd' : 'white', color: isPast ? '#777' : 'black' }}>
-                                        <td>{item?.Hospitalized.Patient?.fullName}</td>
-                                        <td>{item?.Hospitalized.patientId}</td>
-                                        <td>{item?.Hospitalized.Hospital?.description}</td>
-                                        <td>{item?.Hospitalized.Department?.description}</td>
-                                        <td>{item?.Hospitalized.roomNumber}</td>
-                                        <td>{new Date(item.date).toISOString().split('T')[0]}</td>
-                                        <td>{item?.startTime}</td>
-                                        <td>{item?.endTime}</td>
-                                        <td>
-                                            {item.contactId === currentUser.id && !isPast && (
-                                                <>
-                                                    <Update
-                                                        type="Events"
-                                                        itemId={item.id}
-                                                        onSuccess={(updatedItem) => {
-                                                            setUserData(prev => prev.map(i => i.id === updatedItem.id ? updatedItem : i));
-                                                            setEvents(prev => prev.map(i => i.id === updatedItem.id ? updatedItem : i));
-                                                        }}
-                                                        inputs={[
-                                                            {
-                                                                name: "patientId",
-                                                                type: "select",
-                                                                options: patients.map(h => ({ label: h.userId, value: h.userId })),
-                                                                onChange: (e) => {
-                                                                    const patientId = e.target.value;
-                                                                    setUpdateRow({ ...item, patientId });
-                                                                }
-                                                            },
-                                                            {
-                                                                name: "hospitalizedsId",
-                                                                type: "select",
-                                                                options: hospitalizedsPerPatient.map(h => ({
-                                                                    label: `Hospital: ${h.Hospital.description}, Department: ${h.Department.description}, Room: ${h.roomNumber}`,
-                                                                    value: h.id
-                                                                }))
-                                                            },
-                                                            "date",
-                                                            "startTime",
-                                                            "endTime"
-                                                        ]}
-                                                        defaultValue={{
-                                                            patientId: item.Hospitalized.patientId,
-                                                            contactId: item.contactId,
-                                                            hospitalizedsId: item.hospitalizedsId,
-                                                            date: item.date,
-                                                            startTime: item.startTime,
-                                                            endTime: item.endTime
-                                                        }}
-                                                    />
-                                                    <Delete
-                                                        type="Events"
-                                                        itemId={item.id}
-                                                        setIsChange={triggerRefresh}
-                                                    />
-                                                </>
-                                            )}
-                                        </td>
-                                    </tr>
+                                    <React.Fragment key={item.id}>
+                                        <tr
+                                            style={{
+                                                backgroundColor: isPast ? '#ddd' : 'white',
+                                                color: isPast ? '#777' : 'black'
+                                            }}
+                                        >
+                                            <td>{item?.Hospitalized.Patient?.fullName}</td>
+                                            <td>{item?.Hospitalized.patientId}</td>
+                                            <td>{item?.Hospitalized.Hospital?.description}</td>
+                                            <td>{item?.Hospitalized.Department?.description}</td>
+                                            <td>{item?.Hospitalized.roomNumber}</td>
+                                            <td>{new Date(item.date).toISOString().split('T')[0]}</td>
+                                            <td>{item?.startTime}</td>
+                                            <td>{item?.endTime}</td>
+                                            <td>
+                                                {item.Volunteer ? (
+                                                    <button onClick={() => toggleRow(item.id)}>
+                                                        {isExpanded ? 'Hide' : 'Show'}
+                                                    </button>
+                                                ) : (
+                                                    '-'
+                                                )}
+                                            </td>
+                                            <td>
+                                                <Update
+                                                    type="Events"
+                                                    itemId={item.id}
+                                                    onSuccess={(updatedItem) => {
+                                                        setUserData(prev => prev.map(i => i.id === updatedItem.id ? updatedItem : i));
+                                                        setEvents(prev => prev.map(i => i.id === updatedItem.id ? updatedItem : i));
+                                                    }}
+                                                    inputs={[
+                                                        {
+                                                            name: "patientId",
+                                                            type: "select",
+                                                            options: patients.map(h => ({ label: h.userId, value: h.userId })),
+                                                            onChange: (e) => {
+                                                                const patientId = e.target.value;
+                                                                setUpdateRow({ ...item, patientId });
+                                                            }
+                                                        },
+                                                        {
+                                                            name: "hospitalizedsId",
+                                                            type: "select",
+                                                            options: hospitalizedsPerPatient.map(h => ({
+                                                                label: `Hospital: ${h.Hospital.description}, Department: ${h.Department.description}, Room: ${h.roomNumber}`,
+                                                                value: h.id
+                                                            }))
+                                                        },
+                                                        "date",
+                                                        "startTime",
+                                                        "endTime"
+                                                    ]}
+                                                    defaultValue={{
+                                                        patientId: item.Hospitalized.patientId,
+                                                        contactId: item.contactId,
+                                                        hospitalizedsId: item.hospitalizedsId,
+                                                        date: item.date,
+                                                        startTime: item.startTime,
+                                                        endTime: item.endTime
+                                                    }}
+                                                />
+                                                <Delete
+                                                    type="Events"
+                                                    itemId={item.id}
+                                                    setIsChange={triggerRefresh}
+                                                />
+                                            </td>
+                                        </tr>
+
+                                        {isExpanded && item.Volunteer && (
+                                            <tr style={{ backgroundColor: '#eef' }}>
+                                                <td colSpan={10}>
+                                                    <strong>Name:</strong> {item.Volunteer.fullName} &nbsp;&nbsp;
+                                                    {/* <strong>Phone:</strong> {item.Volunteer.phone} &nbsp;&nbsp; */}
+                                                    <strong>Email:</strong> {item.Volunteer?.User?.email}
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </React.Fragment>
                                 );
                             })
                         ) : (
                             <tr>
-                                <td colSpan={9}>No data to display</td>
+                                <td colSpan={10}>No events found.</td>
                             </tr>
                         )}
                     </tbody>
@@ -274,6 +306,7 @@ function ContactRequests() {
             </div>
         </>
     );
+
 }
 
 export default ContactRequests;

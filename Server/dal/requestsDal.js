@@ -58,6 +58,15 @@ const requestDal = {
               attributes: ['id', 'userId', 'fullName']
             }
           ]
+        },
+        {
+          model: Volunteers,
+          attributes: ['userId', 'fullName'],
+          include: [{
+            model: Users,
+            attributes: ['phone', 'email']
+          }],
+          required: false
         }
       ]
     });
@@ -83,9 +92,9 @@ const requestDal = {
     })) || [];
     const events = await Events.findAll({
       where: {
-        // date: {
-        //   [Op.between]: [startDate, endDate]
-        // },
+        date: {
+            [Op.gt]: new Date() 
+        },
         volunteerId: null,
         is_deleted: 0
       },
@@ -173,8 +182,11 @@ const requestDal = {
         },
         {
           model: Hospitalizeds,
-          attributes: ['roomNumber', 'hospital', 'department'],
-          include: [{ model: Patients }]
+          attributes: ['roomNumber'],
+          include: [{ model: Patients, attributes: ['fullName'] },
+          { model: Departments, attributes: ['description'] },
+          { model: Hospitals, attributes: ['description'] },
+          ]
         },
         {
           model: ContactPeople,
@@ -194,7 +206,7 @@ const requestDal = {
     return event;
   },
 
-  softDeleteEvent: async (eventId) => {
+  softDeleteRequests: async (eventId) => {
     Events.update(
       { is_deleted: 1 },
       { where: { id: eventId } })

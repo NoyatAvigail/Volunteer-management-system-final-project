@@ -13,7 +13,10 @@ function Certificate() {
       try {
         const data = await volunteersServices.getAll('certificate');
         setHours(data.totalHours);
-        setFullName(data.fullName);
+        console.log("currentUser:",currentUser);
+        console.log("currentUser.fullName:",currentUser.fullName);
+        
+        setFullName(currentUser.fullName);
       } catch (err) {
         console.error("Failed to load certificate:", err);
       }
@@ -34,7 +37,7 @@ function Certificate() {
       <div id="certificate" className="certificate-box">
         <h1>Certificate of Appreciation</h1>
         <p>This certificate is proudly presented to</p>
-        <h2>{fullName}</h2>
+        <h2>{fullName} </h2>
         <p>For dedicated volunteer service and contributing a total of</p>
         <h3>{hours !== null ? `${hours} hours` : '0'}</h3>
         <p>of community service.</p>
