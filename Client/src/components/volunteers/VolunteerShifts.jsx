@@ -13,6 +13,7 @@ function VolunteerShifts() {
       (data) => setShifts(data),
       (error) => console.error(error)
     );
+
   }, [currentUser]);
 
   return (
@@ -32,6 +33,8 @@ function VolunteerShifts() {
               <th>Room Number</th>
               <th>Hospital</th>
               <th>Department</th>
+              <th>Email</th>
+              <th>Phone</th>
             </tr>
           </thead>
           <tbody>
@@ -45,6 +48,8 @@ function VolunteerShifts() {
                 <td>{shift.Hospitalized?.roomNumber || "—"}</td>
                 <td>{shift.Hospitalized?.Hospital?.description || "—"}</td>
                 <td>{shift.Hospitalized?.Department?.description || "—"}</td>
+                <td>{shift.ContactPerson?.User?.email || "—"}</td>
+                <td>{shift.ContactPerson?.User?.phone|| "—"}</td>
               </tr>
             ))}
           </tbody>
