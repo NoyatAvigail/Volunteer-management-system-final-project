@@ -63,7 +63,7 @@ function Home() {
 
     const maxValues = {
         volunteerCount: Math.max(stats.volunteerCount, 100),
-        totalHours: Math.max(stats.totalHours, 100),
+        totalHours: Math.max(stats.totalHours, 200),
         hospitalCount: Math.max(stats.hospitalCount, 100),
         departmentCount: Math.max(stats.departmentCount, 100)
     };

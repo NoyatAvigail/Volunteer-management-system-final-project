@@ -22,7 +22,7 @@ import {
 
 async function fakerSeed() {
     try {
-        await sequelize.sync({ force: true });
+        await sequelize.sync({ force: false });
         await seedStaticTables();
 
         function generateIsraeliId() {
