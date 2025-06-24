@@ -14,14 +14,14 @@ function VolunteerRequests() {
   const { currentUser } = useContext(CurrentUser);
   const { codes } = useCodes();
   const didFetch = useRef(false);
+  const [startDate, setStartDate] = useState('01/01/2020');
+  const [endDate, setEndDate] = useState('01/07/2027');
   const userTypeObj = codes?.UserTypes?.find(type => type.id == currentUser?.type)?.description;
 
   const noAccess = !currentUser || userTypeObj !== 'Volunteer';
 
   const fetchData = async () => {
     try {
-      const startDate = '2020-06-01';
-      const endDate = '2027-08-31';
       await requestsServices.getAll(
         startDate,
         endDate,
