@@ -25,8 +25,8 @@ function ContactRequests() {
     const [selectedPatientId, setSelectedPatientId] = useState("");
     const [hospitalizedsPerPatient, setHospitalizedsPerPatient] = useState([]);
     const [updateRow, setUpdateRow] = useState(null);
-    const [startDate, setStartDate] = useState('2020-01-01');
-    const [endDate, setEndDate] = useState('2026-01-01');
+    const [startDate, setStartDate] = useState('01-01-2025');
+    const [endDate, setEndDate] = useState('01-01-2026');
     const didFetch = useRef(false);
     const [expandedRows, setExpandedRows] = useState([]);
 
@@ -170,7 +170,7 @@ function ContactRequests() {
                                 value: h.id
                             }))
                         },
-                        "date",
+                        { name: "date", type: "date" },
                         "startTime",
                         "endTime"
                     ]}
@@ -185,7 +185,7 @@ function ContactRequests() {
                     name="Add request"
                 />
             </div>
-            
+
             {error && <div className="error">{error}</div>}
 
             <div className="requests">
@@ -288,7 +288,6 @@ function ContactRequests() {
                                             <tr style={{ backgroundColor: '#eef' }}>
                                                 <td colSpan={10}>
                                                     <strong>Name:</strong> {item.Volunteer.fullName} &nbsp;&nbsp;
-                                                    {/* <strong>Phone:</strong> {item.Volunteer.phone} &nbsp;&nbsp; */}
                                                     <strong>Email:</strong> {item.Volunteer?.User?.email}
                                                 </td>
                                             </tr>

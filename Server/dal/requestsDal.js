@@ -34,7 +34,6 @@ const requestDal = {
 getContactRequests: async (contactId, startDate, endDate) => {
     const formattedStart = moment(startDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
     const formattedEnd = moment(endDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
-
     const events = await Events.findAll({
       where: {
         contactId,
@@ -66,6 +65,7 @@ getContactRequests: async (contactId, startDate, endDate) => {
 
     return events;
   },
+
   getVolunteerRequests: async (userId) => {
     const volunteer = await Volunteers.findOne({
       where: { userId, is_deleted: 0 },
@@ -75,7 +75,6 @@ getContactRequests: async (contactId, startDate, endDate) => {
         { model: VolunteeringForGenders }
       ]
     });
-
     if (!volunteer) throw new Error("Volunteer not found");
     const preferredGenders = volunteer.VolunteeringForGenders?.map(g => g.genderId) || [];
     const preferredSectors = volunteer.VolunteeringForSectors?.map(s => s.sectorId) || [];
@@ -108,7 +107,6 @@ getContactRequests: async (contactId, startDate, endDate) => {
         }
       ]
     });
-
     const filtered = events.filter(event => {
       const hosp = event.Hospitalized?.Hospital;
       const dept = event.Hospitalized?.Department;
@@ -147,7 +145,6 @@ getContactRequests: async (contactId, startDate, endDate) => {
         ]
       }
     ];
-
     const events = await Events.findAll({
       where: filters,
       include: include
@@ -217,14 +214,6 @@ getContactRequests: async (contactId, startDate, endDate) => {
     await event.save();
     return await requestDal.getFullEventById(eventId);
   },
-
-  // updateEventDetails: async (eventId, updatedFields) => {
-  //   const event = await Events.findByPk(eventId);
-  //   if (!event) throw new Error("Event not found");
-  //   Object.assign(event, updatedFields);
-  //   await event.save();
-  //   return event;
-  // },
 
   softDeleteRequests: async (eventId) => {
     Events.update(
