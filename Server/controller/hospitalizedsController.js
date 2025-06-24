@@ -1,14 +1,10 @@
 import hospitalizedsService from "../services/hospitalizedsService.js";
+import genericController from '../controller/genericController.js'
 
 const hospitalizedsController = {
-    utils: (req) => {
-        const authenticatedId = req.user.id?.toString();
-        const authenticatedType = req.user.type?.toString();
-        return { authenticatedId, authenticatedType };
-    },
     getHospitalizeds: async (req, res) => {
-        try {            
-            const authenticated = hospitalizedsController.utils(req);
+        try {
+            const authenticated = await genericController.utils(req);
             const patientId = req.params.id;
             const requests = await hospitalizedsService.getHospitalizeds(authenticated.authenticatedId, patientId);
             res.status(200).json(requests);
@@ -23,11 +19,10 @@ const hospitalizedsController = {
 
     createHospitalized: async (req, res) => {
         try {
-            const authenticated = await hospitalizedsController.utils(req);
+            const authenticated = await genericController.utils(req);
             const restBody = await req.body;
             const newHospitalized = await hospitalizedsService.createHospitalized(authenticated.authenticatedId, restBody);
             res.status(201).json(newHospitalized);
-
         } catch (error) {
             console.error("Error in createHospitalized Controller:", error);
             res.status(500).json({ message: 'Server error', error: error.message });

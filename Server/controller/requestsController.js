@@ -1,17 +1,11 @@
 import requestsService from "../services/requestsService.js";
+import genericController from '../controller/genericController.js'
 
 const requestsController = {
-    utils: async (req) => {
-        const authenticatedId = req.user.id.toString();
-        const authenticatedType = req.user.type.toString();
-        const authenticatedEmail = req.user.email.toString();
-        return { authenticatedId, authenticatedEmail, authenticatedType }
-    },
-
     getRequests: async (req, res) => {
         try {
             const { startDate, endDate } = req.query;
-            const authenticated = await requestsController.utils(req);
+            const authenticated = await genericController.utils(req);
             const requests = await requestsService.getRequests(authenticated.authenticatedId, authenticated.authenticatedType, startDate, endDate);
             res.status(200).json(requests);
         } catch (error) {
@@ -25,7 +19,7 @@ const requestsController = {
 
     createRequest: async (req, res) => {
         try {
-            const authenticated = await requestsController.utils(req);
+            const authenticated = await genericController.utils(req);
             const body = req.body;
             const newEvent = await requestsService.createRequest(body, authenticated.authenticatedId, authenticated.authenticatedType);
             res.status(200).json(newEvent);
@@ -40,7 +34,7 @@ const requestsController = {
 
     deleteRequest: async (req, res) => {
         const { id } = req.params;
-        const authenticated = await requestsController.utils(req);
+        const authenticated = await genericController.utils(req);
         if (!id) {
             return res.status(400).json({ message: "Missing event ID" });
         }
@@ -56,7 +50,7 @@ const requestsController = {
     },
 
     updatRequest: async (req, res) => {
-        const authenticated = await requestsController.utils(req);
+        const authenticated = await genericController.utils(req);
         const { id } = req.params;
         const body = req.body;
         try {
@@ -70,7 +64,6 @@ const requestsController = {
             res.status(500).json({ message: 'Server error', error: error.message });
         }
     },
-
 };
 
 export default requestsController;

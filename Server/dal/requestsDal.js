@@ -66,50 +66,6 @@ const requestDal = {
     return events;
   },
 
-  // getVolunteerRequests: async (userId) => {
-  //   const volunteer = await Volunteers.findOne({
-  //     where: { userId, is_deleted: 0 },
-  //     include: [
-  //       { model: VolunteeringInDepartments },
-  //       { model: VolunteeringForSectors },
-  //       { model: VolunteeringForGenders }
-  //     ]
-  //   });
-  //   if (!volunteer) throw new Error("Volunteer not found");
-  //   const preferredGenders = volunteer.VolunteeringForGenders?.map(g => g.genderId) || [];
-  //   const preferredSectors = volunteer.VolunteeringForSectors?.map(s => s.sectorId) || [];
-  //   const preferredHospitalsDepartments = volunteer.VolunteersDepartments?.map(d => ({
-  //     hospital: d.hospital,
-  //     department: d.department
-  //   })) || [];
-  //   const events = await Events.findAll({
-  //     where: {
-  //       date: {
-  //         [Op.gt]: new Date()
-  //       },
-  //       volunteerId: null,
-  //       is_deleted: 0
-  //     },
-  //     include: [
-  //       {
-  //         model: Hospitalizeds,
-  //         include: [
-  //           {
-  //             model: Hospitals,
-  //           },
-  //           {
-  //             model: Departments,
-  //           },
-  //           {
-  //             model: Patients,
-  //           }
-  //         ]
-  //       }
-  //     ]
-  //   });
-  //   return { events, preferredGenders, preferredSectors, preferredHospitalsDepartments };
-  // },
-
   getVolunteerByUserId: async (userId) => {
     return await Volunteers.findOne({
       where: { userId, is_deleted: 0 },

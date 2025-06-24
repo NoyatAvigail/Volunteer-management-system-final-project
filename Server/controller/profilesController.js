@@ -1,15 +1,9 @@
 import profilesService from "../services/profilesService.js";
+import genericController from '../controller/genericController.js'
 
 const profilesController = {
-    utils: async (req) => {
-        const authenticatedId = req.user.id?.toString();
-        const authenticatedType = req.user.type?.toString();
-        return { authenticatedId, authenticatedType };
-    },
-
     getProfile: async (req, res) => {
-
-        const authenticated = await profilesController.utils(req);
+        const authenticated = await genericController.utils(req);
         try {
             const requests = await profilesService.getProfile(authenticated.authenticatedId, authenticated.authenticatedType);
             return res.status(200).json(requests);
@@ -24,7 +18,7 @@ const profilesController = {
 
     updateProfile: async (req, res) => {
         try {                        
-            const authenticated = await profilesController.utils(req);
+            const authenticated = await genericController.utils(req);
             const requests = await profilesService.updateProfile(authenticated.authenticatedId, authenticated.authenticatedType, req.body);
             res.status(200).json(requests);
         } catch (error) {
@@ -35,8 +29,6 @@ const profilesController = {
             res.status(500).json({ message: 'Server error', error: error.message });
         }
     },
-
-
 }
 
 export default profilesController;
