@@ -25,8 +25,8 @@ function ContactRequests() {
     const [selectedPatientId, setSelectedPatientId] = useState("");
     const [hospitalizedsPerPatient, setHospitalizedsPerPatient] = useState([]);
     const [updateRow, setUpdateRow] = useState(null);
-    const [startDate, setStartDate] = useState('01/01/2020');
-    const [endDate, setEndDate] = useState('01/07/2027');
+    const [startDate, setStartDate] = useState('2020-01-01');
+    const [endDate, setEndDate] = useState('2026-01-01');
     const didFetch = useRef(false);
     const [expandedRows, setExpandedRows] = useState([]);
 

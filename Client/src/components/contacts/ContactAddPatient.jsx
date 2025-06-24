@@ -44,11 +44,6 @@ function ContactAddPatient() {
                             options: gendersObj.map(h => ({ label: h.description, value: h.id }))
                         },
                         "address",
-                        // {
-                        //     name: "patientInterestedInReceivingNotifications",
-                        //     type: "checkbox",
-                        //     label: "Interested in receiving notifications?"
-                        // }
                     ]}
                     defaultValue={{
                         userId: "",

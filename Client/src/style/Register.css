@@ -1,357 +1,192 @@
- /* * {
-     box-sizing: border-box;
-     margin: 0;
-     padding: 0;
-     font-family: Arial, sans-serif;
+   * {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+   font-family: Arial, sans-serif;
  }
 
  html,
  body {
-     overflow-x: hidden;
-     overflow-y: hidden;
- }
-
- h2 {
-     margin-top: 23vh;
- }
-
- .entryForm button.typeBtn {
-     background-color: #dddfdf;
- }
-
- .entryForm button.typeBtn:hover {
-     background-color: #cfcfcf;
+   overflow-x: hidden;
+   overflow-y: hidden;
+   background-color: #ffffff;
  }
 
  .entryContainer {
-     position: relative;
-     justify-content: center;
-     align-items: flex-start;
-     padding: 5vh 0;
+   position: relative;
+   justify-content: center;
+   align-items: flex-start;
+   padding: 5vh 0;
+   display: flex;
  }
 
  .entryForm {
-     background-color: rgb(255, 255, 255);
-     border-radius: 8px;
-     padding: 2rem;
-     box-shadow: 0 0.3vw 0.7vw rgba(0, 0, 0, 0.1);
-     width: 100%;
-     max-width: 400px;
-     text-align: center;
+   background-color: #fff;
+   border-radius: 8px;
+   padding: 2rem;
+   box-shadow: 0 0.3vw 0.7vw rgba(0, 0, 0, 0.1);
+   width: 100%;
+   max-width: 400px;
+   text-align: center;
+ }
+
+ .entryForm input,
+ .entryForm select,
+ .entryForm button {
+   width: 100%;
+   padding: 10px;
+   margin: 10px 0;
+   font-size: 16px;
+   border-radius: 4px;
+ }
+
+ .entryForm input {
+   border: 1px solid #ffffff;
+   color: #4c4b4b !important;
+ }
+
+ .entryForm input:focus,
+ .entryForm select:focus {
+   border-color: #5fa79b;
+   outline: none;
  }
 
  .entryForm select {
-     width: 100%;
-     padding: 10px;
-     margin: 10px 0;
-     border: 1px solid #ffffff;
-     border-radius: 4px;
-     font-size: 16px;
-     color: #4c4b4b;
-     background-color: white;
-     appearance: none;
- }
-
- .entryForm select:focus {
-     border-color: #5fa79b;
-     outline: none;
- }
-
- .preference input[type="checkbox"],
- .preference input[type="radio"] {
-     position: absolute;
-     left: 5vw;
-     accent-color: white;
-     background-color: white;
- }
-
- .entryForm input {
-     width: 100%;
-     padding: 10px;
-     margin: 10px 0;
-     border: 1px solid #ffffff;
-     border-radius: 4px;
-     font-size: 16px;
- }
-
- .entryForm input {
-     color: #4c4b4b !important;
- }
-
-
- .entryForm input:focus {
-     border-color: #5fa79b;
-     outline: none;
+   border: 1px solid #ffffff;
+   background-color: white;
+   appearance: none;
+   color: #4c4b4b;
  }
 
  .entryForm button {
-     width: 100%;
-     padding: 10px;
-     margin: auto;
-     margin-top: 10px;
-     background-color: #5fa79b;
-     color: rgb(113, 111, 111);
-     border: none;
-     border-radius: 4px;
-     font-size: 16px;
-     cursor: pointer;
-     transition: background-color 0.3s ease;
+   background-color: #5fa79b;
+   color: #716f6f;
+   border: none;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
  }
 
  .entryForm button:hover {
-     background-color: #5fa79b;
+   background-color: #5fa79b;
  }
 
  .entryForm button:focus {
-     outline: none;
+   outline: none;
+ }
+
+ .entryForm button.typeBtn {
+   background-color: #dddfdf;
+ }
+
+ .entryForm button.typeBtn:hover {
+   background-color: #cfcfcf;
+ }
+
+ h2 {
+   margin-top: 23vh;
  }
 
  .back-ground-img {
-     overflow: auto;
-     background-image: url('../img/bg.jpg');
-     background-repeat: no-repeat;
-     background-position: center;
-     background-size: cover;
-     width: 100vw;
-     position: absolute;
-     right: 0;
-     top: 0;
+   background-image: url('../img/bg.jpg');
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size: cover;
+   width: 100vw;
+   position: absolute;
+   right: 0;
+   top: 0;
+   overflow: auto;
  }
 
  input[type="date"] {
-     direction: ltr;
-     text-align: left;
+   direction: ltr;
+   text-align: left;
  }
 
  .preference {
-     background-color: #f0f8ff;
-     border: 1px solid #5fa79b;
-     border-radius: 10px;
-     padding: 0.75vw;
-     margin-bottom: 1.5rem;
-     box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
-     direction: ltr;
-     text-align: right;
+   background-color: #f0f8ff;
+   border: 1px solid #5fa79b;
+   border-radius: 10px;
+   padding: 0.75vw;
+   margin-bottom: 1.5rem;
+   box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+   direction: ltr;
+   text-align: right;
  }
 
  .preference h4 {
-     color: #333;
-     position: relative;
-     left: 0;
-     direction: rtl;
+   color: #333;
+   position: relative;
+   left: 0;
+   direction: rtl;
  }
 
  .preference div {
-     display: flex;
-     align-items: center;
-     margin-bottom: 0.3rem;
+   display: flex;
+   align-items: center;
+   margin-bottom: 0.3rem;
  }
 
  .preference label {
-     color: #333;
-     direction: ltr;
+   color: #333;
+   direction: ltr;
  }
 
  .preference input[type="checkbox"],
  .preference input[type="radio"] {
-     position: absolute;
-     left: 5vw;
- } */
-  /* בסיס ועיצוב כללי */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
+   position: absolute;
+   left: 5vw;
+   accent-color: white;
+   background-color: white;
+ }
 
-html,
-body {
-  overflow-x: hidden;
-  overflow-y: hidden;
-  background-color: #ffffff;
-}
+ @media (max-width: 768px) {
+   .entryContainer {
+     flex-direction: column;
+     align-items: center;
+     padding: 2vh 1rem;
+   }
 
-/* טופס כניסה */
-.entryContainer {
-  position: relative;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 5vh 0;
-  display: flex;
-}
+   .entryForm {
+     padding: 1.5rem 1rem;
+     margin-top: 3vh;
+     width: 90%;
+   }
 
-.entryForm {
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 2rem;
-  box-shadow: 0 0.3vw 0.7vw rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-}
+   .entryForm input,
+   .entryForm select,
+   .entryForm button {
+     font-size: 1rem;
+     padding: 12px;
+   }
 
-.entryForm input,
-.entryForm select,
-.entryForm button {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  font-size: 16px;
-  border-radius: 4px;
-}
+   .preference {
+     padding: 1rem;
+     font-size: 0.95rem;
+   }
 
-.entryForm input {
-  border: 1px solid #ffffff;
-  color: #4c4b4b !important;
-}
+   .preference div {
+     flex-direction: column;
+     align-items: flex-start;
+   }
 
-.entryForm input:focus,
-.entryForm select:focus {
-  border-color: #5fa79b;
-  outline: none;
-}
+   .preference input[type="checkbox"],
+   .preference input[type="radio"] {
+     position: static;
+     margin-right: 0.5rem;
+     margin-bottom: 0.5rem;
+   }
 
-.entryForm select {
-  border: 1px solid #ffffff;
-  background-color: white;
-  appearance: none;
-  color: #4c4b4b;
-}
+   h2 {
+     font-size: 1.4rem;
+     margin-top: 1rem;
+   }
 
-.entryForm button {
-  background-color: #5fa79b;
-  color: #716f6f;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.entryForm button:hover {
-  background-color: #5fa79b;
-}
-
-.entryForm button:focus {
-  outline: none;
-}
-
-.entryForm button.typeBtn {
-  background-color: #dddfdf;
-}
-
-.entryForm button.typeBtn:hover {
-  background-color: #cfcfcf;
-}
-
-h2 {
-  margin-top: 23vh;
-}
-
-/* רקע */
-.back-ground-img {
-  background-image: url('../img/bg.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  width: 100vw;
-  position: absolute;
-  right: 0;
-  top: 0;
-  overflow: auto;
-}
-
-/* אינפוט תאריך */
-input[type="date"] {
-  direction: ltr;
-  text-align: left;
-}
-
-/* קבוצה של העדפות */
-.preference {
-  background-color: #f0f8ff;
-  border: 1px solid #5fa79b;
-  border-radius: 10px;
-  padding: 0.75vw;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
-  direction: ltr;
-  text-align: right;
-}
-
-.preference h4 {
-  color: #333;
-  position: relative;
-  left: 0;
-  direction: rtl;
-}
-
-.preference div {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.3rem;
-}
-
-.preference label {
-  color: #333;
-  direction: ltr;
-}
-
-.preference input[type="checkbox"],
-.preference input[type="radio"] {
-  position: absolute;
-  left: 5vw;
-  accent-color: white;
-  background-color: white;
-}
-
-/* רספונסיביות */
-@media (max-width: 768px) {
-  .entryContainer {
-    flex-direction: column;
-    align-items: center;
-    padding: 2vh 1rem;
-  }
-
-  .entryForm {
-    padding: 1.5rem 1rem;
-    margin-top: 3vh;
-    width: 90%;
-  }
-
-  .entryForm input,
-  .entryForm select,
-  .entryForm button {
-    font-size: 1rem;
-    padding: 12px;
-  }
-
-  .preference {
-    padding: 1rem;
-    font-size: 0.95rem;
-  }
-
-  .preference div {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .preference input[type="checkbox"],
-  .preference input[type="radio"] {
-    position: static;
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-
-  h2 {
-    font-size: 1.4rem;
-    margin-top: 1rem;
-  }
-
-  .back-ground-img {
-    background-position: center;
-    background-size: cover;
-    position: fixed;
-    z-index: -1;
-    height: 100vh;
-  }
-}
+   .back-ground-img {
+     background-position: center;
+     background-size: cover;
+     position: fixed;
+     z-index: -1;
+     height: 100vh;
+   }
+ }
