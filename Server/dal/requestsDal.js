@@ -20,7 +20,7 @@ import {
   VolunteeringForSectors,
   VolunteeringForGenders
 } from '../../DB/index.mjs';
-
+import moment from 'moment';
 import { Sequelize } from 'sequelize';
 
 const models = {
@@ -31,12 +31,15 @@ const models = {
 };
 
 const requestDal = {
-  getContactRequests: async (contactId, startDate, endDate) => {
+getContactRequests: async (contactId, startDate, endDate) => {
+    const formattedStart = moment(startDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    const formattedEnd = moment(endDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+
     const events = await Events.findAll({
       where: {
-        contactId: contactId,
+        contactId,
         date: {
-          [Sequelize.Op.between]: [startDate, endDate]
+          [Sequelize.Op.between]: [formattedStart, formattedEnd]
         },
         is_deleted: 0
       },
@@ -45,35 +48,25 @@ const requestDal = {
           model: Hospitalizeds,
           attributes: ['hospital', 'department', 'patientId', 'roomNumber'],
           include: [
-            {
-              model: Hospitals,
-              attributes: ['id', 'description']
-            },
-            {
-              model: Departments,
-              attributes: ['id', 'description']
-            },
-            {
-              model: Patients,
-              attributes: ['id', 'userId', 'fullName']
-            }
+            { model: Hospitals, attributes: ['id', 'description'] },
+            { model: Departments, attributes: ['id', 'description'] },
+            { model: Patients, attributes: ['id', 'userId', 'fullName'] }
           ]
         },
         {
           model: Volunteers,
           attributes: ['userId', 'fullName'],
-          include: [{
-            model: Users,
-            attributes: ['phone', 'email']
-          }],
+          include: [
+            { model: Users, attributes: ['phone', 'email'] }
+          ],
           required: false
         }
       ]
     });
+
     return events;
   },
-
-  getVolunteerRequests: async (userId, startDate, endDate) => {
+  getVolunteerRequests: async (userId) => {
     const volunteer = await Volunteers.findOne({
       where: { userId, is_deleted: 0 },
       include: [
