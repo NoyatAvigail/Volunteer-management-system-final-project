@@ -4,6 +4,7 @@ import { useCodes } from '../Models';
 import { CurrentUser } from '../App';
 import Search from '../Search';
 import Sort from '../Sort';
+import '../../style/Requests.css';
 import { requestsServices } from '../../services/requestsServices';
 
 function VolunteerRequests() {
@@ -66,7 +67,7 @@ function VolunteerRequests() {
 
   return (
     <>
-      <div className="control">
+      <div className='control'>
         <Sort
           type="requests"
           userData={userData}
@@ -87,8 +88,6 @@ function VolunteerRequests() {
         <table className="requests-table">
           <thead>
             <tr>
-              {/* <th>Patient name</th>
-              <th>Patient id</th> */}
               <th>Hospital</th>
               <th>Department</th>
               <th>Room number</th>
@@ -102,8 +101,6 @@ function VolunteerRequests() {
             {events && events.length > 0 ? (
               events.map(item => (
                 <tr key={item.id}>
-                  {/* <td>{item.Hospitalized.Patient?.fullName}</td>
-                  <td>{item.Hospitalized.patientId}</td> */}
                   <td>{item.Hospitalized.Hospital?.description}</td>
                   <td>{item.Hospitalized.Department?.description}</td>
                   <td>{item.Hospitalized.roomNumber}</td>

@@ -130,7 +130,6 @@ function ContactRequests() {
                     </label>
                     <button onClick={fetchData}>Show Events</button>
                 </div>
-
                 <Sort
                     type="requests"
                     userData={userData}
@@ -179,7 +178,7 @@ function ContactRequests() {
                     name="Add request"
                 />
             </div>
-
+            
             {error && <div className="error">{error}</div>}
 
             <div className="requests">
@@ -201,7 +200,7 @@ function ContactRequests() {
                     <tbody>
                         {events && events.length > 0 ? (
                             events.map((item) => {
-                                if (!item || !item.date) return null; 
+                                if (!item || !item.date) return null;
                                 const isPast = isPastEvent(item.date);
                                 return (
                                     <tr key={item?.id} style={{ backgroundColor: isPast ? '#ddd' : 'white', color: isPast ? '#777' : 'black' }}>
