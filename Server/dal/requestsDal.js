@@ -32,8 +32,8 @@ const models = {
 
 const requestDal = {
   getContactRequests: async (contactId, startDate, endDate) => {
-    const formattedStart = moment(startDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
-    const formattedEnd = moment(endDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    const formattedStart = moment(startDate).format('YYYY-MM-DD');
+    const formattedEnd = moment(endDate).format('YYYY-MM-DD');
     const events = await Events.findAll({
       where: {
         contactId,
@@ -66,8 +66,52 @@ const requestDal = {
     return events;
   },
 
-  getVolunteerRequests: async (userId) => {
-    const volunteer = await Volunteers.findOne({
+  // getVolunteerRequests: async (userId) => {
+  //   const volunteer = await Volunteers.findOne({
+  //     where: { userId, is_deleted: 0 },
+  //     include: [
+  //       { model: VolunteeringInDepartments },
+  //       { model: VolunteeringForSectors },
+  //       { model: VolunteeringForGenders }
+  //     ]
+  //   });
+  //   if (!volunteer) throw new Error("Volunteer not found");
+  //   const preferredGenders = volunteer.VolunteeringForGenders?.map(g => g.genderId) || [];
+  //   const preferredSectors = volunteer.VolunteeringForSectors?.map(s => s.sectorId) || [];
+  //   const preferredHospitalsDepartments = volunteer.VolunteersDepartments?.map(d => ({
+  //     hospital: d.hospital,
+  //     department: d.department
+  //   })) || [];
+  //   const events = await Events.findAll({
+  //     where: {
+  //       date: {
+  //         [Op.gt]: new Date()
+  //       },
+  //       volunteerId: null,
+  //       is_deleted: 0
+  //     },
+  //     include: [
+  //       {
+  //         model: Hospitalizeds,
+  //         include: [
+  //           {
+  //             model: Hospitals,
+  //           },
+  //           {
+  //             model: Departments,
+  //           },
+  //           {
+  //             model: Patients,
+  //           }
+  //         ]
+  //       }
+  //     ]
+  //   });
+  //   return { events, preferredGenders, preferredSectors, preferredHospitalsDepartments };
+  // },
+
+  getVolunteerByUserId: async (userId) => {
+    return await Volunteers.findOne({
       where: { userId, is_deleted: 0 },
       include: [
         { model: VolunteeringInDepartments },
@@ -75,14 +119,10 @@ const requestDal = {
         { model: VolunteeringForGenders }
       ]
     });
-    if (!volunteer) throw new Error("Volunteer not found");
-    const preferredGenders = volunteer.VolunteeringForGenders?.map(g => g.genderId) || [];
-    const preferredSectors = volunteer.VolunteeringForSectors?.map(s => s.sectorId) || [];
-    const preferredHospitalsDepartments = volunteer.VolunteersDepartments?.map(d => ({
-      hospital: d.hospital,
-      department: d.department
-    })) || [];
-    const events = await Events.findAll({
+  },
+
+  getFutureOpenEvents: async () => {
+    return await Events.findAll({
       where: {
         date: {
           [Op.gt]: new Date()
@@ -94,22 +134,24 @@ const requestDal = {
         {
           model: Hospitalizeds,
           include: [
-            {
-              model: Hospitals,
-            },
-            {
-              model: Departments,
-            },
-            {
-              model: Patients,
-            }
+            { model: Hospitals },
+            { model: Departments },
+            { model: Patients }
           ]
         }
       ]
     });
-    return {events, preferredGenders, preferredSectors, preferredHospitalsDepartments};
   },
 
+  getEventsOfVolunteer: async (volunteerId) => {
+    return await Events.findAll({
+      where: {
+        volunteerId,
+        is_deleted: 0
+      }
+    });
+  },
+  
   findRequests: async (hospital, department, startDate, endDate) => {
     const filters = {
       date: {

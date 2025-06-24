@@ -39,27 +39,52 @@ const requestService = {
     }
   },
 
-  getVolunteerRequests: async (userIdFromToken) => {
-    try {
-      const { events, preferredGenders, preferredSectors, preferredHospitalsDepartments } = await requestsDal.getVolunteerRequests(userIdFromToken);
-      const filtered = events.filter(event => {
-        const hosp = event.Hospitalized?.Hospital;
-        const dept = event.Hospitalized?.Department;
-        const sect = event.Sectors;
-        const gend = event.Genders;
-        return (preferredHospitalsDepartments.some(pref =>
-          pref.hospital === hosp?.id && pref.department === dept?.id
-        ) && (preferredGenders.some(pref =>
-          pref.genders === gend?.id
-        )) && preferredSectors.some(pref =>
-          pref.sectors === sect?.id
-        ));
-      });
-      return filtered;
-    } catch (error) {
-      console.error("Error in getVolunteerRequests:", error);
-      throw error;
-    }
+  getVolunteerRequests: async (userId) => {
+    const sameDay = (d1, d2) => {
+      const date1 = new Date(d1);
+      const date2 = new Date(d2);
+      return (
+        date1.getFullYear() === date2.getFullYear() &&
+        date1.getMonth() === date2.getMonth() &&
+        date1.getDate() === date2.getDate()
+      );
+    };
+
+    const volunteer = await requestsDal.getVolunteerByUserId(userId);
+    if (!volunteer) throw new Error("Volunteer not found");
+
+    const preferredGenders = volunteer.VolunteeringForGenders?.map(g => g.genderId) || [];
+    const preferredSectors = volunteer.VolunteeringForSectors?.map(s => s.sectorId) || [];
+    const preferredHospitalsDepartments = volunteer.VolunteersDepartments?.map(d => ({
+      hospital: d.hospital,
+      department: d.department,
+    })) || [];
+
+    const takenEvents = await requestsDal.getEventsOfVolunteer(volunteer.userId);
+    const takenDates = takenEvents.map(e => new Date(e.date));
+
+    const allOpenEvents = await requestsDal.getFutureOpenEvents();
+
+    const filteredEvents = allOpenEvents.filter(evt => {
+      const evtDate = new Date(evt.date);
+
+      const alreadyTakenThatDay = takenDates.some(d => sameDay(d, evtDate));
+      if (alreadyTakenThatDay) return false;
+
+      const hosp = evt.Hospitalized?.Hospital?.id;
+      const dept = evt.Hospitalized?.Department?.id;
+      const sect = evt.Hospitalized?.Patient?.sector;
+      const gend = evt.Hospitalized?.Patient?.gender;
+
+      const matchesHospitalDept = preferredHospitalsDepartments.length === 0 ||
+        preferredHospitalsDepartments.some(p => p.hospital === hosp && p.department === dept);
+      const matchesGender = preferredGenders.map(g => String(g)).includes(String(gend));
+      const matchesSector = preferredSectors.map(s => String(s)).includes(String(sect));
+
+      return matchesHospitalDept && matchesGender && matchesSector;
+    });
+
+    return filteredEvents;
   },
 
   getContactRequests: async (userIdFromToken, startDate, endDate) => {
