@@ -31,6 +31,38 @@ const models = {
 };
 
 const requestDal = {
+  // getContactRequests: async (contactId, startDate, endDate) => {
+  //   const events = await Events.findAll({
+  //     where: {
+  //       contactId: contactId,
+  //       date: {
+  //         [Sequelize.Op.between]: [startDate, endDate]
+  //       },
+  //       is_deleted: 0
+  //     },
+  //     include: [
+  //       {
+  //         model: Hospitalizeds,
+  //         attributes: ['hospital', 'department', 'patientId', 'roomNumber'],
+  //         include: [
+  //           {
+  //             model: Hospitals,
+  //             attributes: ['id', 'description']
+  //           },
+  //           {
+  //             model: Departments,
+  //             attributes: ['id', 'description']
+  //           },
+  //           {
+  //             model: Patients,
+  //             attributes: ['id', 'userId', 'fullName']
+  //           }
+  //         ]
+  //       }
+  //     ]
+  //   });
+  //   return events;
+  // },
   getContactRequests: async (contactId, startDate, endDate) => {
     const events = await Events.findAll({
       where: {
@@ -58,6 +90,14 @@ const requestDal = {
               attributes: ['id', 'userId', 'fullName']
             }
           ]
+        },
+        {
+          model: Volunteers,
+          attributes: ['userId', 'fullName'], 
+          include:[{model: Users,
+            attributes: ['phone','email']
+          }],
+          required: false
         }
       ]
     });
