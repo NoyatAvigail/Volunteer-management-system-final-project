@@ -460,7 +460,8 @@ function ContactRequests() {
                     <tbody>
                         {events && events.length > 0 ? (
                             events.map((item) => {
-                                const isPast = isPastEvent(item?.date);
+                                if (!item || !item.date) return null; 
+                                const isPast = isPastEvent(item.date);
                                 return (
                                     <tr key={item?.id} style={{ backgroundColor: isPast ? '#ddd' : 'white', color: isPast ? '#777' : 'black' }}>
                                         <td>{item?.Hospitalized.Patient?.fullName}</td>
