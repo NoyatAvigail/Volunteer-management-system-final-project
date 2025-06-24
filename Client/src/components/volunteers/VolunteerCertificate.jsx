@@ -28,11 +28,6 @@ function Certificate() {
     }
   }, [currentUser?.id]);
 
-  // const downloadPDF = () => {
-  //   const element = document.getElementById('certificate');
-  //   html2pdf().from(element).save(`${fullName}-certificate.pdf`);
-  // };
-
   const downloadPDF = () => {
     const element = document.getElementById('certificate');
     const opt = {
@@ -42,7 +37,6 @@ function Certificate() {
       html2canvas: { scale: 2 },
       jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
     };
-
     html2pdf().set(opt).from(element).save();
   };
 

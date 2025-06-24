@@ -31,7 +31,7 @@ const models = {
 };
 
 const requestDal = {
-getContactRequests: async (contactId, startDate, endDate) => {
+  getContactRequests: async (contactId, startDate, endDate) => {
     const formattedStart = moment(startDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
     const formattedEnd = moment(endDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
     const events = await Events.findAll({
@@ -107,14 +107,7 @@ getContactRequests: async (contactId, startDate, endDate) => {
         }
       ]
     });
-    const filtered = events.filter(event => {
-      const hosp = event.Hospitalized?.Hospital;
-      const dept = event.Hospitalized?.Department;
-      return preferredHospitalsDepartments.some(pref =>
-        pref.hospital === hosp?.id && pref.department === dept?.id
-      );
-    });
-    return filtered;
+    return {events, preferredGenders, preferredSectors, preferredHospitalsDepartments};
   },
 
   findRequests: async (hospital, department, startDate, endDate) => {
@@ -220,7 +213,7 @@ getContactRequests: async (contactId, startDate, endDate) => {
     Events.update(
       { is_deleted: 1 },
       { where: { id: eventId } })
-      return requestDal.getFullEventById(eventId)
+    return requestDal.getFullEventById(eventId)
   }
 }
 
