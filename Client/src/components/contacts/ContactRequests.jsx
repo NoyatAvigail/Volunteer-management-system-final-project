@@ -25,8 +25,8 @@ function ContactRequests() {
     const [selectedPatientId, setSelectedPatientId] = useState("");
     const [hospitalizedsPerPatient, setHospitalizedsPerPatient] = useState([]);
     const [updateRow, setUpdateRow] = useState(null);
-    const [startDate, setStartDate] = useState('01-01-2025');
-    const [endDate, setEndDate] = useState('01-01-2026');
+    const [startDate, setStartDate] = useState('2025-01-01');
+    const [endDate, setEndDate] = useState('2026-01-01');
     const didFetch = useRef(false);
     const [expandedRows, setExpandedRows] = useState([]);
 
@@ -74,7 +74,6 @@ function ContactRequests() {
             setError("Please select start and end dates");
             return;
         }
-
         try {
             await requestsServices.getAll(
                 startDate,
@@ -82,7 +81,6 @@ function ContactRequests() {
                 (result) => {
                     setUserData(result);
                     setEvents(result);
-                    setIsChange(prev => !prev);
                 },
                 (error) => {
                     console.log("get was unsuccessful", error);
@@ -151,8 +149,7 @@ function ContactRequests() {
                 <Add
                     type="Events"
                     onSuccess={(newItem) => {
-                        setUserData(prev => [...prev, newItem]);
-                        setEvents(prev => [...prev, newItem]);
+                        fetchData();
                     }}
                     inputs={[
                         {
@@ -211,7 +208,6 @@ function ContactRequests() {
                                 if (!item || !item.date) return null;
                                 const isPast = isPastEvent(item.date);
                                 const isExpanded = expandedRows.includes(item.id);
-
                                 return (
                                     <React.Fragment key={item.id}>
                                         <tr
@@ -238,49 +234,53 @@ function ContactRequests() {
                                                 )}
                                             </td>
                                             <td>
-                                                <Update
-                                                    type="Events"
-                                                    itemId={item.id}
-                                                    onSuccess={(updatedItem) => {
-                                                        setUserData(prev => prev.map(i => i.id === updatedItem.id ? updatedItem : i));
-                                                        setEvents(prev => prev.map(i => i.id === updatedItem.id ? updatedItem : i));
-                                                    }}
-                                                    inputs={[
-                                                        {
-                                                            name: "patientId",
-                                                            type: "select",
-                                                            options: patients.map(h => ({ label: h.userId, value: h.userId })),
-                                                            onChange: (e) => {
-                                                                const patientId = e.target.value;
-                                                                setUpdateRow({ ...item, patientId });
-                                                            }
-                                                        },
-                                                        {
-                                                            name: "hospitalizedsId",
-                                                            type: "select",
-                                                            options: hospitalizedsPerPatient.map(h => ({
-                                                                label: `Hospital: ${h.Hospital.description}, Department: ${h.Department.description}, Room: ${h.roomNumber}`,
-                                                                value: h.id
-                                                            }))
-                                                        },
-                                                        "date",
-                                                        "startTime",
-                                                        "endTime"
-                                                    ]}
-                                                    defaultValue={{
-                                                        patientId: item.Hospitalized.patientId,
-                                                        contactId: item.contactId,
-                                                        hospitalizedsId: item.hospitalizedsId,
-                                                        date: item.date,
-                                                        startTime: item.startTime,
-                                                        endTime: item.endTime
-                                                    }}
-                                                />
-                                                <Delete
-                                                    type="Events"
-                                                    itemId={item.id}
-                                                    setIsChange={triggerRefresh}
-                                                />
+                                                {!isPast && (
+                                                    <>
+                                                        <Update
+                                                            type="Events"
+                                                            itemId={item.id}
+                                                            onSuccess={(updatedItem) => {
+                                                                setUserData(prev => prev.map(i => i.id === updatedItem.id ? updatedItem : i));
+                                                                setEvents(prev => prev.map(i => i.id === updatedItem.id ? updatedItem : i));
+                                                            }}
+                                                            inputs={[
+                                                                {
+                                                                    name: "patientId",
+                                                                    type: "select",
+                                                                    options: patients.map(h => ({ label: h.userId, value: h.userId })),
+                                                                    onChange: (e) => {
+                                                                        const patientId = e.target.value;
+                                                                        setUpdateRow({ ...item, patientId });
+                                                                    }
+                                                                },
+                                                                {
+                                                                    name: "hospitalizedsId",
+                                                                    type: "select",
+                                                                    options: hospitalizedsPerPatient.map(h => ({
+                                                                        label: `Hospital: ${h.Hospital.description}, Department: ${h.Department.description}, Room: ${h.roomNumber}`,
+                                                                        value: h.id
+                                                                    }))
+                                                                },
+                                                                "date",
+                                                                "startTime",
+                                                                "endTime"
+                                                            ]}
+                                                            defaultValue={{
+                                                                patientId: item.Hospitalized.patientId,
+                                                                contactId: item.contactId,
+                                                                hospitalizedsId: item.hospitalizedsId,
+                                                                date: item.date,
+                                                                startTime: item.startTime,
+                                                                endTime: item.endTime
+                                                            }}
+                                                        />
+                                                        <Delete
+                                                            type="Events"
+                                                            itemId={item.id}
+                                                            setIsChange={triggerRefresh}
+                                                        />
+                                                    </>
+                                                )}    {isPast && <span>Cannot edit</span>}
                                             </td>
                                         </tr>
 

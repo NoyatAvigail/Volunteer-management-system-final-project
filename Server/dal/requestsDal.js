@@ -32,8 +32,8 @@ const models = {
 
 const requestDal = {
   getContactRequests: async (contactId, startDate, endDate) => {
-    const formattedStart = moment(startDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
-    const formattedEnd = moment(endDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    const formattedStart = moment(startDate).format('YYYY-MM-DD');
+    const formattedEnd = moment(endDate).format('YYYY-MM-DD');
     const events = await Events.findAll({
       where: {
         contactId,
@@ -107,7 +107,7 @@ const requestDal = {
         }
       ]
     });
-    return {events, preferredGenders, preferredSectors, preferredHospitalsDepartments};
+    return { events, preferredGenders, preferredSectors, preferredHospitalsDepartments };
   },
 
   findRequests: async (hospital, department, startDate, endDate) => {
