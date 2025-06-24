@@ -31,38 +31,6 @@ const models = {
 };
 
 const requestDal = {
-  // getContactRequests: async (contactId, startDate, endDate) => {
-  //   const events = await Events.findAll({
-  //     where: {
-  //       contactId: contactId,
-  //       date: {
-  //         [Sequelize.Op.between]: [startDate, endDate]
-  //       },
-  //       is_deleted: 0
-  //     },
-  //     include: [
-  //       {
-  //         model: Hospitalizeds,
-  //         attributes: ['hospital', 'department', 'patientId', 'roomNumber'],
-  //         include: [
-  //           {
-  //             model: Hospitals,
-  //             attributes: ['id', 'description']
-  //           },
-  //           {
-  //             model: Departments,
-  //             attributes: ['id', 'description']
-  //           },
-  //           {
-  //             model: Patients,
-  //             attributes: ['id', 'userId', 'fullName']
-  //           }
-  //         ]
-  //       }
-  //     ]
-  //   });
-  //   return events;
-  // },
   getContactRequests: async (contactId, startDate, endDate) => {
     const events = await Events.findAll({
       where: {
@@ -93,9 +61,10 @@ const requestDal = {
         },
         {
           model: Volunteers,
-          attributes: ['userId', 'fullName'], 
-          include:[{model: Users,
-            attributes: ['phone','email']
+          attributes: ['userId', 'fullName'],
+          include: [{
+            model: Users,
+            attributes: ['phone', 'email']
           }],
           required: false
         }
@@ -123,9 +92,9 @@ const requestDal = {
     })) || [];
     const events = await Events.findAll({
       where: {
-        // date: {
-        //   [Op.between]: [startDate, endDate]
-        // },
+        date: {
+            [Op.gt]: new Date() 
+        },
         volunteerId: null,
         is_deleted: 0
       },
@@ -213,8 +182,11 @@ const requestDal = {
         },
         {
           model: Hospitalizeds,
-          attributes: ['roomNumber', 'hospital', 'department'],
-          include: [{ model: Patients }]
+          attributes: ['roomNumber'],
+          include: [{ model: Patients, attributes: ['fullName'] },
+          { model: Departments, attributes: ['description'] },
+          { model: Hospitals, attributes: ['description'] },
+          ]
         },
         {
           model: ContactPeople,
@@ -234,7 +206,7 @@ const requestDal = {
     return event;
   },
 
-  softDeleteEvent: async (eventId) => {
+  softDeleteRequests: async (eventId) => {
     Events.update(
       { is_deleted: 1 },
       { where: { id: eventId } })
