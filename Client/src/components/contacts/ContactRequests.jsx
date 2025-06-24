@@ -149,7 +149,8 @@ function ContactRequests() {
                 <Add
                     type="Events"
                     onSuccess={(newItem) => {
-                        fetchData();
+                        setUserData(prev => [...prev, newItem]);
+                        setEvents(prev => [...prev, newItem]);
                     }}
                     inputs={[
                         {
@@ -240,7 +241,6 @@ function ContactRequests() {
                                                             type="Events"
                                                             itemId={item.id}
                                                             onSuccess={(updatedItem) => {
-                                                                console.log(updatedItem);
                                                                 setUserData(prev => prev.map(i => i.id === updatedItem.id ? updatedItem : i));
                                                                 setEvents(prev => prev.map(i => i.id === updatedItem.id ? updatedItem : i));
                                                             }}
