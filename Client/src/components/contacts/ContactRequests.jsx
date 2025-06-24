@@ -284,8 +284,8 @@ function ContactRequests() {
     const [selectedPatientId, setSelectedPatientId] = useState("");
     const [hospitalizedsPerPatient, setHospitalizedsPerPatient] = useState([]);
     const [updateRow, setUpdateRow] = useState(null);
-    const [startDate, setStartDate] = useState('01/01/2025');
-    const [endDate, setEndDate] = useState('01/07/2025');
+    const [startDate, setStartDate] = useState('01-01-2025');
+    const [endDate, setEndDate] = useState('01-07-2025');
     const didFetch = useRef(false);
 
     const noAccess = !currentUser || userTypeObj !== 'ContactPerson';
@@ -460,17 +460,17 @@ function ContactRequests() {
                     <tbody>
                         {events && events.length > 0 ? (
                             events.map((item) => {
-                                const isPast = isPastEvent(item.date);
+                                const isPast = isPastEvent(item?.date);
                                 return (
-                                    <tr key={item.id} style={{ backgroundColor: isPast ? '#ddd' : 'white', color: isPast ? '#777' : 'black' }}>
-                                        <td>{item.Hospitalized.Patient?.fullName}</td>
-                                        <td>{item.Hospitalized.patientId}</td>
-                                        <td>{item.Hospitalized.Hospital?.description}</td>
-                                        <td>{item.Hospitalized.Department?.description}</td>
-                                        <td>{item.Hospitalized.roomNumber}</td>
+                                    <tr key={item?.id} style={{ backgroundColor: isPast ? '#ddd' : 'white', color: isPast ? '#777' : 'black' }}>
+                                        <td>{item?.Hospitalized.Patient?.fullName}</td>
+                                        <td>{item?.Hospitalized.patientId}</td>
+                                        <td>{item?.Hospitalized.Hospital?.description}</td>
+                                        <td>{item?.Hospitalized.Department?.description}</td>
+                                        <td>{item?.Hospitalized.roomNumber}</td>
                                         <td>{new Date(item.date).toISOString().split('T')[0]}</td>
-                                        <td>{item.startTime}</td>
-                                        <td>{item.endTime}</td>
+                                        <td>{item?.startTime}</td>
+                                        <td>{item?.endTime}</td>
                                         <td>
                                             {item.contactId === currentUser.id && !isPast && (
                                                 <>
