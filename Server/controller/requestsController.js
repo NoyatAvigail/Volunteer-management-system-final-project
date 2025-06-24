@@ -45,7 +45,7 @@ const requestsController = {
             return res.status(400).json({ message: "Missing event ID" });
         }
         try {
-            const deletedEvent = await requestsService.deleteEvent(authenticated.authenticatedId, authenticated.authenticatedType, id);
+            const deletedEvent = await requestsService.deleteRequests(authenticated.authenticatedId, authenticated.authenticatedType, id);
             res.status(200).json(deletedEvent);
         } catch (error) {
             console.error("Error in deleteRequests Controller:", error);

@@ -62,11 +62,11 @@ const requestService = {
     }
   },
 
-  deleteEvent: async (authenticatedId, authenticatedType, eventId) => {
+  deleteRequests: async (authenticatedId, authenticatedType, eventId) => {
     try {
       const userUtils = await requestService.utils(authenticatedType);
       if (userUtils.userTypeDesc == 'ContactPerson') {
-        const result = await requestsDal.softDeleteEvent(eventId);
+        const result = await requestsDal.softDeleteRequests(eventId);
         return result;
       } else {
         const error = new Error("Unauthorized to delete");
@@ -93,24 +93,29 @@ const requestService = {
 
       if (utils.userTypeDesc === 'Volunteer') {
         const event = await requestsDal.assignVolunteerToEvent(eventId, userIdFromToken);
-        await emailsService.sendVolunteerAssignmentEmail(authenticatedEmail, {
+        const volunteerEmailData = {
           volunteerName: event.Volunteer.fullName,
           date: event.date,
           startTime: event.startTime,
           endTime: event.endTime,
-          hospital: event.Hospitalized.hospital,
-          department: event.Hospitalized.department,
+          hospital: event.Hospitalized?.Hospital?.description,
+          department: event.Hospitalized?.Department?.description,
           room: event.Hospitalized.roomNumber,
-          patientName: event.Hospitalized.Patient.fullName,
-        });
-        await emailsService.sendContactNotificationEmail(event.ContactPerson.User.email, {
+          patientName: event.Hospitalized?.Patient?.fullName,
+        };
+
+        const contactEmailData = {
           contactName: event.ContactPerson.fullName,
           volunteerName: event.Volunteer.fullName,
           volunteerPhone: event.Volunteer.User.phone,
           date: event.date,
           startTime: event.startTime,
           endTime: event.endTime,
-        });
+        };
+
+        await emailsService.sendVolunteerAssignmentEmail(authenticatedEmail, volunteerEmailData);
+        await emailsService.sendContactNotificationEmail(event.ContactPerson.User.email, contactEmailData);
+
         return event;
       }
 
