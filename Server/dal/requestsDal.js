@@ -93,7 +93,7 @@ const requestDal = {
     const events = await Events.findAll({
       where: {
         date: {
-            [Op.gt]: new Date() 
+          [Op.gt]: new Date()
         },
         volunteerId: null,
         is_deleted: 0
@@ -198,13 +198,40 @@ const requestDal = {
     return event;
   },
 
+  getFullEventById: async (eventId) => {
+    return await Events.findByPk(eventId, {
+      include: [
+        {
+          model: Volunteers,
+          include: [Users]
+        },
+        {
+          model: Hospitalizeds,
+          include: [Hospitals, Departments, Patients]
+        },
+        {
+          model: ContactPeople,
+          include: [Users]
+        }
+      ]
+    });
+  },
+
   updateEventDetails: async (eventId, updatedFields) => {
     const event = await Events.findByPk(eventId);
     if (!event) throw new Error("Event not found");
     Object.assign(event, updatedFields);
     await event.save();
-    return event;
+    return await requestDal.getFullEventById(eventId);
   },
+
+  // updateEventDetails: async (eventId, updatedFields) => {
+  //   const event = await Events.findByPk(eventId);
+  //   if (!event) throw new Error("Event not found");
+  //   Object.assign(event, updatedFields);
+  //   await event.save();
+  //   return event;
+  // },
 
   softDeleteRequests: async (eventId) => {
     Events.update(

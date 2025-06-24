@@ -20,7 +20,7 @@ const userService = {
         const transaction = await sequelize.transaction();
         try {
             const { email, password, type, phone, id, ...rest } = userData;
-            const findUser = await genericDAL.findByField(Users, { email });
+            const findUser = await genericDAL.findByField(Users, { id });
             const existingUser = findUser[0];
             if (existingUser) throw new Error("Email already taken");
             let newUser = await genericDAL.createModel(Users, { email, type, phone, id }, { transaction });
@@ -76,62 +76,63 @@ const userService = {
 
                 newUser = {
                     ...rest,
-                    user:newUser,
+                    user: newUser,
+                    email: userData.email,
                     type: type,
                     id: Volunteer.id,
                     autoId: userData.id
                 };
-            }
-
+            };
             if (type == cUserType.CONTACTPERSON) {
-                const contact = await genericDAL.createModel(ContactPeople,
-                    {
-                        userId: newUser.id,
-                        fullName: rest.fullName,
-                        address: rest.address
-                    }, { transaction });
-                const patient = await genericDAL.createModel(Patients,
-                    {
-                        userId: rest.patientId,
-                        contactPeopleId: contact.userId,
-                        fullName: rest.patientFullName,
-                        dateOfBirth: rest.patientDateOfBirth,
-                        sector: rest.patientSector,
-                        gender: rest.patientGender,
-                        address: rest.patientAddress,
-                        dateOfDeath: rest.patientDateOfDeath || null,
-                        interestedInReceivingNotifications: rest.patientInterestedInReceivingNotifications ?? true
-                    }, { transaction });
-                const relationToPatients = await genericDAL.createModel(RelationToPatients,
-                    {
-                        contactPeopleId: contact.id,
-                        patientId: patient.id,
-                        relationId: rest.relationId,
-                    }, { transaction });
-                const hospitalizeds = await genericDAL.createModel(Hospitalizeds,
-                    {
-                        patientId: patient.userId,
-                        hospital: rest.hospital,
-                        department: rest.department,
-                        roomNumber: rest.roomNumber,
-                        hospitalizationStart: rest.hospitalizationStart,
-                        hospitalizationEnd: rest.hospitalizationEnd
-                    }, { transaction });
-                newUser = {
-                    ...rest,
-                    type: type,
-                    id: contact.id,
-                    autoId: contact.id
-                };
-            }
-            await transaction.commit();
-            return newUser;
-        } catch (e) {
-            await transaction.rollback();
-            console.error("Signup failed:", e);
-            throw e;
+            const contact = await genericDAL.createModel(ContactPeople,
+                {
+                    userId: newUser.id,
+                    fullName: rest.fullName,
+                    address: rest.address
+                }, { transaction });
+            const patient = await genericDAL.createModel(Patients,
+                {
+                    userId: rest.patientId,
+                    contactPeopleId: contact.userId,
+                    fullName: rest.patientFullName,
+                    dateOfBirth: rest.patientDateOfBirth,
+                    sector: rest.patientSector,
+                    gender: rest.patientGender,
+                    address: rest.patientAddress,
+                    dateOfDeath: rest.patientDateOfDeath || null,
+                    interestedInReceivingNotifications: rest.patientInterestedInReceivingNotifications ?? true
+                }, { transaction });
+            const relationToPatients = await genericDAL.createModel(RelationToPatients,
+                {
+                    contactPeopleId: contact.id,
+                    patientId: patient.id,
+                    relationId: rest.relationId,
+                }, { transaction });
+            const hospitalizeds = await genericDAL.createModel(Hospitalizeds,
+                {
+                    patientId: patient.userId,
+                    hospital: rest.hospital,
+                    department: rest.department,
+                    roomNumber: rest.roomNumber,
+                    hospitalizationStart: rest.hospitalizationStart,
+                    hospitalizationEnd: rest.hospitalizationEnd
+                }, { transaction });
+            newUser = {
+                ...rest,
+                type: type,
+                 email: userData.email,
+                id: contact.id,
+                autoId: contact.id
+            };
         }
-    },
+        await transaction.commit();
+        return newUser;
+    } catch(e) {
+        await transaction.rollback();
+        console.error("Signup failed:", e);
+        throw e;
+    }
+},
 
     login: async ({ email, password }) => {
         log('[POST]', { email, password });
@@ -148,7 +149,7 @@ const userService = {
             const findVolunteer = await genericDAL.findByField(Volunteers, { userId: user.id });
             const volunteer = findVolunteer[0];
             if (!volunteer) return null;
-            userData.email=user.email;
+            userData.email = user.email;
             userData.fullName = volunteer.fullName;
             userData.autoId = volunteer.id;
         } else if (user.type == cUserType.CONTACTPERSON) {

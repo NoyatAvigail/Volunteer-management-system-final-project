@@ -100,7 +100,53 @@ const emailsService = {
       </ul>
     `
     });
-  }
+  },
+  
+    sendVolunteerShiftUpdatedEmail: async (
+    to,
+    {
+      volunteerName,
+      date,
+      startTime,
+      endTime,
+      hospital,
+      department,
+      room,
+      patientName,
+      contactName,
+      contactEmail,
+      contactPhone
+    }
+  ) => {
+    const googleCalendarLink = `https://calendar.google.com/calendar/u/0/r/eventedit?text=Updated+Volunteer+Shift+at+${hospital}&dates=${formatToGoogleCalendarDate(date, startTime, endTime)}&details=Patient:+${patientName}&location=${hospital}`;
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to,
+      subject: 'Your Volunteer Shift Was Updated',
+      html: `
+      <p>Dear ${volunteerName},</p>
+      <p>Please note that the details of your volunteer shift have been <strong>updated</strong>:</p>
+      <ul>
+        <li><strong>Patient:</strong> ${patientName}</li>
+        <li><strong>Hospital:</strong> ${hospital}</li>
+        <li><strong>Department:</strong> ${department}</li>
+        <li><strong>Room:</strong> ${room}</li>
+        <li><strong>Date:</strong> ${formatDate(date)}</li>
+        <li><strong>Time:</strong> ${startTime} - ${endTime}</li>
+      </ul>
+      <p><a href="${googleCalendarLink}">➕ Add to Google Calendar</a></p>
+      <p>If you are unable to attend the shift, please inform the contact person:</p>
+      <ul>
+        <li><strong>Contact Name:</strong> ${contactName}</li>
+        <li><strong>Email:</strong> ${contactEmail}</li>
+        <li><strong>Phone:</strong> ${contactPhone}</li>
+      </ul>
+      <p>Thank you for your commitment!</p>
+    `
+    });
+  },
+
 };
 
 export default emailsService;

@@ -24,7 +24,6 @@ function ContactAddHospitalization() {
 
         }
     }, [currentUser?.autoId, userTypeObj]);
-    console.log("patients:", patients);
 
     if (!currentUser || userTypeObj !== 'ContactPerson') {
         return <div>No access to this form</div>;

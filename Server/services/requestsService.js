@@ -118,8 +118,24 @@ const requestService = {
 
         return event;
       }
+      else {
+        const event = await requestsDal.updateEventDetails(eventId, body);
+        const emailData = {
+          volunteerName: fullEvent.Volunteer.fullName,
+          date: fullEvent.date,
+          startTime: fullEvent.startTime,
+          endTime: fullEvent.endTime,
+          hospital: fullEvent.Hospitalized?.Hospital?.description,
+          department: fullEvent.Hospitalized?.Department?.description,
+          room: fullEvent.Hospitalized?.roomNumber,
+          patientName: fullEvent.Hospitalized?.Patient?.fullName,
+          contactName: fullEvent.ContactPerson?.fullName,
+          contactEmail: fullEvent.ContactPerson?.User?.email,
+          contactPhone: fullEvent.ContactPerson?.User?.phone,
+        };
 
-      return await requestsDal.updateEventDetails(eventId, body);
+        await emailsService.sendVolunteerShiftUpdatedEmail(fullEvent.Volunteer.User.email, emailData);
+      }
     } catch (error) {
       console.error("Error in updatRequests:", error);
       throw error;
