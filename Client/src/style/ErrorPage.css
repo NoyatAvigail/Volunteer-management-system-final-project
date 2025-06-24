@@ -17,3 +17,19 @@ html {
     align-items: center;
     margin-top: 1vw;
 }
+
+@media screen and (max-width: 768px) {
+    .error-page {
+        flex-direction: column;
+        padding: 2rem;
+        margin-top: 0;
+        height: 100vh;
+        background-position: center center;
+        background-size: cover;
+    }
+
+    body,
+    html {
+        overflow: auto;
+    }
+}

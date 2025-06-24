@@ -162,3 +162,71 @@ input[type="date"] {
     -webkit-appearance: menulist;
     -moz-appearance: menulist;
 }
+
+@media screen and (max-width: 768px) {
+    h2 {
+        font-size: 1.3rem;
+        margin-top: 2vw;
+    }
+
+    .entryContainer {
+        padding: 2vh 1vw;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .entryForm {
+        width: 90%;
+        margin: 5vh auto;
+        padding: 5vw;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .entryForm input,
+    .entryForm select,
+    .entryForm button {
+        font-size: 1rem;
+        padding: 10px;
+        width: 100%;
+    }
+
+    .entryForm button {
+        margin-top: 1rem;
+    }
+
+    .preference {
+        padding: 4vw;
+        font-size: 0.9rem;
+    }
+
+    .preference div {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .preference input[type="checkbox"],
+    .preference input[type="radio"] {
+        position: static;
+        margin-right: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .preference label {
+        font-size: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    .preference h4 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+
+    .back-ground-img {
+        background-position: center center;
+        background-size: cover;
+    }
+
+    input[type="date"] {
+        font-size: 1rem;
+    }
+}

@@ -177,20 +177,88 @@
     text-align: right;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .home-container {
         padding: 20px 15px;
+        margin-top: 8vw;
     }
 
     .home-container h1 {
         font-size: 2rem;
+        text-align: center;
     }
 
     .home-container h2 {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    .home-container h3 {
+        font-size: 1.2rem;
     }
 
     .home-container p {
         font-size: 1rem;
+        text-align: center;
+    }
+
+    .home-container ul {
+        text-align: right;
+    }
+
+    .stats-box {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 15px;
+    }
+
+    .stat-item {
+        min-width: 100%;
+        text-align: center;
+    }
+
+    .stat-item h3,
+    .stat-item p {
+        font-size: 1.2rem;
+    }
+
+    .stat-label,
+    .stat-number {
+        font-size: 1rem;
+    }
+
+    .stat-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .progress-bar {
+        height: 4vh;
+    }
+
+    .thank-you-header {
+        font-size: 1.4rem;
+        text-align: center;
+    }
+
+    .notes-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .note-message {
+        font-size: 1rem;
+    }
+
+    .note-author {
+        font-size: 0.9rem;
+        text-align: left;
+    }
+
+    .home-container .slogan {
+        font-size: 1.1rem;
+        letter-spacing: 2px;
+        text-align: center;
     }
 }

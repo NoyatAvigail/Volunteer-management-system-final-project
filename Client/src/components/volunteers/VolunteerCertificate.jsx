@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import html2pdf from 'html2pdf.js';
 import { CurrentUser } from "../App";
 import { volunteersServices } from '../../services/volunteersServices';
+import '../../style/VolunteerCertificats.css'
 
 function Certificate() {
   const { currentUser } = useContext(CurrentUser);
