@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { CurrentUser } from "../App";
 import { volunteersServices } from '../../services/volunteersServices'
+import '../../style/Requests.css';
+
 function VolunteerShifts() {
   const { currentUser } = useContext(CurrentUser);
   const [shifts, setShifts] = useState([]);
@@ -33,8 +35,7 @@ function VolunteerShifts() {
               <th>Room Number</th>
               <th>Hospital</th>
               <th>Department</th>
-              <th>Email</th>
-              <th>Phone</th>
+              <th>Contact Email</th>
             </tr>
           </thead>
           <tbody>
@@ -49,7 +50,6 @@ function VolunteerShifts() {
                 <td>{shift.Hospitalized?.Hospital?.description || "—"}</td>
                 <td>{shift.Hospitalized?.Department?.description || "—"}</td>
                 <td>{shift.ContactPerson?.User?.email || "—"}</td>
-                <td>{shift.ContactPerson?.User?.phone|| "—"}</td>
               </tr>
             ))}
           </tbody>
