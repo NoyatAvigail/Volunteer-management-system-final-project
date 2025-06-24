@@ -219,6 +219,7 @@ getContactRequests: async (contactId, startDate, endDate) => {
     Events.update(
       { is_deleted: 1 },
       { where: { id: eventId } })
+      return requestDal.getFullEventById(eventId)
   }
 }
 
