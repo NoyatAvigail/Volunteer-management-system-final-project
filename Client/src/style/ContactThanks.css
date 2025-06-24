@@ -85,3 +85,47 @@
   font-size: 1.2rem;
   padding: 2rem;
 }
+
+@media screen and (max-width: 768px) {
+  .contact-thanks-container {
+    margin: 1rem;
+    padding: 1.5rem;
+    max-width: 95%;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .contact-thanks-container h2 {
+    font-size: 1.4rem;
+    padding-bottom: 0.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .thanks-form {
+    gap: 0.8rem;
+  }
+
+  .thanks-textarea {
+    font-size: 0.95rem;
+    padding: 0.8rem;
+    min-height: 100px;
+  }
+
+  .thanks-submit-btn {
+    width: 100%;
+    padding: 0.7rem;
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .error,
+  .success {
+    font-size: 0.95rem;
+    padding: 0.7rem;
+  }
+
+  .not-logged-in {
+    font-size: 1rem;
+    padding: 1.5rem;
+  }
+}

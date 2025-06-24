@@ -288,3 +288,27 @@
     left: 100%;
   }
 }
+
+@media (max-width: 768px) {
+
+  .left ul a,
+  .left ul Link {
+    width: 100%;
+    display: block;
+    padding: 1rem 0.8rem;
+    font-size: 1rem;
+  }
+
+  .left {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .left ul a,
+  .left ul Link {
+    padding: 1.1rem 0.8rem;
+    font-size: 0.9rem;
+  }
+}

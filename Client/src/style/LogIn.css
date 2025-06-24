@@ -83,3 +83,47 @@ body {
     right: 0;
     top: 0;
 }
+
+@media screen and (max-width: 768px) {
+    body {
+        align-items: flex-start;
+        padding-top: 15vh;
+        height: auto;
+    }
+
+    .entryContainer {
+        position: static;
+        margin-top: 5vh;
+        padding: 0 1rem;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .entryForm {
+        max-width: 100%;
+        width: 90vw;
+        padding: 2rem 1.5rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .entryForm input {
+        font-size: 1rem;
+        padding: 12px;
+    }
+
+    .entryForm button {
+        font-size: 1rem;
+        padding: 12px;
+        margin-top: 1rem;
+    }
+
+    .back-ground-img {
+        background-position: center center;
+        background-size: cover;
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        top: 0;
+        right: 0;
+    }
+}

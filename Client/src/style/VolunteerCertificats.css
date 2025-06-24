@@ -1,0 +1,71 @@
+.certificate-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4vh 2vw;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.certificate-box {
+  background: linear-gradient(135deg, #ffffff, #f9f9f9);
+  border: 6px double #5fa79b;
+  padding: 3rem 2rem;
+  max-width: 700px;
+  width: 100%;
+  text-align: center;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  color: #444;
+  position: relative;
+}
+
+.certificate-box h1 {
+  color: #5fa79b;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.certificate-box h2 {
+  color: #f15a3c;
+  font-size: 2rem;
+  margin: 1rem 0;
+}
+
+.certificate-box h3 {
+  font-size: 1.8rem;
+  color: #e06eb2;
+  margin-bottom: 1rem;
+}
+
+.certificate-box p {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+.sign {
+  margin-top: 2rem;
+  font-style: italic;
+  color: #777;
+  font-size: 1rem;
+}
+
+.download-button {
+  margin-top: 2rem;
+  background-color: #ffbd59;
+  color: #333;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.download-button:hover {
+  background-color: #f0aa3e;
+}
