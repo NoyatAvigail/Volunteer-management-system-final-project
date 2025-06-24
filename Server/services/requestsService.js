@@ -119,7 +119,7 @@ const requestService = {
         return event;
       }
       else {
-        const event = await requestsDal.updateEventDetails(eventId, body);
+        const fullEvent = await requestsDal.updateEventDetails(eventId, body);
         const emailData = {
           volunteerName: fullEvent.Volunteer.fullName,
           date: fullEvent.date,
