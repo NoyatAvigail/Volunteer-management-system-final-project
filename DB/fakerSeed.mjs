@@ -57,7 +57,6 @@ async function fakerSeed() {
         async function seedVolunteerGenders(volunteerId) {
             const allGenders = [1, 2, 3];
             const selected = faker.helpers.arrayElements(allGenders, faker.number.int({ min: 2, max: 3 }));
-
             for (const genderId of selected) {
                 await VolunteeringForGenders.create({
                     id: volunteerId,
@@ -69,7 +68,6 @@ async function fakerSeed() {
         async function seedVolunteerSectors(volunteerId) {
             const allSectors = [1, 2, 3, 4, 5];
             const selected = faker.helpers.arrayElements(allSectors, faker.number.int({ min: 2, max: 4 }));
-
             for (const sectorId of selected) {
                 await VolunteeringForSectors.create({
                     id: volunteerId,
@@ -81,15 +79,19 @@ async function fakerSeed() {
         async function seedEventsForContact(contactUserId, allVolunteers, allHospitalizeds) {
             const numEvents = faker.number.int({ min: 7, max: 20 });
             for (let i = 0; i < numEvents; i++) {
-                const volunteer = faker.helpers.arrayElement(allVolunteers);
+                const assignVolunteer = Math.random() < 0.5;
+                const volunteer = assignVolunteer ? faker.helpers.arrayElement(allVolunteers) : null;
                 const hospitalized = faker.helpers.arrayElement(allHospitalizeds);
-                const date = faker.date.past({ years: 1 });
+                const date = faker.date.between({
+                    from: faker.date.past({ years: 1 }),
+                    to: faker.date.future({ years: 1 }),
+                });
                 const startHour = faker.number.int({ min: 8, max: 18 });
                 const startTime = `${startHour.toString().padStart(2, '0')}:00:00`;
                 const endTime = `${(startHour + 1).toString().padStart(2, '0')}:00:00`;
                 await Events.create({
                     contactId: contactUserId,
-                    volunteerId: volunteer.userId,
+                    volunteerId: volunteer?.userId ?? null,
                     hospitalizedsId: hospitalized.id,
                     date,
                     startTime,
@@ -102,43 +104,44 @@ async function fakerSeed() {
         const contactType = await UserTypes.findOne({ where: { description: 'ContactPerson' } });
 
         for (let i = 0; i < 15; i++) {
-            const email = faker.internet.email();
-            const phone = faker.phone.number();
-            const password = faker.internet.password();
-            const user = await Users.create({
-                id: generateIsraeliId(),
-                email,
-                phone,
-                type: volunteerType.id,
-            });
+            try {
+                const email = faker.internet.email();
+                const phone = faker.phone.number();
+                const password = faker.internet.password();
+                const user = await Users.create({
+                    id: generateIsraeliId(),
+                    email,
+                    phone,
+                    type: volunteerType.id,
+                });
+                await Passwords.create({
+                    id: user.id,
+                    password: await bcrypt.hash(password, 10),
+                });
+                const volunteer = await Volunteers.create({
+                    userId: user.id,
+                    fullName: faker.person.fullName(),
+                    dateOfBirth: faker.date.past({ years: 30 }),
+                    gender: faker.helpers.arrayElement([1, 2]),
+                    sector: faker.helpers.arrayElement([1, 2, 3, 4]),
+                    address: faker.location.streetAddress(),
+                    volunteerStartDate: faker.date.past({ years: 1 }),
+                    isActive: true,
+                    flexible: faker.datatype.boolean(),
+                });
+                const volunteeringType = await VolunteeringTypes.findOne();
+                await VolunteerTypes.create({
+                    id: volunteer.id,
+                    volunteerTypeId: volunteeringType.id,
+                });
+                await seedVolunteerDepartments(volunteer.id);
+                await seedVolunteerGenders(volunteer.id);
+                await seedVolunteerSectors(volunteer.id);
 
-            await Passwords.create({
-                id: user.id,
-                password: await bcrypt.hash(password, 10),
-            });
-
-            const volunteer = await Volunteers.create({
-                userId: user.id,
-                fullName: faker.person.fullName(),
-                dateOfBirth: faker.date.past({ years: 30 }),
-                gender: faker.helpers.arrayElement([1, 2]),
-                sector: faker.helpers.arrayElement([1, 2, 3, 4]),
-                address: faker.location.streetAddress(),
-                volunteerStartDate: faker.date.past({ years: 1 }),
-                isActive: true,
-                flexible: faker.datatype.boolean(),
-            });
-
-            const volunteeringType = await VolunteeringTypes.findOne();
-            await VolunteerTypes.create({
-                id: volunteer.id,
-                volunteerTypeId: volunteeringType.id,
-            });
-
-            await seedVolunteerDepartments(volunteer.id);
-            await seedVolunteerGenders(volunteer.id);
-            await seedVolunteerSectors(volunteer.id);
-            console.log(`✔ Volunteer created: ${email} | password: ${password}`);
+                console.log(`✔ Volunteer created: ${email} | password: ${password}`);
+            } catch (err) {
+                console.error(`❌ Failed to create volunteer at index ${i}:`, err.message);
+            }
         }
 
         for (let i = 0; i < 15; i++) {
@@ -205,10 +208,7 @@ async function fakerSeed() {
                 message: faker.lorem.sentences(2),
             });
 
-            // שלוף את כל המתנדבים מהמערכת (רק פעם אחת בתחילת הפונקציה!)
             const allVolunteers = await Volunteers.findAll({ attributes: ['userId'] });
-
-            // בתוך הלולאה אחרי יצירת האשפוזים (לכל איש קשר)
             const hospitalizedsOfContact = await Hospitalizeds.findAll({
                 include: {
                     model: Patients,
