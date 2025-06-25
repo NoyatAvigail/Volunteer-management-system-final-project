@@ -84,55 +84,55 @@ const userService = {
                 };
             };
             if (type == cUserType.CONTACTPERSON) {
-            const contact = await genericDAL.createModel(ContactPeople,
-                {
-                    userId: newUser.id,
-                    fullName: rest.fullName,
-                    address: rest.address
-                }, { transaction });
-            const patient = await genericDAL.createModel(Patients,
-                {
-                    userId: rest.patientId,
-                    contactPeopleId: contact.userId,
-                    fullName: rest.patientFullName,
-                    dateOfBirth: rest.patientDateOfBirth,
-                    sector: rest.patientSector,
-                    gender: rest.patientGender,
-                    address: rest.patientAddress,
-                    dateOfDeath: rest.patientDateOfDeath || null,
-                    interestedInReceivingNotifications: rest.patientInterestedInReceivingNotifications ?? true
-                }, { transaction });
-            const relationToPatients = await genericDAL.createModel(RelationToPatients,
-                {
-                    contactPeopleId: contact.id,
-                    patientId: patient.id,
-                    relationId: rest.relationId,
-                }, { transaction });
-            const hospitalizeds = await genericDAL.createModel(Hospitalizeds,
-                {
-                    patientId: patient.userId,
-                    hospital: rest.hospital,
-                    department: rest.department,
-                    roomNumber: rest.roomNumber,
-                    hospitalizationStart: rest.hospitalizationStart,
-                    hospitalizationEnd: rest.hospitalizationEnd
-                }, { transaction });
-            newUser = {
-                ...rest,
-                type: type,
-                 email: userData.email,
-                id: contact.id,
-                autoId: contact.id
-            };
+                const contact = await genericDAL.createModel(ContactPeople,
+                    {
+                        userId: newUser.id,
+                        fullName: rest.fullName,
+                        address: rest.address
+                    }, { transaction });
+                const patient = await genericDAL.createModel(Patients,
+                    {
+                        userId: rest.patientId,
+                        contactPeopleId: contact.userId,
+                        fullName: rest.patientFullName,
+                        dateOfBirth: rest.patientDateOfBirth,
+                        sector: rest.patientSector,
+                        gender: rest.patientGender,
+                        address: rest.patientAddress,
+                        dateOfDeath: rest.patientDateOfDeath || null,
+                        interestedInReceivingNotifications: rest.patientInterestedInReceivingNotifications ?? true
+                    }, { transaction });
+                const relationToPatients = await genericDAL.createModel(RelationToPatients,
+                    {
+                        contactPeopleId: contact.id,
+                        patientId: patient.id,
+                        relationId: rest.relationId,
+                    }, { transaction });
+                const hospitalizeds = await genericDAL.createModel(Hospitalizeds,
+                    {
+                        patientId: patient.userId,
+                        hospital: rest.hospital,
+                        department: rest.department,
+                        roomNumber: rest.roomNumber,
+                        hospitalizationStart: rest.hospitalizationStart,
+                        hospitalizationEnd: rest.hospitalizationEnd
+                    }, { transaction });
+                newUser = {
+                    ...rest,
+                    type: type,
+                    email: userData.email,
+                    id: contact.id,
+                    autoId: contact.id
+                };
+            }
+            await transaction.commit();
+            return newUser;
+        } catch (e) {
+            await transaction.rollback();
+            console.error("Signup failed:", e);
+            throw e;
         }
-        await transaction.commit();
-        return newUser;
-    } catch(e) {
-        await transaction.rollback();
-        console.error("Signup failed:", e);
-        throw e;
-    }
-},
+    },
 
     login: async ({ email, password }) => {
         log('[POST]', { email, password });

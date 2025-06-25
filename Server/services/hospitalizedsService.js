@@ -1,6 +1,4 @@
 import hospitalizedsDal from "../dal/hospitalizedsDal.js";
-import contactsDal from "../dal/contactsDal.js";
-import ContactPeople from '../models/ContactPeople.js';
 
 const hospitalizedsService = {
     utils: async (authenticatedType) => {
@@ -12,7 +10,7 @@ const hospitalizedsService = {
     },
 
     getHospitalizeds: async (authenticatedId, patientId) => {
-        try {            
+        try {
             return await hospitalizedsDal.getHospitalizeds(patientId);
         } catch (error) {
             console.error("Error in hospitalizedsService.getHospitalizeds:", error);
