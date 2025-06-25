@@ -148,6 +148,7 @@ function ContactRequests() {
                 />
                 <Add
                     type="Events"
+                    setIsChange={triggerRefresh}
                     onSuccess={(newItem) => {
                         setUserData(prev => [...prev, newItem]);
                         setEvents(prev => [...prev, newItem]);

@@ -79,6 +79,10 @@ getVolunteerByUserId: async (userId) => {
 
   getFutureOpenEvents: async () => {
     return await Events.findAll({
+  },
+
+  getFutureOpenEvents: async () => {
+    return await Events.findAll({
       where: {
         date: {
           [Op.gt]: new Date()
@@ -90,6 +94,9 @@ getVolunteerByUserId: async (userId) => {
         {
           model: Hospitalizeds,
           include: [
+            { model: Hospitals },
+            { model: Departments },
+            { model: Patients }
             { model: Hospitals },
             { model: Departments },
             { model: Patients }
@@ -108,6 +115,15 @@ getVolunteerByUserId: async (userId) => {
     });
   },
 
+  getEventsOfVolunteer: async (volunteerId) => {
+    return await Events.findAll({
+      where: {
+        volunteerId,
+        is_deleted: 0
+      }
+    });
+  },
+  
   findRequests: async (hospital, department, startDate, endDate) => {
     const filters = {
       date: {
