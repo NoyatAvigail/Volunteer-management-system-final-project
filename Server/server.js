@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import sequelize from '../DB/connectionDB.mjs';
+import connectionDB from '../DB/connectionDB.mjs';
 import userRoutes from './routes/usersRoutes.js';
 import homeRoutes from './routes/homeRoutes.js';
 import referenceDataRoutes from './routes/referenceDataRoutes.js';
