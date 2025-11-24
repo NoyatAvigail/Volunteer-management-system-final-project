@@ -1,6 +1,6 @@
 import genericDAL from "../dal/genericDal.js";
 import patientsDal from "../dal/patientsDal.js";
-import ContactPeople from '../models/tempContact.js';
+import ContactPeople from '../models/ContactPeople.js';
 import genericService from '../services/genericService.js'
 
 const patientsService = {

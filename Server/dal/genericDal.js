@@ -11,7 +11,7 @@ import VolunteeringTypes from '../models/VolunteeringTypes.js';
 import UserTypes from '../models/UserTypes.js';
 import Hospitalizeds from '../models/Hospitalizeds.js'
 import Volunteers from "../models/Volunteers.js";
-import ContactPeople from "../models/tempContact.js";
+import ContactPeople from "../models/ContactPeople.js";
 import Patients from "../models/Patients.js";
 import RelationToPatients from "../models/RelationToPatients.js";
 import VolunteerTypes from "../models/VolunteerTypes.js";
