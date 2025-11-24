@@ -4,7 +4,7 @@ import Users from '../models/Users.js';
 import Passwords from '../models/Passwords.js';
 import Volunteers from "../models/Volunteers.js";
 import VolunteerTypes from '../models/VolunteerTypes.js';
-import ContactPeople from "../models/ContactPeople.js"
+import ContactPeople from "../models/tempContact.js"
 import Patients from "../models/Patients.js"
 import RelationToPatients from '../models/RelationToPatients.js'
 import Hospitalizeds from '../models/Hospitalizeds.js';
